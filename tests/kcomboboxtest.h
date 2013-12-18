@@ -11,39 +11,38 @@ class KComboBox;
 
 class KComboBoxTest : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  KComboBoxTest ( QWidget *parent=0);
-  ~KComboBoxTest();
+    KComboBoxTest(QWidget *parent = 0);
+    ~KComboBoxTest();
 
 private Q_SLOTS:
-  void quitApp();
-  void slotTimeout();
-  void slotDisable();
-  void slotReturnPressed();
-  void slotReturnPressed(const QString&);
-  void slotActivated( int );
-  void slotActivated( const QString& );
-  void slotCurrentIndexChanged(int);
-  void slotCurrentIndexChanged(const QString&);
+    void quitApp();
+    void slotTimeout();
+    void slotDisable();
+    void slotReturnPressed();
+    void slotReturnPressed(const QString &);
+    void slotActivated(int);
+    void slotActivated(const QString &);
+    void slotCurrentIndexChanged(int);
+    void slotCurrentIndexChanged(const QString &);
 
 private:
 
-  void connectComboSignals(QComboBox* combo);
+    void connectComboSignals(QComboBox *combo);
 
-  QComboBox* m_qc;
+    QComboBox *m_qc;
 
-  KComboBox* m_ro;
-  KComboBox* m_rw;
-  KComboBox* m_hc;
-  KComboBox* m_konqc;
+    KComboBox *m_ro;
+    KComboBox *m_rw;
+    KComboBox *m_hc;
+    KComboBox *m_konqc;
 
+    QPushButton *m_btnExit;
+    QPushButton *m_btnEnable;
 
-  QPushButton* m_btnExit;
-  QPushButton* m_btnEnable;
-
-  QTimer* m_timer;
+    QTimer *m_timer;
 };
 
 #endif

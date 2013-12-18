@@ -25,8 +25,11 @@
 class KTestComboBox : public KComboBox
 {
 public:
-        KTestComboBox( bool rw, QWidget *parent=0 ) : KComboBox( rw, parent ) {}
-        KCompletionBase *delegate() const { return KCompletionBase::delegate(); }
+    KTestComboBox(bool rw, QWidget *parent = 0) : KComboBox(rw, parent) {}
+    KCompletionBase *delegate() const
+    {
+        return KCompletionBase::delegate();
+    }
 };
 
 class KComboBox_UnitTest : public QObject
@@ -38,10 +41,10 @@ private:
     {
         KComboBox w(ctorArg /*initial value for editable*/);
         w.setEditable(true);
-        w.setCompletionMode( KCompletion::CompletionPopup );
+        w.setCompletionMode(KCompletion::CompletionPopup);
         w.addItem("Hello world");
         QVERIFY(w.lineEdit());
-        QVERIFY(qobject_cast<KLineEdit*>(w.lineEdit()));
+        QVERIFY(qobject_cast<KLineEdit *>(w.lineEdit()));
         // KLineEdit signals
         QSignalSpy qReturnPressedSpy(w.lineEdit(), SIGNAL(returnPressed()));
         QSignalSpy kReturnPressedSpy(w.lineEdit(), SIGNAL(returnPressed(QString)));
@@ -70,7 +73,7 @@ private Q_SLOTS:
     void testHistoryComboReturnPressed()
     {
         KHistoryComboBox w;
-        QVERIFY(qobject_cast<KLineEdit*>(w.lineEdit()));
+        QVERIFY(qobject_cast<KLineEdit *>(w.lineEdit()));
         connect(&w, SIGNAL(activated(QString)),
                 &w, SLOT(addToHistory(QString)));
         QSignalSpy comboReturnPressedSpy(&w, SIGNAL(returnPressed()));
@@ -111,17 +114,17 @@ private Q_SLOTS:
     void testDeleteLineEdit()
     {
         // Test for KCombo's KLineEdit destruction
-        KTestComboBox *testCombo = new KTestComboBox( true, 0 ); // rw, with KLineEdit
+        KTestComboBox *testCombo = new KTestComboBox(true, 0);   // rw, with KLineEdit
         testCombo->setEditable(false); // destroys our KLineEdit, with deleteLater
         qApp->sendPostedEvents(NULL, QEvent::DeferredDelete);
-        QVERIFY( testCombo->KTestComboBox::delegate() == 0L );
+        QVERIFY(testCombo->KTestComboBox::delegate() == 0L);
         delete testCombo; // not needed anymore
     }
 
     void testSelectionResetOnReturn()
     {
         // void QComboBoxPrivate::_q_returnPressed() calls lineEdit->deselect()
-        KHistoryComboBox *testCombo= new KHistoryComboBox( true, 0);
+        KHistoryComboBox *testCombo = new KHistoryComboBox(true, 0);
         QCOMPARE(testCombo->insertPolicy(), QComboBox::NoInsert); // not the Qt default; KHistoryComboBox changes that
         QTest::keyClicks(testCombo, "Hello world");
         testCombo->lineEdit()->setSelection(5, 3);

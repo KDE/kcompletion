@@ -32,12 +32,20 @@
 
 class KZoneAllocator::MemBlock
 {
-  public:
+public:
     MemBlock(size_t s) : size(s), ref(0), older(0), newer(0)
-      { begin = new char[s]; }
-    ~MemBlock() { delete [] begin; }
-    bool is_in(void *ptr) const {return !(begin > (char *)ptr
-    				          || (begin + size) <= (char *)ptr); }
+    {
+        begin = new char[s];
+    }
+    ~MemBlock()
+    {
+        delete [] begin;
+    }
+    bool is_in(void *ptr) const
+    {
+        return !(begin > (char *)ptr
+                 || (begin + size) <= (char *)ptr);
+    }
     size_t size;
     unsigned int ref;
     char *begin;
@@ -56,9 +64,9 @@ public:
     }
 
     /** One block is 'current' to satisfy requests. @internal */
-    MemBlock *currentBlock; 
+    MemBlock *currentBlock;
     /** Store block size from constructor. @internal */
-    unsigned long blockSize; 
+    unsigned long blockSize;
     /** Store offset into current block; size-offset is free. @internal */
     unsigned long blockOffset;
     /** base-2 log of the block size. @internal */
@@ -74,7 +82,7 @@ public:
 };
 
 KZoneAllocator::KZoneAllocator(unsigned long _blockSize)
-    : d( new Private )
+    : d(new Private)
 {
     while (d->blockSize < _blockSize) {
         d->blockSize <<= 1;
@@ -88,41 +96,44 @@ KZoneAllocator::KZoneAllocator(unsigned long _blockSize)
 
 KZoneAllocator::~KZoneAllocator()
 {
-  unsigned int count = 0;
-  if (d->hashList) {
-    /* No need to maintain the different lists in d->hashList[] anymore.
-       I.e. no need to use delBlock().  */
-    for (unsigned int i = 0; i < d->hashSize; i++)
-      delete d->hashList[i];
-    delete [] d->hashList;
-    d->hashList = 0;
-  }
-  MemBlock *next;
-  for (; d->currentBlock; d->currentBlock = next) {
-    next = d->currentBlock->older;
-    delete d->currentBlock;
-    count++;
-  }
+    unsigned int count = 0;
+    if (d->hashList) {
+        /* No need to maintain the different lists in d->hashList[] anymore.
+           I.e. no need to use delBlock().  */
+        for (unsigned int i = 0; i < d->hashSize; i++) {
+            delete d->hashList[i];
+        }
+        delete [] d->hashList;
+        d->hashList = 0;
+    }
+    MemBlock *next;
+    for (; d->currentBlock; d->currentBlock = next) {
+        next = d->currentBlock->older;
+        delete d->currentBlock;
+        count++;
+    }
 #ifndef NDEBUG // as this is called quite late in the app, we don't care
-	       // to use kDebug
-  if (count > 1)
-    qDebug("zone still contained %d blocks", count);
+    // to use kDebug
+    if (count > 1) {
+        qDebug("zone still contained %d blocks", count);
+    }
 #endif
-  delete d;
+    delete d;
 }
 
 void KZoneAllocator::insertHash(MemBlock *b)
 {
-  quintptr adr = ((quintptr)b->begin) & (~(d->blockSize - 1));
-  quintptr end = ((quintptr)b->begin) + d->blockSize;
-  while (adr < end) {
-    quintptr key = adr >> d->log2;
-    key = key & (d->hashSize - 1);
-    if (!d->hashList[key])
-      d->hashList[key] = new QList<MemBlock *>;
-    d->hashList[key]->append(b);
-    adr += d->blockSize;
-  }
+    quintptr adr = ((quintptr)b->begin) & (~(d->blockSize - 1));
+    quintptr end = ((quintptr)b->begin) + d->blockSize;
+    while (adr < end) {
+        quintptr key = adr >> d->log2;
+        key = key & (d->hashSize - 1);
+        if (!d->hashList[key]) {
+            d->hashList[key] = new QList<MemBlock *>;
+        }
+        d->hashList[key]->append(b);
+        adr += d->blockSize;
+    }
 }
 
 /** Add a new memory block to the pool of blocks,
@@ -132,44 +143,52 @@ void KZoneAllocator::insertHash(MemBlock *b)
 */
 void KZoneAllocator::addBlock(MemBlock *b)
 {
-  b->newer = 0;
-  b->older = d->currentBlock;
-  if (d->currentBlock)
-    b->older->newer = b;
-  d->currentBlock = b;
-  d->num_blocks++;
-  /* If we either have no d->hashList at all, or since it's last construction
-     there are now many more blocks we reconstruct the list.  But don't
-     make it larger than a certain maximum.  */
-  if (d->hashList && ((d->num_blocks / 4) > d->hashSize && d->hashSize < 64*1024))
-    d->hashDirty = true;
-  /* Only insert this block into the hashlists, if we aren't going to
-     reconstruct them anyway.  */
-  if (d->hashList && !d->hashDirty)
-    insertHash (b);
+    b->newer = 0;
+    b->older = d->currentBlock;
+    if (d->currentBlock) {
+        b->older->newer = b;
+    }
+    d->currentBlock = b;
+    d->num_blocks++;
+    /* If we either have no d->hashList at all, or since it's last construction
+       there are now many more blocks we reconstruct the list.  But don't
+       make it larger than a certain maximum.  */
+    if (d->hashList && ((d->num_blocks / 4) > d->hashSize && d->hashSize < 64 * 1024)) {
+        d->hashDirty = true;
+    }
+    /* Only insert this block into the hashlists, if we aren't going to
+       reconstruct them anyway.  */
+    if (d->hashList && !d->hashDirty) {
+        insertHash(b);
+    }
 }
 
 /** Reinitialize hash list. @internal */
 void KZoneAllocator::initHash()
 {
-  if (d->hashList) {
-    for (unsigned int i = 0; i < d->hashSize; i++)
-      delete d->hashList[i];
-    delete [] d->hashList;
-    d->hashList = 0;
-  }
-  d->hashSize = 1;
-  while (d->hashSize < d->num_blocks)
-    d->hashSize <<= 1;
-  if (d->hashSize < 1024)
-    d->hashSize = 1024;
-  if (d->hashSize > 64*1024)
-    d->hashSize = 64*1024;
-  d->hashList = new QList<MemBlock *> *[d->hashSize];
-  memset (d->hashList, 0, sizeof(QList<MemBlock*> *) * d->hashSize);
-  d->hashDirty = false;
-  for (MemBlock *b = d->currentBlock; b; b = b->older)
-    insertHash(b);
+    if (d->hashList) {
+        for (unsigned int i = 0; i < d->hashSize; i++) {
+            delete d->hashList[i];
+        }
+        delete [] d->hashList;
+        d->hashList = 0;
+    }
+    d->hashSize = 1;
+    while (d->hashSize < d->num_blocks) {
+        d->hashSize <<= 1;
+    }
+    if (d->hashSize < 1024) {
+        d->hashSize = 1024;
+    }
+    if (d->hashSize > 64 * 1024) {
+        d->hashSize = 64 * 1024;
+    }
+    d->hashList = new QList<MemBlock *> *[d->hashSize];
+    memset(d->hashList, 0, sizeof(QList<MemBlock *> *) * d->hashSize);
+    d->hashDirty = false;
+    for (MemBlock *b = d->currentBlock; b; b = b->older) {
+        insertHash(b);
+    }
 }
 
 /** Delete a memory block. This @em really returns the memory to the heap.
@@ -178,114 +197,118 @@ void KZoneAllocator::initHash()
 */
 void KZoneAllocator::delBlock(MemBlock *b)
 {
-  /* Update also the hashlists if we aren't going to reconstruct them
-     soon.  */
-  if (d->hashList && !d->hashDirty) {
-    quintptr adr = (( quintptr )b->begin) & (~(d->blockSize - 1));
-    quintptr end = (( quintptr )b->begin) + d->blockSize;
-    while (adr < end) {
-      quintptr key = adr >> d->log2;
-      key = key & (d->hashSize - 1);
-      if (d->hashList[key]) {
-	QList<MemBlock *> *list = d->hashList[key];
-	QList<MemBlock *>::Iterator it = list->begin();
-	QList<MemBlock *>::Iterator endit = list->end();
-	for (; it != endit; ++it)
-	  if (*it == b) {
-	    list->erase(it);
-	    break;
-	  }
-      }
-      adr += d->blockSize;
+    /* Update also the hashlists if we aren't going to reconstruct them
+       soon.  */
+    if (d->hashList && !d->hashDirty) {
+        quintptr adr = ((quintptr)b->begin) & (~(d->blockSize - 1));
+        quintptr end = ((quintptr)b->begin) + d->blockSize;
+        while (adr < end) {
+            quintptr key = adr >> d->log2;
+            key = key & (d->hashSize - 1);
+            if (d->hashList[key]) {
+                QList<MemBlock *> *list = d->hashList[key];
+                QList<MemBlock *>::Iterator it = list->begin();
+                QList<MemBlock *>::Iterator endit = list->end();
+                for (; it != endit; ++it)
+                    if (*it == b) {
+                        list->erase(it);
+                        break;
+                    }
+            }
+            adr += d->blockSize;
+        }
     }
-  }
-  if (b->older)
-    b->older->newer = b->newer;
-  if (b->newer)
-    b->newer->older = b->older;
-  if (b == d->currentBlock) {
-    d->currentBlock = 0;
-    d->blockOffset = d->blockSize;
-  }
-  delete b;
-  d->num_blocks--;
+    if (b->older) {
+        b->older->newer = b->newer;
+    }
+    if (b->newer) {
+        b->newer->older = b->older;
+    }
+    if (b == d->currentBlock) {
+        d->currentBlock = 0;
+        d->blockOffset = d->blockSize;
+    }
+    delete b;
+    d->num_blocks--;
 }
 
 void *
 KZoneAllocator::allocate(size_t _size)
 {
-   // Use the size of (void *) as alignment
-   const size_t alignment = sizeof(void *) - 1;
-   _size = (_size + alignment) & ~alignment;   
+    // Use the size of (void *) as alignment
+    const size_t alignment = sizeof(void *) - 1;
+    _size = (_size + alignment) & ~alignment;
 
-   if ((unsigned long) _size + d->blockOffset > d->blockSize)
-   {
-      if (_size > d->blockSize) {
-	qDebug("KZoneAllocator: allocating more than %lu bytes", d->blockSize);
-	return 0;
-      }
-      addBlock(new MemBlock(d->blockSize));
-      d->blockOffset = 0;
-      //qDebug ("Allocating block #%d (%x)\n", d->num_blocks, d->currentBlock->begin);
-   }
-   void *result = (void *)(d->currentBlock->begin+d->blockOffset);
-   d->currentBlock->ref++;
-   d->blockOffset += _size;
-   return result;
+    if ((unsigned long) _size + d->blockOffset > d->blockSize) {
+        if (_size > d->blockSize) {
+            qDebug("KZoneAllocator: allocating more than %lu bytes", d->blockSize);
+            return 0;
+        }
+        addBlock(new MemBlock(d->blockSize));
+        d->blockOffset = 0;
+        //qDebug ("Allocating block #%d (%x)\n", d->num_blocks, d->currentBlock->begin);
+    }
+    void *result = (void *)(d->currentBlock->begin + d->blockOffset);
+    d->currentBlock->ref++;
+    d->blockOffset += _size;
+    return result;
 }
 
 void
 KZoneAllocator::deallocate(void *ptr)
 {
-  if (d->hashDirty)
-    initHash();
+    if (d->hashDirty) {
+        initHash();
+    }
 
-  quintptr key = (((quintptr)ptr) >> d->log2) & (d->hashSize - 1);
-  const QList<MemBlock *> *list = d->hashList[key];
-  if (!list) {
+    quintptr key = (((quintptr)ptr) >> d->log2) & (d->hashSize - 1);
+    const QList<MemBlock *> *list = d->hashList[key];
+    if (!list) {
+        /* Can happen with certain usage pattern of intermixed free_since()
+           and deallocate().  */
+        //qDebug("Uhoh");
+        return;
+    }
+    QList<MemBlock *>::ConstIterator it = list->begin();
+    QList<MemBlock *>::ConstIterator endit = list->end();
+    for (; it != endit; ++it) {
+        MemBlock *cur = *it;
+        if (cur->is_in(ptr)) {
+            if (!--cur->ref) {
+                if (cur != d->currentBlock) {
+                    delBlock(cur);
+                } else {
+                    d->blockOffset = 0;
+                }
+            }
+            return;
+        }
+    }
     /* Can happen with certain usage pattern of intermixed free_since()
        and deallocate().  */
-    //qDebug("Uhoh");
-    return;
-  }
-  QList<MemBlock*>::ConstIterator it = list->begin();
-  QList<MemBlock*>::ConstIterator endit = list->end();
-  for (; it != endit; ++it) {
-    MemBlock *cur = *it;
-    if (cur->is_in(ptr)) {
-      if (!--cur->ref) {
-	if (cur != d->currentBlock)
-	  delBlock (cur);
-	else
-	  d->blockOffset = 0;
-      }
-      return;
-    }
-  }
-  /* Can happen with certain usage pattern of intermixed free_since()
-     and deallocate().  */
-  //qDebug("Uhoh2");
+    //qDebug("Uhoh2");
 }
 
 void
 KZoneAllocator::free_since(void *ptr)
 {
-  /* If we have a d->hashList and it's not yet dirty, see, if we will dirty
-     it by removing too many blocks.  This will make the below delBlock()s
-     faster.  */
-  if (d->hashList && !d->hashDirty)
-    {
-      const MemBlock *b;
-      unsigned int removed = 0;
-      for (b = d->currentBlock; b; b = b->older, removed++)
-	if (b->is_in (ptr))
-	  break;
-      if (d->hashSize >= 4 * (d->num_blocks - removed))
-        d->hashDirty = true;
+    /* If we have a d->hashList and it's not yet dirty, see, if we will dirty
+       it by removing too many blocks.  This will make the below delBlock()s
+       faster.  */
+    if (d->hashList && !d->hashDirty) {
+        const MemBlock *b;
+        unsigned int removed = 0;
+        for (b = d->currentBlock; b; b = b->older, removed++)
+            if (b->is_in(ptr)) {
+                break;
+            }
+        if (d->hashSize >= 4 * (d->num_blocks - removed)) {
+            d->hashDirty = true;
+        }
     }
-  while (d->currentBlock && !d->currentBlock->is_in(ptr)) {
-    d->currentBlock = d->currentBlock->older;
-    delBlock (d->currentBlock->newer);
-  }
-  d->blockOffset = ((char*)ptr) - d->currentBlock->begin;
+    while (d->currentBlock && !d->currentBlock->is_in(ptr)) {
+        d->currentBlock = d->currentBlock->older;
+        delBlock(d->currentBlock->newer);
+    }
+    d->blockOffset = ((char *)ptr) - d->currentBlock->begin;
 }

@@ -48,7 +48,7 @@ class KPixmapProvider;
 class KCOMPLETION_EXPORT KHistoryComboBox : public KComboBox
 {
     Q_OBJECT
-    Q_PROPERTY( QStringList historyItems READ historyItems WRITE setHistoryItems )
+    Q_PROPERTY(QStringList historyItems READ historyItems WRITE setHistoryItems)
 
 public:
     /**
@@ -69,15 +69,15 @@ public:
      *
      * @p parent the parent object of this widget.
      */
-    explicit KHistoryComboBox( QWidget *parent = 0 );
+    explicit KHistoryComboBox(QWidget *parent = 0);
 
-     /**
-     * Same as the previous constructor, but additionally has the option
-     * to specify whether you want to let KHistoryComboBox handle completion
-     * or not. If set to @p true, KHistoryComboBox will sync the completion to the
-     * contents of the combobox.
-     */
-    explicit KHistoryComboBox( bool useCompletion, QWidget *parent = 0 );
+    /**
+    * Same as the previous constructor, but additionally has the option
+    * to specify whether you want to let KHistoryComboBox handle completion
+    * or not. If set to @p true, KHistoryComboBox will sync the completion to the
+    * contents of the combobox.
+    */
+    explicit KHistoryComboBox(bool useCompletion, QWidget *parent = 0);
 
     /**
      * Destructs the combo, the completion-object and the pixmap-provider
@@ -90,7 +90,7 @@ public:
      *
      * @see historyItems
      */
-    void setHistoryItems( const QStringList &items );
+    void setHistoryItems(const QStringList &items);
 
     /**
      * Inserts @p items into the combobox. @p items might get
@@ -135,7 +135,7 @@ public:
      * @see KCompletion::setItems
      * @see KCompletion::items
      */
-    void setHistoryItems( const QStringList &items, bool setCompletionList );
+    void setHistoryItems(const QStringList &items, bool setCompletionList);
 
     /**
      * Returns the list of history items. Empty, when this is not a read-write
@@ -152,7 +152,7 @@ public:
      *
      * @see addToHistory
      */
-    bool removeFromHistory( const QString& item );
+    bool removeFromHistory(const QString &item);
 
     /**
      * Sets a pixmap provider, so that items in the combobox can have a pixmap.
@@ -166,14 +166,14 @@ public:
      *
      * @see pixmapProvider
      */
-    void setPixmapProvider( KPixmapProvider *prov );
+    void setPixmapProvider(KPixmapProvider *prov);
 
     /**
      * @returns the current pixmap provider.
      * @see setPixmapProvider
      * @see KPixmapProvider
      */
-    KPixmapProvider * pixmapProvider() const;
+    KPixmapProvider *pixmapProvider() const;
 
     /**
      * Resets the current position of the up/down history. Call this
@@ -203,7 +203,7 @@ public Q_SLOTS:
      * @see removeFromHistory
      * @see QComboBox::setDuplicatesEnabled
      */
-    void addToHistory( const QString& item );
+    void addToHistory(const QString &item);
 
     /**
      * Clears the history and the completion list.
@@ -220,12 +220,12 @@ protected:
     /**
      * Handling key-events, the shortcuts to rotate the items.
      */
-    virtual void keyPressEvent( QKeyEvent * );
+    virtual void keyPressEvent(QKeyEvent *);
 
     /**
      * Handling wheel-events, to rotate the items.
      */
-    virtual void wheelEvent( QWheelEvent *ev );
+    virtual void wheelEvent(QWheelEvent *ev);
 
     /**
      * Inserts @p items into the combo, honoring pixmapProvider()
@@ -235,7 +235,7 @@ protected:
      *
      * Called from setHistoryItems() and setPixmapProvider()
      */
-    void insertItems( const QStringList& items );
+    void insertItems(const QStringList &items);
 
     /**
      * @returns if we can modify the completion object or not.
@@ -257,26 +257,25 @@ private Q_SLOTS:
     /**
      * Appends our own context menu entry.
      */
-    void addContextMenuItems( QMenu* );
+    void addContextMenuItems(QMenu *);
 
     /**
      * Used to emit the activated(QString) signal when enter is pressed
      */
-    void slotSimulateActivated( const QString& );
+    void slotSimulateActivated(const QString &);
 
 private:
-    void initWidget( bool useCompletion );
+    void initWidget(bool useCompletion);
     void rotateUp();
     void rotateDown();
 
 private:
     class Private;
     friend class Private;
-    Private* const d;
+    Private *const d;
 
     Q_DISABLE_COPY(KHistoryComboBox)
 };
-
 
 #endif
 

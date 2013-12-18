@@ -44,9 +44,9 @@ class QEvent;
 class KCOMPLETION_EXPORT KCompletionBox : public QListWidget
 {
     Q_OBJECT
-    Q_PROPERTY( bool isTabHandling READ isTabHandling WRITE setTabHandling )
+    Q_PROPERTY(bool isTabHandling READ isTabHandling WRITE setTabHandling)
     Q_PROPERTY(QString cancelledText READ cancelledText WRITE setCancelledText)
-    Q_PROPERTY( bool activateOnSelect READ activateOnSelect WRITE setActivateOnSelect )
+    Q_PROPERTY(bool activateOnSelect READ activateOnSelect WRITE setActivateOnSelect)
 
 public:
     /**
@@ -55,7 +55,7 @@ public:
      * The parent widget is used to give the focus back when pressing the
      * up-button on the very first item.
      */
-    explicit KCompletionBox( QWidget *parent = 0 );
+    explicit KCompletionBox(QWidget *parent = 0);
 
     /**
      * Destroys the box
@@ -80,12 +80,12 @@ public Q_SLOTS:
      * @p index determines at which position @p items will be inserted.
      * (defaults to appending them at the end)
      */
-    void insertItems( const QStringList& items, int index = -1 );
+    void insertItems(const QStringList &items, int index = -1);
 
     /**
      * Clears the box and inserts @p items.
      */
-    void setItems( const QStringList& items );
+    void setItems(const QStringList &items);
 
     /**
      * Adjusts the size of the box to fit the width of the parent given in the
@@ -110,7 +110,7 @@ public Q_SLOTS:
      *
      * @see isTabHandling
      */
-    void setTabHandling( bool enable );
+    void setTabHandling(bool enable);
 
     /**
      * @returns true if this widget is handling Tab-key events to traverse the
@@ -132,7 +132,7 @@ public Q_SLOTS:
      * @see userCancelled( const QString& )
      * @param txt  the text to be emitted if the user cancels this box
      */
-    void setCancelledText( const QString& txt);
+    void setCancelledText(const QString &txt);
 
     /**
      * @returns the text set via setCancelledText() or QString().
@@ -146,7 +146,6 @@ public Q_SLOTS:
      * @param state false if the signal should not be emitted.
      */
     void setActivateOnSelect(bool state);
-
 
     /**
      * Moves the selection one line down or select the first item if nothing is selected yet.
@@ -182,20 +181,20 @@ public Q_SLOTS:
      * Re-implemented for internal reasons.  API is unaffected.
      * Call it only if you really need it (i.e. the widget was hidden before) to have better performance.
      */
-    virtual void setVisible( bool visible );
+    virtual void setVisible(bool visible);
 
 Q_SIGNALS:
     /**
      * Emitted when an item was selected, contains the text of
      * the selected item.
      */
-    void activated( const QString& );
+    void activated(const QString &);
 
     /**
      * Emitted whenever the user chooses to ignore the available
      * selections and close the this box.
      */
-    void userCancelled( const QString& );
+    void userCancelled(const QString &);
 
 protected:
     /**
@@ -214,7 +213,7 @@ protected:
      * Reimplemented from QListWidget to get events from the viewport (to hide
      * this widget on mouse-click, Escape-presses, etc.
      */
-    virtual bool eventFilter( QObject *, QEvent * );
+    virtual bool eventFilter(QObject *, QEvent *);
 
     /**
      * The preferred global coordinate at which the completion box's top left corner
@@ -227,16 +226,15 @@ protected Q_SLOTS:
      * Called when an item was activated. Emits
      * activated() with the item.
      */
-    virtual void slotActivated( QListWidgetItem * );
+    virtual void slotActivated(QListWidgetItem *);
 
 private Q_SLOTS:
     void canceled();
-    void slotItemClicked( QListWidgetItem * );
+    void slotItemClicked(QListWidgetItem *);
 
 private:
     class KCompletionBoxPrivate;
-    KCompletionBoxPrivate* const d;
+    KCompletionBoxPrivate *const d;
 };
-
 
 #endif // KCOMPLETIONBOX_H

@@ -150,12 +150,12 @@ class QUrl;
  */
 class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase //krazy:exclude=qclasses
 {
-  Q_OBJECT
-  Q_PROPERTY( bool autoCompletion READ autoCompletion WRITE setAutoCompletion )
+    Q_OBJECT
+    Q_PROPERTY(bool autoCompletion READ autoCompletion WRITE setAutoCompletion)
 #ifndef KDE_NO_DEPRECATED
-  Q_PROPERTY( bool urlDropsEnabled READ urlDropsEnabled WRITE setUrlDropsEnabled )
+    Q_PROPERTY(bool urlDropsEnabled READ urlDropsEnabled WRITE setUrlDropsEnabled)
 #endif
-  Q_PROPERTY( bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey )
+    Q_PROPERTY(bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey)
 
 public:
 
@@ -165,7 +165,7 @@ public:
     *
     * @param parent The parent object of this widget
     */
-    explicit KComboBox( QWidget *parent=0 );
+    explicit KComboBox(QWidget *parent = 0);
 
     /**
     * Constructs a "read-write" or "read-only" combo box depending on
@@ -175,7 +175,7 @@ public:
     * @param rw When @p true, widget will be editable.
     * @param parent The parent object of this widget.
     */
-    explicit KComboBox( bool rw, QWidget *parent=0 );
+    explicit KComboBox(bool rw, QWidget *parent = 0);
 
     /**
     * Destructor.
@@ -187,14 +187,22 @@ public:
      * @deprecated
      */
 #ifndef KDE_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED void insertURL( const QUrl& url, int index = -1 )
-    { insertUrl( index < 0 ? count() : index, url ); }
-    KCOMPLETION_DEPRECATED void insertURL( const QPixmap& pixmap, const QUrl& url, int index = -1 )
-    { insertUrl( index < 0 ? count() : index, QIcon(pixmap), url ); }
-    KCOMPLETION_DEPRECATED void changeURL( const QUrl& url, int index )
-    { changeUrl( index, url ); }
-    KCOMPLETION_DEPRECATED void changeURL( const QPixmap& pixmap, const QUrl& url, int index )
-    { changeUrl( index, QIcon(pixmap), url ); }
+    KCOMPLETION_DEPRECATED void insertURL(const QUrl &url, int index = -1)
+    {
+        insertUrl(index < 0 ? count() : index, url);
+    }
+    KCOMPLETION_DEPRECATED void insertURL(const QPixmap &pixmap, const QUrl &url, int index = -1)
+    {
+        insertUrl(index < 0 ? count() : index, QIcon(pixmap), url);
+    }
+    KCOMPLETION_DEPRECATED void changeURL(const QUrl &url, int index)
+    {
+        changeUrl(index, url);
+    }
+    KCOMPLETION_DEPRECATED void changeURL(const QPixmap &pixmap, const QUrl &url, int index)
+    {
+        changeUrl(index, QIcon(pixmap), url);
+    }
 #endif
 
     /**
@@ -202,49 +210,49 @@ public:
      * QUrl::toDisplayString() so that the url is properly decoded for
      * displaying.
      */
-    void setEditUrl(const QUrl& url);
+    void setEditUrl(const QUrl &url);
 
     /**
      * Appends @p url to the combobox.
      * QUrl::toDisplayString() is used so that the url is properly decoded
      * for displaying.
      */
-    void addUrl(const QUrl& url);
+    void addUrl(const QUrl &url);
 
     /**
      * Appends @p url with the icon &p icon to the combobox.
      * QUrl::toDisplayString() is used so that the url is properly decoded
      * for displaying.
      */
-    void addUrl(const QIcon& icon,  const QUrl& url);
+    void addUrl(const QIcon &icon,  const QUrl &url);
 
     /**
      * Inserts @p url at position @p index into the combobox.
      * QUrl::toDisplayString() is used so that the url is properly decoded
      * for displaying.
      */
-    void insertUrl(int index, const QUrl& url );
+    void insertUrl(int index, const QUrl &url);
 
     /**
      * Inserts @p url with the pixmap &p pixmap at position @p index into
      * the combobox. QUrl::toDisplayString() is used so that the url is
      * properly decoded for displaying.
      */
-    void insertUrl(int index, const QIcon& icon, const QUrl& url);
+    void insertUrl(int index, const QIcon &icon, const QUrl &url);
 
     /**
      * Replaces the item at position @p index with @p url.
      * QUrl::toDisplayString() is used so that the url is properly decoded
      * for displaying.
      */
-    void changeUrl(int index, const QUrl& url);
+    void changeUrl(int index, const QUrl &url);
 
     /**
      * Replaces the item at position @p index with @p url and icon @p icon.
      * QUrl::toDisplayString() is used so that the url is properly decoded
      * for displaying.
      */
-    void changeUrl(int index , const QIcon& icon, const QUrl& url);
+    void changeUrl(int index, const QIcon &icon, const QUrl &url);
 
     /**
     * Returns the current cursor position.
@@ -266,7 +274,7 @@ public:
     *
     * @param autocomplete Flag to enable/disable automatic completion mode.
     */
-    virtual void setAutoCompletion( bool autocomplete );
+    virtual void setAutoCompletion(bool autocomplete);
 
     /**
     * Re-implemented from QComboBox.
@@ -294,7 +302,7 @@ public:
     * @deprecated use setContextMenuPolicy
     */
 #ifndef KDE_NO_DEPRECATED
-    virtual KCOMPLETION_DEPRECATED void setContextMenuEnabled( bool showMenu );
+    virtual KCOMPLETION_DEPRECATED void setContextMenuEnabled(bool showMenu);
 #endif
 
     /**
@@ -306,7 +314,7 @@ public:
      * @deprecated since 5.0. Use lineEdit()->installEventFilter with a LineEditUrlDropEventFilter
      */
 #ifndef KDE_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED void setUrlDropsEnabled( bool enable );
+    KCOMPLETION_DEPRECATED void setUrlDropsEnabled(bool enable);
 #endif
 
     /**
@@ -323,7 +331,7 @@ public:
      *
      * @return @p true if an item with the string @p text is in the combobox.
      */
-    bool contains( const QString& text ) const;
+    bool contains(const QString &text) const;
 
     /**
      * By default, KComboBox recognizes Key_Return and Key_Enter
@@ -338,7 +346,7 @@ public:
      *
      * @see setTrapReturnKey()
      */
-    void setTrapReturnKey( bool trap );
+    void setTrapReturnKey(bool trap);
 
     /**
      * @return @p true if keyevents of Key_Return or Key_Enter will
@@ -351,7 +359,7 @@ public:
     /**
     * Re-implemented for internal reasons.  API not affected.
     */
-    virtual bool eventFilter( QObject *, QEvent * );
+    virtual bool eventFilter(QObject *, QEvent *);
 
     /**
      * @returns the completion-box, that is used in completion mode
@@ -362,7 +370,7 @@ public:
      * @param create Set this to false if you don't want the box to be created
      *               i.e. to test if it is available.
      */
-    KCompletionBox * completionBox( bool create = true );
+    KCompletionBox *completionBox(bool create = true);
 
     /**
      * Re-implemented for internal reasons.  API remains unaffected.
@@ -373,7 +381,7 @@ public:
      * any attempt to assign a line-edit to a non-editable combobox will
      * simply be ignored.
      */
-    virtual void setLineEdit( QLineEdit * );
+    virtual void setLineEdit(QLineEdit *);
 
     /**
      * "Re-implemented" so that setEditable(true) creates a KLineEdit
@@ -401,7 +409,7 @@ Q_SIGNALS:
     * Note that this signal is only emitted when the
     * widget is editable.
     */
-    void returnPressed( const QString& );
+    void returnPressed(const QString &);
 
     /**
     * Emitted when the completion key is pressed.
@@ -411,31 +419,31 @@ Q_SIGNALS:
     * Note that this signal is @em not available when the widget is non-editable
     * or the completion mode is set to @p CompletionNone.
     */
-    void completion( const QString& );
+    void completion(const QString &);
 
     /**
      * Emitted when the shortcut for substring completion is pressed.
      */
-    void substringCompletion( const QString& );
+    void substringCompletion(const QString &);
 
-   /**
-    * Emitted when the text rotation key-bindings are pressed.
-    *
-    * The argument indicates which key-binding was pressed. In this case this
-    * can be either one of four values: @p PrevCompletionMatch,
-    * @p NextCompletionMatch, @p RotateUp or @p RotateDown. See
-    * KCompletionBase::setKeyBinding() for details.
-    *
-    * Note that this signal is @em NOT emitted if the completion
-    * mode is set to CompletionNone.
-    */
-    void textRotation( KCompletionBase::KeyBindingType );
+    /**
+     * Emitted when the text rotation key-bindings are pressed.
+     *
+     * The argument indicates which key-binding was pressed. In this case this
+     * can be either one of four values: @p PrevCompletionMatch,
+     * @p NextCompletionMatch, @p RotateUp or @p RotateDown. See
+     * KCompletionBase::setKeyBinding() for details.
+     *
+     * Note that this signal is @em NOT emitted if the completion
+     * mode is set to CompletionNone.
+     */
+    void textRotation(KCompletionBase::KeyBindingType);
 
     /**
      * Emitted whenever the completion mode is changed by the user
      * through the context menu.
      */
-    void completionModeChanged( KCompletion::CompletionMode );
+    void completionModeChanged(KCompletion::CompletionMode);
 
     /**
      * Emitted before the context menu is displayed.
@@ -446,7 +454,7 @@ Q_SIGNALS:
      *
      * @param p the context menu about to be displayed
      */
-    void aboutToShowContextMenu( QMenu * p );
+    void aboutToShowContextMenu(QMenu *p);
 
 public Q_SLOTS:
 
@@ -467,7 +475,7 @@ public Q_SLOTS:
     *
     * @param type The key-binding invoked.
     */
-    void rotateText( KCompletionBase::KeyBindingType type );
+    void rotateText(KCompletionBase::KeyBindingType type);
 
     /**
      * Sets the completed text in the line-edit appropriately.
@@ -475,20 +483,20 @@ public Q_SLOTS:
      * This function is an implementation for
      * KCompletionBase::setCompletedText.
      */
-    virtual void setCompletedText( const QString& );
+    virtual void setCompletedText(const QString &);
 
     /**
      * Sets @p items into the completion-box if completionMode() is
      * CompletionPopup. The popup will be shown immediately.
      */
-    void setCompletedItems( const QStringList& items, bool autosubject = true );
+    void setCompletedItems(const QStringList &items, bool autosubject = true);
 
     /**
      * Selects the first item that matches @p item. If there is no such item,
      * it is inserted at position @p index if @p insert is true. Otherwise,
      * no item is selected.
      */
-    void setCurrentItem( const QString& item, bool insert = false, int index = -1 );
+    void setCurrentItem(const QString &item, bool insert = false, int index = -1);
 
 protected Q_SLOTS:
 
@@ -503,7 +511,7 @@ protected Q_SLOTS:
     * through the remaining matches.  This way the rotation functionality
     * is left to iterate through the list as usual.
     */
-    virtual void makeCompletion( const QString& );
+    virtual void makeCompletion(const QString &);
 
 protected:
     /*
@@ -514,9 +522,9 @@ protected:
     * @param
     * @param
     */
-    virtual void setCompletedText( const QString& /* */, bool /*marked*/ );
+    virtual void setCompletedText(const QString & /* */, bool /*marked*/);
 
-    virtual void wheelEvent( QWheelEvent *ev );
+    virtual void wheelEvent(QWheelEvent *ev);
 
     virtual QSize minimumSizeHint() const;
 
@@ -531,10 +539,8 @@ private:
 
 private:
     class KComboBoxPrivate;
-    KComboBoxPrivate* const d;
+    KComboBoxPrivate *const d;
 };
-
-
 
 #endif
 

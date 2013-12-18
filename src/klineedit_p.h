@@ -10,7 +10,7 @@
 
    This library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the GNU
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    Lesser General Public License for more details.
 
    You should have received a copy of the GNU Lesser General Public License
@@ -28,11 +28,10 @@
 #include <QIcon>
 #include <QProxyStyle>
 
-
 class KLineEditButton : public QWidget
 {
     Q_OBJECT
-    Q_PROPERTY( int opacity READ opacity WRITE setOpacity )
+    Q_PROPERTY(int opacity READ opacity WRITE setOpacity)
 
 public:
     KLineEditButton(QWidget *parent)
@@ -45,7 +44,7 @@ public:
         m_animation->setEasingCurve(QEasingCurve::InOutQuad);
     }
 
-    QSize sizeHint () const
+    QSize sizeHint() const
     {
         return m_pixmap.size();
     }
@@ -70,14 +69,15 @@ public:
         }
 
         if (style()->styleHint(QStyle::SH_Widget_Animate, 0, this)) {
-            if (m_animation->state() != QPropertyAnimation::Running)
+            if (m_animation->state() != QPropertyAnimation::Running) {
                 m_animation->start();
+            }
         } else {
             setVisible(m_animation->direction() == QPropertyAnimation::Forward);
         }
     }
 
-    void setPixmap(const QPixmap& p)
+    void setPixmap(const QPixmap &p)
     {
         m_pixmap = p;
         m_icon = QIcon(p);
@@ -105,7 +105,7 @@ public:
         return m_opacity;
     }
 
-    void setOpacity( int value )
+    void setOpacity(int value)
     {
         m_opacity = value;
         update();
@@ -124,8 +124,9 @@ protected:
         if (style()->styleHint(QStyle::SH_Widget_Animate, 0, this)) {
 
             if (m_opacity == 0) {
-                if (m_animation->direction() == QPropertyAnimation::Backward)
+                if (m_animation->direction() == QPropertyAnimation::Backward) {
                     hide();
+                }
                 return;
             }
 
@@ -142,8 +143,8 @@ protected:
                 // draw pixmap on widget
                 QPainter pp(this);
                 pp.drawPixmap((width() - pm.width()) / 2,
-                             (height() - pm.height()) / 2,
-                             pm);
+                              (height() - pm.height()) / 2,
+                              pm);
             } else {
                 QPainter p(this);
                 p.drawPixmap((width() - m_pixmap.width()) / 2,
@@ -153,22 +154,22 @@ protected:
         } else {
             QPainter p(this);
             p.drawPixmap((width() - m_pixmap.width()) / 2,
-                        (height() - m_pixmap.height()) / 2,
-                        m_pixmap);
+                         (height() - m_pixmap.height()) / 2,
+                         m_pixmap);
         }
     }
 
 protected:
-    virtual bool event( QEvent* event )
+    virtual bool event(QEvent *event)
     {
         if (event->type() == QEvent::EnabledChange) {
             m_pixmap = m_icon.pixmap(m_pixmap.size(), isEnabled() ? QIcon::Normal : QIcon::Disabled);
         }
-        return QWidget::event( event );
+        return QWidget::event(event);
     }
 
 private:
-    QPropertyAnimation* m_animation;
+    QPropertyAnimation *m_animation;
     int m_opacity;
     QPixmap m_pixmap;
     QIcon m_icon;
@@ -178,20 +179,20 @@ class KLineEditStyle : public QProxyStyle
 {
     Q_OBJECT
 public:
-  KLineEditStyle(QStyle *style)
-    : QProxyStyle(),
-      m_overlap(0),
-      m_subStyle(style),
-      m_sentinel(false)
-  {
-  }
+    KLineEditStyle(QStyle *style)
+        : QProxyStyle(),
+          m_overlap(0),
+          m_subStyle(style),
+          m_sentinel(false)
+    {
+    }
 
-  QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget) const;
+    QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget) const;
 
-  int m_overlap;
-  QPointer<QStyle> m_subStyle;
-  QString m_lastStyleClass;
-  bool m_sentinel;
+    int m_overlap;
+    QPointer<QStyle> m_subStyle;
+    QString m_lastStyleClass;
+    bool m_sentinel;
 };
 
 #endif

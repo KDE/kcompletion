@@ -32,7 +32,7 @@
  * for sorting.
  * @see KSortableList
  */
-template<typename T, typename Key = int> class KSortableItem : public QPair<Key,T>
+template<typename T, typename Key = int> class KSortableItem : public QPair<Key, T>
 {
 public:
     /**
@@ -40,13 +40,13 @@ public:
      * @param i the first value (the key)
      * @param t the second value (the item)
      */
-    KSortableItem( Key i, const T& t ) : QPair<Key, T>( i, t ) {}
+    KSortableItem(Key i, const T &t) : QPair<Key, T>(i, t) {}
     /**
      * Creates a new KSortableItem that copies another one.
      * @param rhs the other item to copy
      */
-    KSortableItem( const KSortableItem<T, Key> &rhs )
-        : QPair<Key,T>( rhs.first, rhs.second ) {}
+    KSortableItem(const KSortableItem<T, Key> &rhs)
+        : QPair<Key, T>(rhs.first, rhs.second) {}
 
     /**
      * Creates a new KSortableItem with uninitialized values.
@@ -56,7 +56,8 @@ public:
     /**
      * Assignment operator, just copies the item.
      */
-    KSortableItem<T, Key> &operator=( const KSortableItem<T, Key>& i ) {
+    KSortableItem<T, Key> &operator=(const KSortableItem<T, Key> &i)
+    {
         this->first  = i.first;
         this->second = i.second;
         return *this;
@@ -67,68 +68,85 @@ public:
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator> ( const KSortableItem<T, Key>& i2 ) const {
+    bool operator> (const KSortableItem<T, Key> &i2) const
+    {
         return (i2.first < this->first);
     }
     /**
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator< ( const KSortableItem<T, Key>& i2 ) const {
+    bool operator< (const KSortableItem<T, Key> &i2) const
+    {
         return (this->first < i2.first);
     }
     /**
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator>= ( const KSortableItem<T, Key>& i2 ) const {
+    bool operator>= (const KSortableItem<T, Key> &i2) const
+    {
         return (this->first >= i2.first);
     }
     /**
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator<= ( const KSortableItem<T, Key>& i2 ) const {
+    bool operator<= (const KSortableItem<T, Key> &i2) const
+    {
         return !(i2.first < this->first);
     }
     /**
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator== ( const KSortableItem<T, Key>& i2 ) const {
+    bool operator== (const KSortableItem<T, Key> &i2) const
+    {
         return (this->first == i2.first);
     }
     /**
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator!= ( const KSortableItem<T, Key>& i2 ) const {
+    bool operator!= (const KSortableItem<T, Key> &i2) const
+    {
         return (this->first != i2.first);
     }
 
     /**
      * @return the second value (the item)
      */
-    T& value() { return this->second; }
+    T &value()
+    {
+        return this->second;
+    }
 
     /**
      * @return the second value (the item)
      */
-    const T& value() const { return this->second; }
+    const T &value() const
+    {
+        return this->second;
+    }
 
     /**
      * @return the first value (the key)
      * @deprecated use key()
      */
 #ifndef KDE_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED Key index() const { return this->first; }
+    KCOMPLETION_DEPRECATED Key index() const
+    {
+        return this->first;
+    }
 #endif
     /**
      * @return the first value.
      */
-    Key key() const { return this->first; }
+    Key key() const
+    {
+        return this->first;
+    }
 };
-
 
 /**
  * \class KSortableList ksortablelist.h <KSortableList>
@@ -149,8 +167,9 @@ public:
      * @param i the first value
      * @param t the second value
      */
-    void insert( Key i, const T& t ) {
-        QList<KSortableItem<T, Key> >::append( KSortableItem<T, Key>( i, t ) );
+    void insert(Key i, const T &t)
+    {
+        QList<KSortableItem<T, Key> >::append(KSortableItem<T, Key>(i, t));
     }
     // add more as you please...
 
@@ -158,31 +177,36 @@ public:
      * Returns the first value of the KSortableItem at the given position.
      * @return the first value of the KSortableItem
      */
-    T& operator[]( Key i ) {
-        return QList<KSortableItem<T, Key> >::operator[]( i ).value();
+    T &operator[](Key i)
+    {
+        return QList<KSortableItem<T, Key> >::operator[](i).value();
     }
 
     /**
      * Returns the first value of the KSortableItem at the given position.
      * @return the first value of the KSortableItem
      */
-    const T& operator[]( Key i ) const {
-        return QList<KSortableItem<T, Key> >::operator[]( i ).value();
+    const T &operator[](Key i) const
+    {
+        return QList<KSortableItem<T, Key> >::operator[](i).value();
     }
 
     /**
      * Sorts the KSortableItems.
      */
-    void sort() {
-        qSort( *this );
+    void sort()
+    {
+        qSort(*this);
     }
 };
 
-
 #ifdef Q_CC_MSVC
 template<class T, class K>
-inline uint qHash(const KSortableItem<T,K>&) { Q_ASSERT(0); return 0; }
+inline uint qHash(const KSortableItem<T, K> &)
+{
+    Q_ASSERT(0);
+    return 0;
+}
 #endif
-
 
 #endif // KSORTABLELIST_H

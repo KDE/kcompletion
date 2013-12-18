@@ -3,7 +3,7 @@
 
     Copyright (C) 1999 Waldo Bastian (bastian@kde.org)
     Copyright (C) 2002 Michael Matz (matz@kde.org)
-              
+
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
     License as published by the Free Software Foundation; either
@@ -30,10 +30,9 @@
 
 template <typename T> class QList;
 
-
 /**
  * \class KZoneAllocator kallocator.h <KZoneAllocator>
- * 
+ *
  * Memory allocator for large groups of small objects.
  * This should be used for large groups of objects that are created and
  * destroyed together. When used carefully for this purpose it is faster
@@ -51,7 +50,7 @@ public:
      * Creates a KZoneAllocator object.
      * @param _blockSize Size in bytes of the blocks requested from malloc.
      */
-    explicit KZoneAllocator(unsigned long _blockSize = 8*1024);
+    explicit KZoneAllocator(unsigned long _blockSize = 8 * 1024);
 
     /**
      * Destructs the ZoneAllocator and free all memory allocated by it.
@@ -63,7 +62,7 @@ public:
      * @param _size Size in bytes of the memory block. Memory is aligned to
      * the size of a pointer.
      */
-    void* allocate(size_t _size);
+    void *allocate(size_t _size);
 
     /**
      * Gives back a block returned by allocate() to the zone
@@ -89,7 +88,7 @@ public:
 
     /**
      * Deallocate many objects at once.
-     * free_since() deallocates all objects allocated after @p ptr, 
+     * free_since() deallocates all objects allocated after @p ptr,
      * @em including @p ptr itself.
      *
      * The intended use is something along the lines of:
@@ -120,7 +119,7 @@ protected:
     void initHash();
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif

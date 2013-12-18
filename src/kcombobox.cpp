@@ -31,7 +31,6 @@
 #include <kcompletionbox.h>
 #include <klineedit.h>
 
-
 class KComboBox::KComboBoxPrivate
 {
 public:
@@ -46,17 +45,17 @@ public:
     bool trapReturnKey;
 };
 
-KComboBox::KComboBox( QWidget *parent )
-    : QComboBox( parent ), d(new KComboBoxPrivate)
+KComboBox::KComboBox(QWidget *parent)
+    : QComboBox(parent), d(new KComboBoxPrivate)
 {
     initWidget();
 }
 
-KComboBox::KComboBox( bool rw, QWidget *parent )
-    : QComboBox( parent ), d(new KComboBoxPrivate)
+KComboBox::KComboBox(bool rw, QWidget *parent)
+    : QComboBox(parent), d(new KComboBoxPrivate)
 {
     initWidget();
-    setEditable( rw );
+    setEditable(rw);
 }
 
 KComboBox::~KComboBox()
@@ -67,48 +66,44 @@ KComboBox::~KComboBox()
 void KComboBox::initWidget()
 {
     // Permanently set some parameters in the parent object.
-    QComboBox::setAutoCompletion( false );
+    QComboBox::setAutoCompletion(false);
 
     // Enable context menu by default if widget
     // is editable.
     if (lineEdit()) {
-        lineEdit()->setContextMenuPolicy( Qt::DefaultContextMenu );
+        lineEdit()->setContextMenuPolicy(Qt::DefaultContextMenu);
     }
 }
 
-
-bool KComboBox::contains( const QString& _text ) const
+bool KComboBox::contains(const QString &_text) const
 {
-    if ( _text.isEmpty() )
+    if (_text.isEmpty()) {
         return false;
+    }
 
     const int itemCount = count();
-    for (int i = 0; i < itemCount; ++i )
-    {
-        if ( itemText(i) == _text )
+    for (int i = 0; i < itemCount; ++i) {
+        if (itemText(i) == _text) {
             return true;
+        }
     }
     return false;
 }
 
 int KComboBox::cursorPosition() const
 {
-    return ( lineEdit() ) ? lineEdit()->cursorPosition() : -1;
+    return (lineEdit()) ? lineEdit()->cursorPosition() : -1;
 }
 
-void KComboBox::setAutoCompletion( bool autocomplete )
+void KComboBox::setAutoCompletion(bool autocomplete)
 {
-    if ( d->klineEdit )
-    {
-        if ( autocomplete )
-        {
-            d->klineEdit->setCompletionMode( KCompletion::CompletionAuto );
-            setCompletionMode( KCompletion::CompletionAuto );
-        }
-        else
-        {
-            d->klineEdit->setCompletionMode( KCompletion::CompletionPopup );
-            setCompletionMode( KCompletion::CompletionPopup );
+    if (d->klineEdit) {
+        if (autocomplete) {
+            d->klineEdit->setCompletionMode(KCompletion::CompletionAuto);
+            setCompletionMode(KCompletion::CompletionAuto);
+        } else {
+            d->klineEdit->setCompletionMode(KCompletion::CompletionPopup);
+            setCompletionMode(KCompletion::CompletionPopup);
         }
     }
 }
@@ -119,16 +114,18 @@ bool KComboBox::autoCompletion() const
 }
 
 #ifndef KDE_NO_DEPRECATED
-void KComboBox::setContextMenuEnabled( bool showMenu )
+void KComboBox::setContextMenuEnabled(bool showMenu)
 {
-    if( d->klineEdit )
-        d->klineEdit->setContextMenuEnabled( showMenu );
+    if (d->klineEdit) {
+        d->klineEdit->setContextMenuEnabled(showMenu);
+    }
 }
 
-void KComboBox::setUrlDropsEnabled( bool enable )
+void KComboBox::setUrlDropsEnabled(bool enable)
 {
-    if ( d->klineEdit )
-        d->klineEdit->setUrlDropsEnabled( enable );
+    if (d->klineEdit) {
+        d->klineEdit->setUrlDropsEnabled(enable);
+    }
 }
 #endif
 
@@ -137,53 +134,57 @@ bool KComboBox::urlDropsEnabled() const
     return d->klineEdit && d->klineEdit->urlDropsEnabled();
 }
 
-
-void KComboBox::setCompletedText( const QString& text, bool marked )
+void KComboBox::setCompletedText(const QString &text, bool marked)
 {
-    if ( d->klineEdit )
-        d->klineEdit->setCompletedText( text, marked );
-}
-
-void KComboBox::setCompletedText( const QString& text )
-{
-    if ( d->klineEdit )
-        d->klineEdit->setCompletedText( text );
-}
-
-void KComboBox::makeCompletion( const QString& text )
-{
-    if( d->klineEdit )
-        d->klineEdit->makeCompletion( text );
-
-    else // read-only combo completion
-    {
-        if( text.isNull() || !view() )
-            return;
-
-	view()->keyboardSearch(text);
+    if (d->klineEdit) {
+        d->klineEdit->setCompletedText(text, marked);
     }
 }
 
-void KComboBox::rotateText( KCompletionBase::KeyBindingType type )
+void KComboBox::setCompletedText(const QString &text)
 {
-    if ( d->klineEdit )
-        d->klineEdit->rotateText( type );
+    if (d->klineEdit) {
+        d->klineEdit->setCompletedText(text);
+    }
+}
+
+void KComboBox::makeCompletion(const QString &text)
+{
+    if (d->klineEdit) {
+        d->klineEdit->makeCompletion(text);
+    }
+
+    else { // read-only combo completion
+        if (text.isNull() || !view()) {
+            return;
+        }
+
+        view()->keyboardSearch(text);
+    }
+}
+
+void KComboBox::rotateText(KCompletionBase::KeyBindingType type)
+{
+    if (d->klineEdit) {
+        d->klineEdit->rotateText(type);
+    }
 }
 
 // Not needed anymore
-bool KComboBox::eventFilter( QObject* o, QEvent* ev )
+bool KComboBox::eventFilter(QObject *o, QEvent *ev)
 {
-    return QComboBox::eventFilter( o, ev );
+    return QComboBox::eventFilter(o, ev);
 }
 
-void KComboBox::setTrapReturnKey( bool grab )
+void KComboBox::setTrapReturnKey(bool grab)
 {
     d->trapReturnKey = grab;
 
-    if ( d->klineEdit )
-        d->klineEdit->setTrapReturnKey( grab );
-    else
+    if (d->klineEdit) {
+        d->klineEdit->setTrapReturnKey(grab);
+    } else {
         qWarning("KComboBox::setTrapReturnKey not supported with a non-KLineEdit.");
+    }
 }
 
 bool KComboBox::trapReturnKey() const
@@ -191,60 +192,61 @@ bool KComboBox::trapReturnKey() const
     return d->trapReturnKey;
 }
 
-
-void KComboBox::setEditUrl(const QUrl& url)
+void KComboBox::setEditUrl(const QUrl &url)
 {
     QComboBox::setEditText(url.toDisplayString());
 }
 
-void KComboBox::addUrl(const QUrl& url)
+void KComboBox::addUrl(const QUrl &url)
 {
     QComboBox::addItem(url.toDisplayString());
 }
 
-void KComboBox::addUrl(const QIcon& icon, const QUrl& url)
+void KComboBox::addUrl(const QIcon &icon, const QUrl &url)
 {
     QComboBox::addItem(icon, url.toDisplayString());
 }
 
-void KComboBox::insertUrl(int index, const QUrl& url)
+void KComboBox::insertUrl(int index, const QUrl &url)
 {
     QComboBox::insertItem(index, url.toDisplayString());
 }
 
-void KComboBox::insertUrl(int index, const QIcon& icon, const QUrl& url)
+void KComboBox::insertUrl(int index, const QIcon &icon, const QUrl &url)
 {
     QComboBox::insertItem(index, icon, url.toDisplayString());
 }
 
-void KComboBox::changeUrl(int index, const QUrl& url)
+void KComboBox::changeUrl(int index, const QUrl &url)
 {
     QComboBox::setItemText(index, url.toDisplayString());
 }
 
-void KComboBox::changeUrl(int index, const QIcon& icon, const QUrl& url)
+void KComboBox::changeUrl(int index, const QIcon &icon, const QUrl &url)
 {
     QComboBox::setItemIcon(index, icon);
     QComboBox::setItemText(index, url.toDisplayString());
 }
 
-void KComboBox::setCompletedItems( const QStringList& items, bool autosubject )
+void KComboBox::setCompletedItems(const QStringList &items, bool autosubject)
 {
-    if ( d->klineEdit )
-        d->klineEdit->setCompletedItems( items, autosubject );
+    if (d->klineEdit) {
+        d->klineEdit->setCompletedItems(items, autosubject);
+    }
 }
 
-KCompletionBox * KComboBox::completionBox( bool create )
+KCompletionBox *KComboBox::completionBox(bool create)
 {
-    if ( d->klineEdit )
-        return d->klineEdit->completionBox( create );
+    if (d->klineEdit) {
+        return d->klineEdit->completionBox(create);
+    }
     return 0;
 }
 
-void KComboBox::wheelEvent( QWheelEvent *ev )
+void KComboBox::wheelEvent(QWheelEvent *ev)
 {
     // Not necessary anymore
-    QComboBox::wheelEvent( ev );
+    QComboBox::wheelEvent(ev);
 }
 
 QSize KComboBox::minimumSizeHint() const
@@ -263,87 +265,83 @@ QSize KComboBox::minimumSizeHint() const
     return size;
 }
 
-void KComboBox::setLineEdit( QLineEdit *edit )
+void KComboBox::setLineEdit(QLineEdit *edit)
 {
-    if ( !isEditable() && edit &&
-         !qstrcmp( edit->metaObject()->className(), "QLineEdit" ) )
-    {
+    if (!isEditable() && edit &&
+            !qstrcmp(edit->metaObject()->className(), "QLineEdit")) {
         // uic generates code that creates a read-only KComboBox and then
         // calls combo->setEditable( true ), which causes QComboBox to set up
         // a dumb QLineEdit instead of our nice KLineEdit.
         // As some KComboBox features rely on the KLineEdit, we reject
         // this order here.
         delete edit;
-        KLineEdit* kedit = new KLineEdit( this );
+        KLineEdit *kedit = new KLineEdit(this);
 
-        if ( isEditable() ) {
-            kedit->setClearButtonShown( true );
+        if (isEditable()) {
+            kedit->setClearButtonShown(true);
         }
 
         edit = kedit;
     }
 
-    QComboBox::setLineEdit( edit );
-    d->klineEdit = qobject_cast<KLineEdit*>( edit );
-    setDelegate( d->klineEdit );
+    QComboBox::setLineEdit(edit);
+    d->klineEdit = qobject_cast<KLineEdit *>(edit);
+    setDelegate(d->klineEdit);
 
     // Connect the returnPressed signal for both Q[K]LineEdits'
-    if (edit)
-        connect( edit, SIGNAL(returnPressed()), SIGNAL(returnPressed()));
+    if (edit) {
+        connect(edit, SIGNAL(returnPressed()), SIGNAL(returnPressed()));
+    }
 
-    if ( d->klineEdit )
-    {
+    if (d->klineEdit) {
         // someone calling KComboBox::setEditable( false ) destroys our
         // lineedit without us noticing. And KCompletionBase::delegate would
         // be a dangling pointer then, so prevent that. Note: only do this
         // when it is a KLineEdit!
-        connect( edit, SIGNAL(destroyed()), SLOT(lineEditDeleted()));
+        connect(edit, SIGNAL(destroyed()), SLOT(lineEditDeleted()));
 
-        connect( d->klineEdit, SIGNAL(returnPressed(QString)),
-                 SIGNAL(returnPressed(QString)));
+        connect(d->klineEdit, SIGNAL(returnPressed(QString)),
+                SIGNAL(returnPressed(QString)));
 
-        connect( d->klineEdit, SIGNAL(completion(QString)),
-                 SIGNAL(completion(QString)) );
+        connect(d->klineEdit, SIGNAL(completion(QString)),
+                SIGNAL(completion(QString)));
 
-        connect( d->klineEdit, SIGNAL(substringCompletion(QString)),
-                 SIGNAL(substringCompletion(QString)) );
+        connect(d->klineEdit, SIGNAL(substringCompletion(QString)),
+                SIGNAL(substringCompletion(QString)));
 
-        connect( d->klineEdit,
-                 SIGNAL(textRotation(KCompletionBase::KeyBindingType)),
-                 SIGNAL(textRotation(KCompletionBase::KeyBindingType)) );
+        connect(d->klineEdit,
+                SIGNAL(textRotation(KCompletionBase::KeyBindingType)),
+                SIGNAL(textRotation(KCompletionBase::KeyBindingType)));
 
-        connect( d->klineEdit,
-                 SIGNAL(completionModeChanged(KCompletion::CompletionMode)),
-                 SIGNAL(completionModeChanged(KCompletion::CompletionMode)));
+        connect(d->klineEdit,
+                SIGNAL(completionModeChanged(KCompletion::CompletionMode)),
+                SIGNAL(completionModeChanged(KCompletion::CompletionMode)));
 
-        connect( d->klineEdit,
-                 SIGNAL(aboutToShowContextMenu(QMenu*)),
-                 SIGNAL(aboutToShowContextMenu(QMenu*)) );
+        connect(d->klineEdit,
+                SIGNAL(aboutToShowContextMenu(QMenu*)),
+                SIGNAL(aboutToShowContextMenu(QMenu*)));
 
-        connect( d->klineEdit,
-                 SIGNAL(completionBoxActivated(QString)),
-                 SIGNAL(activated(QString)) );
+        connect(d->klineEdit,
+                SIGNAL(completionBoxActivated(QString)),
+                SIGNAL(activated(QString)));
 
-        d->klineEdit->setTrapReturnKey( d->trapReturnKey );
+        d->klineEdit->setTrapReturnKey(d->trapReturnKey);
     }
 }
 
-void KComboBox::setCurrentItem( const QString& item, bool insert, int index )
+void KComboBox::setCurrentItem(const QString &item, bool insert, int index)
 {
     int sel = -1;
 
     const int itemCount = count();
-    for (int i = 0; i < itemCount; ++i)
-    {
-        if (itemText(i) == item)
-        {
+    for (int i = 0; i < itemCount; ++i) {
+        if (itemText(i) == item) {
             sel = i;
             break;
         }
     }
 
-    if (sel == -1 && insert)
-    {
+    if (sel == -1 && insert) {
         if (index >= 0) {
             insertItem(index, item);
             sel = index;
@@ -360,11 +358,12 @@ void KComboBox::lineEditDeleted()
     // yes, we need those ugly casts due to the multiple inheritance
     // sender() is guaranteed to be a KLineEdit (see the connect() to the
     // destroyed() signal
-    const KCompletionBase *base = static_cast<const KCompletionBase*>( static_cast<const KLineEdit*>( sender() ));
+    const KCompletionBase *base = static_cast<const KCompletionBase *>(static_cast<const KLineEdit *>(sender()));
 
     // is it our delegate, that is destroyed?
-    if ( base == delegate() )
-        setDelegate( 0L );
+    if (base == delegate()) {
+        setDelegate(0L);
+    }
 }
 
 void KComboBox::setEditable(bool editable)
@@ -373,9 +372,9 @@ void KComboBox::setEditable(bool editable)
         // Create a KLineEdit instead of a QLineEdit
         // Compared to QComboBox::setEditable, we might be missing the SH_ComboBox_Popup code though...
         // If a style needs this, then we'll need to call QComboBox::setEditable and then setLineEdit again
-        KLineEdit *edit = new KLineEdit( this );
-        edit->setClearButtonShown( true );
-        setLineEdit( edit );
+        KLineEdit *edit = new KLineEdit(this);
+        edit->setClearButtonShown(true);
+        setLineEdit(edit);
     } else {
         QComboBox::setEditable(editable);
     }
