@@ -8,6 +8,7 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
 
 include(FeatureSummary)
 include(ECMSetupVersion)
+include(ECMGenerateHeaders)
 include(CMakePackageConfigHelpers)
 include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings)

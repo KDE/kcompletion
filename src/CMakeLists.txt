@@ -13,6 +13,8 @@ add_library(KF5Completion ${kcompletion_SRCS})
 generate_export_header(KF5Completion BASE_NAME KCompletion)
 add_library(KF5::Completion ALIAS KF5Completion)
 
+target_include_directories(KF5Completion INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/kcompletion>" "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/KCompletion>")
+
 target_link_libraries(KF5Completion PUBLIC Qt5::Widgets
                                     PRIVATE KF5::ConfigCore      # KConfigGroup, used in many places
                                             KF5::ConfigGui       # KStandardShortcut
@@ -24,16 +26,24 @@ set_target_properties(KF5Completion PROPERTIES VERSION   ${KCOMPLETION_VERSION_S
                                                EXPORT_NAME Completion
 )
 
+ecm_generate_headers(
+  KComboBox
+  KCompletion
+  KCompletionBox
+  KLineEdit
+  KHistoryComboBox
+  KPixmapProvider
+  KSortableList
+
+  MODULE_NAME KCompletion
+  REQUIRED_HEADERS KCompletion_HEADERS
+)
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/KCompletion DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
+
 install(TARGETS KF5Completion EXPORT KF5CompletionTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
-  kcombobox.h
-  kcompletion.h
-  kcompletionbox.h
-  klineedit.h
-  khistorycombobox.h
-  kpixmapprovider.h
-  ksortablelist.h
   ${CMAKE_CURRENT_BINARY_DIR}/kcompletion_export.h
-  DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel
+  ${KCompletion_HEADERS}
+  DESTINATION ${INCLUDE_INSTALL_DIR}/kcompletion COMPONENT Devel
 )
