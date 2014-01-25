@@ -47,3 +47,7 @@ install(FILES
   ${KCompletion_HEADERS}
   DESTINATION ${INCLUDE_INSTALL_DIR}/KCompletion COMPONENT Devel
 )
+
+include(ECMGeneratePriFile)
+ecm_generate_pri_file(BASE_NAME KCompletion LIB_NAME KF5Completion DEPS "widgets" FILENAME_VAR PRI_FILENAME)
+install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
