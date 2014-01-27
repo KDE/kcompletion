@@ -827,7 +827,7 @@ public:
      * Sets the type of completion to be used.
      *
      * @param mode Completion type
-     * @see CompletionMode
+     * @see KCompletion::CompletionMode
      */
     virtual void setCompletionMode(KCompletion::CompletionMode mode);
 
@@ -835,6 +835,7 @@ public:
      * Returns the current completion mode.
      *
      * @return the completion mode.
+     * @see KCompletion::CompletionMode
      */
     KCompletion::CompletionMode completionMode() const;
 
