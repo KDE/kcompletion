@@ -39,51 +39,52 @@ class KCompletionMatches;
 /**
  * @short A generic class for completing QStrings
  *
- * This class offers easy use of "auto-completion", "manual-completion" or
+ * This class offers easy use of "auto completion", "manual completion" or
  * "shell completion" on QString objects. A common use is completing filenames
  * or URLs (see KUrlCompletion()).
  * But it is not limited to URL-completion -- everything should be completable!
- * The user should be able to complete email-addresses, telephone-numbers,
- * commands, SQL queries, ...
- * Every time your program knows what the user can type into an edit-field, you
+ * The user should be able to complete email addresses, telephone numbers,
+ * commands, SQL queries...
+ * Every time your program knows what the user can type into an edit field, you
  * should offer completion. With KCompletion, this is very easy, and if you are
- * using a line edit widget ( KLineEdit), it is even more easy.
+ * using a line edit widget (KLineEdit), it is even easier.
  * Basically, you tell a KCompletion object what strings should be completable
- * and whenever completion should be invoked, you call makeCompletion().
+ * and, whenever completion should be invoked, you call makeCompletion().
  * KLineEdit and (an editable) KComboBox even do this automatically for you.
  *
  * KCompletion offers the completed string via the signal match() and
  * all matching strings (when the result is ambiguous) via the method
  * allMatches().
  *
- * Notice: auto-completion, shell completion and manual completion work
+ * Notice: auto completion, shell completion and manual completion work
  *         slightly differently:
  *
- * @li auto-completion always returns a complete item as match.
- *     When more than one matching items are available, it will deliver just
- *     the first (depending on sorting order) item. Iterating over all matches
+ * @li auto completion always returns a complete item as match.
+ *     When more than one matching item is available, it will deliver just
+ *     the first one (depending on sorting order). Iterating over all matches
  *     is possible via nextMatch() and previousMatch().
  *
- * @li popup-completion works in the same way, the only difference being that
- *     the completed items are not put into the edit-widget, but into a
- *     separate popup-box.
+ * @li popup completion works in the same way, the only difference being that
+ *     the completed items are not put into the edit widget, but into a
+ *     separate popup box.
  *
- * @li manual completion works the same way as auto-completion, the
- *     subtle difference is, that it isn't invoked automatically while the user
- *     is typing, but only when the user presses a special key. The difference
- *     of manual and auto-completion is therefore only visible in UI classes,
+ * @li manual completion works the same way as auto completion, except that
+ *     it is not invoked automatically while the user is typing,
+ *     but only when the user presses a special key. The difference
+ *     of manual and auto completion is therefore only visible in UI classes.
  *     KCompletion needs to know whether to deliver partial matches
  *     (shell completion) or whole matches (auto/manual completion), therefore
  *     KCompletion::CompletionMan and KCompletion::CompletionAuto have the exact
  *     same effect in KCompletion.
  *
- * @li shell completion works like how shells complete filenames:
+ * @li shell completion works like "tab completion" in a shell:
  *     when multiple matches are available, the longest possible string of all
  *     matches is returned (i.e. only a partial item).
  *     Iterating over all matching items (complete, not partial) is possible
  *     via nextMatch() and previousMatch().
  *
- * You don't have to worry much about that though, KCompletion handles
+ * As an application programmer, you do not normally have to worry about
+ * the different completion modes; KCompletion handles
  * that for you, according to the setting setCompletionMode().
  * The default setting is globally configured by the user and read
  * from completionMode().
@@ -91,20 +92,20 @@ class KCompletionMatches;
  * A short example:
  * \code
  * KCompletion completion;
- * completion.setOrder( KCompletion::Sorted );
- * completion.addItem( "pfeiffer@kde.org" );
- * completion.addItem( "coolo@kde.org" );
- * completion.addItem( "carpdjih@sp.zrz.tu-berlin.de" );
- * completion.addItem( "carp@cs.tu-berlin.de" );
+ * completion.setOrder(KCompletion::Sorted);
+ * completion.addItem("pfeiffer@kde.org");
+ * completion.addItem("coolo@kde.org");
+ * completion.addItem("carpdjih@sp.zrz.tu-berlin.de");
+ * completion.addItem("carp@cs.tu-berlin.de");
  *
- * cout << completion.makeCompletion( "ca" ).latin1() << endl;
+ * cout << completion.makeCompletion("ca").latin1() << endl;
  * \endcode
  *
- * In shell-completion-mode, this will be "carp"; in auto-completion-
+ * In shell-completion mode, this will be "carp"; in auto-completion
  * mode it will be "carp\@cs.tu-berlin.de", as that is alphabetically
  * smaller.
  * If setOrder was set to Insertion, "carpdjih\@sp.zrz.tu-berlin.de"
- * would be completed in auto-completion-mode, as that was inserted before
+ * would be completed in auto-completion mode, as that was inserted before
  * "carp\@cs.tu-berlin.de".
  *
  * You can dynamically update the completable items by removing and adding them
@@ -115,11 +116,11 @@ class KCompletionMatches;
  * tell the user) where a completion comes from.
  *
  * Note: KCompletion does not work with strings that contain 0x0 characters
- *       (unicode nul), as this is used internally as a delimiter.
+ *       (unicode null), as this is used internally as a delimiter.
  *
  * You may inherit from KCompletion and override makeCompletion() in
- * special cases (like reading directories/urls and then supplying the
- * contents to KCompletion, as KUrlCompletion does), but generally, this is
+ * special cases (like reading directories or urls and then supplying the
+ * contents to KCompletion, as KUrlCompletion does), but this is usually
  * not necessary.
  *
  *
@@ -151,27 +152,27 @@ public:
          */
         CompletionAuto,
         /**
-         * Same as automatic except shortest match is used for completion.
+         * Same as automatic, but shortest match is used for completion.
          */
         CompletionMan,
         /**
-         * Complete text much in the same way as a typical *nix shell would.
+         * Completes text much in the same way as a typical *nix shell would.
          */
         CompletionShell,
         /**
-         * Lists all possible matches in a popup list-box to choose from.
+         * Lists all possible matches in a popup list box to choose from.
          */
         CompletionPopup,
         /**
-         * Lists all possible matches in a popup list-box to choose from, and automatically
-         * fill the result whenever possible.
+         * Lists all possible matches in a popup list box to choose from, and automatically
+         * fills the result whenever possible.
          */
         CompletionPopupAuto
     };
 
     /**
      * Constants that represent the order in which KCompletion performs
-     * completion-lookups.
+     * completion lookups.
      */
     enum CompOrder { Sorted,    ///< Use alphabetically sorted order
                      Insertion, ///< Use order of insertion
@@ -189,20 +190,20 @@ public:
     virtual ~KCompletion();
 
     /**
-     * Attempts to find an item in the list of available completions,
+     * Attempts to find an item in the list of available completions
      * that begins with @p string. Will either return the first matching item
-     * (if there is more than one match) or QString(), if no match was
+     * (if there is more than one match) or QString(), if no match is
      * found.
      *
-     * In the latter case, a sound will be issued, depending on
+     * In the latter case, a sound will be emitted, depending on
      * soundsEnabled().
-     * If a match was found, it will also be emitted via the signal
+     * If a match is found, it will be emitted via the signal
      * match().
      *
-     * If this is called twice or more often with the same string while no
+     * If this is called twice or more with the same string while no
      * items were added or removed in the meantime, all available completions
-     * will be emitted via the signal #matches().
-     * This happens only in shell-completion-mode.
+     * will be emitted via the signal matches().
+     * This happens only in shell-completion mode.
      *
      * @param string the string to complete
      * @return the matching item, or QString() if there is no matching
@@ -215,7 +216,7 @@ public:
     /**
      * Returns a list of all completion items that contain the given @p string.
      * @param string the string to complete
-     * @return a list of items which all contain @p text as a substring,
+     * @return a list of items which contain @p text as a substring,
      * i.e. not necessarily at the beginning.
      *
      * @see makeCompletion
@@ -223,23 +224,23 @@ public:
     QStringList substringCompletion(const QString &string) const;
 
     /**
-     * Returns the next item from the matching-items-list.
+     * Returns the next item from the list of matching items.
      * When reaching the beginning, the list is rotated so it will return the
-     * last match and a sound is issued (depending on soundsEnabled()).
-     * @return the next item from the matching-items-list.
+     * last match and a sound is emitted (depending on soundsEnabled()).
+     * @return the next item from the list of matching items.
      * When there is no match, QString() is returned and
-     * a sound is be issued.
+     * a sound is emitted.
      * @see slotPreviousMatch
      */
     QString previousMatch();
 
     /**
-     * Returns the next item from the matching-items-list.
+     * Returns the next item from the list of matching items.
      * When reaching the last item, the list is rotated, so it will return
-     * the first match and a sound is issued (depending on
+     * the first match and a sound is emitted (depending on
      * soundsEnabled()).
-     * @return the next item from the matching-items-list.  When there is no
-     * match, QString() is returned and a sound is issued
+     * @return the next item from the list of matching items.  When there is no
+     * match, QString() is returned and a sound is emitted
      * @see slotNextMatch
      */
     QString nextMatch();
@@ -264,8 +265,7 @@ public:
      * This is necessary so that you can save the items along with its
      * weighting on disk and load them back with setItems(), restoring its
      * weight as well. If you really don't want the appended weightings, call
-     * setOrder( KCompletion::Insertion )
-     * before calling items().
+     * setOrder( KCompletion::Insertion ) before calling items().
      *
      * @return a list of all items
      * @see setItems
@@ -273,22 +273,23 @@ public:
     QStringList items() const;
 
     /**
-     * Returns true when the completion object contains no entries.
+     * Returns true if the completion object contains no entries.
      */
     bool isEmpty() const;
 
     /**
-     * Sets the completion mode to Auto/Manual, Shell or None.
+     * Sets the completion mode.
      * @param mode the completion mode
-     * @see completionMode
+     * @see CompletionMode
      */
     virtual void setCompletionMode(CompletionMode mode);
 
     /**
-     * Return the current completion mode.
+     * Returns the current completion mode.
      *
      * @return the current completion mode, default is CompletionPopup
      * @see setCompletionMode
+     * @see CompletionMode
      */
     CompletionMode completionMode() const;
 
@@ -305,7 +306,7 @@ public:
      *
      * Note: Setting the order to sorted only affects new inserted items,
      * already existing items will stay in the current order. So you probably
-     * want to call setOrder( Sorted ) before inserting items, when you want
+     * want to call setOrder(Sorted) before inserting items if you want
      * everything sorted.
      *
      * Default is insertion order.
@@ -323,7 +324,7 @@ public:
 
     /**
      * Setting this to true makes KCompletion behave case insensitively.
-     * E.g. makeCompletion( "CA" ); might return "carp\@cs.tu-berlin.de".
+     * E.g. makeCompletion("CA"); might return "carp\@cs.tu-berlin.de".
      * Default is false (case sensitive).
      * @param ignoreCase true to ignore the case
      * @see ignoreCase
@@ -331,7 +332,7 @@ public:
     virtual void setIgnoreCase(bool ignoreCase);
 
     /**
-     * Return whether KCompletion acts case insensitively or not.
+     * Returns whether KCompletion acts case insensitively or not.
      * Default is false (case sensitive).
      * @return true if the case will be ignored
      * @see setIgnoreCase
@@ -340,7 +341,7 @@ public:
 
     /**
      * Returns a list of all items matching the last completed string.
-     * Might take some time, when you have LOTS of items.
+     * It might take some time if you have a @em lot of items.
      * @return a list of all matches for the last completed string.
      * @see substringCompletion
      */
@@ -355,7 +356,7 @@ public:
 
     /**
      * Returns a list of all items matching the last completed string.
-     * Might take some time, when you have LOTS of items.
+     * It might take some time if you have a @em lot of items.
      * The matches are returned as KCompletionMatches, which also
      * keeps the weight of the matches, allowing
      * you to modify some matches or merge them with matches
@@ -375,14 +376,14 @@ public:
     KCompletionMatches allWeightedMatches(const QString &string);
 
     /**
-     * Enables/disables playing a sound when
+     * Enables/disables emitting a sound when
      * @li makeCompletion() can't find a match
      * @li there is a partial completion (= multiple matches in
      *     Shell-completion mode)
      * @li nextMatch() or previousMatch() hit the last possible
-     *     match -> rotation
+     *     match and the list is rotated
      *
-     * For playing the sounds, KNotifyClient() is used.
+     * KNotifyClient() is used to emit the sounds.
      *
      * @param enable true to enable sounds
      * @see soundsEnabled
@@ -390,7 +391,7 @@ public:
     virtual void setSoundsEnabled(bool enable);
 
     /**
-     * Tells you whether KCompletion will play sounds on certain occasions.
+     * Tells you whether KCompletion will emit sounds on certain occasions.
      * Default is enabled.
      * @return true if sounds are enabled
      * @see setSoundsEnabled
@@ -399,7 +400,7 @@ public:
 
     /**
      * Returns true when more than one match is found.
-     * @return true if there are more than one match
+     * @return true if there is more than one match
      * @see multipleMatches
      */
     bool hasMultipleMatches() const;
@@ -407,7 +408,7 @@ public:
 public Q_SLOTS:
     /**
      * Attempts to complete "string" and emits the completion via match().
-     * Same as makeCompletion() (just as a slot).
+     * Same as makeCompletion(), but in this case as a slot.
      * @param string the string to complete
      * @see makeCompletion
      */
@@ -418,7 +419,7 @@ public Q_SLOTS:
 
     /**
      * Searches the previous matching item and emits it via match().
-     * Same as previousMatch() (just as a slot).
+     * Same as previousMatch(), but in this case as a slot.
      * @see previousMatch
      */
     void slotPreviousMatch()   //inline (redirect)
@@ -428,7 +429,7 @@ public Q_SLOTS:
 
     /**
      * Searches the next matching item and emits it via match().
-     * Same as nextMatch() (just as a slot).
+     * Same as nextMatch(), but in this case as a slot.
      * @see nextMatch
      */
     void slotNextMatch()   //inline (redirect)
@@ -436,11 +437,11 @@ public Q_SLOTS:
         (void) nextMatch();
     }
 
-    // FIXME ###: KDE4: unify the nomenclature.  We have insertItems, addItem,
+    // FIXME ###: KDE5: unify the nomenclature.  We have insertItems, addItem,
     //            setItems...
     /**
      * Inserts @p items into the list of possible completions.
-     * Does the same as setItems(), but does not call clear() before.
+     * It does the same as setItems(), but without calling clear() before.
      * @param items the items to insert
      */
     void insertItems(const QStringList &items);
@@ -454,7 +455,7 @@ public Q_SLOTS:
      * where number is an unsigned integer, specifying the weighting.
      *
      * If you don't like this, call
-     * setOrder( KCompletion::Insertion )
+     * setOrder(KCompletion::Insertion)
      * before calling setItems().
      *
      * @param list the list of items that are available for completion
@@ -464,19 +465,19 @@ public Q_SLOTS:
 
     /**
      * Adds an item to the list of available completions.
-     * Resets the current item-state ( previousMatch() and nextMatch()
-     * won't work anymore).
+     * Resets the current item state (previousMatch() and nextMatch()
+     * won't work the next time they are called).
      * @param item the item to add
      */
     void addItem(const QString &item);
 
     /**
      * Adds an item to the list of available completions.
-     * Resets the current item-state ( previousMatch() and nextMatch()
-     * won't work anymore).
+     * Resets the current item state (previousMatch() and nextMatch()
+     * won't work the next time they are called).
      *
-     * Sets the weighting of the item to @p weight or adds it to the current
-     * weighting if the item is already available. The weight has to be greater
+     * Sets the weight of the item to @p weight or adds it to the current
+     * weight if the item is already available. The weight has to be greater
      * than 1 to take effect (default weight is 1).
      * @param item the item to add
      * @param weight the weight of the item, default is 1
@@ -485,8 +486,8 @@ public Q_SLOTS:
 
     /**
      * Removes an item from the list of available completions.
-     * Resets the current item-state ( previousMatch() and nextMatch()
-     * won't work anymore).
+     * Resets the current item state (previousMatch() and nextMatch()
+     * won't work the next time they are called).
      * @param item the item to remove
      */
     void removeItem(const QString &item);
@@ -498,23 +499,28 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     /**
-     * The matching item. Will be emitted by makeCompletion(),
-     * previousMatch() or nextMatch(). May be QString() if there
-     * is no matching item.
-     * @param item the match, or QString() if there is none
+     * This signal is emitted when a match is found.
+     *
+     * In particular, makeCompletion(), previousMatch() and nextMatch()
+     * all emit this signal; makeCompletion() will only emit it when a
+     * match is found, but the other methods will alwasy emit it (and so
+     * may emit it with an empty string).
+     *
+     * @param item the matching item, or QString() if there were no more
+     * matching items.
      */
     void match(const QString &item);
 
     /**
-     * All matching items. Will be emitted by makeCompletion() in shell-
-     * completion-mode, when the same string is passed to makeCompletion twice
-     * or more often.
-     * @param matchlist the list of matches
+     * This signal is emitted by makeCompletion() in shell-completion mode
+     * when the same string is passed to makeCompletion() multiple times in
+     * a row.
+     * @param matchlist the list of all matching items
      */
     void matches(const QStringList &matchlist);
 
     /**
-     * This signal is emitted, when calling makeCompletion() and more than
+     * This signal is emitted when calling makeCompletion() and more than
      * one matching item is found.
      * @see hasMultipleMatches
      */
@@ -538,8 +544,8 @@ protected:
 
     /**
      * This method is called before a list of all available completions is
-     * emitted via #matches. You can override this method to modify the
-     * found items before match() or #matches are emitted.
+     * emitted via matches(). You can override this method to modify the
+     * found items before match() or matches() are emitted.
      * Never delete that pointer!
      *
      * Default implementation does nothing.
@@ -550,7 +556,7 @@ protected:
 
     /**
      * This method is called before a list of all available completions is
-     * emitted via #matches. You can override this method to modify the
+     * emitted via #matches(). You can override this method to modify the
      * found items before #match() or #matches() are emitted.
      * Never delete that pointer!
      *
@@ -586,17 +592,17 @@ typedef KSortableList<QString> KCompletionMatchesList;
 class KCompletionMatchesPrivate;
 
 /**
- * This structure is returned by KCompletion::allWeightedMatches .
+ * This structure is returned by KCompletion::allWeightedMatches().
  * It also keeps the weight of the matches, allowing
  * you to modify some matches or merge them with matches
  * from another call to allWeightedMatches(), and sort the matches
- * after that in order to have the matches ordered correctly
+ * after that in order to have the matches ordered correctly.
  *
  * Example (a simplified example of what Konqueror's completion does):
  * \code
- * KCompletionMatches matches = completion->allWeightedMatches( location );
- * if( !location.startsWith( "www." ))
- matches += completion->allWeightedmatches( "www." + location" );
+ * KCompletionMatches matches = completion->allWeightedMatches(location);
+ * if(!location.startsWith("www."))
+ matches += completion->allWeightedmatches("www." + location");
  * matches.removeDuplicates();
  * QStringList list = matches.list();
  * \endcode
@@ -662,7 +668,7 @@ private:
  * This is a convenience class that provides the basic functions
  * needed to add text completion support into widgets.  All that
  * is required is an implementation for the pure virtual function
- * setCompletedText.  Refer to KLineEdit or KComboBox
+ * setCompletedText().  Refer to KLineEdit or KComboBox
  * to see how easily such support can be added using this as a base
  * class.
  *
@@ -673,8 +679,8 @@ class KCOMPLETION_EXPORT KCompletionBase
 {
 public:
     /**
-     * Constants that represent the items whose short-cut
-     * key-binding is programmable.  The default key-bindings
+     * Constants that represent the items whose shortcut
+     * key binding is programmable.  The default key bindings
      * for these items are defined in KStandardShortcut.
      */
     enum KeyBindingType {
@@ -722,7 +728,7 @@ public:
      * See also @ref compObj.
      *
      * @param hsig if true, handles completion signals internally.
-     * @return a pointer the completion object.
+     * @return a pointer to the completion object.
      */
     KCompletion *completionObject(bool hsig = true);
 
@@ -754,7 +760,7 @@ public:
      * stop the object from emitting signals when these
      * events occur.
      *
-     * @param handle if true, handle completion & rotation internally.
+     * @param handle if true, it handles completion and rotation internally.
      */
     virtual void setHandleSignals(bool handle);
 
@@ -786,7 +792,7 @@ public:
      * rotation signals.
      *
      * Invoking this function with @p enable set to @p false will
-     * cause the completion & rotation signals not to be emitted.
+     * cause the completion and rotation signals not to be emitted.
      * However, unlike setting the completion object to @p NULL
      * using setCompletionObject, disabling the emition of
      * the signals through this method does not affect the current
@@ -796,10 +802,10 @@ public:
      * completion object is created through completionObject or
      * setCompletionObject, these signals are set to emit
      * automatically.  Also note that disabling this signals will not
-     * necessarily interfere with the objects ability to handle these
+     * necessarily interfere with the objects' ability to handle these
      * events internally.  See setHandleSignals.
      *
-     * @param enable if false, disables the emition of completion & rotation signals.
+     * @param enable if false, disables the emition of completion and rotation signals.
      */
     void setEnableSignals(bool enable);
 
@@ -820,22 +826,8 @@ public:
     /**
      * Sets the type of completion to be used.
      *
-     * The completion modes supported are those defined in
-     * KCompletion::CompletionMode.  See below.
-     *
-     * @param mode Completion type:
-     *   @li CompletionNone:  Disables completion feature.
-     *   @li CompletionAuto:  Attempts to find a match &
-     *                        fills-in the remaining text.
-     *   @li CompletionMan:   Acts the same as the above
-     *                        except the action has to be
-     *                        manually triggered through
-     *                        pre-defined completion key.
-     *   @li CompletionShell: Mimics the completion feature
-     *                        found in typical *nix shell
-     *                        environments.
-     *   @li CompletionPopup: Shows all available completions at once,
-     *                        in a listbox popping up.
+     * @param mode Completion type
+     * @see CompletionMode
      */
     virtual void setCompletionMode(KCompletion::CompletionMode mode);
 
@@ -847,7 +839,7 @@ public:
     KCompletion::CompletionMode completionMode() const;
 
     /**
-     * Sets the key-binding to be used for manual text
+     * Sets the key binding to be used for manual text
      * completion, text rotation in a history list as
      * well as a completion list.
      *
@@ -855,52 +847,51 @@ public:
      * When the keys set by this function are pressed, a
      * signal defined by the inheriting widget will be activated.
      * If the default value or 0 is specified by the second
-     * parameter, then the key-binding as defined in the global
-     * setting should be used.  This method returns false value
-     * for @p key is negative or the supplied key-binding conflicts
-     * with the ones set for one of the other features.
+     * parameter, then the key binding as defined in the global
+     * setting should be used.  This method returns false
+     * when @p key is negative or the supplied key binding conflicts
+     * with another one set for another feature.
      *
      * NOTE: To use a modifier key (Shift, Ctrl, Alt) as part of
-     * the key-binding simply simply @p sum up the values of the
-     * modifier and the actual key.  For example, to use CTRL+E as
-     * a key binding for one of the items, you would simply supply
+     * the key binding simply @p sum up the values of the
+     * modifier and the actual key.  For example, to use CTRL+E, supply
      * @p "Qt::CtrlButton + Qt::Key_E" as the second argument to this
      * function.
      *
-     * @param item the feature whose key-binding needs to be set:
-     *   @li TextCompletion the manual completion key-binding.
-     *   @li PrevCompletionMatch    the previous match key for multiple completion.
-     *   @li NextCompletionMatch    the next match key for for multiple completion.
-     *   @li SubstringCompletion  the key for substring completion
-     * @param key key-binding used to rotate down in a list.
-     * @return true if key-binding can successfully be set.
+     * @param item the feature whose key binding needs to be set:
+     *   @li TextCompletion the manual completion key binding.
+     *   @li PrevCompletionMatch the previous match key for multiple completion.
+     *   @li NextCompletionMatch the next match key for for multiple completion.
+     *   @li SubstringCompletion the key for substring completion
+     * @param key key binding used to rotate down in a list.
+     * @return true if key binding is successfully set.
      * @see getKeyBinding
      */
     bool setKeyBinding(KeyBindingType item, const QList<QKeySequence> &key);
 
     /**
-     * Returns the key-binding used for the specified item.
+     * Returns the key binding used for the specified item.
      *
-     * This methods returns the key-binding used to activate
-     * the feature feature given by @p item.  If the binding
-     * contains modifier key(s), the SUM of the modifier key
-     * and the actual key code are returned.
+     * This method returns the key binding used to activate
+     * the feature given by @p item.  If the binding
+     * contains modifier key(s), the sum of the modifier key
+     * and the actual key code is returned.
      *
      * @param item the item to check
-     * @return the key-binding used for the feature given by @p item.
+     * @return the key binding used for the feature given by @p item.
      * @see setKeyBinding
      */
     QList<QKeySequence> getKeyBinding(KeyBindingType item) const;
 
     /**
-     * Sets this object to use global values for key-bindings.
+     * Sets this object to use global values for key bindings.
      *
      * This method changes the values of the key bindings for
      * rotation and completion features to the default values
      * provided in KGlobalSettings.
      *
-     * NOTE: By default inheriting widgets should uses the
-     * global key-bindings so that there will be no need to
+     * NOTE: By default, inheriting widgets should use the
+     * global key bindings so that there is no need to
      * call this method.
      */
     void useGlobalKeyBindings();
@@ -926,7 +917,7 @@ public:
      * all inheriting classes.
      * @param items the list of completed items
      * @param autoSuggest if @c true, the first element of @p items
-     *        is auto-completed (i.e. pre-selected).
+     *        is automatically completed (i.e. preselected).
      */
     virtual void setCompletedItems(const QStringList &items, bool autoSuggest = true) = 0;
 
@@ -937,7 +928,7 @@ public:
      * in that it does not create a new KCompletion object even if
      * the internal pointer is @c NULL. Use this method to get the
      * pointer to a completion object when inheriting so that you
-     * won't inadvertently create it!!
+     * will not inadvertently create it.
      *
      * @return the completion object or @c NULL if one does not exist.
      */
@@ -945,12 +936,12 @@ public:
 
 protected:
     /**
-     * Returns a key-binding map.
+     * Returns a key binding map.
      *
-     * This method is the same as getKeyBinding() except it
-     * returns the whole keymap containing the key-bindings.
+     * This method is the same as getKeyBinding(), except that it
+     * returns the whole keymap containing the key bindings.
      *
-     * @return the key-binding used for the feature given by @p item.
+     * @return the key binding used for the feature given by @p item.
      */
     KeyBindingMap getKeyBindings() const;
 
