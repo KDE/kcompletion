@@ -28,7 +28,10 @@
  */
 
 #include "kzoneallocator_p.h"
+
 #include <QList>
+
+#include <stdio.h>
 
 class KZoneAllocator::MemBlock
 {
@@ -113,9 +116,9 @@ KZoneAllocator::~KZoneAllocator()
         count++;
     }
 #ifndef NDEBUG // as this is called quite late in the app, we don't care
-    // to use kDebug
+    // to use qDebug
     if (count > 1) {
-        qDebug("zone still contained %d blocks", count);
+        fprintf(stderr, "zone still contained %d blocks", count);
     }
 #endif
     delete d;
