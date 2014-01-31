@@ -22,11 +22,11 @@
 #ifndef KCOMBOBOX_H
 #define KCOMBOBOX_H
 
-#include <QComboBox>
-
 #include <kcompletion.h>
-
+#include <kcompletionbase.h>
 #include <kcompletion_export.h>
+
+#include <QComboBox>
 
 class QLineEdit;
 class QMenu;

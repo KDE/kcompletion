@@ -30,11 +30,11 @@
 #ifndef KLINEEDIT_H
 #define KLINEEDIT_H
 
-#include <QLineEdit>
-
 #include <kcompletion.h>
-
+#include <kcompletionbase.h>
 #include <kcompletion_export.h>
+
+#include <QLineEdit>
 
 class QAction;
 class QMenu;

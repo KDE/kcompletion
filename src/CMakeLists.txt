@@ -7,6 +7,7 @@ set(kcompletion_SRCS
   khistorycombobox.cpp
   kpixmapprovider.cpp
   kzoneallocator.cpp
+  kcompletionbase.cpp
 )
 
 add_library(KF5Completion ${kcompletion_SRCS})
@@ -29,6 +30,7 @@ set_target_properties(KF5Completion PROPERTIES VERSION   ${KCOMPLETION_VERSION_S
 ecm_generate_headers(
   KComboBox
   KCompletion
+  KCompletionBase
   KCompletionBox
   KLineEdit
   KHistoryComboBox

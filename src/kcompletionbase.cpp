@@ -18,10 +18,12 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <QtCore/QMap>
-#include <QtCore/QObject>
+#include <kcompletionbase.h>
 
 #include <kcompletion.h>
+
+#include <QtCore/QMap>
+#include <QtCore/QObject>
 
 class KCompletionBasePrivate
 {

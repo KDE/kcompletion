@@ -23,16 +23,13 @@
 #include <kcompletion_export.h>
 #include <ksortablelist.h>
 
-#include <QtCore/QMap>
 #include <QtCore/QObject>
-#include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QPointer>
 #include <QKeySequence>
 
 class KCompTreeNode;
 class KCompletionPrivate;
-class KCompletionBasePrivate;
 class KCompletionMatchesWrapper;
 class KCompletionMatches;
 
