@@ -130,6 +130,7 @@ class KCOMPLETION_EXPORT KCompletion : public QObject
     Q_PROPERTY(bool ignoreCase READ ignoreCase WRITE setIgnoreCase)
     Q_PROPERTY(QStringList items READ items WRITE setItems)
     Q_OBJECT
+    Q_DECLARE_PRIVATE(KCompletion)
 
 public:
     /**
@@ -564,24 +565,8 @@ protected:
     virtual void postProcessMatches(KCompletionMatches *pMatches) const;
 
 private:
-    void            addWeightedItem(const QString &);
-    QString         findCompletion(const QString &string);
-    void            findAllCompletions(const QString &,
-                                       KCompletionMatchesWrapper *matches,
-                                       bool &hasMultipleMatches) const;
-
-    void extractStringsFromNode(const KCompTreeNode *,
-                                const QString &beginning,
-                                KCompletionMatchesWrapper *matches,
-                                bool addWeight = false) const;
-    void extractStringsFromNodeCI(const KCompTreeNode *,
-                                  const QString &beginning,
-                                  const QString &restString,
-                                  KCompletionMatchesWrapper *matches) const;
-
-private:
     Q_DISABLE_COPY(KCompletion)
-    KCompletionPrivate *const d;
+    const QScopedPointer<KCompletionPrivate> d_ptr;
 };
 
 // some more helper stuff
