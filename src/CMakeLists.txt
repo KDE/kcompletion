@@ -8,6 +8,7 @@ set(kcompletion_SRCS
   kpixmapprovider.cpp
   kzoneallocator.cpp
   kcompletionbase.cpp
+  kcompletionmatches.cpp
 )
 
 add_library(KF5Completion ${kcompletion_SRCS})
@@ -36,6 +37,7 @@ ecm_generate_headers(
   KHistoryComboBox
   KPixmapProvider
   KSortableList
+  KCompletionMatches
 
   MODULE_NAME KCompletion
   REQUIRED_HEADERS KCompletion_HEADERS

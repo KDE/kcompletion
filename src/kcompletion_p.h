@@ -22,6 +22,8 @@
 
 #include "kcompletion.h"
 
+#include <kcompletionmatches.h>
+
 #include <QtCore/QString>
 
 class KCompTreeNode;
@@ -179,9 +181,6 @@ private:
     KCompTreeNodeList   myChildren;
     static QSharedPointer<KZoneAllocator> alloc;
 };
-
-// some more helper stuff
-typedef KSortableList<QString> KCompletionMatchesList;
 
 /**
  * @internal

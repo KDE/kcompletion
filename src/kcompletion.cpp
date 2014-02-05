@@ -20,8 +20,9 @@
 #include "kcompletion.h"
 #include "kcompletion_p.h"
 
+#include <kcompletionmatches.h>
+
 #include <QDebug>
-#include <QtCore/QMutableVectorIterator>
 #include <QCollator>
 
 class KCompletionPrivate
@@ -827,92 +828,6 @@ QStringList KCompletionMatchesWrapper::list() const
     }
 
     return stringList;
-}
-
-class KCompletionMatchesPrivate
-{
-public:
-    KCompletionMatchesPrivate(bool sort)
-        : sorting(sort)
-    {}
-    bool sorting;
-};
-
-KCompletionMatches::KCompletionMatches(const KCompletionMatches &o)
-    : KSortableList<QString, int>(),
-      d(new KCompletionMatchesPrivate(o.d->sorting))
-{
-    *this = KCompletionMatches::operator=(o);
-}
-
-KCompletionMatches &KCompletionMatches::operator=(const KCompletionMatches &o)
-{
-    if (*this == o) {
-        return *this;
-    }
-    KCompletionMatchesList::operator=(o);
-    d->sorting = o.d->sorting;
-
-    return *this;
-}
-
-KCompletionMatches::KCompletionMatches(bool sort_P)
-    : d(new KCompletionMatchesPrivate(sort_P))
-{
-}
-
-KCompletionMatches::KCompletionMatches(const KCompletionMatchesWrapper &matches)
-    : d(new KCompletionMatchesPrivate(matches.sorting()))
-{
-    if (matches.sortedList != 0L) {
-        KCompletionMatchesList::operator=(*matches.sortedList);
-    } else {
-        const QStringList l = matches.list();
-        for (QStringList::ConstIterator it = l.begin();
-                it != l.end();
-                ++it) {
-            prepend(KSortableItem<QString, int>(1, *it));
-        }
-    }
-}
-
-KCompletionMatches::~KCompletionMatches()
-{
-    delete d;
-}
-
-QStringList KCompletionMatches::list(bool sort_P) const
-{
-    if (d->sorting && sort_P) {
-        const_cast< KCompletionMatches * >(this)->sort();
-    }
-    QStringList stringList;
-    // high weight == sorted last -> reverse the sorting here
-    for (ConstIterator it = begin(); it != end(); ++it) {
-        stringList.prepend((*it).value());
-    }
-    return stringList;
-}
-
-bool KCompletionMatches::sorting() const
-{
-    return d->sorting;
-}
-
-void KCompletionMatches::removeDuplicates()
-{
-    Iterator it1, it2;
-    for (it1 = begin(); it1 != end(); ++it1) {
-        for ((it2 = it1), ++it2; it2 != end();) {
-            if ((*it1).value() == (*it2).value()) {
-                // use the max height
-                (*it1).first = qMax((*it1).key(), (*it2).key());
-                it2 = erase(it2);
-                continue;
-            }
-            ++it2;
-        }
-    }
 }
 
 void KCompTreeNodeList::append(KCompTreeNode *item)
