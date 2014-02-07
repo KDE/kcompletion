@@ -187,30 +187,6 @@ public:
     virtual ~KCompletion();
 
     /**
-     * Attempts to find an item in the list of available completions
-     * that begins with @p string. Will either return the first matching item
-     * (if there is more than one match) or QString(), if no match is
-     * found.
-     *
-     * In the latter case, a sound will be emitted, depending on
-     * soundsEnabled().
-     * If a match is found, it will be emitted via the signal
-     * match().
-     *
-     * If this is called twice or more with the same string while no
-     * items were added or removed in the meantime, all available completions
-     * will be emitted via the signal matches().
-     * This happens only in shell-completion mode.
-     *
-     * @param string the string to complete
-     * @return the matching item, or QString() if there is no matching
-     * item.
-     * @see slotMakeCompletion
-     * @see substringCompletion
-     */
-    virtual QString makeCompletion(const QString &string);
-
-    /**
      * Returns a list of all completion items that contain the given @p string.
      * @param string the string to complete
      * @return a list of items which contain @p text as a substring,
@@ -219,28 +195,6 @@ public:
      * @see makeCompletion
      */
     QStringList substringCompletion(const QString &string) const;
-
-    /**
-     * Returns the next item from the list of matching items.
-     * When reaching the beginning, the list is rotated so it will return the
-     * last match and a sound is emitted (depending on soundsEnabled()).
-     * @return the next item from the list of matching items.
-     * When there is no match, QString() is returned and
-     * a sound is emitted.
-     * @see slotPreviousMatch
-     */
-    QString previousMatch();
-
-    /**
-     * Returns the next item from the list of matching items.
-     * When reaching the last item, the list is rotated, so it will return
-     * the first match and a sound is emitted (depending on
-     * soundsEnabled()).
-     * @return the next item from the list of matching items.  When there is no
-     * match, QString() is returned and a sound is emitted
-     * @see slotNextMatch
-     */
-    QString nextMatch();
 
     /**
      * Returns the last match. Might be useful if you need to check whether
@@ -404,12 +358,57 @@ public:
 
 public Q_SLOTS:
     /**
+     * Attempts to find an item in the list of available completions
+     * that begins with @p string. Will either return the first matching item
+     * (if there is more than one match) or QString(), if no match is
+     * found.
+     *
+     * In the latter case, a sound will be emitted, depending on
+     * soundsEnabled().
+     * If a match is found, it will be emitted via the signal
+     * match().
+     *
+     * If this is called twice or more with the same string while no
+     * items were added or removed in the meantime, all available completions
+     * will be emitted via the signal matches().
+     * This happens only in shell-completion mode.
+     *
+     * @param string the string to complete
+     * @return the matching item, or QString() if there is no matching
+     * item.
+     * @see substringCompletion
+     */
+    virtual QString makeCompletion(const QString &string);
+
+    /**
+     * Returns the next item from the list of matching items.
+     * When reaching the beginning, the list is rotated so it will return the
+     * last match and a sound is emitted (depending on soundsEnabled()).
+     * @return the next item from the list of matching items.
+     * When there is no match, QString() is returned and
+     * a sound is emitted.
+     */
+    QString previousMatch();
+
+    /**
+     * Returns the next item from the list of matching items.
+     * When reaching the last item, the list is rotated, so it will return
+     * the first match and a sound is emitted (depending on
+     * soundsEnabled()).
+     * @return the next item from the list of matching items.  When there is no
+     * match, QString() is returned and a sound is emitted
+     */
+    QString nextMatch();
+
+    /**
      * Attempts to complete "string" and emits the completion via match().
      * Same as makeCompletion(), but in this case as a slot.
      * @param string the string to complete
      * @see makeCompletion
+     * @deprecated since 5.0, use makeCompletion() instead
      */
-    void slotMakeCompletion(const QString &string)     //inline (redirect)
+#ifndef KDE_NO_DEPRECATED
+    KCOMPLETION_DEPRECATED void slotMakeCompletion(const QString &string)     //inline (redirect)
     {
         (void) makeCompletion(string);
     }
@@ -418,8 +417,9 @@ public Q_SLOTS:
      * Searches the previous matching item and emits it via match().
      * Same as previousMatch(), but in this case as a slot.
      * @see previousMatch
+     * @deprecated since 5.0, use previousMatch() instead
      */
-    void slotPreviousMatch()   //inline (redirect)
+    KCOMPLETION_DEPRECATED void slotPreviousMatch()   //inline (redirect)
     {
         (void) previousMatch();
     }
@@ -428,11 +428,13 @@ public Q_SLOTS:
      * Searches the next matching item and emits it via match().
      * Same as nextMatch(), but in this case as a slot.
      * @see nextMatch
+     * @deprecated since 5.0, use nextMatch() instead
      */
-    void slotNextMatch()   //inline (redirect)
+    KCOMPLETION_DEPRECATED void slotNextMatch()   //inline (redirect)
     {
         (void) nextMatch();
     }
+#endif
 
     // FIXME ###: KDE5: unify the nomenclature.  We have insertItems, addItem,
     //            setItems...
