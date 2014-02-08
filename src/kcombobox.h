@@ -23,16 +23,17 @@
 #define KCOMBOBOX_H
 
 #include <kcompletion.h>
+
 #include <kcompletionbase.h>
 #include <kcompletion_export.h>
 
 #include <QComboBox>
 
+class KCompletionBox;
+class KComboBoxPrivate;
+
 class QLineEdit;
 class QMenu;
-
-class KCompletionBox;
-class QUrl;
 
 /*
  * ### KDE 5: On all methods that it is said that toDisplayString() will be used, it
@@ -154,6 +155,7 @@ class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase //
     Q_PROPERTY(bool urlDropsEnabled READ urlDropsEnabled WRITE setUrlDropsEnabled)
 #endif
     Q_PROPERTY(bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey)
+    Q_DECLARE_PRIVATE(KComboBox)
 
 public:
 
@@ -536,18 +538,9 @@ protected:
 
     virtual QSize minimumSizeHint() const;
 
-private Q_SLOTS:
-    void lineEditDeleted();
-
 private:
-    /**
-     * Initializes the variables upon construction.
-     */
-    void initWidget();
-
-private:
-    class KComboBoxPrivate;
-    KComboBoxPrivate *const d;
+    const QScopedPointer<KComboBoxPrivate> d_ptr;
+    Q_PRIVATE_SLOT(d_func(), void lineEditDeleted())
 };
 
 #endif
