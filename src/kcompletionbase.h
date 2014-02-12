@@ -110,10 +110,10 @@ public:
      * after calling this method. Be sure to set the bool argument to false, if
      * you want to handle the completion signals yourself.
      *
-     * @param compObj a KCompletion() or a derived child object.
-     * @param hsig if true, handles completion signals internally.
+     * @param completionObject a KCompletion or a derived child object.
+     * @param handleCompletionSignals if true, handles completion signals internally.
      */
-    virtual void setCompletionObject(KCompletion *compObj, bool hsig = true);
+    virtual void setCompletionObject(KCompletion *completionObject, bool handleCompletionSignals = true);
 
     /**
      * Enables this object to handle completion and rotation
