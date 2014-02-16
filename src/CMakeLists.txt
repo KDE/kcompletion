@@ -28,7 +28,8 @@ set_target_properties(KF5Completion PROPERTIES VERSION   ${KCOMPLETION_VERSION_S
                                                EXPORT_NAME Completion
 )
 
-ecm_generate_headers(
+ecm_generate_headers(KCompletion_HEADERS
+  HEADER_NAMES
   KComboBox
   KCompletion
   KCompletionBase
@@ -39,10 +40,8 @@ ecm_generate_headers(
   KSortableList
   KCompletionMatches
 
-  MODULE_NAME KCompletion
   REQUIRED_HEADERS KCompletion_HEADERS
 )
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/KCompletion DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
 
 install(TARGETS KF5Completion EXPORT KF5CompletionTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
 
