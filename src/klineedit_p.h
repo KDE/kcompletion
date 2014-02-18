@@ -22,11 +22,16 @@
 #ifndef KLINEEDIT_P_H
 #define KLINEEDIT_P_H
 
+#include "klineedit.h"
+
 #include <QPainter>
 #include <QPaintEvent>
 #include <QPropertyAnimation>
 #include <QIcon>
 #include <QProxyStyle>
+
+class KCompletionBox;
+class LineEditUrlDropEventFilter;
 
 class KLineEditButton : public QWidget
 {
@@ -194,6 +199,77 @@ public:
     QString m_lastStyleClass;
     bool m_sentinel;
 };
+
+class KLineEditPrivate
+{
+public:
+    KLineEditPrivate(KLineEdit *parent)
+        : q_ptr(parent) {}
+
+    ~KLineEditPrivate();
+
+    void _k_textChanged(const QString &txt);
+    void _k_updateUserText(const QString &txt);
+    void adjustForReadOnly();
+
+    /**
+     * Checks whether we should/should not consume a key used as a shortcut.
+     * This makes it possible to handle shortcuts in the focused widget before any
+     * window-global QAction is triggered.
+     */
+    bool overrideShortcut(const QKeyEvent *e);
+
+    void init();
+
+    static bool s_initialized;
+    static bool s_backspacePerformsCompletion; // Configuration option
+
+    QColor previousHighlightColor;
+    QColor previousHighlightedTextColor;
+
+    bool userSelection: 1;
+    bool autoSuggest : 1;
+    bool disableRestoreSelection: 1;
+    bool handleURLDrops: 1;
+    bool grabReturnKeyEvents: 1;
+    bool enableSqueezedText: 1;
+    bool completionRunning: 1;
+
+    int squeezedEnd;
+    int squeezedStart;
+    QPalette::ColorRole bgRole;
+    QString squeezedText;
+    QString userText;
+
+    bool threeStars: 1;
+
+    bool possibleTripleClick : 1; // set in mousePressEvent, deleted in tripleClickTimeout
+
+    bool clickInClear: 1;
+    bool wideEnoughForClear: 1;
+    KLineEditButton *clearButton;
+    QPointer<KLineEditStyle> style;
+    QString lastStyleClass;
+
+    KCompletionBox *completionBox;
+
+    LineEditUrlDropEventFilter *urlDropEventFilter;
+
+    bool italicizePlaceholder: 1;
+
+    QAction *noCompletionAction;
+    QAction *shellCompletionAction;
+    QAction *autoCompletionAction;
+    QAction *popupCompletionAction;
+    QAction *shortAutoCompletionAction;
+    QAction *popupAutoCompletionAction;
+    QAction *defaultAction;
+
+    QMap<KCompletion::CompletionMode, bool> disableCompletionMap;
+    KLineEdit *q_ptr;
+    Q_DECLARE_PUBLIC(KLineEdit)
+};
+
 
 #endif
 

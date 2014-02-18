@@ -154,6 +154,7 @@ class KCOMPLETION_EXPORT KLineEdit : public QLineEdit, public KCompletionBase //
     friend class KLineEditStyle;
 
     Q_OBJECT
+    Q_DECLARE_PRIVATE(KLineEdit)
 #ifndef KDE_NO_DEPRECATED
     Q_PROPERTY(bool contextMenuEnabled READ isContextMenuEnabled WRITE setContextMenuEnabled)
 #endif
@@ -640,12 +641,6 @@ private Q_SLOTS:
     void updateClearButtonIcon(const QString &);
 
 private:
-
-    /**
-     * Initializes variables.  Called from the constructors.
-     */
-    void initWidget();
-
     bool copySqueezedText(bool clipboard) const;
 
     /**
@@ -660,10 +655,9 @@ private:
     void updateClearButton();
 
 private:
-    friend class KLineEditPrivate;
-    KLineEditPrivate *const d;
+    const QScopedPointer<KLineEditPrivate> d_ptr;
 
-    Q_PRIVATE_SLOT(d, void _k_textChanged(const QString &))
+    Q_PRIVATE_SLOT(d_func(), void _k_textChanged(const QString &))
 };
 
 #endif

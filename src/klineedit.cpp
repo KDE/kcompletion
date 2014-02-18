@@ -36,146 +36,61 @@
 #include <kstandardshortcut.h>
 #include <lineediturldropeventfilter.h>
 
-#include <QtCore/QTimer>
-#include <QAction>
+#include <QTimer>
 #include <QApplication>
 #include <QClipboard>
 #include <QMenu>
-#include <QStyleOption>
 #include <QToolTip>
 
 class KLineEditStyle;
 
-class KLineEditPrivate
+KLineEditPrivate::~KLineEditPrivate()
 {
-public:
-    KLineEditPrivate(KLineEdit *qq)
-        : q(qq)
-    {
-        completionBox = 0L;
-        handleURLDrops = true;
-        grabReturnKeyEvents = false;
-
-        userSelection = true;
-        autoSuggest = false;
-        disableRestoreSelection = false;
-        enableSqueezedText = false;
-
-        completionRunning = false;
-        if (!s_initialized) {
-            KConfigGroup config(KSharedConfig::openConfig(), "General");
-            s_backspacePerformsCompletion = config.readEntry("Backspace performs completion", false);
-            s_initialized = true;
-        }
-
-        clearButton = 0;
-        clickInClear = false;
-        wideEnoughForClear = true;
-
-        urlDropEventFilter = new LineEditUrlDropEventFilter(qq);
-
-        // i18n: Placeholder text in line edit widgets is the text appearing
-        // before any user input, briefly explaining to the user what to type
-        // (e.g. "Enter search pattern").
-        // By default the text is set in italic, which may not be appropriate
-        // for some languages and scripts (e.g. for CJK ideographs).
-        QString metaMsg = q->tr("1", "Italic placeholder text in line edits: 0 no, 1 yes");
-        italicizePlaceholder = (metaMsg.trimmed() != QString('0'));
-    }
-
-    ~KLineEditPrivate()
-    {
 // causes a weird crash in KWord at least, so let Qt delete it for us.
 //        delete completionBox;
-        delete style.data();
-    }
+    delete style.data();
+}
 
-    void _k_textChanged(const QString &txt)
-    {
-        // COMPAT (as documented): emit userTextChanged whenever textChanged is emitted
-        // KDE5: remove userTextChanged signal, textEdited does the same...
-        if (!completionRunning && (txt != userText)) {
-            userText = txt;
+void KLineEditPrivate::_k_textChanged(const QString &txt)
+{
+    Q_Q(KLineEdit);
+    // COMPAT (as documented): emit userTextChanged whenever textChanged is emitted
+    // KDE5: remove userTextChanged signal, textEdited does the same...
+    if (!completionRunning && (txt != userText)) {
+        userText = txt;
 #ifndef KDE_NO_DEPRECATED
-            emit q->userTextChanged(txt);
+        emit q->userTextChanged(txt);
 #endif
-        }
     }
+}
 
-    // Call this when a completion operation changes the lineedit text
-    // "as if it had been edited by the user".
-    void _k_updateUserText(const QString &txt)
-    {
-        if (!completionRunning && (txt != userText)) {
-            userText = txt;
-            q->setModified(true);
+// Call this when a completion operation changes the lineedit text
+// "as if it had been edited by the user".
+void KLineEditPrivate::_k_updateUserText(const QString &txt)
+{
+    Q_Q(KLineEdit);
+    if (!completionRunning && (txt != userText)) {
+        userText = txt;
+        q->setModified(true);
 #ifndef KDE_NO_DEPRECATED
-            emit q->userTextChanged(txt);
+        emit q->userTextChanged(txt);
 #endif
-            emit q->textEdited(txt);
-            emit q->textChanged(txt);
-        }
+        emit q->textEdited(txt);
+        emit q->textChanged(txt);
     }
+}
 
-    // This is called when the lineedit is readonly.
-    // Either from setReadOnly() itself, or when we realize that
-    // we became readonly and setReadOnly() wasn't called (because it's not virtual)
-    // Typical case: comboBox->lineEdit()->setReadOnly(true)
-    void adjustForReadOnly()
-    {
-        if (style && style.data()->m_overlap) {
-            style.data()->m_overlap = 0;
-        }
+// This is called when the lineedit is readonly.
+// Either from setReadOnly() itself, or when we realize that
+// we became readonly and setReadOnly() wasn't called (because it's not virtual)
+// Typical case: comboBox->lineEdit()->setReadOnly(true)
+void KLineEditPrivate::adjustForReadOnly()
+{
+    if (style && style.data()->m_overlap) {
+        style.data()->m_overlap = 0;
     }
+}
 
-    /**
-     * Checks whether we should/should not consume a key used as a shortcut.
-     * This makes it possible to handle shortcuts in the focused widget before any
-     * window-global QAction is triggered.
-     */
-    bool overrideShortcut(const QKeyEvent *e);
-
-    static bool s_initialized;
-    static bool s_backspacePerformsCompletion; // Configuration option
-
-    QColor previousHighlightColor;
-    QColor previousHighlightedTextColor;
-
-    bool userSelection: 1;
-    bool autoSuggest : 1;
-    bool disableRestoreSelection: 1;
-    bool handleURLDrops: 1;
-    bool grabReturnKeyEvents: 1;
-    bool enableSqueezedText: 1;
-    bool completionRunning: 1;
-
-    int squeezedEnd;
-    int squeezedStart;
-    QPalette::ColorRole bgRole;
-    QString squeezedText;
-    QString userText;
-
-    bool threeStars: 1;
-
-    bool possibleTripleClick : 1; // set in mousePressEvent, deleted in tripleClickTimeout
-
-    bool clickInClear: 1;
-    bool wideEnoughForClear: 1;
-    KLineEditButton *clearButton;
-    QPointer<KLineEditStyle> style;
-    QString lastStyleClass;
-
-    KCompletionBox *completionBox;
-
-    LineEditUrlDropEventFilter *urlDropEventFilter;
-
-    bool italicizePlaceholder: 1;
-
-    QAction *noCompletionAction, *shellCompletionAction, *autoCompletionAction, *popupCompletionAction, *shortAutoCompletionAction, *popupAutoCompletionAction, *defaultAction;
-
-    QMap<KCompletion::CompletionMode, bool> disableCompletionMap;
-    KLineEdit *q;
-};
 
 QRect KLineEditStyle::subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget) const
 {
@@ -205,54 +120,87 @@ QRect KLineEditStyle::subElementRect(SubElement element, const QStyleOption *opt
 bool KLineEditPrivate::s_backspacePerformsCompletion = false;
 bool KLineEditPrivate::s_initialized = false;
 
-KLineEdit::KLineEdit(const QString &string, QWidget *parent)
-    : QLineEdit(string, parent), d(new KLineEditPrivate(this))
+void KLineEditPrivate::init()
 {
-    initWidget();
+    Q_Q(KLineEdit);
+    //---
+    completionBox = 0L;
+    handleURLDrops = true;
+    grabReturnKeyEvents = false;
+
+    userSelection = true;
+    autoSuggest = false;
+    disableRestoreSelection = false;
+    enableSqueezedText = false;
+
+    completionRunning = false;
+    if (!s_initialized) {
+        KConfigGroup config(KSharedConfig::openConfig(), "General");
+        s_backspacePerformsCompletion = config.readEntry("Backspace performs completion", false);
+        s_initialized = true;
+    }
+
+    clearButton = 0;
+    clickInClear = false;
+    wideEnoughForClear = true;
+
+    urlDropEventFilter = new LineEditUrlDropEventFilter(q);
+
+    // i18n: Placeholder text in line edit widgets is the text appearing
+    // before any user input, briefly explaining to the user what to type
+    // (e.g. "Enter search pattern").
+    // By default the text is set in italic, which may not be appropriate
+    // for some languages and scripts (e.g. for CJK ideographs).
+    QString metaMsg = q->tr("1", "Italic placeholder text in line edits: 0 no, 1 yes");
+    italicizePlaceholder = (metaMsg.trimmed() != QString('0'));
+    //---
+    possibleTripleClick = false;
+    bgRole = q->backgroundRole();
+
+    // Enable the context menu by default.
+    q->QLineEdit::setContextMenuPolicy(Qt::DefaultContextMenu);
+    KCursor::setAutoHideCursor(q, true, true);
+
+    KCompletion::CompletionMode mode = q->completionMode();
+    autoSuggest = (mode == KCompletion::CompletionMan ||
+                      mode == KCompletion::CompletionPopupAuto ||
+                      mode == KCompletion::CompletionAuto);
+    q->connect(q, SIGNAL(selectionChanged()), q, SLOT(slotRestoreSelectionColors()));
+
+    if (handleURLDrops) {
+        q->installEventFilter(urlDropEventFilter);
+    }
+
+    const QPalette p = q->palette();
+    if (!previousHighlightedTextColor.isValid()) {
+        previousHighlightedTextColor = p.color(QPalette::Normal, QPalette::HighlightedText);
+    }
+    if (!previousHighlightColor.isValid()) {
+        previousHighlightColor = p.color(QPalette::Normal, QPalette::Highlight);
+    }
+
+    style = new KLineEditStyle(q->style());
+    q->setStyle(style.data());
+
+    q->connect(q, SIGNAL(textChanged(QString)), q, SLOT(_k_textChanged(QString)));
+}
+
+KLineEdit::KLineEdit(const QString &string, QWidget *parent)
+    : QLineEdit(string, parent), d_ptr(new KLineEditPrivate(this))
+{
+    Q_D(KLineEdit);
+    d->init();
 }
 
 KLineEdit::KLineEdit(QWidget *parent)
-    : QLineEdit(parent), d(new KLineEditPrivate(this))
+    : QLineEdit(parent), d_ptr(new KLineEditPrivate(this))
 {
-    initWidget();
+    Q_D(KLineEdit);
+    d->init();
 }
 
 KLineEdit::~KLineEdit()
 {
-    delete d;
-}
-
-void KLineEdit::initWidget()
-{
-    d->possibleTripleClick = false;
-    d->bgRole = backgroundRole();
-
-    // Enable the context menu by default.
-    QLineEdit::setContextMenuPolicy(Qt::DefaultContextMenu);
-    KCursor::setAutoHideCursor(this, true, true);
-
-    KCompletion::CompletionMode mode = completionMode();
-    d->autoSuggest = (mode == KCompletion::CompletionMan ||
-                      mode == KCompletion::CompletionPopupAuto ||
-                      mode == KCompletion::CompletionAuto);
-    connect(this, SIGNAL(selectionChanged()), this, SLOT(slotRestoreSelectionColors()));
-
-    if (d->handleURLDrops) {
-        installEventFilter(d->urlDropEventFilter);
-    }
-
-    const QPalette p = palette();
-    if (!d->previousHighlightedTextColor.isValid()) {
-        d->previousHighlightedTextColor = p.color(QPalette::Normal, QPalette::HighlightedText);
-    }
-    if (!d->previousHighlightColor.isValid()) {
-        d->previousHighlightColor = p.color(QPalette::Normal, QPalette::Highlight);
-    }
-
-    d->style = new KLineEditStyle(style());
-    setStyle(d->style.data());
-
-    connect(this, SIGNAL(textChanged(QString)), this, SLOT(_k_textChanged(QString)));
 }
 
 #ifndef KDE_NO_DEPRECATED
@@ -264,6 +212,7 @@ QString KLineEdit::clickMessage() const
 
 void KLineEdit::setClearButtonShown(bool show)
 {
+    Q_D(KLineEdit);
     if (show) {
         if (d->clearButton) {
             return;
@@ -290,11 +239,13 @@ void KLineEdit::setClearButtonShown(bool show)
 
 bool KLineEdit::isClearButtonShown() const
 {
+    Q_D(const KLineEdit);
     return d->clearButton != 0;
 }
 
 QSize KLineEdit::clearButtonUsedSize() const
 {
+    Q_D(const KLineEdit);
     QSize s;
     if (d->clearButton) {
         const int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth, 0, this);
@@ -307,6 +258,7 @@ QSize KLineEdit::clearButtonUsedSize() const
 // Decides whether to show or hide the icon; called when the text changes
 void KLineEdit::updateClearButtonIcon(const QString &text)
 {
+    Q_D(KLineEdit);
     if (!d->clearButton) {
         return;
     }
@@ -334,6 +286,7 @@ void KLineEdit::updateClearButtonIcon(const QString &text)
 // Determine geometry of clear button. Called initially, and on resizeEvent.
 void KLineEdit::updateClearButton()
 {
+    Q_D(KLineEdit);
     if (!d->clearButton) {
         return;
     }
@@ -378,6 +331,7 @@ void KLineEdit::updateClearButton()
 
 void KLineEdit::setCompletionMode(KCompletion::CompletionMode mode)
 {
+    Q_D(KLineEdit);
     KCompletion::CompletionMode oldMode = completionMode();
 
     if (oldMode != mode && (oldMode == KCompletion::CompletionPopup ||
@@ -409,11 +363,13 @@ void KLineEdit::setCompletionMode(KCompletion::CompletionMode mode)
 
 void KLineEdit::setCompletionModeDisabled(KCompletion::CompletionMode mode, bool disable)
 {
+    Q_D(KLineEdit);
     d->disableCompletionMap[ mode ] = disable;
 }
 
 void KLineEdit::setCompletedText(const QString &t, bool marked)
 {
+    Q_D(KLineEdit);
     if (!d->autoSuggest) {
         return;
     }
@@ -466,6 +422,7 @@ void KLineEdit::rotateText(KCompletionBase::KeyBindingType type)
 
 void KLineEdit::makeCompletion(const QString &text)
 {
+    Q_D(KLineEdit);
     KCompletion *comp = compObj();
     KCompletion::CompletionMode mode = completionMode();
 
@@ -504,6 +461,7 @@ void KLineEdit::makeCompletion(const QString &text)
 
 void KLineEdit::setReadOnly(bool readOnly)
 {
+    Q_D(KLineEdit);
     // Do not do anything if nothing changed...
     if (readOnly == isReadOnly()) {
         return;
@@ -542,16 +500,19 @@ void KLineEdit::setSqueezedText(const QString &text)
 
 void KLineEdit::setSqueezedTextEnabled(bool enable)
 {
+    Q_D(KLineEdit);
     d->enableSqueezedText = enable;
 }
 
 bool KLineEdit::isSqueezedTextEnabled() const
 {
+    Q_D(const KLineEdit);
     return d->enableSqueezedText;
 }
 
 void KLineEdit::setText(const QString &text)
 {
+    Q_D(KLineEdit);
     if (d->enableSqueezedText && isReadOnly()) {
         d->squeezedText = text;
         setSqueezedText();
@@ -563,6 +524,7 @@ void KLineEdit::setText(const QString &text)
 
 void KLineEdit::setSqueezedText()
 {
+    Q_D(KLineEdit);
     d->squeezedStart = 0;
     d->squeezedEnd = 0;
     const QString fullText = d->squeezedText;
@@ -631,6 +593,7 @@ void KLineEdit::copy() const
 
 bool KLineEdit::copySqueezedText(bool clipboard) const
 {
+    Q_D(const KLineEdit);
     if (!d->squeezedText.isEmpty() && d->squeezedStart) {
         KLineEdit *that = const_cast<KLineEdit *>(this);
         if (!that->hasSelectedText()) {
@@ -663,6 +626,7 @@ bool KLineEdit::copySqueezedText(bool clipboard) const
 
 void KLineEdit::resizeEvent(QResizeEvent *ev)
 {
+    Q_D(KLineEdit);
     if (!d->squeezedText.isEmpty()) {
         setSqueezedText();
     }
@@ -673,6 +637,7 @@ void KLineEdit::resizeEvent(QResizeEvent *ev)
 
 void KLineEdit::keyPressEvent(QKeyEvent *e)
 {
+    Q_D(KLineEdit);
     const int key = e->key() | e->modifiers();
 
     if (KStandardShortcut::copy().contains(key)) {
@@ -1046,6 +1011,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
 
 void KLineEdit::mouseDoubleClickEvent(QMouseEvent *e)
 {
+    Q_D(KLineEdit);
     if (e->button() == Qt::LeftButton) {
         d->possibleTripleClick = true;
         QTimer::singleShot(QApplication::doubleClickInterval(), this,
@@ -1056,6 +1022,7 @@ void KLineEdit::mouseDoubleClickEvent(QMouseEvent *e)
 
 void KLineEdit::mousePressEvent(QMouseEvent *e)
 {
+    Q_D(KLineEdit);
     if ((e->button() == Qt::LeftButton ||
             e->button() == Qt::MidButton) &&
             d->clearButton) {
@@ -1087,6 +1054,7 @@ void KLineEdit::mousePressEvent(QMouseEvent *e)
 
 void KLineEdit::mouseReleaseEvent(QMouseEvent *e)
 {
+    Q_D(KLineEdit);
     if (d->clickInClear) {
         if (d->clearButton == childAt(e->pos()) || d->clearButton->underMouse()) {
             QString newText;
@@ -1118,11 +1086,13 @@ void KLineEdit::mouseReleaseEvent(QMouseEvent *e)
 
 void KLineEdit::tripleClickTimeout()
 {
+    Q_D(KLineEdit);
     d->possibleTripleClick = false;
 }
 
 QMenu *KLineEdit::createStandardContextMenu()
 {
+    Q_D(KLineEdit);
     QMenu *popup = QLineEdit::createStandardContextMenu();
 
     if (!isReadOnly()) {
@@ -1219,6 +1189,7 @@ void KLineEdit::contextMenuEvent(QContextMenuEvent *e)
 
 void KLineEdit::completionMenuActivated(QAction  *act)
 {
+    Q_D(KLineEdit);
     KCompletion::CompletionMode oldMode = completionMode();
 
     if (act == d->noCompletionAction) {
@@ -1251,6 +1222,7 @@ void KLineEdit::completionMenuActivated(QAction  *act)
 
 bool KLineEdit::event(QEvent *ev)
 {
+    Q_D(KLineEdit);
     KCursor::autoHideEventFilter(this, ev);
     if (ev->type() == QEvent::ShortcutOverride) {
         QKeyEvent *e = static_cast<QKeyEvent *>(ev);
@@ -1297,6 +1269,7 @@ bool KLineEdit::event(QEvent *ev)
 
 void KLineEdit::setUrlDropsEnabled(bool enable)
 {
+    Q_D(KLineEdit);
     if (enable && !d->handleURLDrops) {
         installEventFilter(d->urlDropEventFilter);
         d->handleURLDrops = true;
@@ -1308,16 +1281,19 @@ void KLineEdit::setUrlDropsEnabled(bool enable)
 
 bool KLineEdit::urlDropsEnabled() const
 {
+    Q_D(const KLineEdit);
     return d->handleURLDrops;
 }
 
 void KLineEdit::setTrapReturnKey(bool grab)
 {
+    Q_D(KLineEdit);
     d->grabReturnKeyEvents = grab;
 }
 
 bool KLineEdit::trapReturnKey() const
 {
+    Q_D(const KLineEdit);
     return d->grabReturnKeyEvents;
 }
 
@@ -1328,6 +1304,7 @@ void KLineEdit::setUrl(const QUrl &url)
 
 void KLineEdit::setCompletionBox(KCompletionBox *box)
 {
+    Q_D(KLineEdit);
     if (d->completionBox) {
         return;
     }
@@ -1362,6 +1339,7 @@ static void setEditText(KLineEdit *edit, const QString &text)
 
 void KLineEdit::userCancelled(const QString &cancelText)
 {
+    Q_D(KLineEdit);
     if (completionMode() != KCompletion::CompletionPopupAuto) {
         setEditText(this, cancelText);
     } else if (hasSelectedText()) {
@@ -1380,6 +1358,7 @@ void KLineEdit::userCancelled(const QString &cancelText)
 
 bool KLineEditPrivate::overrideShortcut(const QKeyEvent *e)
 {
+    Q_Q(KLineEdit);
     QList<QKeySequence> scKey;
 
     const int key = e->key() | e->modifiers();
@@ -1462,6 +1441,7 @@ bool KLineEditPrivate::overrideShortcut(const QKeyEvent *e)
 
 void KLineEdit::setCompletedItems(const QStringList &items, bool autoSuggest)
 {
+    Q_D(KLineEdit);
     QString txt;
     if (d->completionBox && d->completionBox->isVisible()) {
         // The popup is visible already - do the matching on the initial string,
@@ -1519,6 +1499,7 @@ void KLineEdit::setCompletedItems(const QStringList &items, bool autoSuggest)
 
 KCompletionBox *KLineEdit::completionBox(bool create)
 {
+    Q_D(KLineEdit);
     if (create && !d->completionBox) {
         setCompletionBox(new KCompletionBox(this));
         d->completionBox->setObjectName("completion box");
@@ -1544,6 +1525,7 @@ void KLineEdit::setCompletionObject(KCompletion *comp, bool hsig)
 
 void KLineEdit::setUserSelection(bool userSelection)
 {
+    Q_D(KLineEdit);
     //if !d->userSelection && userSelection we are accepting a completion,
     //so trigger an update
 
@@ -1569,6 +1551,7 @@ void KLineEdit::setUserSelection(bool userSelection)
 
 void KLineEdit::slotRestoreSelectionColors()
 {
+    Q_D(KLineEdit);
     if (d->disableRestoreSelection) {
         return;
     }
@@ -1592,6 +1575,7 @@ void KLineEdit::_k_slotCompletionBoxTextChanged(const QString &text)
 
 QString KLineEdit::originalText() const
 {
+    Q_D(const KLineEdit);
     if (d->enableSqueezedText && isReadOnly()) {
         return d->squeezedText;
     }
@@ -1601,16 +1585,19 @@ QString KLineEdit::originalText() const
 
 QString KLineEdit::userText() const
 {
+    Q_D(const KLineEdit);
     return d->userText;
 }
 
 bool KLineEdit::autoSuggest() const
 {
+    Q_D(const KLineEdit);
     return d->autoSuggest;
 }
 
 void KLineEdit::paintEvent(QPaintEvent *ev)
 {
+    Q_D(KLineEdit);
     if (echoMode() == Password && d->threeStars) {
         // ### hack alert!
         // QLineEdit has currently no hooks to modify the displayed string.
@@ -1658,6 +1645,7 @@ bool KLineEdit::isContextMenuEnabled() const
 
 void KLineEdit::setPasswordMode(bool b)
 {
+    Q_D(KLineEdit);
     if (b) {
         KConfigGroup cg(KSharedConfig::openConfig(), "Passwords");
         const QString val = cg.readEntry("EchoMode", "OneStar");
@@ -1679,6 +1667,7 @@ bool KLineEdit::passwordMode() const
 
 void KLineEdit::doCompletion(const QString &txt)
 {
+    Q_D(KLineEdit);
     if (emitSignals()) {
         emit completion(txt); // emit when requested...
     }
