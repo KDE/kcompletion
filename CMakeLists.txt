@@ -10,7 +10,7 @@ include(FeatureSummary)
 include(GenerateExportHeader)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
-include(CMakePackageConfigHelpers)
+include(ECMPackageConfigHelpers)
 include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
@@ -45,9 +45,9 @@ add_subdirectory(autotests)
 # create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5Completion")
 
-include(CMakePackageConfigHelpers)
+include(ECMPackageConfigHelpers)
 
-configure_package_config_file(
+ecm_configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/KF5CompletionConfig.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/KF5CompletionConfig.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
