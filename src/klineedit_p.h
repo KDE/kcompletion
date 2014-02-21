@@ -208,9 +208,23 @@ public:
 
     ~KLineEditPrivate();
 
+    //FIXME: Change to the form _k_*() the methods that are used as slots
+    //and declare them as Q_PRIVATE_SLOT in klineedit.h.
+    //The methods that aren't slots shouldn't have the form _k_*()
     void _k_textChanged(const QString &txt);
     void _k_updateUserText(const QString &txt);
     void adjustForReadOnly();
+
+    // Slots
+    void completionMenuActivated(QAction *act);
+    void tripleClickTimeout();  // resets possibleTripleClick
+    void slotRestoreSelectionColors();
+    void _k_slotCompletionBoxTextChanged(const QString &text);
+    /**
+     * updates the icon of the clear button on text change
+     **/
+    void updateClearButtonIcon(const QString &);
+    //
 
     /**
      * Checks whether we should/should not consume a key used as a shortcut.
@@ -220,6 +234,19 @@ public:
     bool overrideShortcut(const QKeyEvent *e);
 
     void init();
+
+    bool copySqueezedText(bool clipboard) const;
+
+    /**
+     * Properly sets the squeezed text whenever the widget is
+     * created or resized.
+     */
+    void setSqueezedText();
+
+    /**
+     * updates the geometry of the clear button on resize events
+     **/
+    void updateClearButton();
 
     static bool s_initialized;
     static bool s_backspacePerformsCompletion; // Configuration option

@@ -223,8 +223,8 @@ void KLineEdit::setClearButtonShown(bool show)
         d->clearButton->setCursor(Qt::ArrowCursor);
         d->clearButton->setToolTip(tr("Clear text", "@action:button Clear current text in the line edit"));
 
-        updateClearButtonIcon(text());
-        updateClearButton();
+        d->updateClearButtonIcon(text());
+        d->updateClearButton();
         connect(this, SIGNAL(textChanged(QString)), this, SLOT(updateClearButtonIcon(QString)));
     } else {
         disconnect(this, SIGNAL(textChanged(QString)), this, SLOT(updateClearButtonIcon(QString)));
@@ -256,76 +256,76 @@ QSize KLineEdit::clearButtonUsedSize() const
 }
 
 // Decides whether to show or hide the icon; called when the text changes
-void KLineEdit::updateClearButtonIcon(const QString &text)
+void KLineEditPrivate::updateClearButtonIcon(const QString &text)
 {
-    Q_D(KLineEdit);
-    if (!d->clearButton) {
+    Q_Q(KLineEdit);
+    if (!clearButton) {
         return;
     }
-    if (isReadOnly()) {
-        d->adjustForReadOnly();
+    if (q->isReadOnly()) {
+        adjustForReadOnly();
         return;
     }
 
     // set proper icon if necessary
-    if (d->clearButton->pixmap().isNull()) {
-        QString iconName = layoutDirection() == Qt::LeftToRight ? "edit-clear-locationbar-rtl" : "edit-clear-locationbar-ltr";
+    if (clearButton->pixmap().isNull()) {
+        QString iconName = q->layoutDirection() == Qt::LeftToRight ? "edit-clear-locationbar-rtl" : "edit-clear-locationbar-ltr";
 
-        int size = d->clearButton->style()->pixelMetric(QStyle::PM_SmallIconSize, 0, this);
-        d->clearButton->setPixmap(QIcon::fromTheme(iconName).pixmap(size, size));
+        int size = clearButton->style()->pixelMetric(QStyle::PM_SmallIconSize, 0, q);
+        clearButton->setPixmap(QIcon::fromTheme(iconName).pixmap(size, size));
     }
 
     // trigger animation
-    if (d->wideEnoughForClear && text.length() > 0) {
-        d->clearButton->animateVisible(true);
+    if (wideEnoughForClear && text.length() > 0) {
+        clearButton->animateVisible(true);
     } else {
-        d->clearButton->animateVisible(false);
+        clearButton->animateVisible(false);
     }
 }
 
 // Determine geometry of clear button. Called initially, and on resizeEvent.
-void KLineEdit::updateClearButton()
+void KLineEditPrivate::updateClearButton()
 {
-    Q_D(KLineEdit);
-    if (!d->clearButton) {
+    Q_Q(KLineEdit);
+    if (!clearButton) {
         return;
     }
-    if (isReadOnly()) {
-        d->adjustForReadOnly();
+    if (q->isReadOnly()) {
+        adjustForReadOnly();
         return;
     }
 
-    const QSize geom = size();
-    const int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth, 0, this);
-    const int buttonWidth = d->clearButton->sizeHint().width();
+    const QSize geom = q->size();
+    const int frameWidth = q->style()->pixelMetric(QStyle::PM_DefaultFrameWidth, 0, q);
+    const int buttonWidth = clearButton->sizeHint().width();
     const QSize newButtonSize(buttonWidth, geom.height());
-    const QFontMetrics fm(font());
+    const QFontMetrics fm(q->font());
     const int em = fm.width("m");
 
     // make sure we have enough room for the clear button
     // no point in showing it if we can't also see a few characters as well
     const bool wideEnough = geom.width() > 4 * em + buttonWidth + frameWidth;
 
-    if (newButtonSize != d->clearButton->size()) {
-        d->clearButton->resize(newButtonSize);
+    if (newButtonSize != clearButton->size()) {
+        clearButton->resize(newButtonSize);
     }
 
-    if (d->style) {
-        d->style.data()->m_overlap = wideEnough ? buttonWidth + frameWidth : 0;
+    if (style) {
+        style.data()->m_overlap = wideEnough ? buttonWidth + frameWidth : 0;
     }
 
-    if (layoutDirection() == Qt::LeftToRight) {
-        d->clearButton->move(geom.width() - frameWidth - buttonWidth - 1, 0);
+    if (q->layoutDirection() == Qt::LeftToRight) {
+        clearButton->move(geom.width() - frameWidth - buttonWidth - 1, 0);
     } else {
-        d->clearButton->move(frameWidth + 1, 0);
+        clearButton->move(frameWidth + 1, 0);
     }
 
-    if (wideEnough != d->wideEnoughForClear) {
+    if (wideEnough != wideEnoughForClear) {
         // we may (or may not) have been showing the button, but now our
         // positiong on that matter has shifted, so let's ensure that it
         // is properly visible (or not)
-        d->wideEnoughForClear = wideEnough;
-        updateClearButtonIcon(text());
+        wideEnoughForClear = wideEnough;
+        updateClearButtonIcon(q->text());
     }
 }
 
@@ -474,7 +474,7 @@ void KLineEdit::setReadOnly(bool readOnly)
         setBackgroundRole(QPalette::Window);
         if (d->enableSqueezedText && d->squeezedText.isEmpty()) {
             d->squeezedText = text();
-            setSqueezedText();
+            d->setSqueezedText();
         }
 
         if (d->clearButton) {
@@ -488,7 +488,7 @@ void KLineEdit::setReadOnly(bool readOnly)
         }
 
         setBackgroundRole(d->bgRole);
-        updateClearButton();
+        d->updateClearButton();
     }
 }
 
@@ -515,22 +515,22 @@ void KLineEdit::setText(const QString &text)
     Q_D(KLineEdit);
     if (d->enableSqueezedText && isReadOnly()) {
         d->squeezedText = text;
-        setSqueezedText();
+        d->setSqueezedText();
         return;
     }
 
     QLineEdit::setText(text);
 }
 
-void KLineEdit::setSqueezedText()
+void KLineEditPrivate::setSqueezedText()
 {
-    Q_D(KLineEdit);
-    d->squeezedStart = 0;
-    d->squeezedEnd = 0;
-    const QString fullText = d->squeezedText;
+    Q_Q(KLineEdit);
+    squeezedStart = 0;
+    squeezedEnd = 0;
+    const QString fullText = squeezedText;
     const int fullLength = fullText.length();
-    const QFontMetrics fm(fontMetrics());
-    const int labelWidth = size().width() - 2 * style()->pixelMetric(QStyle::PM_DefaultFrameWidth) - 2;
+    const QFontMetrics fm(q->fontMetrics());
+    const int labelWidth = q->size().width() - 2 * q->style()->pixelMetric(QStyle::PM_DefaultFrameWidth) - 2;
     const int textWidth = fm.width(fullText);
 
     if (textWidth > labelWidth) {
@@ -565,59 +565,60 @@ void KLineEdit::setSqueezedText()
 
         if (letters < 5) {
             // too few letters added -> we give up squeezing
-            QLineEdit::setText(fullText);
+            q->QLineEdit::setText(fullText);
         } else {
-            QLineEdit::setText(squeezedText);
-            d->squeezedStart = letters;
-            d->squeezedEnd = fullText.length() - letters;
+            q->QLineEdit::setText(squeezedText);
+            squeezedStart = letters;
+            squeezedEnd = fullText.length() - letters;
         }
 
-        setToolTip(fullText);
+        q->setToolTip(fullText);
 
     } else {
-        QLineEdit::setText(fullText);
+        q->QLineEdit::setText(fullText);
 
-        this->setToolTip("");
-        QToolTip::showText(pos(), QString()); // hide
+        q->setToolTip("");
+        QToolTip::showText(q->pos(), QString()); // hide
     }
 
-    setCursorPosition(0);
+    q->setCursorPosition(0);
 }
 
 void KLineEdit::copy() const
 {
-    if (!copySqueezedText(true)) {
+    Q_D(const KLineEdit);
+    if (!d->copySqueezedText(true)) {
         QLineEdit::copy();
     }
 }
 
-bool KLineEdit::copySqueezedText(bool clipboard) const
+bool KLineEditPrivate::copySqueezedText(bool clipboard) const
 {
-    Q_D(const KLineEdit);
-    if (!d->squeezedText.isEmpty() && d->squeezedStart) {
-        KLineEdit *that = const_cast<KLineEdit *>(this);
+    Q_Q(const KLineEdit);
+    if (!squeezedText.isEmpty() && squeezedStart) {
+        KLineEdit *that = const_cast<KLineEdit *>(q);
         if (!that->hasSelectedText()) {
             return false;
         }
-        int start = selectionStart(), end = start + selectedText().length();
-        if (start >= d->squeezedStart + 3) {
-            start = start - 3 - d->squeezedStart + d->squeezedEnd;
-        } else if (start > d->squeezedStart) {
-            start = d->squeezedStart;
+        int start = q->selectionStart(), end = start + q->selectedText().length();
+        if (start >= squeezedStart + 3) {
+            start = start - 3 - squeezedStart + squeezedEnd;
+        } else if (start > squeezedStart) {
+            start = squeezedStart;
         }
-        if (end >= d->squeezedStart + 3) {
-            end = end - 3 - d->squeezedStart + d->squeezedEnd;
-        } else if (end > d->squeezedStart) {
-            end = d->squeezedEnd;
+        if (end >= squeezedStart + 3) {
+            end = end - 3 - squeezedStart + squeezedEnd;
+        } else if (end > squeezedStart) {
+            end = squeezedEnd;
         }
         if (start == end) {
             return false;
         }
-        QString t = d->squeezedText;
+        QString t = squeezedText;
         t = t.mid(start, end - start);
-        disconnect(QApplication::clipboard(), SIGNAL(selectionChanged()), this, 0);
+        q->disconnect(QApplication::clipboard(), SIGNAL(selectionChanged()), q, 0);
         QApplication::clipboard()->setText(t, clipboard ? QClipboard::Clipboard : QClipboard::Selection);
-        connect(QApplication::clipboard(), SIGNAL(selectionChanged()), this,
+        q->connect(QApplication::clipboard(), SIGNAL(selectionChanged()), q,
                 SLOT(_q_clipboardChanged()));
         return true;
     }
@@ -628,10 +629,10 @@ void KLineEdit::resizeEvent(QResizeEvent *ev)
 {
     Q_D(KLineEdit);
     if (!d->squeezedText.isEmpty()) {
-        setSqueezedText();
+        d->setSqueezedText();
     }
 
-    updateClearButton();
+    d->updateClearButton();
     QLineEdit::resizeEvent(ev);
 }
 
@@ -874,7 +875,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
             d->disableRestoreSelection = false;
 
             if ((selectedLength != selectedText().length()) && !hasUserSelection) {
-                slotRestoreSelectionColors();    // and set userSelection to true
+                d->slotRestoreSelectionColors();    // and set userSelection to true
             }
 
             QString txt = text();
@@ -1005,7 +1006,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
     QLineEdit::keyPressEvent(e);
 
     if (selectedLength != selectedText().length()) {
-        slotRestoreSelectionColors();    // and set userSelection to true
+        d->slotRestoreSelectionColors();    // and set userSelection to true
     }
 }
 
@@ -1079,15 +1080,14 @@ void KLineEdit::mouseReleaseEvent(QMouseEvent *e)
     if (QApplication::clipboard()->supportsSelection()) {
         if (e->button() == Qt::LeftButton) {
             // Fix copying of squeezed text if needed
-            copySqueezedText(false);
+            d->copySqueezedText(false);
         }
     }
 }
 
-void KLineEdit::tripleClickTimeout()
+void KLineEditPrivate::tripleClickTimeout()
 {
-    Q_D(KLineEdit);
-    d->possibleTripleClick = false;
+    possibleTripleClick = false;
 }
 
 QMenu *KLineEdit::createStandardContextMenu()
@@ -1187,36 +1187,36 @@ void KLineEdit::contextMenuEvent(QContextMenuEvent *e)
     delete popup;
 }
 
-void KLineEdit::completionMenuActivated(QAction  *act)
+void KLineEditPrivate::completionMenuActivated(QAction  *act)
 {
-    Q_D(KLineEdit);
-    KCompletion::CompletionMode oldMode = completionMode();
+    Q_Q(KLineEdit);
+    KCompletion::CompletionMode oldMode = q->completionMode();
 
-    if (act == d->noCompletionAction) {
-        setCompletionMode(KCompletion::CompletionNone);
-    } else if (act ==  d->shellCompletionAction) {
-        setCompletionMode(KCompletion::CompletionShell);
-    } else if (act == d->autoCompletionAction) {
-        setCompletionMode(KCompletion::CompletionAuto);
-    } else if (act == d->popupCompletionAction) {
-        setCompletionMode(KCompletion::CompletionPopup);
-    } else if (act == d->shortAutoCompletionAction) {
-        setCompletionMode(KCompletion::CompletionMan);
-    } else if (act == d->popupAutoCompletionAction) {
-        setCompletionMode(KCompletion::CompletionPopupAuto);
-    } else if (act == d->defaultAction) {
-        setCompletionMode(KCompletion::CompletionPopup);
+    if (act == noCompletionAction) {
+        q->setCompletionMode(KCompletion::CompletionNone);
+    } else if (act ==  shellCompletionAction) {
+        q->setCompletionMode(KCompletion::CompletionShell);
+    } else if (act == autoCompletionAction) {
+        q->setCompletionMode(KCompletion::CompletionAuto);
+    } else if (act == popupCompletionAction) {
+        q->setCompletionMode(KCompletion::CompletionPopup);
+    } else if (act == shortAutoCompletionAction) {
+        q->setCompletionMode(KCompletion::CompletionMan);
+    } else if (act == popupAutoCompletionAction) {
+        q->setCompletionMode(KCompletion::CompletionPopupAuto);
+    } else if (act == defaultAction) {
+        q->setCompletionMode(KCompletion::CompletionPopup);
     } else {
         return;
     }
 
-    if (oldMode != completionMode()) {
+    if (oldMode != q->completionMode()) {
         if ((oldMode == KCompletion::CompletionPopup ||
                 oldMode == KCompletion::CompletionPopupAuto) &&
-                d->completionBox && d->completionBox->isVisible()) {
-            d->completionBox->hide();
+                completionBox && completionBox->isVisible()) {
+            completionBox->hide();
         }
-        emit completionModeChanged(completionMode());
+        emit q->completionModeChanged(q->completionMode());
     }
 }
 
@@ -1260,8 +1260,8 @@ bool KLineEdit::event(QEvent *ev)
         }
     } else if (ev->type() == QEvent::ApplicationLayoutDirectionChange
                || ev->type() == QEvent::LayoutDirectionChange) {
-        updateClearButtonIcon(text());
-        updateClearButton();
+        d->updateClearButtonIcon(text());
+        d->updateClearButton();
     }
 
     return QLineEdit::event(ev);
@@ -1549,14 +1549,14 @@ void KLineEdit::setUserSelection(bool userSelection)
     setPalette(p);
 }
 
-void KLineEdit::slotRestoreSelectionColors()
+void KLineEditPrivate::slotRestoreSelectionColors()
 {
-    Q_D(KLineEdit);
-    if (d->disableRestoreSelection) {
+    Q_Q(KLineEdit);
+    if (disableRestoreSelection) {
         return;
     }
 
-    setUserSelection(true);
+    q->setUserSelection(true);
 }
 
 void KLineEdit::clear()
@@ -1564,12 +1564,13 @@ void KLineEdit::clear()
     setText(QString());
 }
 
-void KLineEdit::_k_slotCompletionBoxTextChanged(const QString &text)
+void KLineEditPrivate::_k_slotCompletionBoxTextChanged(const QString &text)
 {
+    Q_Q(KLineEdit);
     if (!text.isEmpty()) {
-        setText(text);
-        setModified(true);
-        end(false);   // force cursor at end
+        q->setText(text);
+        q->setModified(true);
+        q->end(false);   // force cursor at end
     }
 }
 

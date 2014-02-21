@@ -629,35 +629,15 @@ protected:
 
     virtual void paintEvent(QPaintEvent *ev);
 
-private Q_SLOTS:
-    void completionMenuActivated(QAction *act);
-    void tripleClickTimeout();  // resets possibleTripleClick
-    void slotRestoreSelectionColors();
-    void _k_slotCompletionBoxTextChanged(const QString &text);
-
-    /**
-     * updates the icon of the clear button on text change
-     **/
-    void updateClearButtonIcon(const QString &);
-
-private:
-    bool copySqueezedText(bool clipboard) const;
-
-    /**
-     * Properly sets the squeezed text whenever the widget is
-     * created or resized.
-     */
-    void setSqueezedText();
-
-    /**
-     * updates the geometry of the clear button on resize events
-     **/
-    void updateClearButton();
-
 private:
     const QScopedPointer<KLineEditPrivate> d_ptr;
 
     Q_PRIVATE_SLOT(d_func(), void _k_textChanged(const QString &))
+    Q_PRIVATE_SLOT(d_func(), void completionMenuActivated(QAction *))
+    Q_PRIVATE_SLOT(d_func(), void tripleClickTimeout())
+    Q_PRIVATE_SLOT(d_func(), void slotRestoreSelectionColors())
+    Q_PRIVATE_SLOT(d_func(), void _k_slotCompletionBoxTextChanged(const QString &))
+    Q_PRIVATE_SLOT(d_func(), void updateClearButtonIcon(const QString &))
 };
 
 #endif
