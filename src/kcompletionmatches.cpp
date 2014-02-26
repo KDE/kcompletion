@@ -25,37 +25,42 @@
 class KCompletionMatchesPrivate
 {
 public:
-    KCompletionMatchesPrivate(bool sort)
-        : sorting(sort)
-    {}
+    KCompletionMatchesPrivate(bool sort, KCompletionMatches *parent)
+        : sorting(sort),
+          q_ptr(parent) {}
+
     bool sorting;
+    KCompletionMatches * const q_ptr;
+
+    Q_DECLARE_PUBLIC(KCompletionMatches)
 };
 
 KCompletionMatches::KCompletionMatches(const KCompletionMatches &o)
     : KSortableList<QString, int>(),
-      d(new KCompletionMatchesPrivate(o.d->sorting))
+      d_ptr(new KCompletionMatchesPrivate(o.sorting(), this))
 {
     *this = KCompletionMatches::operator=(o);
 }
 
 KCompletionMatches &KCompletionMatches::operator=(const KCompletionMatches &o)
 {
+    Q_D(KCompletionMatches);
     if (*this == o) {
         return *this;
     }
     KCompletionMatchesList::operator=(o);
-    d->sorting = o.d->sorting;
+    d->sorting = o.sorting();
 
     return *this;
 }
 
 KCompletionMatches::KCompletionMatches(bool sort_P)
-    : d(new KCompletionMatchesPrivate(sort_P))
+    : d_ptr(new KCompletionMatchesPrivate(sort_P, this))
 {
 }
 
 KCompletionMatches::KCompletionMatches(const KCompletionMatchesWrapper &matches)
-    : d(new KCompletionMatchesPrivate(matches.sorting()))
+    : d_ptr(new KCompletionMatchesPrivate(matches.sorting(), this))
 {
     if (matches.sortedList != 0L) {
         KCompletionMatchesList::operator=(*matches.sortedList);
@@ -71,11 +76,11 @@ KCompletionMatches::KCompletionMatches(const KCompletionMatchesWrapper &matches)
 
 KCompletionMatches::~KCompletionMatches()
 {
-    delete d;
 }
 
 QStringList KCompletionMatches::list(bool sort_P) const
 {
+    Q_D(const KCompletionMatches);
     if (d->sorting && sort_P) {
         const_cast< KCompletionMatches * >(this)->sort();
     }
@@ -89,6 +94,7 @@ QStringList KCompletionMatches::list(bool sort_P) const
 
 bool KCompletionMatches::sorting() const
 {
+    Q_D(const KCompletionMatches);
     return d->sorting;
 }
 

@@ -51,6 +51,7 @@ typedef KSortableList<QString> KCompletionMatchesList;
 class KCOMPLETION_EXPORT KCompletionMatches : public KCompletionMatchesList
 {
 public:
+    Q_DECLARE_PRIVATE(KCompletionMatches)
     /**
      * Default constructor.
      * @param sort if false, the matches won't be sorted before the conversion,
@@ -97,7 +98,7 @@ public:
     bool sorting() const;
 
 private:
-    KCompletionMatchesPrivate *const d;
+    const QScopedPointer<KCompletionMatchesPrivate> d_ptr;
 };
 
 #endif // KCOMPLETIONMATCHES_H

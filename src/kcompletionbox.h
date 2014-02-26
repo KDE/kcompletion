@@ -26,6 +26,7 @@
 #include <QListWidget>
 #include "kcompletion_export.h"
 
+class KCompletionBoxPrivate;
 class QEvent;
 
 /**
@@ -44,6 +45,7 @@ class QEvent;
 class KCOMPLETION_EXPORT KCompletionBox : public QListWidget
 {
     Q_OBJECT
+    Q_DECLARE_PRIVATE(KCompletionBox)
     Q_PROPERTY(bool isTabHandling READ isTabHandling WRITE setTabHandling)
     Q_PROPERTY(QString cancelledText READ cancelledText WRITE setCancelledText)
     Q_PROPERTY(bool activateOnSelect READ activateOnSelect WRITE setActivateOnSelect)
@@ -228,13 +230,11 @@ protected Q_SLOTS:
      */
     virtual void slotActivated(QListWidgetItem *);
 
-private Q_SLOTS:
-    void canceled();
-    void slotItemClicked(QListWidgetItem *);
-
 private:
-    class KCompletionBoxPrivate;
-    KCompletionBoxPrivate *const d;
+    const QScopedPointer<KCompletionBoxPrivate> d_ptr;
+
+    Q_PRIVATE_SLOT(d_func(), void canceled())
+    Q_PRIVATE_SLOT(d_func(), void slotItemClicked(QListWidgetItem *))
 };
 
 #endif // KCOMPLETIONBOX_H
