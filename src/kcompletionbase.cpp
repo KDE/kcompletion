@@ -28,18 +28,11 @@
 class KCompletionBasePrivate
 {
 public:
-    KCompletionBasePrivate()
-    // Assign the default completion type to use.
-        : completionMode(KCompletion::CompletionPopup)
-        , delegate(0)
-    {
-    }
-    ~KCompletionBasePrivate()
-    {
-        if (autoDeletesCompletionObject && completionObject) {
-            delete completionObject;
-        }
-    }
+    KCompletionBasePrivate(KCompletionBase *parent) : q_ptr(parent){}
+
+    ~KCompletionBasePrivate();
+
+    void init();
 
     bool autoDeletesCompletionObject;
     bool handlesCompletionSignals;
@@ -49,46 +42,67 @@ public:
     KCompletionBase::KeyBindingMap keyBindingMap;
     // we may act as a proxy to another KCompletionBase object
     KCompletionBase *delegate;
+    KCompletionBase * const q_ptr;
+    Q_DECLARE_PUBLIC(KCompletionBase)
 };
 
-KCompletionBase::KCompletionBase()
-    : d(new KCompletionBasePrivate)
+KCompletionBasePrivate::~KCompletionBasePrivate()
 {
+    if (autoDeletesCompletionObject && completionObject) {
+        delete completionObject;
+    }
+}
+
+void KCompletionBasePrivate::init()
+{
+    Q_Q(KCompletionBase);
+    completionMode = KCompletion::CompletionPopup;
+    delegate = 0;
     // Initialize all key-bindings to 0 by default so that
     // the event filter will use the global settings.
-    useGlobalKeyBindings();
+    q->useGlobalKeyBindings();
 
     // By default we initialize everything except hsig to false.
     // All the variables would be setup properly when
     // the appropriate member functions are called.
-    setup(false, true, false);
+    q->setup(false, true, false);
+}
+
+
+KCompletionBase::KCompletionBase()
+    : d_ptr(new KCompletionBasePrivate(this))
+{
+    Q_D(KCompletionBase);
+    d->init();
 }
 
 KCompletionBase::~KCompletionBase()
 {
-    delete d;
 }
 
 void KCompletionBase::setDelegate(KCompletionBase *delegate)
 {
+    Q_D(KCompletionBase);
     d->delegate = delegate;
 
     if (delegate) {
-        delegate->d->autoDeletesCompletionObject = d->autoDeletesCompletionObject;
-        delegate->d->handlesCompletionSignals = d->handlesCompletionSignals;
-        delegate->d->emitsRotationSignals = d->emitsRotationSignals;
-        delegate->d->completionMode = d->completionMode;
-        delegate->d->keyBindingMap = d->keyBindingMap;
+        delegate->setAutoDeleteCompletionObject(d->autoDeletesCompletionObject);
+        delegate->setHandleSignals(d->handlesCompletionSignals);
+        delegate->setEmitSignals(d->emitsRotationSignals);
+        delegate->setCompletionMode(d->completionMode);
+        delegate->setKeyBindingMap(d->keyBindingMap);
     }
 }
 
 KCompletionBase *KCompletionBase::delegate() const
 {
+    Q_D(const KCompletionBase);
     return d->delegate;
 }
 
 KCompletion *KCompletionBase::completionObject(bool hsig)
 {
+    Q_D(KCompletionBase);
     if (d->delegate) {
         return d->delegate->completionObject(hsig);
     }
@@ -102,6 +116,7 @@ KCompletion *KCompletionBase::completionObject(bool hsig)
 
 void KCompletionBase::setCompletionObject(KCompletion *completionObject, bool handleCompletionSignals)
 {
+    Q_D(KCompletionBase);
     if (d->delegate) {
         d->delegate->setCompletionObject(completionObject, handleCompletionSignals);
         return;
@@ -121,6 +136,7 @@ void KCompletionBase::setCompletionObject(KCompletion *completionObject, bool ha
 // BC: Inline this function and possibly rename it to setHandleEvents??? (DA)
 void KCompletionBase::setHandleSignals(bool handle)
 {
+    Q_D(KCompletionBase);
     if (d->delegate) {
         d->delegate->setHandleSignals(handle);
     } else {
@@ -130,12 +146,14 @@ void KCompletionBase::setHandleSignals(bool handle)
 
 bool KCompletionBase::isCompletionObjectAutoDeleted() const
 {
+    Q_D(const KCompletionBase);
     return d->delegate ? d->delegate->isCompletionObjectAutoDeleted()
            : d->autoDeletesCompletionObject;
 }
 
 void KCompletionBase::setAutoDeleteCompletionObject(bool autoDelete)
 {
+    Q_D(KCompletionBase);
     if (d->delegate) {
         d->delegate->setAutoDeleteCompletionObject(autoDelete);
     } else {
@@ -145,6 +163,7 @@ void KCompletionBase::setAutoDeleteCompletionObject(bool autoDelete)
 
 void KCompletionBase::setEnableSignals(bool enable)
 {
+    Q_D(KCompletionBase);
     if (d->delegate) {
         d->delegate->setEnableSignals(enable);
     } else {
@@ -154,16 +173,29 @@ void KCompletionBase::setEnableSignals(bool enable)
 
 bool KCompletionBase::handleSignals() const
 {
+    Q_D(const KCompletionBase);
     return d->delegate ? d->delegate->handleSignals() : d->handlesCompletionSignals;
 }
 
 bool KCompletionBase::emitSignals() const
 {
+    Q_D(const KCompletionBase);
     return d->delegate ? d->delegate->emitSignals() : d->emitsRotationSignals;
+}
+
+void KCompletionBase::setEmitSignals(bool emitRotationSignals)
+{
+    Q_D(KCompletionBase);
+    if (d->delegate) {
+        d->delegate->setEmitSignals(emitRotationSignals);
+    } else {
+        d->emitsRotationSignals = emitRotationSignals;
+    }
 }
 
 void KCompletionBase::setCompletionMode(KCompletion::CompletionMode mode)
 {
+    Q_D(KCompletionBase);
     if (d->delegate) {
         d->delegate->setCompletionMode(mode);
         return;
@@ -179,11 +211,13 @@ void KCompletionBase::setCompletionMode(KCompletion::CompletionMode mode)
 
 KCompletion::CompletionMode KCompletionBase::completionMode() const
 {
+    Q_D(const KCompletionBase);
     return d->delegate ? d->delegate->completionMode() : d->completionMode;
 }
 
 bool KCompletionBase::setKeyBinding(KeyBindingType item, const QList<QKeySequence> &cut)
 {
+    Q_D(KCompletionBase);
     if (d->delegate) {
         return d->delegate->setKeyBinding(item, cut);
     }
@@ -200,11 +234,13 @@ bool KCompletionBase::setKeyBinding(KeyBindingType item, const QList<QKeySequenc
 
 QList<QKeySequence> KCompletionBase::getKeyBinding(KeyBindingType item) const
 {
+    Q_D(const KCompletionBase);
     return d->delegate ? d->delegate->getKeyBinding(item) : d->keyBindingMap[ item ];
 }
 
 void KCompletionBase::useGlobalKeyBindings()
 {
+    Q_D(KCompletionBase);
     if (d->delegate) {
         d->delegate->useGlobalKeyBindings();
         return;
@@ -219,17 +255,31 @@ void KCompletionBase::useGlobalKeyBindings()
 
 KCompletion *KCompletionBase::compObj() const
 {
+    Q_D(const KCompletionBase);
     return d->delegate ? d->delegate->compObj()
            : static_cast<KCompletion *>(d->completionObject);
 }
 
 KCompletionBase::KeyBindingMap KCompletionBase::getKeyBindings() const
 {
+    Q_D(const KCompletionBase);
     return d->delegate ? d->delegate->getKeyBindings() : d->keyBindingMap;
+}
+
+void KCompletionBase::setKeyBindingMap(KCompletionBase::KeyBindingMap keyBindingMap)
+{
+    Q_D(KCompletionBase);
+    if (d->delegate) {
+        d->delegate->setKeyBindingMap(keyBindingMap);
+        return;
+    }
+
+    d->keyBindingMap = keyBindingMap;
 }
 
 void KCompletionBase::setup(bool autodel, bool hsig, bool esig)
 {
+    Q_D(KCompletionBase);
     if (d->delegate) {
         d->delegate->setup(autodel, hsig, esig);
         return;
@@ -244,4 +294,3 @@ void KCompletionBase::virtual_hook(int, void *)
 {
     /*BASE::virtual_hook( id, data );*/
 }
-

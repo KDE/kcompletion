@@ -43,6 +43,7 @@ class KCompletionBasePrivate;
 class KCOMPLETION_EXPORT KCompletionBase
 {
 public:
+    Q_DECLARE_PRIVATE(KCompletionBase)
     /**
      * Constants that represent the items whose shortcut
      * key binding is programmable.  The default key bindings
@@ -189,6 +190,13 @@ public:
     bool emitSignals() const;
 
     /**
+     * Sets whether the object emits rotation signals.
+     *
+     * @param emitRotationSignals if false, disables the emition of rotation signals.
+     */
+    void setEmitSignals(bool emitRotationSignals);
+
+    /**
      * Sets the type of completion to be used.
      *
      * @param mode Completion type
@@ -311,6 +319,13 @@ protected:
     KeyBindingMap getKeyBindings() const;
 
     /**
+     * Sets the keymap.
+     *
+     * @param keyBindingMap
+     */
+    void setKeyBindingMap(KeyBindingMap keyBindingMap);
+
+    /**
      * Sets or removes the delegation object. If a delegation object is
      * set, all function calls will be forwarded to the delegation object.
      * @param delegate the delegation object, or 0 to remove it
@@ -338,7 +353,7 @@ protected:
     virtual void virtual_hook(int id, void *data);
 private:
     Q_DISABLE_COPY(KCompletionBase)
-    KCompletionBasePrivate *const d;
+    const QScopedPointer<KCompletionBasePrivate> d_ptr;
 };
 
 #endif // KCOMPLETIONBASE_H
