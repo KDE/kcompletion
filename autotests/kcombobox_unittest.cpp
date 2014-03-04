@@ -111,6 +111,17 @@ private Q_SLOTS:
         combo.insertItems(0, QStringList() << "foo");
     }
 
+    void testHistoryComboReset()
+    {
+        //It only tests that it doesn't crash
+        //TODO: Finish
+        KHistoryComboBox combo;
+        QStringList items;
+        items << "One" << "Two";
+        combo.addItems(items);
+        combo.reset();
+    }
+
     void testDeleteLineEdit()
     {
         // Test for KCombo's KLineEdit destruction

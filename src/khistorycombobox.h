@@ -23,8 +23,10 @@
 #define KHistoryComboBoxBOX_H
 
 #include <kcombobox.h>
+#include <kcompletion_export.h>
 
 class KPixmapProvider;
+class KHistoryComboBoxPrivate;
 
 /**
  * @short A combobox for offering a history and completion
@@ -48,6 +50,9 @@ class KPixmapProvider;
 class KCOMPLETION_EXPORT KHistoryComboBox : public KComboBox
 {
     Q_OBJECT
+
+    Q_DECLARE_PRIVATE(KHistoryComboBox)
+
     Q_PROPERTY(QStringList historyItems READ historyItems WRITE setHistoryItems)
 
 public:
@@ -242,37 +247,12 @@ protected:
      */
     bool useCompletion() const;
 
-private Q_SLOTS:
-    /**
-     * Resets the iterate index to -1
-     */
-    void slotReset();
-
-    /**
-     * Called from the popupmenu,
-     * calls clearHistory() and emits cleared()
-     */
-    void slotClear();
-
-    /**
-     * Appends our own context menu entry.
-     */
-    void addContextMenuItems(QMenu *);
-
-    /**
-     * Used to emit the activated(QString) signal when enter is pressed
-     */
-    void slotSimulateActivated(const QString &);
-
 private:
-    void initWidget(bool useCompletion);
-    void rotateUp();
-    void rotateDown();
-
-private:
-    class Private;
-    friend class Private;
-    Private *const d;
+    const QScopedPointer<KHistoryComboBoxPrivate> d_ptr;
+    Q_PRIVATE_SLOT(d_func(), void reset())
+    Q_PRIVATE_SLOT(d_func(), void clear())
+    Q_PRIVATE_SLOT(d_func(), void addContextMenuItems(QMenu *))
+    Q_PRIVATE_SLOT(d_func(), void simulateActivated(const QString &))
 
     Q_DISABLE_COPY(KHistoryComboBox)
 };
