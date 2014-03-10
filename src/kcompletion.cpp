@@ -20,65 +20,8 @@
 #include "kcompletion.h"
 #include "kcompletion_p.h"
 
-#include <kcompletionmatches.h>
-
 #include <QDebug>
 #include <QCollator>
-
-class KCompletionPrivate
-{
-public:
-    KCompletionPrivate(KCompletion *parent)
-        : myCompletionMode(KCompletion::CompletionPopup)
-        , myTreeNodeAllocator( KCompTreeNode::allocator() ) // keep strong-ref to allocator instance
-        , myTreeRoot(new KCompTreeNode)
-        , myBeep(true)
-        , myIgnoreCase(false)
-        , myHasMultipleMatches(false)
-        , myRotationIndex(0)
-        , q_ptr(parent)
-    {
-    }
-    ~KCompletionPrivate()
-    {
-        delete myTreeRoot;
-    }
-
-    void addWeightedItem(const QString &);
-    QString findCompletion(const QString &string);
-    void findAllCompletions(const QString &,
-                            KCompletionMatchesWrapper *matches,
-                            bool &hasMultipleMatches) const;
-
-    void extractStringsFromNode(const KCompTreeNode *,
-                                const QString &beginning,
-                                KCompletionMatchesWrapper *matches,
-                                bool addWeight = false) const;
-    void extractStringsFromNodeCI(const KCompTreeNode *,
-                                  const QString &beginning,
-                                  const QString &restString,
-                                  KCompletionMatchesWrapper *matches) const;
-
-    // list used for nextMatch() and previousMatch()
-    KCompletionMatchesWrapper matches;
-
-    KCompletion::CompletionMode myCompletionMode;
-
-    QSharedPointer<KZoneAllocator> myTreeNodeAllocator;
-
-    KCompletion::CompOrder myOrder;
-    QString                myLastString;
-    QString                myLastMatch;
-    QString                myCurrentMatch;
-    KCompTreeNode         *myTreeRoot;
-    //QStringList            myRotations;
-    bool                   myBeep : 1;
-    bool                   myIgnoreCase : 1;
-    bool                   myHasMultipleMatches;
-    int                    myRotationIndex;
-    KCompletion * const q_ptr;
-    Q_DECLARE_PUBLIC(KCompletion)
-};
 
 void KCompletionPrivate::addWeightedItem(const QString &item)
 {
@@ -255,7 +198,7 @@ void KCompletionPrivate::extractStringsFromNode(const KCompTreeNode *node,
     QString w;
 
     // loop thru all children
-    for (KCompTreeNode *cur = list->begin(); cur; cur = cur->next) {
+    for (KCompTreeNode *cur = list->begin(); cur; cur = cur->m_next) {
         string = beginning;
         node = cur;
         if (!node->isNull()) {
@@ -727,10 +670,10 @@ QString KCompletion::previousMatch()
 KCompTreeNode::~KCompTreeNode()
 {
     // delete all children
-    KCompTreeNode *cur = myChildren.begin();
+    KCompTreeNode *cur = m_children.begin();
     while (cur) {
-        KCompTreeNode *next = cur->next;
-        delete myChildren.remove(cur);
+        KCompTreeNode *next = cur->m_next;
+        delete m_children.remove(cur);
         cur = next;
     }
 }
@@ -746,24 +689,24 @@ KCompTreeNode *KCompTreeNode::insert(const QChar &ch, bool sorted)
         // FIXME, first (slow) sorted insertion implementation
         if (sorted) {
             KCompTreeNode *prev = 0;
-            KCompTreeNode *cur = myChildren.begin();
+            KCompTreeNode *cur = m_children.begin();
             while (cur) {
                 if (ch > *cur) {
                     prev = cur;
-                    cur = cur->next;
+                    cur = cur->m_next;
                 } else {
                     break;
                 }
             }
             if (prev) {
-                myChildren.insert(prev, child);
+                m_children.insert(prev, child);
             } else {
-                myChildren.prepend(child);
+                m_children.prepend(child);
             }
         }
 
         else {
-            myChildren.append(child);
+            m_children.append(child);
         }
     }
 
@@ -802,59 +745,59 @@ void KCompTreeNode::remove(const QString &str)
     for (; i >= 1; i--) {
         parent = deletables.at(i - 1);
         child = deletables.at(i);
-        if (child->myChildren.count() == 0) {
-            delete parent->myChildren.remove(child);
+        if (child->m_children.count() == 0) {
+            delete parent->m_children.remove(child);
         }
     }
 }
 
 QStringList KCompletionMatchesWrapper::list() const
 {
-    if (sortedList && dirty) {
-        sortedList->sort();
-        dirty = false;
+    if (m_sortedList && m_dirty) {
+        m_sortedList->sort();
+        m_dirty = false;
 
-        stringList.clear();
+        m_stringList.clear();
 
         // high weight == sorted last -> reverse the sorting here
         QList<KSortableItem<QString> >::const_iterator it;
-        for (it = sortedList->constBegin(); it != sortedList->constEnd(); ++it) {
-            stringList.prepend((*it).value());
+        for (it = m_sortedList->constBegin(); it != m_sortedList->constEnd(); ++it) {
+            m_stringList.prepend((*it).value());
         }
-    } else if (compOrder == KCompletion::Sorted) {
+    } else if (m_compOrder == KCompletion::Sorted) {
         QCollator c;
         c.setCaseSensitivity(Qt::CaseSensitive);
-        qStableSort(stringList.begin(), stringList.end(), c);
+        qStableSort(m_stringList.begin(), m_stringList.end(), c);
     }
 
-    return stringList;
+    return m_stringList;
 }
 
 void KCompTreeNodeList::append(KCompTreeNode *item)
 {
     m_count++;
-    if (!last) {
-        last = item;
-        last->next = 0;
-        first = item;
+    if (!m_last) {
+        m_last = item;
+        m_last->m_next = 0;
+        m_first = item;
         return;
     }
-    last->next = item;
-    item->next = 0;
-    last = item;
+    m_last->m_next = item;
+    item->m_next = 0;
+    m_last = item;
 }
 
 void KCompTreeNodeList::prepend(KCompTreeNode *item)
 {
     m_count++;
-    if (!last) {
-        last = item;
-        last->next = 0;
-        first = item;
+    if (!m_last) {
+        m_last = item;
+        m_last->m_next = 0;
+        m_first = item;
         return;
     }
-    item->next = first;
-    first = item;
+    item->m_next = m_first;
+    m_first = item;
 }
 
 void KCompTreeNodeList::insert(KCompTreeNode *after, KCompTreeNode *item)
@@ -866,35 +809,35 @@ void KCompTreeNodeList::insert(KCompTreeNode *after, KCompTreeNode *item)
 
     m_count++;
 
-    item->next = after->next;
-    after->next = item;
+    item->m_next = after->m_next;
+    after->m_next = item;
 
-    if (after == last) {
-        last = item;
+    if (after == m_last) {
+        m_last = item;
     }
 }
 
 KCompTreeNode *KCompTreeNodeList::remove(KCompTreeNode *item)
 {
-    if (!first || !item) {
+    if (!m_first || !item) {
         return 0;
     }
     KCompTreeNode *cur = 0;
 
-    if (item == first) {
-        first = first->next;
+    if (item == m_first) {
+        m_first = m_first->m_next;
     } else {
-        cur = first;
-        while (cur && cur->next != item) {
-            cur = cur->next;
+        cur = m_first;
+        while (cur && cur->m_next != item) {
+            cur = cur->m_next;
         }
         if (!cur) {
             return 0;
         }
-        cur->next = item->next;
+        cur->m_next = item->m_next;
     }
-    if (item == last) {
-        last = cur;
+    if (item == m_last) {
+        m_last = cur;
     }
     m_count--;
     return item;
@@ -902,12 +845,12 @@ KCompTreeNode *KCompTreeNodeList::remove(KCompTreeNode *item)
 
 KCompTreeNode *KCompTreeNodeList::at(uint index) const
 {
-    KCompTreeNode *cur = first;
+    KCompTreeNode *cur = m_first;
     while (index-- && cur) {
-        cur = cur->next;
+        cur = cur->m_next;
     }
     return cur;
 }
 
-QSharedPointer<KZoneAllocator> KCompTreeNode::alloc(new KZoneAllocator(8*1024));
+QSharedPointer<KZoneAllocator> KCompTreeNode::m_alloc(new KZoneAllocator(8*1024));
 

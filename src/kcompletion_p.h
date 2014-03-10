@@ -24,11 +24,9 @@
 
 #include <kcompletionmatches.h>
 
-#include <QtCore/QString>
+#include <kzoneallocator_p.h>
 
 class KCompTreeNode;
-
-#include <kzoneallocator_p.h>
 
 /**
  * @internal
@@ -36,14 +34,16 @@ class KCompTreeNode;
 class KCOMPLETION_EXPORT KCompTreeNodeList
 {
 public:
-    KCompTreeNodeList() : first(0), last(0), m_count(0) {}
+    KCompTreeNodeList() : m_first(0), m_last(0), m_count(0) {}
+
     KCompTreeNode *begin() const
     {
-        return first;
+        return m_first;
     }
+
     KCompTreeNode *end() const
     {
-        return last;
+        return m_last;
     }
 
     KCompTreeNode *at(uint index) const;
@@ -51,13 +51,15 @@ public:
     void prepend(KCompTreeNode *item);
     void insert(KCompTreeNode *after, KCompTreeNode *item);
     KCompTreeNode *remove(KCompTreeNode *item);
+
     uint count() const
     {
         return m_count;
     }
 
 private:
-    KCompTreeNode *first, *last;
+    KCompTreeNode *m_first;
+    KCompTreeNode *m_last;
     uint m_count;
 };
 
@@ -95,91 +97,106 @@ typedef KCompTreeNodeList KCompTreeChildren;
 class KCOMPLETION_EXPORT KCompTreeNode : public QChar
 {
 public:
-    KCompTreeNode() : QChar(), next(0), myWeight(0) {}
+    KCompTreeNode()
+        : QChar(),
+          m_next(0),
+          m_weight(0) {}
+
     explicit KCompTreeNode(const QChar &ch, uint weight = 0)
         : QChar(ch),
-          next(0),
-          myWeight(weight) {}
+          m_next(0),
+          m_weight(weight) {}
+
     ~KCompTreeNode();
 
     void *operator new(size_t s)
     {
-        Q_ASSERT(alloc);
-        return alloc->allocate(s);
+        Q_ASSERT(m_alloc);
+        return m_alloc->allocate(s);
     }
+
     void operator delete(void *s)
     {
-        Q_ASSERT(alloc);
-        alloc->deallocate(s);
+        Q_ASSERT(m_alloc);
+        m_alloc->deallocate(s);
     }
 
     // Returns a child of this node matching ch, if available.
     // Otherwise, returns 0L
     inline KCompTreeNode *find(const QChar &ch) const
     {
-        KCompTreeNode *cur = myChildren.begin();
+        KCompTreeNode *cur = m_children.begin();
         while (cur && (*cur != ch)) {
-            cur = cur->next;
+            cur = cur->m_next;
         }
         return cur;
     }
-    KCompTreeNode  *insert(const QChar &, bool sorted);
-    void        remove(const QString &);
 
-    inline int      childrenCount() const
+    KCompTreeNode *insert(const QChar &, bool sorted);
+    void remove(const QString &);
+
+    inline int childrenCount() const
     {
-        return myChildren.count();
+        return m_children.count();
     }
 
-    // weighting
     inline void confirm()
     {
-        myWeight++;
+        m_weight++;
     }
+
     inline void confirm(uint w)
     {
-        myWeight += w;
+        m_weight += w;
     }
+
     inline void decline()
     {
-        myWeight--;
+        m_weight--;
     }
+
     inline uint weight() const
     {
-        return myWeight;
+        return m_weight;
     }
 
     inline const KCompTreeChildren *children() const
     {
-        return &myChildren;
+        return &m_children;
     }
+
     inline const KCompTreeNode *childAt(int index) const
     {
-        return myChildren.at(index);
+        return m_children.at(index);
     }
+
     inline const KCompTreeNode *firstChild() const
     {
-        return myChildren.begin();
+        return m_children.begin();
     }
+
     inline const KCompTreeNode *lastChild()  const
     {
-        return myChildren.end();
+        return m_children.end();
     }
 
     /* We want to handle a list of KCompTreeNodes on our own, to not
-       need to use QValueList<>.  And to make it even more fast we don't
+       need to use QValueList<>.  And to make it even faster we don't
        use an accessor, but just a public member.  */
-    KCompTreeNode *next;
+    KCompTreeNode *m_next;
 
     /**
      * Custom allocator used for all KCompTreeNode instances
      */
-    static QSharedPointer<KZoneAllocator> allocator() { return alloc; }
+    static QSharedPointer<KZoneAllocator> allocator()
+    {
+        return m_alloc;
+    }
 
 private:
-    uint myWeight;
-    KCompTreeNodeList   myChildren;
-    static QSharedPointer<KZoneAllocator> alloc;
+    uint m_weight;
+    KCompTreeNodeList m_children;
+    static QSharedPointer<KZoneAllocator> m_alloc;
 };
 
 /**
@@ -188,59 +205,59 @@ private:
 class KCOMPLETION_EXPORT KCompletionMatchesWrapper
 {
 public:
-    KCompletionMatchesWrapper(KCompletion::CompOrder _compOrder = KCompletion::Insertion)
-        : sortedList(_compOrder == KCompletion::Weighted ? new KCompletionMatchesList : 0L),
-          dirty(false),
-          compOrder(_compOrder)
-    {}
+    KCompletionMatchesWrapper(KCompletion::CompOrder compOrder = KCompletion::Insertion)
+        : m_sortedList(compOrder == KCompletion::Weighted ? new KCompletionMatchesList : 0L),
+          m_dirty(false),
+          m_compOrder(compOrder) {}
+
     ~KCompletionMatchesWrapper()
     {
-        delete sortedList;
+        delete m_sortedList;
     }
 
-    void setSorting(KCompletion::CompOrder _compOrder)
+    void setSorting(KCompletion::CompOrder compOrder)
     {
-        if (_compOrder == KCompletion::Weighted && !sortedList) {
-            sortedList = new KCompletionMatchesList;
-        } else if (_compOrder != KCompletion::Weighted) {
-            delete sortedList;
-            sortedList = 0L;
+        if (compOrder == KCompletion::Weighted && !m_sortedList) {
+            m_sortedList = new KCompletionMatchesList;
+        } else if (compOrder != KCompletion::Weighted) {
+            delete m_sortedList;
+            m_sortedList = 0L;
         }
-        compOrder = _compOrder;
-        stringList.clear();
-        dirty = false;
+        m_compOrder = compOrder;
+        m_stringList.clear();
+        m_dirty = false;
     }
 
     KCompletion::CompOrder sorting() const
     {
-        return compOrder;
+        return m_compOrder;
     }
 
     void append(int i, const QString &string)
     {
-        if (sortedList) {
-            sortedList->insert(i, string);
+        if (m_sortedList) {
+            m_sortedList->insert(i, string);
         } else {
-            stringList.append(string);
+            m_stringList.append(string);
         }
-        dirty = true;
+        m_dirty = true;
     }
 
     void clear()
     {
-        if (sortedList) {
-            sortedList->clear();
+        if (m_sortedList) {
+            m_sortedList->clear();
         }
-        stringList.clear();
-        dirty = false;
+        m_stringList.clear();
+        m_dirty = false;
     }
 
     uint count() const
     {
-        if (sortedList) {
-            return sortedList->count();
+        if (m_sortedList) {
+            return m_sortedList->count();
         }
-        return stringList.count();
+        return m_stringList.count();
     }
 
     bool isEmpty() const
@@ -260,10 +277,65 @@ public:
 
     QStringList list() const;
 
-    mutable QStringList stringList;
-    KCompletionMatchesList *sortedList;
-    mutable bool dirty;
-    KCompletion::CompOrder compOrder;
+    mutable QStringList m_stringList;
+    KCompletionMatchesList *m_sortedList;
+    mutable bool m_dirty;
+    KCompletion::CompOrder m_compOrder;
+};
+
+class KCompletionPrivate
+{
+public:
+    KCompletionPrivate(KCompletion *parent)
+        : myCompletionMode(KCompletion::CompletionPopup)
+        , myTreeNodeAllocator( KCompTreeNode::allocator() ) // keep strong-ref to allocator instance
+        , myTreeRoot(new KCompTreeNode)
+        , myBeep(true)
+        , myIgnoreCase(false)
+        , myHasMultipleMatches(false)
+        , myRotationIndex(0)
+        , q_ptr(parent)
+    {
+    }
+    ~KCompletionPrivate()
+    {
+        delete myTreeRoot;
+    }
+
+    void addWeightedItem(const QString &);
+    QString findCompletion(const QString &string);
+    void findAllCompletions(const QString &,
+                            KCompletionMatchesWrapper *matches,
+                            bool &hasMultipleMatches) const;
+
+    void extractStringsFromNode(const KCompTreeNode *,
+                                const QString &beginning,
+                                KCompletionMatchesWrapper *matches,
+                                bool addWeight = false) const;
+    void extractStringsFromNodeCI(const KCompTreeNode *,
+                                  const QString &beginning,
+                                  const QString &restString,
+                                  KCompletionMatchesWrapper *matches) const;
+
+    // list used for nextMatch() and previousMatch()
+    KCompletionMatchesWrapper matches;
+
+    KCompletion::CompletionMode myCompletionMode;
+
+    QSharedPointer<KZoneAllocator> myTreeNodeAllocator;
+
+    KCompletion::CompOrder myOrder;
+    QString                myLastString;
+    QString                myLastMatch;
+    QString                myCurrentMatch;
+    KCompTreeNode         *myTreeRoot;
+    //QStringList            myRotations;
+    bool                   myBeep : 1;
+    bool                   myIgnoreCase : 1;
+    bool                   myHasMultipleMatches;
+    int                    myRotationIndex;
+    KCompletion * const q_ptr;
+    Q_DECLARE_PUBLIC(KCompletion)
 };
 
 #endif // KCOMPLETION_PRIVATE_H
