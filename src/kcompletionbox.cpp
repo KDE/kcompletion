@@ -33,7 +33,7 @@ class KCompletionBoxPrivate
 public:
     KCompletionBoxPrivate(KCompletionBox *parent): q_ptr(parent){}
     void init();
-    void canceled();
+    void cancelled();
     void slotItemClicked(QListWidgetItem *);
 
     QWidget *m_parent; // necessary to set the focus back
@@ -117,7 +117,7 @@ bool KCompletionBox::eventFilter(QObject *o, QEvent *e)
 
     if (wid && wid == d->m_parent &&
             (type == QEvent::Move || type == QEvent::Resize)) {
-        sizeAndPosition();
+        resizeAndReposition();
         return false;
     }
 
@@ -191,7 +191,7 @@ bool KCompletionBox::eventFilter(QObject *o, QEvent *e)
                 ev->accept();
                 return true;
             case Qt::Key_Escape:
-                d->canceled();
+                d->cancelled();
                 ev->accept();
                 return true;
             case Qt::Key_Enter:
@@ -278,12 +278,12 @@ void KCompletionBox::popup()
         if (!isVisible()) {
             show();
         } else if (size().height() != sizeHint().height()) {
-            sizeAndPosition();
+            resizeAndReposition();
         }
     }
 }
 
-void KCompletionBox::sizeAndPosition()
+void KCompletionBox::resizeAndReposition()
 {
     Q_D(KCompletionBox);
     int currentGeom = height();
@@ -332,21 +332,20 @@ void KCompletionBox::setVisible(bool visible)
     if (visible) {
         d->upwardBox = false;
         if (d->m_parent) {
-            sizeAndPosition();
+            resizeAndReposition();
             qApp->installEventFilter(this);
         }
 
-        // ### we shouldn't need to call this, but without this, the scrollbars
-        // are pretty b0rked.
-        //triggerUpdate( true );
-
-        // Workaround for I'm not sure whose bug - if this KCompletionBox' parent
-        // is in a layout, that layout will detect inserting new child (posted
-        // ChildInserted event), and will trigger relayout (post LayoutHint event).
-        // QWidget::show() sends also posted ChildInserted events for the parent,
-        // and later all LayoutHint events, which causes layout updating.
-        // The problem is, KCompletionBox::eventFilter() detects resizing
-        // of the parent, and calls hide() - and this hide() happen in the middle
+        // FIXME: Is this comment still valid or can it be deleted? Is a patch already sent to Qt?
+        // Following lines are a workaround for a bug (not sure whose this is):
+        // If this KCompletionBox' parent is in a layout, that layout will detect the
+        // insertion of a new child (posting a ChildInserted event). Then it will trigger relayout
+        // (posting a LayoutHint event).
+        //
+        // QWidget::show() then sends also posted ChildInserted events for the parent,
+        // and later all LayoutHint events, which cause layout updating.
+        // The problem is that KCompletionBox::eventFilter() detects the resizing
+        // of the parent, calls hide() and this hide() happens in the middle
         // of show(), causing inconsistent state. I'll try to submit a Qt patch too.
         qApp->sendPostedEvents();
     } else {
@@ -373,42 +372,6 @@ QRect KCompletionBox::calculateGeometry() const
 
     int w = (d->m_parent) ? d->m_parent->width() : QListWidget::minimumSizeHint().width();
     w = qMax(QListWidget::minimumSizeHint().width(), w);
-
-    //### M.O.: Qt4 doesn't actually honor SC_ComboBoxListBoxPopup ???
-#if 0
-    //If we're inside a combox, Qt by default makes the dropdown
-    // as wide as the combo, and gives the style a chance
-    // to adjust it. Do that here as well, for consistency
-    const QObject *combo;
-    if (d->m_parent && (combo = d->m_parent->parent()) &&
-            qobject_cast<QComboBox *>(combo)) {
-        const QComboBox *cb = static_cast<const QComboBox *>(combo);
-
-        //Expand to the combo width
-        w = qMax(w, cb->width());
-
-        QPoint parentCorner = d->m_parent->mapToGlobal(QPoint(0, 0));
-        QPoint comboCorner  = cb->mapToGlobal(QPoint(0, 0));
-
-        //We need to adjust our horizontal position to also be WRT to the combo
-        x += comboCorner.x() -  parentCorner.x();
-
-        //The same with vertical one
-        y += cb->height() - d->m_parent->height() +
-             comboCorner.y() - parentCorner.y();
-
-        //Ask the style to refine this a bit
-        QRect styleAdj = style().querySubControlMetrics(QStyle::CC_ComboBox,
-                         cb, QStyle::SC_ComboBoxListBoxPopup,
-                         QStyleOption(x, y, w, h));
-        //QCommonStyle returns QRect() by default, so this is what we get if the
-        //style doesn't implement this
-        if (!styleAdj.isNull()) {
-            return styleAdj;
-        }
-
-    }
-#endif
     return QRect(x, y, w, h);
 }
 
@@ -447,18 +410,11 @@ void KCompletionBox::up()
 
 void KCompletionBox::pageDown()
 {
-    //int i = currentItem() + numItemsVisible();
-    //i = i > (int)count() - 1 ? (int)count() - 1 : i;
-    //setCurrentRow( i );
     moveCursor(QAbstractItemView::MovePageDown, Qt::NoModifier);
 }
 
 void KCompletionBox::pageUp()
 {
-    //int i = currentItem() - numItemsVisible();
-    //i = i < 0 ? 0 : i;
-    //setCurrentRow( i );
-
     moveCursor(QAbstractItemView::MovePageUp, Qt::NoModifier);
 }
 
@@ -496,7 +452,7 @@ QString KCompletionBox::cancelledText() const
     return d->cancelText;
 }
 
-void KCompletionBoxPrivate::canceled()
+void KCompletionBoxPrivate::cancelled()
 {
     Q_Q(KCompletionBox);
     if (!cancelText.isNull()) {
@@ -571,14 +527,10 @@ void KCompletionBox::setItems(const QStringList &items)
             Q_ASSERT(item);
             delete item;
         }
-
-        //TODO KDE4 : Port me
-        //if (dirty)
-        //    triggerUpdate( false );
     }
 
     if (isVisible() && size().height() != sizeHint().height()) {
-        sizeAndPosition();
+        resizeAndReposition();
     }
 
     blockSignals(block);

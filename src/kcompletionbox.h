@@ -71,12 +71,27 @@ public:
      */
     bool activateOnSelect() const;
 
-public Q_SLOTS:
     /**
      * Returns a list of all items currently in the box.
      */
     QStringList items() const;
 
+    /**
+     * @returns true if this widget is handling Tab-key events to traverse the
+     * items in the dropdown list, otherwise false.
+     *
+     * Default is true.
+     *
+     * @see setTabHandling
+     */
+    bool isTabHandling() const;
+
+    /**
+     * @returns the text set via setCancelledText() or QString().
+     */
+    QString cancelledText() const;
+
+public Q_SLOTS:
     /**
      * Inserts @p items into the box. Does not clear the items before.
      * @p index determines at which position @p items will be inserted.
@@ -115,31 +130,16 @@ public Q_SLOTS:
     void setTabHandling(bool enable);
 
     /**
-     * @returns true if this widget is handling Tab-key events to traverse the
-     * items in the dropdown list, otherwise false.
-     *
-     * Default is true.
-     *
-     * @see setTabHandling
-     */
-    bool isTabHandling() const;
-
-    /**
      * Sets the text to be emitted if the user chooses not to
      * pick from the available matches.
      *
-     * If the canceled text is not set through this function, the
+     * If the cancelled text is not set through this function, the
      * userCancelled signal will not be emitted.
      *
      * @see userCancelled( const QString& )
-     * @param txt  the text to be emitted if the user cancels this box
+     * @param text the text to be emitted if the user cancels this box
      */
-    void setCancelledText(const QString &txt);
-
-    /**
-     * @returns the text set via setCancelledText() or QString().
-     */
-    QString cancelledText() const;
+    void setCancelledText(const QString &text);
 
     /**
      * Set whether or not the selected signal should be emitted when an
@@ -207,9 +207,21 @@ protected:
     QRect calculateGeometry() const;
 
     /**
-     * This properly sizes and positions the listbox.
+     * @deprecated since 5.0, use resizeAndReposition instead.
      */
-    void sizeAndPosition();
+#ifndef KCOMPLETION_NO_DEPRECATED
+    KCOMPLETION_DEPRECATED void sizeAndPosition()
+    {
+        resizeAndReposition();
+    }
+#endif
+
+    /**
+     * This properly resizes and repositions the listbox.
+     *
+     * @since 5.0
+     */
+    void resizeAndReposition();
 
     /**
      * Reimplemented from QListWidget to get events from the viewport (to hide
@@ -233,7 +245,7 @@ protected Q_SLOTS:
 private:
     const QScopedPointer<KCompletionBoxPrivate> d_ptr;
 
-    Q_PRIVATE_SLOT(d_func(), void canceled())
+    Q_PRIVATE_SLOT(d_func(), void cancelled())
     Q_PRIVATE_SLOT(d_func(), void slotItemClicked(QListWidgetItem *))
 };
 
