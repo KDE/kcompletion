@@ -22,9 +22,6 @@
 
 #include <kcompletion.h>
 
-#include <QtCore/QMap>
-#include <QtCore/QObject>
-
 class KCompletionBasePrivate
 {
 public:
@@ -232,10 +229,10 @@ bool KCompletionBase::setKeyBinding(KeyBindingType item, const QList<QKeySequenc
     return true;
 }
 
-QList<QKeySequence> KCompletionBase::getKeyBinding(KeyBindingType item) const
+QList<QKeySequence> KCompletionBase::keyBinding(KeyBindingType item) const
 {
     Q_D(const KCompletionBase);
-    return d->delegate ? d->delegate->getKeyBinding(item) : d->keyBindingMap[ item ];
+    return d->delegate ? d->delegate->keyBinding(item) : d->keyBindingMap[ item ];
 }
 
 void KCompletionBase::useGlobalKeyBindings()
@@ -260,10 +257,10 @@ KCompletion *KCompletionBase::compObj() const
            : static_cast<KCompletion *>(d->completionObject);
 }
 
-KCompletionBase::KeyBindingMap KCompletionBase::getKeyBindings() const
+KCompletionBase::KeyBindingMap KCompletionBase::keyBindingMap() const
 {
     Q_D(const KCompletionBase);
-    return d->delegate ? d->delegate->getKeyBindings() : d->keyBindingMap;
+    return d->delegate ? d->delegate->keyBindingMap() : d->keyBindingMap;
 }
 
 void KCompletionBase::setKeyBindingMap(KCompletionBase::KeyBindingMap keyBindingMap)

@@ -23,6 +23,8 @@
 #include <kcompletion.h>
 #include <kcompletion_export.h>
 
+#include <QMap>
+
 class KCompletionBasePrivate;
 
 /**
@@ -238,7 +240,7 @@ public:
      *   @li SubstringCompletion the key for substring completion
      * @param key key binding used to rotate down in a list.
      * @return true if key binding is successfully set.
-     * @see getKeyBinding
+     * @see keyBinding
      */
     bool setKeyBinding(KeyBindingType item, const QList<QKeySequence> &key);
 
@@ -254,7 +256,17 @@ public:
      * @return the key binding used for the feature given by @p item.
      * @see setKeyBinding
      */
-    QList<QKeySequence> getKeyBinding(KeyBindingType item) const;
+    QList<QKeySequence> keyBinding(KeyBindingType item) const;
+
+    /**
+     * @deprecated since 5.0, use keyBinding instead
+     */
+#ifndef KCOMPLETION_NO_DEPRECATED
+    KCOMPLETION_DEPRECATED QList<QKeySequence> getKeyBinding(KeyBindingType item) const
+    {
+        return keyBinding(item);
+    }
+#endif
 
     /**
      * Sets this object to use global values for key bindings.
@@ -316,7 +328,17 @@ protected:
      *
      * @return the key binding used for the feature given by @p item.
      */
-    KeyBindingMap getKeyBindings() const;
+    KeyBindingMap keyBindingMap() const;
+
+    /**
+     * @deprecated since 5.0, use keyBindingMap instead
+     */
+#ifndef KCOMPLETION_NO_DEPRECATED
+    KCOMPLETION_DEPRECATED KeyBindingMap getKeyBindings() const
+    {
+        return keyBindingMap();
+    }
+#endif
 
     /**
      * Sets the keymap.
@@ -339,19 +361,17 @@ protected:
      */
     KCompletionBase *delegate() const;
 
+    /** Virtual hook, used to add new "virtual" functions while maintaining
+    binary compatibility. Unused in this class.
+    */
+    virtual void virtual_hook(int id, void *data);
+
 private:
     // This method simply sets the autodelete boolean for
     // the completion object, the emit signals and handle
     // signals internally flags to the provided values.
     void setup(bool, bool, bool);
 
-    // BCI
-protected:
-    /** Virtual hook, used to add new "virtual" functions while maintaining
-    binary compatibility. Unused in this class.
-    */
-    virtual void virtual_hook(int id, void *data);
-private:
     Q_DISABLE_COPY(KCompletionBase)
     const QScopedPointer<KCompletionBasePrivate> d_ptr;
 };

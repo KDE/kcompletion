@@ -738,7 +738,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
             }
         }
 
-        const KeyBindingMap keys = getKeyBindings();
+        const KeyBindingMap keys = keyBindingMap();
         const KCompletion::CompletionMode mode = completionMode();
         const bool noModifier = (e->modifiers() == Qt::NoButton ||
                                  e->modifiers() == Qt::ShiftModifier ||
@@ -1362,7 +1362,7 @@ bool KLineEditPrivate::overrideShortcut(const QKeyEvent *e)
     QList<QKeySequence> scKey;
 
     const int key = e->key() | e->modifiers();
-    const KLineEdit::KeyBindingMap keys = q->getKeyBindings();
+    const KLineEdit::KeyBindingMap keys = q->keyBindingMap();
 
     if (keys[KLineEdit::TextCompletion].isEmpty()) {
         scKey = KStandardShortcut::shortcut(KStandardShortcut::TextCompletion);
