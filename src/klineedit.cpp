@@ -58,7 +58,7 @@ void KLineEditPrivate::_k_textChanged(const QString &txt)
     // KDE5: remove userTextChanged signal, textEdited does the same...
     if (!completionRunning && (txt != userText)) {
         userText = txt;
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
         emit q->userTextChanged(txt);
 #endif
     }
@@ -72,7 +72,7 @@ void KLineEditPrivate::_k_updateUserText(const QString &txt)
     if (!completionRunning && (txt != userText)) {
         userText = txt;
         q->setModified(true);
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
         emit q->userTextChanged(txt);
 #endif
         emit q->textEdited(txt);
@@ -203,7 +203,7 @@ KLineEdit::~KLineEdit()
 {
 }
 
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
 QString KLineEdit::clickMessage() const
 {
     return placeholderText();
@@ -1623,21 +1623,21 @@ void KLineEdit::paintEvent(QPaintEvent *ev)
     }
 }
 
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
 void KLineEdit::setClickMessage(const QString &msg)
 {
     setPlaceholderText(msg);
 }
 #endif
 
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
 void KLineEdit::setContextMenuEnabled(bool showMenu)
 {
     QLineEdit::setContextMenuPolicy(showMenu ? Qt::DefaultContextMenu : Qt::NoContextMenu);
 }
 #endif
 
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
 bool KLineEdit::isContextMenuEnabled() const
 {
     return (contextMenuPolicy() == Qt::DefaultContextMenu);

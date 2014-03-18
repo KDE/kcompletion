@@ -155,15 +155,15 @@ class KCOMPLETION_EXPORT KLineEdit : public QLineEdit, public KCompletionBase //
 
     Q_OBJECT
     Q_DECLARE_PRIVATE(KLineEdit)
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     Q_PROPERTY(bool contextMenuEnabled READ isContextMenuEnabled WRITE setContextMenuEnabled)
 #endif
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     Q_PROPERTY(bool urlDropsEnabled READ urlDropsEnabled WRITE setUrlDropsEnabled)
 #endif
     Q_PROPERTY(bool trapEnterKeyEvent READ trapReturnKey WRITE setTrapReturnKey)
     Q_PROPERTY(bool squeezedTextEnabled READ isSqueezedTextEnabled WRITE setSqueezedTextEnabled)
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     Q_PROPERTY(QString clickMessage READ clickMessage WRITE setClickMessage)
 #endif
     Q_PROPERTY(bool showClearButton READ isClearButtonShown WRITE setClearButtonShown)
@@ -229,7 +229,7 @@ public:
      * @param showMenu If @p true, show the context menu.
      * @deprecated use setContextMenuPolicy
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     virtual KCOMPLETION_DEPRECATED void setContextMenuEnabled(bool showMenu);
 #endif
 
@@ -237,7 +237,7 @@ public:
      * Returns @p true when the context menu is enabled.
      * @deprecated use contextMenuPolicy
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED bool isContextMenuEnabled() const;
 #endif
 
@@ -249,7 +249,7 @@ public:
      * @param enable If @p true, insert decoded URLs
      * @deprecated since 5.0. Use installEventFilter with a LineEditUrlDropEventFilter
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED void setUrlDropsEnabled(bool enable);
 #endif
 
@@ -348,7 +348,7 @@ public:
      * the purpose of the line edit.
      * @deprecated Use QLineEdit::setPlaceholderText instead.
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED void setClickMessage(const QString &msg);
 #endif
 
@@ -356,7 +356,7 @@ public:
      * @return the message set with setClickMessage
      * @deprecated Use QLineEdit::placeholderText instead.
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED QString clickMessage() const;
 #endif
 
@@ -429,7 +429,7 @@ Q_SIGNALS:
      * (by typing or accepting autocompletion), without side effects from
      * suggested autocompletion either. userTextChanged isn't needed anymore.
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     QT_MOC_COMPAT void userTextChanged(const QString &);
 #endif
 

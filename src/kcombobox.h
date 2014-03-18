@@ -151,7 +151,7 @@ class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase //
 {
     Q_OBJECT
     Q_PROPERTY(bool autoCompletion READ autoCompletion WRITE setAutoCompletion)
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     Q_PROPERTY(bool urlDropsEnabled READ urlDropsEnabled WRITE setUrlDropsEnabled)
 #endif
     Q_PROPERTY(bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey)
@@ -183,7 +183,7 @@ public:
      * Deprecated to reflect Qt api changes
      * @deprecated
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED void insertURL(const QUrl &url, int index = -1)
     {
         insertUrl(index < 0 ? count() : index, url);
@@ -306,7 +306,7 @@ public:
     * @param showMenu If @p true, show the context menu.
     * @deprecated since 5.0, use setContextMenuPolicy instead
     */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     virtual KCOMPLETION_DEPRECATED void setContextMenuEnabled(bool showMenu);
 #endif
 
@@ -320,7 +320,7 @@ public:
      * @param enable If @p true, insert decoded URLs
      * @deprecated since 5.0. Use lineEdit()->installEventFilter with a LineEditUrlDropEventFilter
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED void setUrlDropsEnabled(bool enable);
 #endif
 

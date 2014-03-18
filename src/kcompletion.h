@@ -407,7 +407,7 @@ public Q_SLOTS:
      * @see makeCompletion
      * @deprecated since 5.0, use makeCompletion() instead
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED void slotMakeCompletion(const QString &string)     //inline (redirect)
     {
         (void) makeCompletion(string);

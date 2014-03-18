@@ -138,12 +138,12 @@ bool KComboBox::autoCompletion() const
     return completionMode() == KCompletion::CompletionAuto;
 }
 
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
 void KComboBox::setContextMenuEnabled(bool showMenu)
 {
     Q_D(KComboBox);
     if (d->klineEdit) {
-        d->klineEdit->setContextMenuEnabled(showMenu);
+        d->klineEdit->setContextMenuPolicy(showMenu ? Qt::DefaultContextMenu : Qt::NoContextMenu);
     }
 }
 
