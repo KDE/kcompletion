@@ -374,7 +374,7 @@ public:
 
     /**
      * @return the size used by the clear button
-     * @since KDE 4.1
+     * @since 4.1
      **/
     QSize clearButtonUsedSize() const;
 
