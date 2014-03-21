@@ -287,19 +287,13 @@ class KCompletionPrivate
 {
 public:
     KCompletionPrivate(KCompletion *parent)
-        : myCompletionMode(KCompletion::CompletionPopup)
-        , myTreeNodeAllocator( KCompTreeNode::allocator() ) // keep strong-ref to allocator instance
-        , myTreeRoot(new KCompTreeNode)
-        , myBeep(true)
-        , myIgnoreCase(false)
-        , myHasMultipleMatches(false)
-        , myRotationIndex(0)
-        , q_ptr(parent)
-    {
-    }
+        : q_ptr(parent) {}
+
+    void init();
+
     ~KCompletionPrivate()
     {
-        delete myTreeRoot;
+        delete treeRoot;
     }
 
     void addWeightedItem(const QString &);
@@ -320,21 +314,22 @@ public:
     // list used for nextMatch() and previousMatch()
     KCompletionMatchesWrapper matches;
 
-    KCompletion::CompletionMode myCompletionMode;
+    KCompletion::CompletionMode completionMode;
 
-    QSharedPointer<KZoneAllocator> myTreeNodeAllocator;
+    QSharedPointer<KZoneAllocator> treeNodeAllocator;
 
-    KCompletion::CompOrder myOrder;
-    QString                myLastString;
-    QString                myLastMatch;
-    QString                myCurrentMatch;
-    KCompTreeNode         *myTreeRoot;
-    //QStringList            myRotations;
-    bool                   myBeep : 1;
-    bool                   myIgnoreCase : 1;
-    bool                   myHasMultipleMatches;
-    int                    myRotationIndex;
+    QString lastString;
+    QString lastMatch;
+    QString currentMatch;
+    KCompTreeNode *treeRoot;
     KCompletion * const q_ptr;
+    int rotationIndex;
+    // TODO: Change hasMultipleMatches to bitfield after moving findAllCompletions()
+    // to KCompletionMatchesPrivate
+    KCompletion::CompOrder order : 3;
+    bool hasMultipleMatches;
+    bool beep : 1;
+    bool ignoreCase : 1;
     Q_DECLARE_PUBLIC(KCompletion)
 };
 
