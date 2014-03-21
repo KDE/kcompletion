@@ -30,7 +30,7 @@
  *
  * It will be called whenever an icon is searched for @p text.
  *
- * Used e.g. by KHistoryCombo
+ * Used e.g. by KHistoryComboBox
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  * @short an abstract interface for looking up icons
