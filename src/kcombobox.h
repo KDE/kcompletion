@@ -181,7 +181,7 @@ public:
 
     /**
      * Deprecated to reflect Qt api changes
-     * @deprecated
+     * @deprecated since 4.5
      */
 #ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED void insertURL(const QUrl &url, int index = -1)
@@ -304,7 +304,7 @@ public:
     * menu.
     *
     * @param showMenu If @p true, show the context menu.
-    * @deprecated since 5.0, use setContextMenuPolicy instead
+    * @deprecated since 4.5, use setContextMenuPolicy instead
     */
 #ifndef KCOMPLETION_NO_DEPRECATED
     virtual KCOMPLETION_DEPRECATED void setContextMenuEnabled(bool showMenu);

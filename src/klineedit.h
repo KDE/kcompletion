@@ -227,7 +227,7 @@ public:
      * menu.
      *
      * @param showMenu If @p true, show the context menu.
-     * @deprecated use setContextMenuPolicy
+     * @deprecated since 4.5, use setContextMenuPolicy instead
      */
 #ifndef KCOMPLETION_NO_DEPRECATED
     virtual KCOMPLETION_DEPRECATED void setContextMenuEnabled(bool showMenu);
@@ -235,7 +235,7 @@ public:
 
     /**
      * Returns @p true when the context menu is enabled.
-     * @deprecated use contextMenuPolicy
+     * @deprecated since 4.5, use contextMenuPolicy instead
      */
 #ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED bool isContextMenuEnabled() const;
@@ -346,7 +346,7 @@ public:
      * This makes the line edit display a grayed-out hinting text as long as
      * the user didn't enter any text. It is often used as indication about
      * the purpose of the line edit.
-     * @deprecated Use QLineEdit::setPlaceholderText instead.
+     * @deprecated since 5.0, use QLineEdit::setPlaceholderText instead.
      */
 #ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED void setClickMessage(const QString &msg);
@@ -354,7 +354,7 @@ public:
 
     /**
      * @return the message set with setClickMessage
-     * @deprecated Use QLineEdit::placeholderText instead.
+     * @deprecated since 5.0, use QLineEdit::placeholderText instead.
      */
 #ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED QString clickMessage() const;

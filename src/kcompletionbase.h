@@ -254,6 +254,7 @@ public:
      *
      * @param item the item to check
      * @return the key binding used for the feature given by @p item.
+     * @since 5.0
      * @see setKeyBinding
      */
     QList<QKeySequence> keyBinding(KeyBindingType item) const;
@@ -327,6 +328,7 @@ protected:
      * returns the whole keymap containing the key bindings.
      *
      * @return the key binding used for the feature given by @p item.
+     * @since 5.0
      */
     KeyBindingMap keyBindingMap() const;
 
