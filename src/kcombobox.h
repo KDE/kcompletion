@@ -35,13 +35,6 @@ class KComboBoxPrivate;
 class QLineEdit;
 class QMenu;
 
-/*
- * ### KDE 5: On all methods that it is said that toDisplayString() will be used, it
- *            would be nice to add a flag to the method for forcing the pretty
- *            url or not. (ereslibre)
- * David: when would we want the ugly string rather than the pretty one? ;-)
- */
-
 /**
  * @short A combo box with completion support.
  *
