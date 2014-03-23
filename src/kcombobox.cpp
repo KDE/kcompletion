@@ -202,12 +202,6 @@ void KComboBox::rotateText(KCompletionBase::KeyBindingType type)
     }
 }
 
-// Not needed anymore
-bool KComboBox::eventFilter(QObject *o, QEvent *ev)
-{
-    return QComboBox::eventFilter(o, ev);
-}
-
 void KComboBox::setTrapReturnKey(bool grab)
 {
     Q_D(KComboBox);
@@ -277,12 +271,6 @@ KCompletionBox *KComboBox::completionBox(bool create)
         return d->klineEdit->completionBox(create);
     }
     return 0;
-}
-
-void KComboBox::wheelEvent(QWheelEvent *ev)
-{
-    // Not necessary anymore
-    QComboBox::wheelEvent(ev);
 }
 
 QSize KComboBox::minimumSizeHint() const

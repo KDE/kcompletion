@@ -364,11 +364,6 @@ public:
     bool trapReturnKey() const;
 
     /**
-    * Re-implemented for internal reasons.  API not affected.
-    */
-    virtual bool eventFilter(QObject *, QEvent *);
-
-    /**
      * @returns the completion box that is used in completion mode
      * CompletionPopup and CompletionPopupAuto.
      *
@@ -533,8 +528,6 @@ protected:
     * @param marked Whether the text inserted should be highlighted
     */
     virtual void setCompletedText(const QString &text, bool marked);
-
-    virtual void wheelEvent(QWheelEvent *ev);
 
     virtual QSize minimumSizeHint() const;
 
