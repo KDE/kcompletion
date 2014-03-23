@@ -248,41 +248,23 @@ public:
      **/
     void updateClearButton();
 
-    static bool s_initialized;
-    static bool s_backspacePerformsCompletion; // Configuration option
+    QMap<KCompletion::CompletionMode, bool> disableCompletionMap;
 
     QColor previousHighlightColor;
     QColor previousHighlightedTextColor;
 
-    bool userSelection: 1;
-    bool autoSuggest : 1;
-    bool disableRestoreSelection: 1;
-    bool handleURLDrops: 1;
-    bool grabReturnKeyEvents: 1;
-    bool enableSqueezedText: 1;
-    bool completionRunning: 1;
-
-    int squeezedEnd;
-    int squeezedStart;
     QPalette::ColorRole bgRole;
+
     QString squeezedText;
     QString userText;
+    QString lastStyleClass;
 
-    bool threeStars: 1;
-
-    bool possibleTripleClick : 1; // set in mousePressEvent, deleted in tripleClickTimeout
-
-    bool clickInClear: 1;
-    bool wideEnoughForClear: 1;
     KLineEditButton *clearButton;
     QPointer<KLineEditStyle> style;
-    QString lastStyleClass;
 
     KCompletionBox *completionBox;
 
     LineEditUrlDropEventFilter *urlDropEventFilter;
-
-    bool italicizePlaceholder: 1;
 
     QAction *noCompletionAction;
     QAction *shellCompletionAction;
@@ -292,8 +274,26 @@ public:
     QAction *popupAutoCompletionAction;
     QAction *defaultAction;
 
-    QMap<KCompletion::CompletionMode, bool> disableCompletionMap;
     KLineEdit *q_ptr;
+
+    int squeezedEnd;
+    int squeezedStart;
+
+    static bool s_initialized;
+    static bool s_backspacePerformsCompletion; // Configuration option
+
+    bool userSelection: 1;
+    bool autoSuggest : 1;
+    bool disableRestoreSelection: 1;
+    bool handleURLDrops: 1;
+    bool grabReturnKeyEvents: 1;
+    bool enableSqueezedText: 1;
+    bool completionRunning: 1;
+    bool italicizePlaceholder: 1;
+    bool threeStars: 1;
+    bool possibleTripleClick : 1; // set in mousePressEvent, deleted in tripleClickTimeout
+    bool clickInClear: 1;
+    bool wideEnoughForClear: 1;
     Q_DECLARE_PUBLIC(KLineEdit)
 };
 
