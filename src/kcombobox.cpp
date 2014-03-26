@@ -202,13 +202,13 @@ void KComboBox::rotateText(KCompletionBase::KeyBindingType type)
     }
 }
 
-void KComboBox::setTrapReturnKey(bool grab)
+void KComboBox::setTrapReturnKey(bool trap)
 {
     Q_D(KComboBox);
-    d->trapReturnKey = grab;
+    d->trapReturnKey = trap;
 
     if (d->klineEdit) {
-        d->klineEdit->setTrapReturnKey(grab);
+        d->klineEdit->setTrapReturnKey(trap);
     } else {
         qWarning("KComboBox::setTrapReturnKey not supported with a non-KLineEdit.");
     }

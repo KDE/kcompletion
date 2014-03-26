@@ -385,7 +385,7 @@ public:
      *
      * @since 4.2.1
      */
-    void doCompletion(const QString &txt);
+    void doCompletion(const QString &text);
 
 Q_SIGNALS:
 
@@ -462,9 +462,9 @@ Q_SIGNALS:
      * provided through since it is created and deleted
      * on demand.
      *
-     * @param p the context menu about to be displayed
+     * @param contextMenu the context menu about to be displayed
      */
-    void aboutToShowContextMenu(QMenu *menu);
+    void aboutToShowContextMenu(QMenu *contextMenu);
 
     /**
      * Emitted when the user clicked on the clear button
@@ -526,9 +526,9 @@ public Q_SLOTS:
     /**
      * @brief set the line edit in password mode.
      * this change the EchoMode according to KDE preferences.
-     * @param b true to set in password mode
+     * @param passwordMode true to set in password mode
      */
-    void setPasswordMode(bool b = true);
+    void setPasswordMode(bool passwordMode = true);
 
     /**
      * @return returns true if the lineedit is set to password mode echoing

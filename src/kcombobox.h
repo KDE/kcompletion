@@ -449,9 +449,9 @@ Q_SIGNALS:
      * Note that you <em>must not</em> store the pointer to the QPopupMenu since it is
      * created and deleted on demand.  Otherwise, you can crash your app.
      *
-     * @param p the context menu about to be displayed
+     * @param contextMenu the context menu about to be displayed
      */
-    void aboutToShowContextMenu(QMenu *p);
+    void aboutToShowContextMenu(QMenu *contextMenu);
 
 public Q_SLOTS:
 

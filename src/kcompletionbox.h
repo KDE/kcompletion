@@ -145,9 +145,9 @@ public Q_SLOTS:
      * Set whether or not the selected signal should be emitted when an
      * item is selected. By default the selected() signal is emitted.
      *
-     * @param state false if the signal should not be emitted.
+     * @param doEmit false if the signal should not be emitted.
      */
-    void setActivateOnSelect(bool state);
+    void setActivateOnSelect(bool doEmit);
 
     /**
      * Moves the selection one line down or select the first item if nothing is selected yet.

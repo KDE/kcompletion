@@ -51,32 +51,32 @@ KLineEditPrivate::~KLineEditPrivate()
     delete style.data();
 }
 
-void KLineEditPrivate::_k_textChanged(const QString &txt)
+void KLineEditPrivate::_k_textChanged(const QString &text)
 {
     Q_Q(KLineEdit);
     // COMPAT (as documented): emit userTextChanged whenever textChanged is emitted
     // KDE5: remove userTextChanged signal, textEdited does the same...
-    if (!completionRunning && (txt != userText)) {
-        userText = txt;
+    if (!completionRunning && (text != userText)) {
+        userText = text;
 #ifndef KCOMPLETION_NO_DEPRECATED
-        emit q->userTextChanged(txt);
+        emit q->userTextChanged(text);
 #endif
     }
 }
 
 // Call this when a completion operation changes the lineedit text
 // "as if it had been edited by the user".
-void KLineEditPrivate::_k_updateUserText(const QString &txt)
+void KLineEditPrivate::_k_updateUserText(const QString &text)
 {
     Q_Q(KLineEdit);
-    if (!completionRunning && (txt != userText)) {
-        userText = txt;
+    if (!completionRunning && (text != userText)) {
+        userText = text;
         q->setModified(true);
 #ifndef KCOMPLETION_NO_DEPRECATED
-        emit q->userTextChanged(txt);
+        emit q->userTextChanged(text);
 #endif
-        emit q->textEdited(txt);
-        emit q->textChanged(txt);
+        emit q->textEdited(text);
+        emit q->textChanged(text);
     }
 }
 
@@ -126,7 +126,7 @@ void KLineEditPrivate::init()
     //---
     completionBox = 0L;
     handleURLDrops = true;
-    grabReturnKeyEvents = false;
+    trapReturnKeyEvents = false;
 
     userSelection = true;
     autoSuggest = false;
@@ -592,7 +592,7 @@ void KLineEdit::copy() const
     }
 }
 
-bool KLineEditPrivate::copySqueezedText(bool clipboard) const
+bool KLineEditPrivate::copySqueezedText(bool copy) const
 {
     Q_Q(const KLineEdit);
     if (!squeezedText.isEmpty() && squeezedStart) {
@@ -617,7 +617,7 @@ bool KLineEditPrivate::copySqueezedText(bool clipboard) const
         QString t = squeezedText;
         t = t.mid(start, end - start);
         q->disconnect(QApplication::clipboard(), SIGNAL(selectionChanged()), q, 0);
-        QApplication::clipboard()->setText(t, clipboard ? QClipboard::Clipboard : QClipboard::Selection);
+        QApplication::clipboard()->setText(t, copy ? QClipboard::Clipboard : QClipboard::Selection);
         q->connect(QApplication::clipboard(), SIGNAL(selectionChanged()), q,
                 SLOT(_q_clipboardChanged()));
         return true;
@@ -715,7 +715,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
             completionMode() != KCompletion::CompletionNone) {
         if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter) {
             const bool trap = (d->completionBox && d->completionBox->isVisible());
-            const bool stopEvent = (trap || (d->grabReturnKeyEvents &&
+            const bool stopEvent = (trap || (d->trapReturnKeyEvents &&
                                              (e->modifiers() == Qt::NoButton ||
                                               e->modifiers() == Qt::KeypadModifier)));
 
@@ -1267,6 +1267,7 @@ bool KLineEdit::event(QEvent *ev)
     return QLineEdit::event(ev);
 }
 
+#ifndef KCOMPLETION_NO_DEPRECATED
 void KLineEdit::setUrlDropsEnabled(bool enable)
 {
     Q_D(KLineEdit);
@@ -1278,6 +1279,7 @@ void KLineEdit::setUrlDropsEnabled(bool enable)
         d->handleURLDrops = false;
     }
 }
+#endif
 
 bool KLineEdit::urlDropsEnabled() const
 {
@@ -1285,16 +1287,16 @@ bool KLineEdit::urlDropsEnabled() const
     return d->handleURLDrops;
 }
 
-void KLineEdit::setTrapReturnKey(bool grab)
+void KLineEdit::setTrapReturnKey(bool trap)
 {
     Q_D(KLineEdit);
-    d->grabReturnKeyEvents = grab;
+    d->trapReturnKeyEvents = trap;
 }
 
 bool KLineEdit::trapReturnKey() const
 {
     Q_D(const KLineEdit);
-    return d->grabReturnKeyEvents;
+    return d->trapReturnKeyEvents;
 }
 
 void KLineEdit::setUrl(const QUrl &url)
@@ -1644,10 +1646,10 @@ bool KLineEdit::isContextMenuEnabled() const
 }
 #endif
 
-void KLineEdit::setPasswordMode(bool b)
+void KLineEdit::setPasswordMode(bool passwordMode)
 {
     Q_D(KLineEdit);
-    if (b) {
+    if (passwordMode) {
         KConfigGroup cg(KSharedConfig::openConfig(), "Passwords");
         const QString val = cg.readEntry("EchoMode", "OneStar");
         if (val == "NoEcho") {
@@ -1666,15 +1668,15 @@ bool KLineEdit::passwordMode() const
     return echoMode() == NoEcho || echoMode() == Password;
 }
 
-void KLineEdit::doCompletion(const QString &txt)
+void KLineEdit::doCompletion(const QString &text)
 {
     Q_D(KLineEdit);
     if (emitSignals()) {
-        emit completion(txt); // emit when requested...
+        emit completion(text); // emit when requested...
     }
     d->completionRunning = true;
     if (handleSignals()) {
-        makeCompletion(txt);  // handle when requested...
+        makeCompletion(text);  // handle when requested...
     }
     d->completionRunning = false;
 }

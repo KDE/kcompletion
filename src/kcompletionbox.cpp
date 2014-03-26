@@ -546,10 +546,10 @@ void KCompletionBoxPrivate::slotItemClicked(QListWidgetItem *item)
     }
 }
 
-void KCompletionBox::setActivateOnSelect(bool state)
+void KCompletionBox::setActivateOnSelect(bool doEmit)
 {
     Q_D(KCompletionBox);
-    d->emitSelected = state;
+    d->emitSelected = doEmit;
 }
 
 bool KCompletionBox::activateOnSelect() const

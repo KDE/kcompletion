@@ -313,10 +313,10 @@ bool KCompletion::ignoreCase() const
     return d->ignoreCase;
 }
 
-void KCompletion::setItems(const QStringList &items)
+void KCompletion::setItems(const QStringList &itemList)
 {
     clear();
-    insertItems(items);
+    insertItems(itemList);
 }
 
 void KCompletion::insertItems(const QStringList &items)

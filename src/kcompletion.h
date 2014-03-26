@@ -457,10 +457,10 @@ public Q_SLOTS:
      * setOrder(KCompletion::Insertion)
      * before calling setItems().
      *
-     * @param list the list of items that are available for completion
+     * @param itemList the list of items that are available for completion
      * @see items
      */
-    virtual void setItems(const QStringList &list);
+    virtual void setItems(const QStringList &itemList);
 
     /**
      * Adds an item to the list of available completions.
@@ -536,10 +536,10 @@ protected:
      * Never delete that pointer!
      *
      * Default implementation does nothing.
-     * @param pMatch the match to process
+     * @param match the match to process
      * @see postProcessMatches
      */
-    virtual void postProcessMatch(QString *pMatch) const;
+    virtual void postProcessMatch(QString *match) const;
 
     /**
      * This method is called before a list of all available completions is
@@ -548,10 +548,10 @@ protected:
      * Never delete that pointer!
      *
      * Default implementation does nothing.
-     * @param pMatches the matches to process
+     * @param matchList the matches to process
      * @see postProcessMatch
      */
-    virtual void postProcessMatches(QStringList *pMatches) const;
+    virtual void postProcessMatches(QStringList *matchList) const;
 
     /**
      * This method is called before a list of all available completions is
@@ -560,10 +560,10 @@ protected:
      * Never delete that pointer!
      *
      * Default implementation does nothing.
-     * @param pMatches the matches to process
+     * @param matches the matches to process
      * @see postProcessMatch
      */
-    virtual void postProcessMatches(KCompletionMatches *pMatches) const;
+    virtual void postProcessMatches(KCompletionMatches *matches) const;
 
 private:
     Q_DISABLE_COPY(KCompletion)

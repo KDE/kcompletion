@@ -164,14 +164,14 @@ public:
      * KPixmapProvider is just an abstract class with the one pure virtual
      * method KPixmapProvider::pixmapFor(). This method is called whenever
      * an item is added to the KHistoryComboBoxBox. Implement it to return your
-     * own custom pixmaps, or use the KUrlPixmapProvider from libkio,
+     * own custom pixmaps, or use the KUrlPixmapProvider from KIO,
      * which uses KMimeType::pixmapForUrl to resolve icons.
      *
-     * Set @p prov to 0L if you want to disable pixmaps. Default no pixmaps.
+     * Set @p provider to Q_NULLPTR if you want to disable pixmaps. Default no pixmaps.
      *
      * @see pixmapProvider
      */
-    void setPixmapProvider(KPixmapProvider *prov);
+    void setPixmapProvider(KPixmapProvider *provider);
 
     /**
      * @returns the current pixmap provider.

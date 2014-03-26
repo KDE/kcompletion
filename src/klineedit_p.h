@@ -211,8 +211,8 @@ public:
     //FIXME: Change to the form _k_*() the methods that are used as slots
     //and declare them as Q_PRIVATE_SLOT in klineedit.h.
     //The methods that aren't slots shouldn't have the form _k_*()
-    void _k_textChanged(const QString &txt);
-    void _k_updateUserText(const QString &txt);
+    void _k_textChanged(const QString &text);
+    void _k_updateUserText(const QString &text);
     void adjustForReadOnly();
 
     // Slots
@@ -235,7 +235,7 @@ public:
 
     void init();
 
-    bool copySqueezedText(bool clipboard) const;
+    bool copySqueezedText(bool copy) const;
 
     /**
      * Properly sets the squeezed text whenever the widget is
@@ -286,7 +286,7 @@ public:
     bool autoSuggest : 1;
     bool disableRestoreSelection: 1;
     bool handleURLDrops: 1;
-    bool grabReturnKeyEvents: 1;
+    bool trapReturnKeyEvents: 1;
     bool enableSqueezedText: 1;
     bool completionRunning: 1;
     bool italicizePlaceholder: 1;

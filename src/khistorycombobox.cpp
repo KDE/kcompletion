@@ -414,15 +414,15 @@ void KHistoryComboBoxPrivate::reset()
     rotated = false;
 }
 
-void KHistoryComboBox::setPixmapProvider(KPixmapProvider *prov)
+void KHistoryComboBox::setPixmapProvider(KPixmapProvider *provider)
 {
     Q_D(KHistoryComboBox);
-    if (d->pixmapProvider == prov) {
+    if (d->pixmapProvider == provider) {
         return;
     }
 
     delete d->pixmapProvider;
-    d->pixmapProvider = prov;
+    d->pixmapProvider = provider;
 
     // re-insert all the items with/without pixmap
     // I would prefer to use changeItem(), but that doesn't honor the pixmap
