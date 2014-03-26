@@ -436,8 +436,6 @@ public Q_SLOTS:
     }
 #endif
 
-    // FIXME ###: KDE5: unify the nomenclature.  We have insertItems, addItem,
-    //            setItems...
     /**
      * Inserts @p items into the list of possible completions.
      * It does the same as setItems(), but without calling clear() before.
