@@ -204,7 +204,7 @@ void KHistoryComboBoxPrivate::addContextMenuItems(QMenu *menu)
     Q_Q(KHistoryComboBox);
     if (menu) {
         menu->addSeparator();
-        QAction *clearHistory = menu->addAction(QIcon::fromTheme("edit-clear-history"), QCoreApplication::translate("KHistoryComboBox", "Clear &History"), q, SLOT(clear()));
+        QAction *clearHistory = menu->addAction(QIcon::fromTheme("edit-clear-history"), KHistoryComboBox::tr("Clear &History"), q, SLOT(clear()));
         if (!q->count()) {
             clearHistory->setEnabled(false);
         }

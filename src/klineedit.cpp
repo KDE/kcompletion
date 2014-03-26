@@ -151,7 +151,7 @@ void KLineEditPrivate::init()
     // (e.g. "Enter search pattern").
     // By default the text is set in italic, which may not be appropriate
     // for some languages and scripts (e.g. for CJK ideographs).
-    QString metaMsg = QCoreApplication::translate("KLineEdit", "1", "Italic placeholder text in line edits: 0 no, 1 yes");
+    QString metaMsg = KLineEdit::tr("1", "Italic placeholder text in line edits: 0 no, 1 yes");
     italicizePlaceholder = (metaMsg.trimmed() != QString('0'));
     //---
     possibleTripleClick = false;
