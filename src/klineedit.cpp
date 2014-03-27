@@ -1561,11 +1561,6 @@ void KLineEditPrivate::slotRestoreSelectionColors()
     q->setUserSelection(true);
 }
 
-void KLineEdit::clear()
-{
-    setText(QString());
-}
-
 void KLineEditPrivate::_k_slotCompletionBoxTextChanged(const QString &text)
 {
     Q_Q(KLineEdit);

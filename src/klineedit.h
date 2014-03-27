@@ -507,12 +507,6 @@ public Q_SLOTS:
     void setCompletedItems(const QStringList &items, bool autoSuggest = true);
 
     /**
-     * Reimplemented to workaround a buggy QLineEdit::clear()
-     * (changing the clipboard to the text we just had in the lineedit)
-     */
-    virtual void clear(); // ### KDE 5: check if still required
-
-    /**
      * Squeezes @p text into the line edit.
      * This can only be used with read-only line-edits.
      */
