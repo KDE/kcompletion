@@ -42,11 +42,6 @@ public:
     void rotateDown();
 
     /**
-     * Resets the iterate index to -1
-     */
-    void reset();
-
-    /**
      * Called from the popupmenu,
      * calls clearHistory() and emits cleared()
      */
@@ -408,12 +403,6 @@ void KHistoryComboBox::wheelEvent(QWheelEvent *ev)
     ev->accept();
 }
 
-void KHistoryComboBoxPrivate::reset()
-{
-    currentIndex = -1;
-    rotated = false;
-}
-
 void KHistoryComboBox::setPixmapProvider(KPixmapProvider *provider)
 {
     Q_D(KHistoryComboBox);
@@ -490,7 +479,8 @@ KPixmapProvider *KHistoryComboBox::pixmapProvider() const
 void KHistoryComboBox::reset()
 {
     Q_D(KHistoryComboBox);
-    d->reset();
+    d->currentIndex = -1;
+    d->rotated = false;
 }
 
 #include "moc_khistorycombobox.cpp"

@@ -180,12 +180,6 @@ public:
      */
     KPixmapProvider *pixmapProvider() const;
 
-    /**
-     * Resets the current position of the up/down history. Call this
-     * when you manually call setCurrentItem() or clearEdit().
-     */
-    void reset();
-
     using QComboBox::insertItems;
 
 public Q_SLOTS:
@@ -214,6 +208,12 @@ public Q_SLOTS:
      * Clears the history and the completion list.
      */
     void clearHistory();
+
+    /**
+     * Resets the current position of the up/down history. Call this
+     * when you manually call setCurrentItem() or clearEdit().
+     */
+    void reset();
 
 Q_SIGNALS:
     /**
@@ -249,7 +249,6 @@ protected:
 
 private:
     const QScopedPointer<KHistoryComboBoxPrivate> d_ptr;
-    Q_PRIVATE_SLOT(d_func(), void reset())
     Q_PRIVATE_SLOT(d_func(), void clear())
     Q_PRIVATE_SLOT(d_func(), void addContextMenuItems(QMenu *))
     Q_PRIVATE_SLOT(d_func(), void simulateActivated(const QString &))
