@@ -87,7 +87,7 @@ public:
      * Returns a pointer to the current completion object.
      *
      * If the completion object does not exist, it is automatically created and
-     * by default handles all the completion signals internally unless @p hsig
+     * by default handles all the completion signals internally unless @p handleSignals
      * is set to false. It is also automatically destroyed when the destructor
      * is called. You can change this default behavior using the
      * @ref setAutoDeleteCompletionObject and @ref setHandleSignals member
@@ -95,10 +95,10 @@ public:
      *
      * See also @ref compObj.
      *
-     * @param hsig if true, handles completion signals internally.
+     * @param handleSignals if true, handles completion signals internally.
      * @return a pointer to the completion object.
      */
-    KCompletion *completionObject(bool hsig = true);
+    KCompletion *completionObject(bool handleSignals = true);
 
     /**
      * Sets up the completion object to be used.
@@ -116,7 +116,7 @@ public:
      * @param completionObject a KCompletion or a derived child object.
      * @param handleCompletionSignals if true, handles completion signals internally.
      */
-    virtual void setCompletionObject(KCompletion *completionObject, bool handleCompletionSignals = true);
+    virtual void setCompletionObject(KCompletion *completionObject, bool handleSignals = true);
 
     /**
      * Enables this object to handle completion and rotation
@@ -369,11 +369,6 @@ protected:
     virtual void virtual_hook(int id, void *data);
 
 private:
-    // This method simply sets the autodelete boolean for
-    // the completion object, the emit signals and handle
-    // signals internally flags to the provided values.
-    void setup(bool, bool, bool);
-
     Q_DISABLE_COPY(KCompletionBase)
     const QScopedPointer<KCompletionBasePrivate> d_ptr;
 };

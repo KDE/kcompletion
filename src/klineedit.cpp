@@ -1511,18 +1511,18 @@ KCompletionBox *KLineEdit::completionBox(bool create)
     return d->completionBox;
 }
 
-void KLineEdit::setCompletionObject(KCompletion *comp, bool hsig)
+void KLineEdit::setCompletionObject(KCompletion *comp, bool handle)
 {
     KCompletion *oldComp = compObj();
     if (oldComp && handleSignals())
         disconnect(oldComp, SIGNAL(matches(QStringList)),
                    this, SLOT(setCompletedItems(QStringList)));
 
-    if (comp && hsig)
+    if (comp && handle)
         connect(comp, SIGNAL(matches(QStringList)),
                 this, SLOT(setCompletedItems(QStringList)));
 
-    KCompletionBase::setCompletionObject(comp, hsig);
+    KCompletionBase::setCompletionObject(comp, handle);
 }
 
 void KLineEdit::setUserSelection(bool userSelection)

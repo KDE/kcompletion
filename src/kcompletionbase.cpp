@@ -31,9 +31,9 @@ public:
 
     void init();
 
-    bool autoDeletesCompletionObject;
-    bool handlesCompletionSignals;
-    bool emitsRotationSignals;
+    bool autoDeleteCompletionObject;
+    bool handleSignals;
+    bool emitSignals;
     KCompletion::CompletionMode completionMode;
     QPointer<KCompletion> completionObject;
     KCompletionBase::KeyBindingMap keyBindingMap;
@@ -45,7 +45,7 @@ public:
 
 KCompletionBasePrivate::~KCompletionBasePrivate()
 {
-    if (autoDeletesCompletionObject && completionObject) {
+    if (autoDeleteCompletionObject && completionObject) {
         delete completionObject;
     }
 }
@@ -59,10 +59,9 @@ void KCompletionBasePrivate::init()
     // the event filter will use the global settings.
     q->useGlobalKeyBindings();
 
-    // By default we initialize everything except hsig to false.
-    // All the variables would be setup properly when
-    // the appropriate member functions are called.
-    q->setup(false, true, false);
+    q->setAutoDeleteCompletionObject(false);
+    q->setHandleSignals(true);
+    q->setEmitSignals(false);
 }
 
 
@@ -83,9 +82,9 @@ void KCompletionBase::setDelegate(KCompletionBase *delegate)
     d->delegate = delegate;
 
     if (delegate) {
-        delegate->setAutoDeleteCompletionObject(d->autoDeletesCompletionObject);
-        delegate->setHandleSignals(d->handlesCompletionSignals);
-        delegate->setEmitSignals(d->emitsRotationSignals);
+        delegate->setAutoDeleteCompletionObject(d->autoDeleteCompletionObject);
+        delegate->setHandleSignals(d->handleSignals);
+        delegate->setEmitSignals(d->emitSignals);
         delegate->setCompletionMode(d->completionMode);
         delegate->setKeyBindingMap(d->keyBindingMap);
     }
@@ -97,37 +96,40 @@ KCompletionBase *KCompletionBase::delegate() const
     return d->delegate;
 }
 
-KCompletion *KCompletionBase::completionObject(bool hsig)
+KCompletion *KCompletionBase::completionObject(bool handleSignals)
 {
     Q_D(KCompletionBase);
     if (d->delegate) {
-        return d->delegate->completionObject(hsig);
+        return d->delegate->completionObject(handleSignals);
     }
 
     if (!d->completionObject) {
-        setCompletionObject(new KCompletion(), hsig);
-        d->autoDeletesCompletionObject = true;
+        setCompletionObject(new KCompletion(), handleSignals);
+        d->autoDeleteCompletionObject = true;
     }
     return d->completionObject;
 }
 
-void KCompletionBase::setCompletionObject(KCompletion *completionObject, bool handleCompletionSignals)
+void KCompletionBase::setCompletionObject(KCompletion *completionObject, bool handleSignals)
 {
     Q_D(KCompletionBase);
     if (d->delegate) {
-        d->delegate->setCompletionObject(completionObject, handleCompletionSignals);
+        d->delegate->setCompletionObject(completionObject, handleSignals);
         return;
     }
 
-    if (d->autoDeletesCompletionObject && completionObject != d->completionObject) {
+    if (d->autoDeleteCompletionObject && completionObject != d->completionObject) {
         delete d->completionObject;
     }
 
     d->completionObject = completionObject;
 
+    setAutoDeleteCompletionObject(false);
+    setHandleSignals(handleSignals);
+
     // We emit rotation and completion signals
     // if completion object is not NULL.
-    setup(false, handleCompletionSignals, !d->completionObject.isNull());
+    setEmitSignals(!d->completionObject.isNull());
 }
 
 // BC: Inline this function and possibly rename it to setHandleEvents??? (DA)
@@ -137,7 +139,7 @@ void KCompletionBase::setHandleSignals(bool handle)
     if (d->delegate) {
         d->delegate->setHandleSignals(handle);
     } else {
-        d->handlesCompletionSignals = handle;
+        d->handleSignals = handle;
     }
 }
 
@@ -145,7 +147,7 @@ bool KCompletionBase::isCompletionObjectAutoDeleted() const
 {
     Q_D(const KCompletionBase);
     return d->delegate ? d->delegate->isCompletionObjectAutoDeleted()
-           : d->autoDeletesCompletionObject;
+           : d->autoDeleteCompletionObject;
 }
 
 void KCompletionBase::setAutoDeleteCompletionObject(bool autoDelete)
@@ -154,7 +156,7 @@ void KCompletionBase::setAutoDeleteCompletionObject(bool autoDelete)
     if (d->delegate) {
         d->delegate->setAutoDeleteCompletionObject(autoDelete);
     } else {
-        d->autoDeletesCompletionObject = autoDelete;
+        d->autoDeleteCompletionObject = autoDelete;
     }
 }
 
@@ -164,20 +166,20 @@ void KCompletionBase::setEnableSignals(bool enable)
     if (d->delegate) {
         d->delegate->setEnableSignals(enable);
     } else {
-        d->emitsRotationSignals = enable;
+        d->emitSignals = enable;
     }
 }
 
 bool KCompletionBase::handleSignals() const
 {
     Q_D(const KCompletionBase);
-    return d->delegate ? d->delegate->handleSignals() : d->handlesCompletionSignals;
+    return d->delegate ? d->delegate->handleSignals() : d->handleSignals;
 }
 
 bool KCompletionBase::emitSignals() const
 {
     Q_D(const KCompletionBase);
-    return d->delegate ? d->delegate->emitSignals() : d->emitsRotationSignals;
+    return d->delegate ? d->delegate->emitSignals() : d->emitSignals;
 }
 
 void KCompletionBase::setEmitSignals(bool emitRotationSignals)
@@ -186,7 +188,7 @@ void KCompletionBase::setEmitSignals(bool emitRotationSignals)
     if (d->delegate) {
         d->delegate->setEmitSignals(emitRotationSignals);
     } else {
-        d->emitsRotationSignals = emitRotationSignals;
+        d->emitSignals = emitRotationSignals;
     }
 }
 
@@ -272,19 +274,6 @@ void KCompletionBase::setKeyBindingMap(KCompletionBase::KeyBindingMap keyBinding
     }
 
     d->keyBindingMap = keyBindingMap;
-}
-
-void KCompletionBase::setup(bool autodel, bool hsig, bool esig)
-{
-    Q_D(KCompletionBase);
-    if (d->delegate) {
-        d->delegate->setup(autodel, hsig, esig);
-        return;
-    }
-
-    d->autoDeletesCompletionObject = autodel;
-    d->handlesCompletionSignals = hsig;
-    d->emitsRotationSignals = esig;
 }
 
 void KCompletionBase::virtual_hook(int, void *)

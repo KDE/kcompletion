@@ -291,7 +291,7 @@ public:
     /**
      * Reimplemented for internal reasons, the API is not affected.
      */
-    virtual void setCompletionObject(KCompletion *, bool hsig = true);
+    virtual void setCompletionObject(KCompletion *, bool handle = true);
 
     /**
      * Reimplemented for internal reasons, the API is not affected.
