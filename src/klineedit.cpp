@@ -55,12 +55,12 @@ void KLineEditPrivate::_k_textChanged(const QString &text)
 {
     Q_Q(KLineEdit);
     // COMPAT (as documented): emit userTextChanged whenever textChanged is emitted
-    // KDE5: remove userTextChanged signal, textEdited does the same...
     if (!completionRunning && (text != userText)) {
         userText = text;
 #ifndef KCOMPLETION_NO_DEPRECATED
         emit q->userTextChanged(text);
 #endif
+        emit q->textEdited(text);
     }
 }
 
