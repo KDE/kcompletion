@@ -68,7 +68,7 @@ private Q_SLOTS:
 #endif
         QCOMPARE(textChangedSpy.count(), 1);
         QCOMPARE(textChangedSpy[0][0].toString(), w.text());
-        QCOMPARE(textEditedSpy.count(), 0);
+        QCOMPARE(textEditedSpy.count(), 1);
         QVERIFY(!w.isModified());
 #ifndef KCOMPLETION_NO_DEPRECATED
         userTextChangedSpy.clear();
@@ -85,7 +85,7 @@ private Q_SLOTS:
 #endif
         QCOMPARE(textChangedSpy.count(), 1);
         QCOMPARE(textChangedSpy[0][0].toString(), w.text());
-        QCOMPARE(textEditedSpy.count(), 1);
+        QCOMPARE(textEditedSpy.count(), 2);
         QCOMPARE(textEditedSpy[0][0].toString(), w.text());
         QVERIFY(w.isModified());
 
@@ -169,7 +169,7 @@ private Q_SLOTS:
         QCOMPARE(userTextChangedSpy.count(), 2);
 #endif
         QCOMPARE(textChangedSpy.count(), 2);
-        QCOMPARE(textEditedSpy.count(), 0);
+        QCOMPARE(textEditedSpy.count(), 2);
 #ifndef KCOMPLETION_NO_DEPRECATED
         userTextChangedSpy.clear();
 #endif
