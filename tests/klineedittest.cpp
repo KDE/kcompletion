@@ -78,7 +78,6 @@ KLineEditTest::KLineEditTest(QWidget *widget)
     buttonLayout->addWidget(m_btnPassword);
     buttonLayout->addWidget(m_btnEnable);
     buttonLayout->addWidget(m_btnHide);
-    buttonLayout->addWidget(m_btnClickMessage);
     buttonLayout->addWidget(m_btnPlaceholderText);
     buttonLayout->addWidget(btnStyle);
 
