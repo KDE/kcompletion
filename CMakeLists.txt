@@ -37,6 +37,16 @@ endif()
 remove_definitions(-DQT_NO_CAST_TO_ASCII)
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/po)
+  include(ECMCreateQmFromPoFiles)
+  ecm_create_qm_from_po_files(
+    PO_DIR po
+    POT_NAME kcompletion5.pot
+    DATA_INSTALL_SUB_DIR kcompletion
+    CREATE_LOADER kcompletion_QM_LOADER
+  )
+endif()
+
 add_subdirectory(src)
 add_subdirectory(tests)
 add_subdirectory(autotests)

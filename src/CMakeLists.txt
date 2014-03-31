@@ -9,6 +9,7 @@ set(kcompletion_SRCS
   kzoneallocator.cpp
   kcompletionbase.cpp
   kcompletionmatches.cpp
+  ${kcompletion_QM_LOADER}
 )
 
 add_library(KF5Completion ${kcompletion_SRCS})
