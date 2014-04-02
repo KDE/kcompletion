@@ -277,6 +277,19 @@ public:
 
     QStringList list() const;
 
+    void findAllCompletions(const KCompTreeNode *,
+                            const QString &,
+                            bool ignoreCase,
+                            bool &hasMultipleMatches);
+
+    void extractStringsFromNode(const KCompTreeNode *,
+                                const QString &beginning,
+                                bool addWeight = false);
+
+    void extractStringsFromNodeCI(const KCompTreeNode *,
+                                  const QString &beginning,
+                                  const QString &restString);
+
     mutable QStringList m_stringList;
     KCompletionMatchesList *m_sortedList;
     mutable bool m_dirty;
@@ -298,18 +311,6 @@ public:
 
     void addWeightedItem(const QString &);
     QString findCompletion(const QString &string);
-    void findAllCompletions(const QString &,
-                            KCompletionMatchesWrapper *matches,
-                            bool &hasMultipleMatches) const;
-
-    void extractStringsFromNode(const KCompTreeNode *,
-                                const QString &beginning,
-                                KCompletionMatchesWrapper *matches,
-                                bool addWeight = false) const;
-    void extractStringsFromNodeCI(const KCompTreeNode *,
-                                  const QString &beginning,
-                                  const QString &restString,
-                                  KCompletionMatchesWrapper *matches) const;
 
     // list used for nextMatch() and previousMatch()
     KCompletionMatchesWrapper matches;

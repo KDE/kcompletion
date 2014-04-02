@@ -137,145 +137,6 @@ QString KCompletionPrivate::findCompletion(const QString &string)
     return completion;
 }
 
-void KCompletionPrivate::findAllCompletions(const QString &string,
-                                     KCompletionMatchesWrapper *matches,
-                                     bool &hasMultipleMatches) const
-{
-    //qDebug() << "*** finding all completions for " << string;
-
-    if (string.isEmpty()) {
-        return;
-    }
-
-    if (ignoreCase) {   // case insensitive completion
-        extractStringsFromNodeCI(treeRoot, QString(), string, matches);
-        hasMultipleMatches = (matches->count() > 1);
-        return;
-    }
-
-    QChar ch;
-    QString completion;
-    const KCompTreeNode *node = treeRoot;
-
-    // start at the tree-root and try to find the search-string
-    for (int i = 0; i < string.length(); i++) {
-        ch = string.at(i);
-        node = node->find(ch);
-
-        if (node) {
-            completion += ch;
-        } else {
-            return;    // no completion -> return empty list
-        }
-    }
-
-    // Now we have the last node of the to be completed string.
-    // Follow it as long as it has exactly one child (= longest possible
-    // completion)
-
-    while (node->childrenCount() == 1) {
-        node = node->firstChild();
-        if (!node->isNull()) {
-            completion += *node;
-        }
-        // qDebug() << completion << node->latin1();
-    }
-
-    // there is just one single match)
-    if (node->childrenCount() == 0) {
-        matches->append(node->weight(), completion);
-    }
-
-    else {
-        // node has more than one child
-        // -> recursively find all remaining completions
-        hasMultipleMatches = true;
-        extractStringsFromNode(node, completion, matches);
-    }
-}
-
-void KCompletionPrivate::extractStringsFromNode(const KCompTreeNode *node,
-        const QString &beginning,
-        KCompletionMatchesWrapper *matches,
-        bool addWeight) const
-{
-    if (!node || !matches) {
-        return;
-    }
-
-    // qDebug() << "Beginning: " << beginning;
-    const KCompTreeChildren *list = node->children();
-    QString string;
-    QString w;
-
-    // loop thru all children
-    for (KCompTreeNode *cur = list->begin(); cur; cur = cur->m_next) {
-        string = beginning;
-        node = cur;
-        if (!node->isNull()) {
-            string += *node;
-        }
-
-        while (node && node->childrenCount() == 1) {
-            node = node->firstChild();
-            if (node->isNull()) {
-                break;
-            }
-            string += *node;
-        }
-
-        if (node && node->isNull()) {   // we found a leaf
-            if (addWeight) {
-                // add ":num" to the string to store the weighting
-                string += QLatin1Char(':');
-                w.setNum(node->weight());
-                string.append(w);
-            }
-            matches->append(node->weight(), string);
-        }
-
-        // recursively find all other strings.
-        if (node && node->childrenCount() > 1) {
-            extractStringsFromNode(node, string, matches, addWeight);
-        }
-    }
-}
-
-void KCompletionPrivate::extractStringsFromNodeCI(const KCompTreeNode *node,
-        const QString &beginning,
-        const QString &restString,
-        KCompletionMatchesWrapper *matches) const
-{
-    if (restString.isEmpty()) {
-        extractStringsFromNode(node, beginning, matches, false /*noweight*/);
-        return;
-    }
-
-    QChar ch1 = restString.at(0);
-    QString newRest = restString.mid(1);
-    KCompTreeNode *child1, *child2;
-
-    child1 = node->find(ch1);   // the correct match
-    if (child1)
-        extractStringsFromNodeCI(child1, beginning + QChar(*child1), newRest,
-                                 matches);
-
-    // append the case insensitive matches, if available
-    if (ch1.isLetter()) {
-        // find out if we have to lower or upper it. Is there a better way?
-        QChar ch2 = ch1.toLower();
-        if (ch1 == ch2) {
-            ch2 = ch1.toUpper();
-        }
-        if (ch1 != ch2) {
-            child2 = node->find(ch2);
-            if (child2)
-                extractStringsFromNodeCI(child2, beginning + QChar(*child2), newRest,
-                                         matches);
-        }
-    }
-}
-
 KCompletion::KCompletion()
     : d_ptr(new KCompletionPrivate(this))
 {
@@ -340,7 +201,7 @@ QStringList KCompletion::items() const
     Q_D(const KCompletion);
     KCompletionMatchesWrapper list; // unsorted
     bool addWeight = (d->order == Weighted);
-    d->extractStringsFromNode(d->treeRoot, QString(), &list, addWeight);
+    list.extractStringsFromNode(d->treeRoot, QString(), addWeight);
 
     return list.list();
 }
@@ -447,7 +308,7 @@ QString KCompletion::makeCompletion(const QString &string)
         // on d->matches here would interfere with call to
         // postProcessMatch() during rotation
 
-        d->findAllCompletions(string, &d->matches, d->hasMultipleMatches);
+        d->matches.findAllCompletions(d->treeRoot, string, d->ignoreCase, d->hasMultipleMatches);
         QStringList l = d->matches.list();
         postProcessMatches(&l);
         emit matches(l);
@@ -459,7 +320,7 @@ QString KCompletion::makeCompletion(const QString &string)
     // in case-insensitive popup mode, we search all completions at once
     if (d->completionMode == CompletionPopup ||
             d->completionMode == CompletionPopupAuto) {
-        d->findAllCompletions(string, &d->matches, d->hasMultipleMatches);
+        d->matches.findAllCompletions(d->treeRoot, string, d->ignoreCase, d->hasMultipleMatches);
         if (!d->matches.isEmpty()) {
             completion = d->matches.first();
         }
@@ -489,7 +350,7 @@ QStringList KCompletion::substringCompletion(const QString &string) const
     Q_D(const KCompletion);
     // get all items in the tree, eventually in sorted order
     KCompletionMatchesWrapper allItems(d->order);
-    d->extractStringsFromNode(d->treeRoot, QString(), &allItems, false);
+    allItems.extractStringsFromNode(d->treeRoot, QString(), false);
 
     QStringList list = allItems.list();
 
@@ -537,7 +398,7 @@ QStringList KCompletion::allMatches()
     // postProcessMatch() during rotation
     KCompletionMatchesWrapper matches(d->order);
     bool dummy;
-    d->findAllCompletions(d->lastString, &matches, dummy);
+    matches.findAllCompletions(d->treeRoot, d->lastString, d->ignoreCase, dummy);
     QStringList l = matches.list();
     postProcessMatches(&l);
     return l;
@@ -551,7 +412,7 @@ KCompletionMatches KCompletion::allWeightedMatches()
     // postProcessMatch() during rotation
     KCompletionMatchesWrapper matches(d->order);
     bool dummy;
-    d->findAllCompletions(d->lastString, &matches, dummy);
+    matches.findAllCompletions(d->treeRoot, d->lastString, d->ignoreCase, dummy);
     KCompletionMatches ret(matches);
     postProcessMatches(&ret);
     return ret;
@@ -562,7 +423,7 @@ QStringList KCompletion::allMatches(const QString &string)
     Q_D(KCompletion);
     KCompletionMatchesWrapper matches(d->order);
     bool dummy;
-    d->findAllCompletions(string, &matches, dummy);
+    matches.findAllCompletions(d->treeRoot, string, d->ignoreCase, dummy);
     QStringList l = matches.list();
     postProcessMatches(&l);
     return l;
@@ -573,7 +434,7 @@ KCompletionMatches KCompletion::allWeightedMatches(const QString &string)
     Q_D(KCompletion);
     KCompletionMatchesWrapper matches(d->order);
     bool dummy;
-    d->findAllCompletions(string, &matches, dummy);
+    matches.findAllCompletions(d->treeRoot, string, d->ignoreCase, dummy);
     KCompletionMatches ret(matches);
     postProcessMatches(&ret);
     return ret;
@@ -607,7 +468,7 @@ QString KCompletion::nextMatch()
     d->lastMatch = d->currentMatch;
 
     if (d->matches.isEmpty()) {
-        d->findAllCompletions(d->lastString, &d->matches, d->hasMultipleMatches);
+        d->matches.findAllCompletions(d->treeRoot, d->lastString, d->ignoreCase, d->hasMultipleMatches);
         if (!d->matches.isEmpty()) {
             completion = d->matches.first();
         }
@@ -645,7 +506,7 @@ QString KCompletion::previousMatch()
     d->lastMatch = d->currentMatch;
 
     if (d->matches.isEmpty()) {
-        d->findAllCompletions(d->lastString, &d->matches, d->hasMultipleMatches);
+        d->matches.findAllCompletions(d->treeRoot, d->lastString, d->ignoreCase, d->hasMultipleMatches);
         if (!d->matches.isEmpty()) {
             completion = d->matches.last();
         }
@@ -784,6 +645,135 @@ QStringList KCompletionMatchesWrapper::list() const
     }
 
     return m_stringList;
+}
+
+void KCompletionMatchesWrapper::findAllCompletions(const KCompTreeNode *treeRoot,const QString &string, bool ignoreCase, bool &hasMultipleMatches)
+{
+    //qDebug() << "*** finding all completions for " << string;
+
+    if (string.isEmpty()) {
+        return;
+    }
+
+    if (ignoreCase) {   // case insensitive completion
+        extractStringsFromNodeCI(treeRoot, QString(), string);
+        hasMultipleMatches = (count() > 1);
+        return;
+    }
+
+    QChar ch;
+    QString completion;
+    const KCompTreeNode *node = treeRoot;
+
+    // start at the tree-root and try to find the search-string
+    for (int i = 0; i < string.length(); i++) {
+        ch = string.at(i);
+        node = node->find(ch);
+
+        if (node) {
+            completion += ch;
+        } else {
+            return;    // no completion -> return empty list
+        }
+    }
+
+    // Now we have the last node of the to be completed string.
+    // Follow it as long as it has exactly one child (= longest possible
+    // completion)
+
+    while (node->childrenCount() == 1) {
+        node = node->firstChild();
+        if (!node->isNull()) {
+            completion += *node;
+        }
+        // qDebug() << completion << node->latin1();
+    }
+
+    // there is just one single match)
+    if (node->childrenCount() == 0) {
+        append(node->weight(), completion);
+    }
+
+    else {
+        // node has more than one child
+        // -> recursively find all remaining completions
+        hasMultipleMatches = true;
+        extractStringsFromNode(node, completion);
+    }
+}
+
+void KCompletionMatchesWrapper::extractStringsFromNode(const KCompTreeNode *node, const QString &beginning, bool addWeight)
+{
+    if (!node) {
+        return;
+    }
+
+    // qDebug() << "Beginning: " << beginning;
+    const KCompTreeChildren *list = node->children();
+    QString string;
+    QString w;
+
+    // loop thru all children
+    for (KCompTreeNode *cur = list->begin(); cur; cur = cur->m_next) {
+        string = beginning;
+        node = cur;
+        if (!node->isNull()) {
+            string += *node;
+        }
+
+        while (node && node->childrenCount() == 1) {
+            node = node->firstChild();
+            if (node->isNull()) {
+                break;
+            }
+            string += *node;
+        }
+
+        if (node && node->isNull()) {   // we found a leaf
+            if (addWeight) {
+                // add ":num" to the string to store the weighting
+                string += QLatin1Char(':');
+                w.setNum(node->weight());
+                string.append(w);
+            }
+            append(node->weight(), string);
+        }
+
+        // recursively find all other strings.
+        if (node && node->childrenCount() > 1) {
+            extractStringsFromNode(node, string, addWeight);
+        }
+    }
+}
+
+void KCompletionMatchesWrapper::extractStringsFromNodeCI(const KCompTreeNode *node, const QString &beginning, const QString &restString)
+{
+    if (restString.isEmpty()) {
+        extractStringsFromNode(node, beginning, false /*noweight*/);
+        return;
+    }
+
+    QChar ch1 = restString.at(0);
+    QString newRest = restString.mid(1);
+    KCompTreeNode *child1, *child2;
+
+    child1 = node->find(ch1);   // the correct match
+    if (child1)
+        extractStringsFromNodeCI(child1, beginning + QChar(*child1), newRest);
+
+    // append the case insensitive matches, if available
+    if (ch1.isLetter()) {
+        // find out if we have to lower or upper it. Is there a better way?
+        QChar ch2 = ch1.toLower();
+        if (ch1 == ch2) {
+            ch2 = ch1.toUpper();
+        }
+        if (ch1 != ch2) {
+            child2 = node->find(ch2);
+            if (child2)
+                extractStringsFromNodeCI(child2, beginning + QChar(*child2), newRest);
+        }
+    }
 }
 
 void KCompTreeNodeList::append(KCompTreeNode *item)
