@@ -1,4 +1,4 @@
-ecm_create_qm_loader(kcompletion_QM_LOADER kcompletion5)
+ecm_create_qm_loader(kcompletion_QM_LOADER kcompletion5_qt)
 
 set(kcompletion_SRCS
   kcombobox.cpp
