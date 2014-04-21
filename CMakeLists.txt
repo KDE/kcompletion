@@ -31,10 +31,8 @@ set(REQUIRED_QT_VERSION "5.2.0")
 
 find_package(Qt5 ${REQUIRED_QT_VERSION} NO_MODULE REQUIRED Widgets)
 
-if("${CMAKE_BINARY_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
-  find_package(KF5Config ${KF5_VERSION} REQUIRED)
-  find_package(KF5WidgetsAddons ${KF5_VERSION} REQUIRED)
-endif()
+find_package(KF5Config ${KF5_VERSION} REQUIRED)
+find_package(KF5WidgetsAddons ${KF5_VERSION} REQUIRED)
 
 remove_definitions(-DQT_NO_CAST_TO_ASCII)
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
@@ -74,6 +72,4 @@ install(FILES
   DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel
 )
 
-if ("${CMAKE_BINARY_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
-  feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
-endif()
+feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
