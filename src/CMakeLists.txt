@@ -18,7 +18,7 @@ add_library(KF5Completion ${kcompletion_SRCS})
 generate_export_header(KF5Completion BASE_NAME KCompletion)
 add_library(KF5::Completion ALIAS KF5Completion)
 
-target_include_directories(KF5Completion INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/KCompletion>")
+target_include_directories(KF5Completion INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KCompletion>")
 
 target_link_libraries(KF5Completion PUBLIC Qt5::Widgets
                                     PRIVATE KF5::ConfigCore      # KConfigGroup, used in many places
@@ -46,12 +46,12 @@ ecm_generate_headers(KCompletion_HEADERS
   REQUIRED_HEADERS KCompletion_HEADERS
 )
 
-install(TARGETS KF5Completion EXPORT KF5CompletionTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5Completion EXPORT KF5CompletionTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kcompletion_export.h
   ${KCompletion_HEADERS}
-  DESTINATION ${INCLUDE_INSTALL_DIR}/KCompletion COMPONENT Devel
+  DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KCompletion COMPONENT Devel
 )
 
 include(ECMGeneratePriFile)
