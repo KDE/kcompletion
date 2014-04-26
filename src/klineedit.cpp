@@ -66,7 +66,7 @@ void KLineEditPrivate::_k_textChanged(const QString &text)
 
 // Call this when a completion operation changes the lineedit text
 // "as if it had been edited by the user".
-void KLineEditPrivate::_k_updateUserText(const QString &text)
+void KLineEditPrivate::updateUserText(const QString &text)
 {
     Q_Q(KLineEdit);
     if (!completionRunning && (text != userText)) {
@@ -165,7 +165,7 @@ void KLineEditPrivate::init()
     autoSuggest = (mode == KCompletion::CompletionMan ||
                       mode == KCompletion::CompletionPopupAuto ||
                       mode == KCompletion::CompletionAuto);
-    q->connect(q, SIGNAL(selectionChanged()), q, SLOT(slotRestoreSelectionColors()));
+    q->connect(q, SIGNAL(selectionChanged()), q, SLOT(_k_restoreSelectionColors()));
 
     if (handleURLDrops) {
         q->installEventFilter(urlDropEventFilter);
@@ -223,11 +223,11 @@ void KLineEdit::setClearButtonShown(bool show)
         d->clearButton->setCursor(Qt::ArrowCursor);
         d->clearButton->setToolTip(tr("Clear text", "@action:button Clear current text in the line edit"));
 
-        d->updateClearButtonIcon(text());
+        d->_k_updateClearButtonIcon(text());
         d->updateClearButton();
-        connect(this, SIGNAL(textChanged(QString)), this, SLOT(updateClearButtonIcon(QString)));
+        connect(this, SIGNAL(textChanged(QString)), this, SLOT(_k_updateClearButtonIcon(QString)));
     } else {
-        disconnect(this, SIGNAL(textChanged(QString)), this, SLOT(updateClearButtonIcon(QString)));
+        disconnect(this, SIGNAL(textChanged(QString)), this, SLOT(_k_updateClearButtonIcon(QString)));
         delete d->clearButton;
         d->clearButton = 0;
         d->clickInClear = false;
@@ -256,7 +256,7 @@ QSize KLineEdit::clearButtonUsedSize() const
 }
 
 // Decides whether to show or hide the icon; called when the text changes
-void KLineEditPrivate::updateClearButtonIcon(const QString &text)
+void KLineEditPrivate::_k_updateClearButtonIcon(const QString &text)
 {
     Q_Q(KLineEdit);
     if (!clearButton) {
@@ -325,7 +325,7 @@ void KLineEditPrivate::updateClearButton()
         // positiong on that matter has shifted, so let's ensure that it
         // is properly visible (or not)
         wideEnoughForClear = wideEnough;
-        updateClearButtonIcon(q->text());
+        _k_updateClearButtonIcon(q->text());
     }
 }
 
@@ -763,7 +763,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
                 setSelection(old_txt.length(), cPosition - old_txt.length());
                 if (e->key() == Qt::Key_Right && cPosition > start) {
                     //the user explicitly accepted the autocompletion
-                    d->_k_updateUserText(text());
+                    d->updateUserText(text());
                 }
 
                 d->disableRestoreSelection = false;
@@ -875,7 +875,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
             d->disableRestoreSelection = false;
 
             if ((selectedLength != selectedText().length()) && !hasUserSelection) {
-                d->slotRestoreSelectionColors();    // and set userSelection to true
+                d->_k_restoreSelectionColors();    // and set userSelection to true
             }
 
             QString txt = text();
@@ -1006,7 +1006,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
     QLineEdit::keyPressEvent(e);
 
     if (selectedLength != selectedText().length()) {
-        d->slotRestoreSelectionColors();    // and set userSelection to true
+        d->_k_restoreSelectionColors();    // and set userSelection to true
     }
 }
 
@@ -1016,7 +1016,7 @@ void KLineEdit::mouseDoubleClickEvent(QMouseEvent *e)
     if (e->button() == Qt::LeftButton) {
         d->possibleTripleClick = true;
         QTimer::singleShot(QApplication::doubleClickInterval(), this,
-                           SLOT(tripleClickTimeout()));
+                           SLOT(_k_tripleClickTimeout()));
     }
     QLineEdit::mouseDoubleClickEvent(e);
 }
@@ -1085,7 +1085,7 @@ void KLineEdit::mouseReleaseEvent(QMouseEvent *e)
     }
 }
 
-void KLineEditPrivate::tripleClickTimeout()
+void KLineEditPrivate::_k_tripleClickTimeout()
 {
     possibleTripleClick = false;
 }
@@ -1124,7 +1124,7 @@ QMenu *KLineEdit::createStandardContextMenu()
     if (compObj() && !isReadOnly() && KAuthorized::authorize("lineedit_text_completion")) {
         QMenu *subMenu = popup->addMenu(QIcon::fromTheme("text-completion"), tr("Text Completion", "@title:menu"));
         connect(subMenu, SIGNAL(triggered(QAction*)),
-                this, SLOT(completionMenuActivated(QAction*)));
+                this, SLOT(_k_completionMenuActivated(QAction*)));
 
         popup->addSeparator();
 
@@ -1187,7 +1187,7 @@ void KLineEdit::contextMenuEvent(QContextMenuEvent *e)
     delete popup;
 }
 
-void KLineEditPrivate::completionMenuActivated(QAction  *act)
+void KLineEditPrivate::_k_completionMenuActivated(QAction  *act)
 {
     Q_Q(KLineEdit);
     KCompletion::CompletionMode oldMode = q->completionMode();
@@ -1260,7 +1260,7 @@ bool KLineEdit::event(QEvent *ev)
         }
     } else if (ev->type() == QEvent::ApplicationLayoutDirectionChange
                || ev->type() == QEvent::LayoutDirectionChange) {
-        d->updateClearButtonIcon(text());
+        d->_k_updateClearButtonIcon(text());
         d->updateClearButton();
     }
 
@@ -1314,7 +1314,7 @@ void KLineEdit::setCompletionBox(KCompletionBox *box)
     d->completionBox = box;
     if (handleSignals()) {
         connect(d->completionBox, SIGNAL(currentTextChanged(QString)),
-                SLOT(_k_slotCompletionBoxTextChanged(QString)));
+                SLOT(_k_completionBoxTextChanged(QString)));
         connect(d->completionBox, SIGNAL(userCancelled(QString)),
                 SLOT(userCancelled(QString)));
         connect(d->completionBox, SIGNAL(activated(QString)),
@@ -1532,7 +1532,7 @@ void KLineEdit::setUserSelection(bool userSelection)
     //so trigger an update
 
     if (!d->userSelection && userSelection) {
-        d->_k_updateUserText(text());
+        d->updateUserText(text());
     }
 
     QPalette p = palette();
@@ -1551,7 +1551,7 @@ void KLineEdit::setUserSelection(bool userSelection)
     setPalette(p);
 }
 
-void KLineEditPrivate::slotRestoreSelectionColors()
+void KLineEditPrivate::_k_restoreSelectionColors()
 {
     Q_Q(KLineEdit);
     if (disableRestoreSelection) {
@@ -1561,7 +1561,7 @@ void KLineEditPrivate::slotRestoreSelectionColors()
     q->setUserSelection(true);
 }
 
-void KLineEditPrivate::_k_slotCompletionBoxTextChanged(const QString &text)
+void KLineEditPrivate::_k_completionBoxTextChanged(const QString &text)
 {
     Q_Q(KLineEdit);
     if (!text.isEmpty()) {

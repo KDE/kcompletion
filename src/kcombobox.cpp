@@ -45,7 +45,7 @@ public:
      */
     void init();
 
-    void lineEditDeleted();
+    void _k_lineEditDeleted();
 
     KLineEdit *klineEdit;
     bool trapReturnKey;
@@ -63,7 +63,7 @@ void KComboBoxPrivate::init()
     }
 }
 
-void KComboBoxPrivate::lineEditDeleted()
+void KComboBoxPrivate::_k_lineEditDeleted()
 {
     Q_Q(KComboBox);
     // yes, we need those ugly casts due to the multiple inheritance
@@ -324,7 +324,7 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         // line edit without us noticing. And KCompletionBase::delegate would
         // be a dangling pointer then, so prevent that. Note: only do this
         // when it is a KLineEdit!
-        connect(edit, SIGNAL(destroyed()), SLOT(lineEditDeleted()));
+        connect(edit, SIGNAL(destroyed()), SLOT(_k_lineEditDeleted()));
 
         connect(d->klineEdit, SIGNAL(returnPressed(QString)),
                 SIGNAL(returnPressed(QString)));
