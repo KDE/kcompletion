@@ -34,7 +34,7 @@ public:
     KCompletionBoxPrivate(KCompletionBox *parent): q_ptr(parent){}
     void init();
     void cancelled();
-    void slotItemClicked(QListWidgetItem *);
+    void _k_itemClicked(QListWidgetItem *);
 
     QWidget *m_parent; // necessary to set the focus back
     QString cancelText;
@@ -73,7 +73,7 @@ void KCompletionBoxPrivate::init()
     q->connect(q, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
             SLOT(slotActivated(QListWidgetItem*)));
     q->connect(q, SIGNAL(itemClicked(QListWidgetItem*)),
-            SLOT(slotItemClicked(QListWidgetItem*)));
+            SLOT(_k_itemClicked(QListWidgetItem*)));
 }
 
 KCompletionBox::~KCompletionBox()
@@ -536,7 +536,7 @@ void KCompletionBox::setItems(const QStringList &items)
     blockSignals(block);
 }
 
-void KCompletionBoxPrivate::slotItemClicked(QListWidgetItem *item)
+void KCompletionBoxPrivate::_k_itemClicked(QListWidgetItem *item)
 {
     Q_Q(KCompletionBox);
     if (item) {

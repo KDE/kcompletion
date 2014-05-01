@@ -45,17 +45,17 @@ public:
      * Called from the popupmenu,
      * calls clearHistory() and emits cleared()
      */
-    void clear();
+    void _k_clear();
 
     /**
      * Appends our own context menu entry.
      */
-    void addContextMenuItems(QMenu *);
+    void _k_addContextMenuItems(QMenu *);
 
     /**
      * Used to emit the activated(QString) signal when enter is pressed
      */
-    void simulateActivated(const QString &);
+    void _k_simulateActivated(const QString &);
 
     /**
     * The text typed before Up or Down was pressed.
@@ -100,13 +100,13 @@ void KHistoryComboBoxPrivate::init(bool useCompletion)
         q->setDuplicatesEnabled(false);
     }
 
-    q->connect(q, SIGNAL(aboutToShowContextMenu(QMenu*)), SLOT(addContextMenuItems(QMenu*)));
+    q->connect(q, SIGNAL(aboutToShowContextMenu(QMenu*)), SLOT(_k_addContextMenuItems(QMenu*)));
     q->connect(q, SIGNAL(activated(int)), SLOT(reset()));
     q->connect(q, SIGNAL(returnPressed(QString)), SLOT(reset()));
-    // We want slotSimulateActivated to be called _after_ QComboBoxPrivate::_q_returnPressed
-    // otherwise there's a risk of emitting activated twice (slotSimulateActivated will find
+    // We want _k_simulateActivated to be called _after_ QComboBoxPrivate::_q_returnPressed
+    // otherwise there's a risk of emitting activated twice (_k_simulateActivated will find
     // the item, after some app's slotActivated inserted the item into the combo).
-    q->connect(q, SIGNAL(returnPressed(QString)), SLOT(simulateActivated(QString)), Qt::QueuedConnection);
+    q->connect(q, SIGNAL(returnPressed(QString)), SLOT(_k_simulateActivated(QString)), Qt::QueuedConnection);
 }
 
 // we are always read-write
@@ -194,12 +194,14 @@ void KHistoryComboBox::clearHistory()
     setEditText(temp);
 }
 
-void KHistoryComboBoxPrivate::addContextMenuItems(QMenu *menu)
+void KHistoryComboBoxPrivate::_k_addContextMenuItems(QMenu *menu)
 {
     Q_Q(KHistoryComboBox);
     if (menu) {
         menu->addSeparator();
-        QAction *clearHistory = menu->addAction(QIcon::fromTheme("edit-clear-history"), KHistoryComboBox::tr("Clear &History"), q, SLOT(clear()));
+        QAction *clearHistory = menu->addAction(QIcon::fromTheme("edit-clear-history"),
+                                                KHistoryComboBox::tr("Clear &History"),
+                                                q, SLOT(_k_clear()));
         if (!q->count()) {
             clearHistory->setEnabled(false);
         }
@@ -443,14 +445,14 @@ void KHistoryComboBox::insertItems(const QStringList &items)
     }
 }
 
-void KHistoryComboBoxPrivate::clear()
+void KHistoryComboBoxPrivate::_k_clear()
 {
     Q_Q(KHistoryComboBox);
     q->clearHistory();
     emit q->cleared();
 }
 
-void KHistoryComboBoxPrivate::simulateActivated(const QString &text)
+void KHistoryComboBoxPrivate::_k_simulateActivated(const QString &text)
 {
     Q_Q(KHistoryComboBox);
     /* With the insertion policy NoInsert, which we use by default,

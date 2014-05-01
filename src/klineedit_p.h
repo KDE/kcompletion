@@ -208,23 +208,18 @@ public:
 
     ~KLineEditPrivate();
 
-    //FIXME: Change to the form _k_*() the methods that are used as slots
-    //and declare them as Q_PRIVATE_SLOT in klineedit.h.
-    //The methods that aren't slots shouldn't have the form _k_*()
     void _k_textChanged(const QString &text);
-    void _k_updateUserText(const QString &text);
-    void adjustForReadOnly();
-
-    // Slots
-    void completionMenuActivated(QAction *act);
-    void tripleClickTimeout();  // resets possibleTripleClick
-    void slotRestoreSelectionColors();
-    void _k_slotCompletionBoxTextChanged(const QString &text);
+    void _k_completionMenuActivated(QAction *act);
+    void _k_tripleClickTimeout();  // resets possibleTripleClick
+    void _k_restoreSelectionColors();
+    void _k_completionBoxTextChanged(const QString &text);
     /**
      * updates the icon of the clear button on text change
      **/
-    void updateClearButtonIcon(const QString &);
-    //
+    void _k_updateClearButtonIcon(const QString &);
+
+    void adjustForReadOnly();
+    void updateUserText(const QString &text);
 
     /**
      * Checks whether we should/should not consume a key used as a shortcut.

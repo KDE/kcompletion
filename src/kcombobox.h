@@ -526,7 +526,7 @@ protected:
 
 private:
     const QScopedPointer<KComboBoxPrivate> d_ptr;
-    Q_PRIVATE_SLOT(d_func(), void lineEditDeleted())
+    Q_PRIVATE_SLOT(d_func(), void _k_lineEditDeleted())
 };
 
 #endif

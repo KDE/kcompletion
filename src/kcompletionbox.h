@@ -245,8 +245,7 @@ protected Q_SLOTS:
 private:
     const QScopedPointer<KCompletionBoxPrivate> d_ptr;
 
-    Q_PRIVATE_SLOT(d_func(), void cancelled())
-    Q_PRIVATE_SLOT(d_func(), void slotItemClicked(QListWidgetItem *))
+    Q_PRIVATE_SLOT(d_func(), void _k_itemClicked(QListWidgetItem *))
 };
 
 #endif // KCOMPLETIONBOX_H

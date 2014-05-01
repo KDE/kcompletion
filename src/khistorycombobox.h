@@ -249,9 +249,9 @@ protected:
 
 private:
     const QScopedPointer<KHistoryComboBoxPrivate> d_ptr;
-    Q_PRIVATE_SLOT(d_func(), void clear())
-    Q_PRIVATE_SLOT(d_func(), void addContextMenuItems(QMenu *))
-    Q_PRIVATE_SLOT(d_func(), void simulateActivated(const QString &))
+    Q_PRIVATE_SLOT(d_func(), void _k_clear())
+    Q_PRIVATE_SLOT(d_func(), void _k_addContextMenuItems(QMenu *))
+    Q_PRIVATE_SLOT(d_func(), void _k_simulateActivated(const QString &))
 
     Q_DISABLE_COPY(KHistoryComboBox)
 };
