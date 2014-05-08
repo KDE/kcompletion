@@ -8,20 +8,13 @@ if(NOT Qt5Test_FOUND)
     return()
 endif()
 
-include(ECMMarkAsTest)
+include(ECMAddTests)
 
-macro(KCOMPLETION_TESTS)
-    foreach(_testname ${ARGN})
-        add_executable(${_testname} ${_testname}.cpp)
-        add_test(kcompletion-${_testname} ${_testname})
-        ecm_mark_as_test(${_testname})
-        target_link_libraries(${_testname} Qt5::Test KF5::Completion)
-    endforeach(_testname)
-endmacro()
-
-kcompletion_tests(
-   kcompletioncoretest
-   klineedit_unittest
-   kcombobox_unittest
-   ksortablelisttest
+ecm_add_tests(
+   kcompletioncoretest.cpp
+   klineedit_unittest.cpp
+   kcombobox_unittest.cpp
+   ksortablelisttest.cpp
+   NAME_PREFIX "kcompletion-"
+   LINK_LIBRARIES Qt5::Test KF5::Completion
 )
