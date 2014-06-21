@@ -15,6 +15,5 @@ ecm_add_tests(
    klineedit_unittest.cpp
    kcombobox_unittest.cpp
    ksortablelisttest.cpp
-   NAME_PREFIX "kcompletion-"
    LINK_LIBRARIES Qt5::Test KF5::Completion
 )
