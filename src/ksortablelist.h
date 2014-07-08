@@ -133,7 +133,7 @@ public:
      * @return the first value (the key)
      * @deprecated use key()
      */
-#ifndef KDE_NO_DEPRECATED
+#ifndef KCOMPLETION_NO_DEPRECATED
     KCOMPLETION_DEPRECATED Key index() const
     {
         return this->first;
