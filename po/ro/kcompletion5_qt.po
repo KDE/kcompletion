@@ -1,0 +1,113 @@
+# Traducerea kdelibs4.po în Română
+# Laurenţiu Buzdugan <lbuz@rolix.org>, 2008, 2009.
+# Sergiu Bivol <sergiu@ase.md>, 2008, 2009, 2010.
+# Sergiu Bivol <sergiu@ase.md>, 2010, 2012, 2013, 2014.
+# Cristian Oneț <onet.cristian@gmail.com>, 2010, 2011, 2012, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2014-03-26 19:20+0200\n"
+"Last-Translator: Sergiu Bivol <sergiu@ase.md>\n"
+"Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+
+#: khistorycombobox.cpp:203
+#, fuzzy
+#| msgid "Clear &History"
+msgctxt "KHistoryComboBox|"
+msgid "Clear &History"
+msgstr "Șterge &istoricul"
+
+#: klineedit.cpp:154
+#, fuzzy
+#| msgid "1"
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:224
+#, fuzzy
+#| msgctxt "@action:button Clear current text in the line edit"
+#| msgid "Clear text"
+msgctxt "KLineEdit|@action:button Clear current text in the line edit"
+msgid "Clear text"
+msgstr "Șterge textul"
+
+#: klineedit.cpp:1111
+#, fuzzy
+#| msgid "C&lear"
+msgctxt "KLineEdit|"
+msgid "C&lear"
+msgstr "Ș&terge"
+
+#: klineedit.cpp:1125
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Text Completion"
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Completare text"
+
+#: klineedit.cpp:1132
+#, fuzzy
+#| msgctxt "No border line"
+#| msgid "None"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Niciuna"
+
+#: klineedit.cpp:1133
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Manual"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Manuală"
+
+#: klineedit.cpp:1134
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Automată"
+
+#: klineedit.cpp:1135
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Dropdown List"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Listă derulantă"
+
+#: klineedit.cpp:1136
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Short Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Automat scurt"
+
+#: klineedit.cpp:1137
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Dropdown List && Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Listă derulantă și automată"
+
+#: klineedit.cpp:1167
+#, fuzzy
+#| msgctxt "Encodings menu"
+#| msgid "Default"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "Implicit"
