@@ -1,5 +1,5 @@
 maintainer: dgilo
-description: Widgets with advanced auto-completion features
+description: Text completion helpers and widgets
 tier: 2
 type: functional
 platforms:
