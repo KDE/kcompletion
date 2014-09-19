@@ -51,7 +51,7 @@ public:
 
     QSize sizeHint() const
     {
-        return m_pixmap.size();
+        return m_pixmap.size() / m_pixmap.devicePixelRatio();
     }
 
     void animateVisible(bool visible)
@@ -126,6 +126,7 @@ protected:
             return;
         }
 
+        const QSize pmSize(m_pixmap.size() / m_pixmap.devicePixelRatio());
         if (style()->styleHint(QStyle::SH_Widget_Animate, 0, this)) {
 
             if (m_opacity == 0) {
@@ -147,19 +148,19 @@ protected:
 
                 // draw pixmap on widget
                 QPainter pp(this);
-                pp.drawPixmap((width() - pm.width()) / 2,
-                              (height() - pm.height()) / 2,
+                pp.drawPixmap((width() - pmSize.width()) / 2,
+                              (height() - pmSize.height()) / 2,
                               pm);
             } else {
                 QPainter p(this);
-                p.drawPixmap((width() - m_pixmap.width()) / 2,
-                             (height() - m_pixmap.height()) / 2,
+                p.drawPixmap((width() - pmSize.width()) / 2,
+                             (height() - pmSize.height()) / 2,
                              m_pixmap);
             }
         } else {
             QPainter p(this);
-            p.drawPixmap((width() - m_pixmap.width()) / 2,
-                         (height() - m_pixmap.height()) / 2,
+            p.drawPixmap((width() - pmSize.width()) / 2,
+                         (height() - pmSize.height()) / 2,
                          m_pixmap);
         }
     }
