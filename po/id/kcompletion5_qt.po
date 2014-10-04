@@ -1,0 +1,78 @@
+# Indonesian translations for kdelibs4 package.
+# Copyright (C) 2010 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kdelibs4 package.
+# Andhika Padmawan <andhika.padmawan@gmail.com>, 2010-2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2014-06-08 12:28+0700\n"
+"Last-Translator: Andhika Padmawan <andhika.padmawan@gmail.com>\n"
+"Language-Team: Indonesian <translation-team-id@lists.sourceforge.net>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: khistorycombobox.cpp:203
+msgctxt "KHistoryComboBox|"
+msgid "Clear &History"
+msgstr "Hapus &Riwayat"
+
+#: klineedit.cpp:154
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:224
+msgctxt "KLineEdit|@action:button Clear current text in the line edit"
+msgid "Clear text"
+msgstr "Hapus teks"
+
+#: klineedit.cpp:1111
+msgctxt "KLineEdit|"
+msgid "C&lear"
+msgstr "Ha&pus"
+
+#: klineedit.cpp:1125
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Penyelesai Teks"
+
+#: klineedit.cpp:1132
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Tak Ada"
+
+#: klineedit.cpp:1133
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Manual"
+
+#: klineedit.cpp:1134
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Otomatis"
+
+#: klineedit.cpp:1135
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Senarai Taruh Bawah"
+
+#: klineedit.cpp:1136
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Pengurutan Otomatis"
+
+#: klineedit.cpp:1137
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Senarai Taruh Bawah && Otomatis"
+
+#: klineedit.cpp:1167
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "Standar"
