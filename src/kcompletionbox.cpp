@@ -410,12 +410,12 @@ void KCompletionBox::up()
 
 void KCompletionBox::pageDown()
 {
-    moveCursor(QAbstractItemView::MovePageDown, Qt::NoModifier);
+    selectionModel()->setCurrentIndex(moveCursor(QAbstractItemView::MovePageDown, Qt::NoModifier), QItemSelectionModel::SelectCurrent);
 }
 
 void KCompletionBox::pageUp()
 {
-    moveCursor(QAbstractItemView::MovePageUp, Qt::NoModifier);
+    selectionModel()->setCurrentIndex(moveCursor(QAbstractItemView::MovePageUp, Qt::NoModifier), QItemSelectionModel::SelectCurrent);
 }
 
 void KCompletionBox::home()
