@@ -24,6 +24,7 @@
 #include <kcompletion_export.h>
 
 #include <QStringList>
+#include <QScopedPointer>
 
 class KCompletionMatchesWrapper;
 class KCompletionMatchesPrivate;
