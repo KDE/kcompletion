@@ -1,0 +1,101 @@
+# translation of kdelibs4.po to Luxembourgish
+# kevin claude everard <kevin@math.uni-sb.de>, 2005.
+# Michel Ludwig <michel.ludwig@kdemail.net>, 2005, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2006-06-22 16:29+0200\n"
+"Last-Translator: Michel Ludwig <michel.ludwig@kdemail.net>\n"
+"Language-Team: Luxembourgish <kde-i18n-lb@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Qt-Contexts: true\n"
+
+#: khistorycombobox.cpp:203
+#, fuzzy
+#| msgid "Clear &History"
+msgctxt "KHistoryComboBox|"
+msgid "Clear &History"
+msgstr "&History läschen"
+
+#: klineedit.cpp:154
+#, fuzzy
+#| msgid "%1%"
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "%1%"
+
+#: klineedit.cpp:224
+#, fuzzy
+msgctxt "KLineEdit|@action:button Clear current text in the line edit"
+msgid "Clear text"
+msgstr "Kierzel läschen"
+
+#: klineedit.cpp:1111
+#, fuzzy
+#| msgid "C&lear"
+msgctxt "KLineEdit|"
+msgid "C&lear"
+msgstr "Eidelmaa&chen"
+
+#: klineedit.cpp:1125
+#, fuzzy
+#| msgid "Text Completion"
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Ergänzung vum Text"
+
+#: klineedit.cpp:1132
+#, fuzzy
+#| msgid "None"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Keng"
+
+#: klineedit.cpp:1133
+#, fuzzy
+#| msgid "Manual"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Manuell"
+
+#: klineedit.cpp:1134
+#, fuzzy
+#| msgid "Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Automatësch"
+
+#: klineedit.cpp:1135
+#, fuzzy
+#| msgid "Dropdown List"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Ausklapplëscht"
+
+#: klineedit.cpp:1136
+#, fuzzy
+#| msgid "Short Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Automatësch kuerz"
+
+#: klineedit.cpp:1137
+#, fuzzy
+#| msgid "Dropdown List && Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Ausklapplëscht && Automatik"
+
+#: klineedit.cpp:1167
+#, fuzzy
+#| msgid "Default"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "Standard"
