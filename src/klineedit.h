@@ -205,7 +205,7 @@ public:
     *
     * See KCompletionBase::setCompletionMode
     */
-    virtual void setCompletionMode(KCompletion::CompletionMode mode);
+    void setCompletionMode(KCompletion::CompletionMode mode) Q_DECL_OVERRIDE;
 
     /**
      * Disables completion modes by makeing them non-checkable.
@@ -291,7 +291,7 @@ public:
     /**
      * Reimplemented for internal reasons, the API is not affected.
      */
-    virtual void setCompletionObject(KCompletion *, bool handle = true);
+    void setCompletionObject(KCompletion *, bool handle = true) Q_DECL_OVERRIDE;
 
     /**
      * Reimplemented for internal reasons, the API is not affected.
@@ -494,7 +494,7 @@ public Q_SLOTS:
     /**
      * See KCompletionBase::setCompletedText.
      */
-    virtual void setCompletedText(const QString &);
+    void setCompletedText(const QString &) Q_DECL_OVERRIDE;
 
     /**
      * Same as the above function except it allows you to temporarily
@@ -504,7 +504,7 @@ public Q_SLOTS:
      * @param items list of completion matches to be shown in the completion box.
      * @param autoSuggest true if you want automatic text completion (suggestion) enabled.
      */
-    void setCompletedItems(const QStringList &items, bool autoSuggest = true);
+    void setCompletedItems(const QStringList &items, bool autoSuggest = true) Q_DECL_OVERRIDE;
 
     /**
      * Squeezes @p text into the line edit.
@@ -549,49 +549,49 @@ protected:
     /**
      * Re-implemented for internal reasons.  API not affected.
      */
-    virtual bool event(QEvent *);
+    bool event(QEvent *) Q_DECL_OVERRIDE;
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
     * See QLineEdit::resizeEvent().
     */
-    virtual void resizeEvent(QResizeEvent *);
+    void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
     * See QLineEdit::keyPressEvent().
     */
-    virtual void keyPressEvent(QKeyEvent *);
+    void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
     * See QLineEdit::mousePressEvent().
     */
-    virtual void mousePressEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *) Q_DECL_OVERRIDE;
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
     * See QLineEdit::mouseReleaseEvent().
     */
-    virtual void mouseReleaseEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent *) Q_DECL_OVERRIDE;
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
     * See QWidget::mouseDoubleClickEvent().
     */
-    virtual void mouseDoubleClickEvent(QMouseEvent *);
+    void mouseDoubleClickEvent(QMouseEvent *) Q_DECL_OVERRIDE;
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
     * See QLineEdit::contextMenuEvent().
     */
-    virtual void contextMenuEvent(QContextMenuEvent *);
+    void contextMenuEvent(QContextMenuEvent *) Q_DECL_OVERRIDE;
 
     /**
     * Re-implemented for internal reasons.  API not affected.
@@ -621,7 +621,7 @@ protected:
     */
     bool autoSuggest() const;
 
-    virtual void paintEvent(QPaintEvent *ev);
+    void paintEvent(QPaintEvent *ev) Q_DECL_OVERRIDE;
 
 private:
     const QScopedPointer<KLineEditPrivate> d_ptr;

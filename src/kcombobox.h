@@ -480,13 +480,13 @@ public Q_SLOTS:
      * This function is an implementation for
      * KCompletionBase::setCompletedText.
      */
-    virtual void setCompletedText(const QString &);
+    void setCompletedText(const QString &) Q_DECL_OVERRIDE;
 
     /**
      * Sets @p items into the completion box if completionMode() is
      * CompletionPopup. The popup will be shown immediately.
      */
-    void setCompletedItems(const QStringList &items, bool autosubject = true);
+    void setCompletedItems(const QStringList &items, bool autosubject = true) Q_DECL_OVERRIDE;
 
     /**
      * Selects the first item that matches @p item.
@@ -522,7 +522,7 @@ protected:
     */
     virtual void setCompletedText(const QString &text, bool marked);
 
-    virtual QSize minimumSizeHint() const;
+    QSize minimumSizeHint() const Q_DECL_OVERRIDE;
 
 private:
     const QScopedPointer<KComboBoxPrivate> d_ptr;

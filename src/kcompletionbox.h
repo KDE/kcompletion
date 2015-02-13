@@ -64,7 +64,7 @@ public:
      */
     ~KCompletionBox();
 
-    virtual QSize sizeHint() const;
+    QSize sizeHint() const Q_DECL_OVERRIDE;
 
     /**
      * @returns true if selecting an item results in the emition of the selected() signal.
@@ -183,7 +183,7 @@ public Q_SLOTS:
      * Re-implemented for internal reasons.  API is unaffected.
      * Call it only if you really need it (i.e. the widget was hidden before) to have better performance.
      */
-    virtual void setVisible(bool visible);
+    void setVisible(bool visible) Q_DECL_OVERRIDE;
 
 Q_SIGNALS:
     /**
@@ -227,7 +227,7 @@ protected:
      * Reimplemented from QListWidget to get events from the viewport (to hide
      * this widget on mouse-click, Escape-presses, etc.
      */
-    virtual bool eventFilter(QObject *, QEvent *);
+    bool eventFilter(QObject *, QEvent *) Q_DECL_OVERRIDE;
 
     /**
      * The preferred global coordinate at which the completion box's top left corner

@@ -225,12 +225,12 @@ protected:
     /**
      * Handling key-events, the shortcuts to rotate the items.
      */
-    virtual void keyPressEvent(QKeyEvent *);
+    void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
 
     /**
      * Handling wheel-events, to rotate the items.
      */
-    virtual void wheelEvent(QWheelEvent *ev);
+    void wheelEvent(QWheelEvent *ev) Q_DECL_OVERRIDE;
 
     /**
      * Inserts @p items into the combo, honoring pixmapProvider()
