@@ -55,12 +55,12 @@ class KLineEditPrivate;
  * modes on the fly based on their preference.
  *
  * To support these new features KLineEdit also emits a few more
- * additional signals.  These are: completion( const QString& ),
+ * additional signals. These are: completion( const QString& ),
  * textRotation( KeyBindingType ), and returnPressed( const QString& ).
  * The completion signal can be connected to a slot that will assist the
- * user in filling out the remaining text.  The text rotation signal is
+ * user in filling out the remaining text. The text rotation signal is
  * intended to be used to iterate through the list of all possible matches
- * whenever there is more than one match for the entered text.  The
+ * whenever there is more than one match for the entered text. The
  * @p returnPressed( const QString& ) signals are the same as QLineEdit's
  * except it provides the current text in the widget as its argument whenever
  * appropriate.
@@ -68,15 +68,15 @@ class KLineEditPrivate;
  * This widget by default creates a completion object when you invoke
  * the completionObject( bool ) member function for the first time or
  * use setCompletionObject( KCompletion*, bool ) to assign your own
- * completion object.  Additionally, to make this widget more functional,
+ * completion object. Additionally, to make this widget more functional,
  * KLineEdit will by default handle the text rotation and completion
  * events internally when a completion object is created through either one
- * of the methods mentioned above.  If you do not need this functionality,
+ * of the methods mentioned above. If you do not need this functionality,
  * simply use KCompletionBase::setHandleSignals( bool ) or set the
  * boolean parameter in the above functions to false.
  *
  * The default key-bindings for completion and rotation is determined
- * from the global settings in KStandardShortcut.  These values, however,
+ * from the global settings in KStandardShortcut. These values, however,
  * can be overridden locally by invoking KCompletionBase::setKeyBinding().
  * The values can easily be reverted back to the default setting, by simply
  * calling useGlobalSettings(). An alternate method would be to default
@@ -95,7 +95,7 @@ class KLineEditPrivate;
  * and is done to give visual distinction between the three different modes:
  * disabled, read-only, and read-write.
  *
- * KLineEdit has also a password mode which depends of globals KDE settings.  Use
+ * KLineEdit has also a password mode which depends of globals KDE settings. Use
  * KLineEdit::setPasswordMode instead of QLineEdit::echoMode property to have a password field.
  *
  * \b Usage \n
@@ -198,7 +198,7 @@ public:
     void setUrl(const QUrl &url);
 
     /**
-    * Re-implemented from KCompletionBase for internal reasons.
+    * Reimplemented from KCompletionBase for internal reasons.
     *
     * This function is re-implemented in order to make sure that
     * the EchoMode is acceptable before we set the completion mode.
@@ -397,7 +397,7 @@ Q_SIGNALS:
     /**
      * Emitted when the user presses the return key.
      *
-     *  The argument is the current text.  Note that this
+     *  The argument is the current text. Note that this
      * signal is @em not emitted if the widget's @p EchoMode is set to
      * QLineEdit::EchoMode.
      */
@@ -513,7 +513,7 @@ public Q_SLOTS:
     void setSqueezedText(const QString &text);
 
     /**
-     * Re-implemented to enable text squeezing. API is not affected.
+     * Reimplemented to enable text squeezing. API is not affected.
      */
     virtual void setText(const QString &);
 
@@ -547,54 +547,54 @@ protected Q_SLOTS:
 protected:
 
     /**
-     * Re-implemented for internal reasons.  API not affected.
+     * Reimplemented for internal reasons. API not affected.
      */
     bool event(QEvent *) Q_DECL_OVERRIDE;
 
     /**
-    * Re-implemented for internal reasons.  API not affected.
+    * Reimplemented for internal reasons. API not affected.
     *
     * See QLineEdit::resizeEvent().
     */
     void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
 
     /**
-    * Re-implemented for internal reasons.  API not affected.
+    * Reimplemented for internal reasons. API not affected.
     *
     * See QLineEdit::keyPressEvent().
     */
     void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
 
     /**
-    * Re-implemented for internal reasons.  API not affected.
+    * Reimplemented for internal reasons. API not affected.
     *
     * See QLineEdit::mousePressEvent().
     */
     void mousePressEvent(QMouseEvent *) Q_DECL_OVERRIDE;
 
     /**
-    * Re-implemented for internal reasons.  API not affected.
+    * Reimplemented for internal reasons. API not affected.
     *
     * See QLineEdit::mouseReleaseEvent().
     */
     void mouseReleaseEvent(QMouseEvent *) Q_DECL_OVERRIDE;
 
     /**
-    * Re-implemented for internal reasons.  API not affected.
+    * Reimplemented for internal reasons. API not affected.
     *
     * See QWidget::mouseDoubleClickEvent().
     */
     void mouseDoubleClickEvent(QMouseEvent *) Q_DECL_OVERRIDE;
 
     /**
-    * Re-implemented for internal reasons.  API not affected.
+    * Reimplemented for internal reasons. API not affected.
     *
     * See QLineEdit::contextMenuEvent().
     */
     void contextMenuEvent(QContextMenuEvent *) Q_DECL_OVERRIDE;
 
     /**
-    * Re-implemented for internal reasons.  API not affected.
+    * Reimplemented for internal reasons. API not affected.
     *
     * See QLineEdit::createStandardContextMenu().
     */

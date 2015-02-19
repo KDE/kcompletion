@@ -395,8 +395,8 @@ public Q_SLOTS:
      * When reaching the last item, the list is rotated, so it will return
      * the first match and a sound is emitted (depending on
      * soundsEnabled()).
-     * @return the next item from the list of matching items.  When there is no
-     * match, QString() is returned and a sound is emitted
+     * @return the next item from the list of matching items. When there is no
+     * match, QString() is returned and a sound is emitted.
      */
     QString nextMatch();
 

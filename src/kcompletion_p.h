@@ -181,8 +181,8 @@ public:
     }
 
     /* We want to handle a list of KCompTreeNodes on our own, to not
-       need to use QValueList<>.  And to make it even faster we don't
-       use an accessor, but just a public member.  */
+       need to use QValueList<>. And to make it even faster we don't
+       use an accessor, but just a public member. */
     KCompTreeNode *m_next;
 
     /**

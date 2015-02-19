@@ -32,9 +32,9 @@ class KCompletionBasePrivate;
  * into widgets.
  *
  * This is a convenience class that provides the basic functions
- * needed to add text completion support into widgets.  All that
+ * needed to add text completion support into widgets. All that
  * is required is an implementation for the pure virtual function
- * setCompletedText().  Refer to KLineEdit or KComboBox
+ * setCompletedText(). Refer to KLineEdit or KComboBox
  * to see how easily such support can be added using this as a base
  * class.
  *
@@ -48,7 +48,7 @@ public:
     Q_DECLARE_PRIVATE(KCompletionBase)
     /**
      * Constants that represent the items whose shortcut
-     * key binding is programmable.  The default key bindings
+     * key binding is programmable. The default key bindings
      * for these items are defined in KStandardShortcut.
      */
     enum KeyBindingType {
@@ -104,7 +104,7 @@ public:
      * Sets up the completion object to be used.
      *
      * This method assigns the completion object and sets it up to automatically
-     * handle the completion and rotation signals internally.  You should use
+     * handle the completion and rotation signals internally. You should use
      * this function if you want to share one completion object among your
      * widgets or need to use a customized completion object.
      *
@@ -124,7 +124,7 @@ public:
      *
      * This function simply assigns a boolean value that
      * indicates whether it should handle rotation and
-     * completion events or not.  Note that this does not
+     * completion events or not. Note that this does not
      * stop the object from emitting signals when these
      * events occur.
      *
@@ -162,18 +162,18 @@ public:
      * Invoking this function with @p enable set to @p false will
      * cause the completion and rotation signals not to be emitted.
      * However, unlike setting the completion object to @p NULL
-     * using setCompletionObject, disabling the emition of
+     * using setCompletionObject, disabling the emission of
      * the signals through this method does not affect the current
      * completion object.
      *
-     * There is no need to invoke this function by default.  When a
+     * There is no need to invoke this function by default. When a
      * completion object is created through completionObject or
      * setCompletionObject, these signals are set to emit
-     * automatically.  Also note that disabling this signals will not
+     * automatically. Also note that disabling this signals will not
      * necessarily interfere with the objects' ability to handle these
-     * events internally.  See setHandleSignals.
+     * events internally. See setHandleSignals.
      *
-     * @param enable if false, disables the emition of completion and rotation signals.
+     * @param enable if false, disables the emission of completion and rotation signals.
      */
     void setEnableSignals(bool enable);
 
@@ -194,7 +194,7 @@ public:
     /**
      * Sets whether the object emits rotation signals.
      *
-     * @param emitRotationSignals if false, disables the emition of rotation signals.
+     * @param emitRotationSignals if false, disables the emission of rotation signals.
      */
     void setEmitSignals(bool emitRotationSignals);
 
@@ -223,13 +223,13 @@ public:
      * signal defined by the inheriting widget will be activated.
      * If the default value or 0 is specified by the second
      * parameter, then the key binding as defined in the global
-     * setting should be used.  This method returns false
+     * setting should be used. This method returns false
      * when @p key is negative or the supplied key binding conflicts
      * with another one set for another feature.
      *
      * NOTE: To use a modifier key (Shift, Ctrl, Alt) as part of
      * the key binding simply @p sum up the values of the
-     * modifier and the actual key.  For example, to use CTRL+E, supply
+     * modifier and the actual key. For example, to use CTRL+E, supply
      * @p "Qt::CtrlButton + Qt::Key_E" as the second argument to this
      * function.
      *
@@ -248,7 +248,7 @@ public:
      * Returns the key binding used for the specified item.
      *
      * This method returns the key binding used to activate
-     * the feature given by @p item.  If the binding
+     * the feature given by @p item. If the binding
      * contains modifier key(s), the sum of the modifier key
      * and the actual key code is returned.
      *
@@ -287,7 +287,7 @@ public:
      * all inheriting classes.
      *
      * This function is intended to allow external completion
-     * implementations to set completed text appropriately.  It
+     * implementations to set completed text appropriately. It
      * is mostly relevant when the completion mode is set to
      * CompletionAuto and CompletionManual modes. See
      * KCompletionBase::setCompletedText.

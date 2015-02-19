@@ -67,7 +67,7 @@ public:
     QSize sizeHint() const Q_DECL_OVERRIDE;
 
     /**
-     * @returns true if selecting an item results in the emition of the selected() signal.
+     * @returns true if selecting an item results in the emission of the selected() signal.
      */
     bool activateOnSelect() const;
 
@@ -180,7 +180,7 @@ public Q_SLOTS:
     void end();
 
     /**
-     * Re-implemented for internal reasons.  API is unaffected.
+     * Reimplemented for internal reasons. API is unaffected.
      * Call it only if you really need it (i.e. the widget was hidden before) to have better performance.
      */
     void setVisible(bool visible) Q_DECL_OVERRIDE;
@@ -194,7 +194,7 @@ Q_SIGNALS:
 
     /**
      * Emitted whenever the user chooses to ignore the available
-     * selections and close the this box.
+     * selections and closes this box.
      */
     void userCancelled(const QString &);
 

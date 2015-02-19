@@ -57,15 +57,15 @@ class QMenu;
  * KCombobox by default creates a completion object when you invoke the
  * completionObject(bool) member function for the first time or
  * explicitly use setCompletionObject(KCompletion*, bool) to assign your
- * own completion object.  Additionally, to make this widget more functional,
+ * own completion object. Additionally, to make this widget more functional,
  * KComboBox will by default handle text rotation and completion events
  * internally whenever a completion object is created through either one of the
- * methods mentioned above.  If you do not need this functionality, simply use
+ * methods mentioned above. If you do not need this functionality, simply use
  * KCompletionBase::setHandleSignals(bool) or alternatively set the boolean
  * parameter in the @p setCompletionObject call to false.
  *
  * Beware: The completion object can be deleted on you, especially if a call
- * such as setEditable(false) is made.  Store the pointer at your own risk,
+ * such as setEditable(false) is made. Store the pointer at your own risk,
  * and consider using QPointer<KCompletion>.
  *
  * The default key bindings for completion and rotation are determined from the
@@ -263,10 +263,10 @@ public:
     int cursorPosition() const;
 
     /**
-    * Re-implemented from QComboBox.
+    * Reimplemented from QComboBox.
     *
     * If @p true, the completion mode will be set to automatic.
-    * Otherwise, it is defaulted to the global setting.  This
+    * Otherwise, it is defaulted to the global setting. This
     * method has been replaced by the more comprehensive
     * setCompletionMode().
     *
@@ -275,10 +275,10 @@ public:
     virtual void setAutoCompletion(bool autocomplete);
 
     /**
-    * Re-implemented from QComboBox.
+    * Reimplemented from QComboBox.
     *
     * Returns @p true if the current completion mode is set
-    * to automatic.  See its more comprehensive replacement
+    * to automatic. See its more comprehensive replacement
     * completionMode().
     *
     * @return @p true when completion mode is automatic.
@@ -369,7 +369,7 @@ public:
     KCompletionBox *completionBox(bool create = true);
 
     /**
-     * Re-implemented for internal reasons.  API remains unaffected.
+     * Reimplemented for internal reasons. API remains unaffected.
      * Note that QComboBox::setLineEdit is not virtual in Qt4, do not
      * use a KComboBox in a QComboBox pointer.
      *
@@ -380,7 +380,7 @@ public:
     virtual void setLineEdit(QLineEdit *);
 
     /**
-     * Re-implemented so that setEditable(true) creates a KLineEdit
+     * Reimplemented so that setEditable(true) creates a KLineEdit
      * instead of QLineEdit.
      *
      * Note that QComboBox::setEditable is not virtual, so do not
@@ -399,7 +399,7 @@ Q_SIGNALS:
     /**
     * Emitted when the user presses the Enter key.
     *
-    * The argument is the current text being edited.  This signal is just like
+    * The argument is the current text being edited. This signal is just like
     * returnPressed() except that it contains the current text as its argument.
     *
     * Note that this signal is only emitted when the
@@ -447,7 +447,7 @@ Q_SIGNALS:
      *
      * The signal allows you to add your own entries into the context menu.
      * Note that you <em>must not</em> store the pointer to the QPopupMenu since it is
-     * created and deleted on demand.  Otherwise, you can crash your app.
+     * created and deleted on demand. Otherwise, you can crash your app.
      *
      * @param contextMenu the context menu about to be displayed
      */
@@ -462,7 +462,7 @@ public Q_SLOTS:
     * Depending on the value of the argument, this function either
     * iterates through the history list of this widget or all the
     * possible matches in whenever multiple matches result from a
-    * text completion request.  Note that the all-possible-match
+    * text completion request. Note that the all-possible-match
     * iteration will not work if there are no previous matches, i.e.
     * no text has been completed and the *nix shell history list
     * rotation is only available if the insertion policy for this
@@ -502,11 +502,11 @@ protected Q_SLOTS:
     * Completes text according to the completion mode.
     *
     * Note: this method is not invoked if the completion mode is
-    * set to @p CompletionNone.  Also if the mode is set to @p CompletionShell
+    * set to @p CompletionNone. Also if the mode is set to @p CompletionShell
     * and multiple matches are found, this method will complete the
     * text to the first match with a beep to indicate that there are
-    * more matches.  Then any successive completion key event iterates
-    * through the remaining matches.  This way the rotation functionality
+    * more matches. Then any successive completion key event iterates
+    * through the remaining matches. This way the rotation functionality
     * is left to iterate through the list as usual.
     */
     virtual void makeCompletion(const QString &);
