@@ -657,9 +657,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
         insert(text);
         deselect();
         return;
-    }
-
-    else if (KStandardShortcut::cut().contains(key)) {
+    } else if (KStandardShortcut::cut().contains(key)) {
         if (!isReadOnly()) {
             cut();
         }
@@ -745,8 +743,8 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
                                  e->modifiers() == Qt::KeypadModifier);
 
         if ((mode == KCompletion::CompletionAuto ||
-                mode == KCompletion::CompletionPopupAuto ||
-                mode == KCompletion::CompletionMan) && noModifier) {
+             mode == KCompletion::CompletionPopupAuto ||
+             mode == KCompletion::CompletionMan) && noModifier) {
             if (!d->userSelection && hasSelectedText() &&
                     (e->key() == Qt::Key_Right || e->key() == Qt::Key_Left) &&
                     e->modifiers() == Qt::NoButton) {
@@ -785,7 +783,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
         }
 
         if ((mode == KCompletion::CompletionAuto ||
-                mode == KCompletion::CompletionMan) && noModifier) {
+             mode == KCompletion::CompletionMan) && noModifier) {
             const QString keycode = e->text();
             if (!keycode.isEmpty() && (keycode.unicode()->isPrint() ||
                                        e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Delete)) {
@@ -842,11 +840,9 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
                 return;
             }
 
-        }
-
-        else if ((mode == KCompletion::CompletionPopup ||
-                  mode == KCompletion::CompletionPopupAuto) &&
-                 noModifier && !e->text().isEmpty()) {
+        } else if ((mode == KCompletion::CompletionPopup ||
+                    mode == KCompletion::CompletionPopupAuto) &&
+                   noModifier && !e->text().isEmpty()) {
             const QString old_txt = text();
             const bool hasUserSelection = d->userSelection;
             const bool hadSelection = hasSelectedText();
@@ -916,9 +912,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
             }
 
             return;
-        }
-
-        else if (mode == KCompletion::CompletionShell) {
+        } else if (mode == KCompletion::CompletionShell) {
             // Handles completion.
             QList<QKeySequence> cut;
             if (keys[TextCompletion].isEmpty()) {
@@ -942,41 +936,39 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
         }
 
         // handle rotation
-        if (mode != KCompletion::CompletionNone) {
-            // Handles previous match
-            QList<QKeySequence> cut;
-            if (keys[PrevCompletionMatch].isEmpty()) {
-                cut = KStandardShortcut::shortcut(KStandardShortcut::PrevCompletion);
-            } else {
-                cut = keys[PrevCompletionMatch];
-            }
+        // Handles previous match
+        QList<QKeySequence> cut;
+        if (keys[PrevCompletionMatch].isEmpty()) {
+            cut = KStandardShortcut::shortcut(KStandardShortcut::PrevCompletion);
+        } else {
+            cut = keys[PrevCompletionMatch];
+        }
 
-            if (cut.contains(key)) {
-                if (emitSignals()) {
-                    emit textRotation(KCompletionBase::PrevCompletionMatch);
-                }
-                if (handleSignals()) {
-                    rotateText(KCompletionBase::PrevCompletionMatch);
-                }
-                return;
+        if (cut.contains(key)) {
+            if (emitSignals()) {
+                emit textRotation(KCompletionBase::PrevCompletionMatch);
             }
+            if (handleSignals()) {
+                rotateText(KCompletionBase::PrevCompletionMatch);
+            }
+            return;
+        }
 
-            // Handles next match
-            if (keys[NextCompletionMatch].isEmpty()) {
-                cut = KStandardShortcut::shortcut(KStandardShortcut::NextCompletion);
-            } else {
-                cut = keys[NextCompletionMatch];
-            }
+        // Handles next match
+        if (keys[NextCompletionMatch].isEmpty()) {
+            cut = KStandardShortcut::shortcut(KStandardShortcut::NextCompletion);
+        } else {
+            cut = keys[NextCompletionMatch];
+        }
 
-            if (cut.contains(key)) {
-                if (emitSignals()) {
-                    emit textRotation(KCompletionBase::NextCompletionMatch);
-                }
-                if (handleSignals()) {
-                    rotateText(KCompletionBase::NextCompletionMatch);
-                }
-                return;
+        if (cut.contains(key)) {
+            if (emitSignals()) {
+                emit textRotation(KCompletionBase::NextCompletionMatch);
             }
+            if (handleSignals()) {
+                rotateText(KCompletionBase::NextCompletionMatch);
+            }
+            return;
         }
 
         // substring completion
