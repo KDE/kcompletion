@@ -57,6 +57,7 @@ void KComboBoxPrivate::init()
 {
     Q_Q(KComboBox);
     q->setCompleter(0);
+    q->QComboBox::setAutoCompletion(false); // otherwise setLineEdit will create a completer...
 
     if (q->isEditable()) {
         q->lineEdit()->setContextMenuPolicy(Qt::DefaultContextMenu);
