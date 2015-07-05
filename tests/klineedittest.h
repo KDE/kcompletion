@@ -41,7 +41,7 @@ private Q_SLOTS:
 
 protected:
     KLineEdit *m_lineedit;
-    QLineEdit *m_restrictedLine;
+    KLineEdit *m_restrictedLine;
     QLabel *m_invalidCharLabel;
     QPushButton *m_btnExit;
     QPushButton *m_btnReadOnly;

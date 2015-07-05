@@ -33,11 +33,11 @@ KLineEditTest::KLineEditTest(QWidget *widget)
             SLOT(slotReturnPressed(QString)));
 
     QHBoxLayout *restrictedHBox = new QHBoxLayout;
-    m_restrictedLine = new QLineEdit(this);
+    m_restrictedLine = new KLineEdit(this);
     QRegExp regex(QString::fromUtf8("[aeiouyé]*"));
     QRegExpValidator *validator = new QRegExpValidator(regex, m_restrictedLine);
     m_restrictedLine->setValidator(validator);
-    connect(m_restrictedLine, SIGNAL(invalidChar(int)), this, SLOT(slotInvalidChar(int)));
+    //connect(m_restrictedLine, SIGNAL(invalidChar(int)), this, SLOT(slotInvalidChar(int)));
     connect(m_restrictedLine, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));
     connect(m_restrictedLine, SIGNAL(returnPressed(QString)),
             SLOT(slotReturnPressed(QString)));
