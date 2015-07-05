@@ -674,7 +674,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
         return;
     } else if (KStandardShortcut::deleteWordBack().contains(key)) {
         cursorWordBackward(true);
-        if (hasSelectedText()) {
+        if (hasSelectedText() && !isReadOnly()) {
             del();
         }
 
@@ -683,7 +683,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
     } else if (KStandardShortcut::deleteWordForward().contains(key)) {
         // Workaround for QT bug where
         cursorWordForward(true);
-        if (hasSelectedText()) {
+        if (hasSelectedText() && !isReadOnly()) {
             del();
         }
 
