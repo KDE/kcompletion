@@ -1,5 +1,7 @@
 # KCompletion
 
+Powerful completion framework, including completion-enabled lineedit and combobox.
+
 ## Introduction
 
 When typing filenames, email addresses and other text where the user often wants
