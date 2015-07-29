@@ -169,7 +169,8 @@ protected:
     virtual bool event(QEvent *event)
     {
         if (event->type() == QEvent::EnabledChange) {
-            m_pixmap = m_icon.pixmap(m_pixmap.size(), isEnabled() ? QIcon::Normal : QIcon::Disabled);
+            // QIcon::pixmap will return HiDPI pixmaps that are larger than the requested size => scale pixmap size back
+            m_pixmap = m_icon.pixmap(m_pixmap.size() / m_pixmap.devicePixelRatio(), isEnabled() ? QIcon::Normal : QIcon::Disabled);
         }
         return QWidget::event(event);
     }
