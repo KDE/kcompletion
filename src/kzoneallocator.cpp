@@ -69,9 +69,9 @@ public:
     /** One block is 'current' to satisfy requests. @internal */
     MemBlock *currentBlock;
     /** Store block size from constructor. @internal */
-    unsigned long blockSize;
+    quintptr blockSize;
     /** Store offset into current block; size-offset is free. @internal */
-    unsigned long blockOffset;
+    quintptr blockOffset;
     /** base-2 log of the block size. @internal */
     unsigned int log2;
     /** Count total number of allocated blocks. @internal */
@@ -244,7 +244,7 @@ KZoneAllocator::allocate(size_t _size)
 
     if ((unsigned long) _size + d->blockOffset > d->blockSize) {
         if (_size > d->blockSize) {
-            qDebug("KZoneAllocator: allocating more than %lu bytes", d->blockSize);
+            qDebug("KZoneAllocator: allocating more than %zu bytes", (size_t)d->blockSize);
             return 0;
         }
         addBlock(new MemBlock(d->blockSize));
