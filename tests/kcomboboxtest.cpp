@@ -99,12 +99,12 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
     // Create an exit button
     hbox = new QHBoxLayout();
     m_btnExit = new QPushButton("E&xit", this);
-    QObject::connect(m_btnExit, SIGNAL(clicked()), SLOT(quitApp()));
+    QObject::connect(m_btnExit, &QAbstractButton::clicked, this, &KComboBoxTest::quitApp);
     hbox->addWidget(m_btnExit);
 
     // Create a disable button...
     m_btnEnable = new QPushButton("Disa&ble", this);
-    QObject::connect(m_btnEnable, SIGNAL(clicked()), SLOT(slotDisable()));
+    QObject::connect(m_btnEnable, &QAbstractButton::clicked, this, &KComboBoxTest::slotDisable);
     hbox->addWidget(m_btnEnable);
 
     vbox->addLayout(hbox);
@@ -145,7 +145,7 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
     m_konqc->setCurrentIndex(m_konqc->count() - 1);
 
     m_timer = new QTimer(this);
-    connect(m_timer, SIGNAL(timeout()), SLOT(slotTimeout()));
+    connect(m_timer, &QTimer::timeout, this, &KComboBoxTest::slotTimeout);
 }
 
 KComboBoxTest::~KComboBoxTest()

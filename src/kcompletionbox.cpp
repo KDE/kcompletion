@@ -70,8 +70,8 @@ void KCompletionBoxPrivate::init()
     q->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     q->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    q->connect(q, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
-            SLOT(slotActivated(QListWidgetItem*)));
+    q->connect(q, &QListWidget::itemDoubleClicked,
+            q, &KCompletionBox::slotActivated);
     q->connect(q, SIGNAL(itemClicked(QListWidgetItem*)),
             SLOT(_k_itemClicked(QListWidgetItem*)));
 }

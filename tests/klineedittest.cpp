@@ -48,29 +48,29 @@ KLineEditTest::KLineEditTest(QWidget *widget)
 
     // horizontal button layout
     m_btnExit = new QPushButton("E&xit", this);
-    connect(m_btnExit, SIGNAL(clicked()), SLOT(quitApp()));
+    connect(m_btnExit, &QAbstractButton::clicked, this, &KLineEditTest::quitApp);
 
     m_btnReadOnly = new QPushButton("&Read Only", this);
     m_btnReadOnly->setCheckable(true);
-    connect(m_btnReadOnly, SIGNAL(toggled(bool)), SLOT(slotReadOnly(bool)));
+    connect(m_btnReadOnly, &QAbstractButton::toggled, this, &KLineEditTest::slotReadOnly);
 
     m_btnPassword = new QPushButton("&Password", this);
     m_btnPassword->setCheckable(true);
-    connect(m_btnPassword, SIGNAL(toggled(bool)), SLOT(slotPassword(bool)));
+    connect(m_btnPassword, &QAbstractButton::toggled, this, &KLineEditTest::slotPassword);
 
     m_btnEnable = new QPushButton("Dis&able", this);
     m_btnEnable->setCheckable(true);
-    connect(m_btnEnable, SIGNAL(toggled(bool)), SLOT(slotEnable(bool)));
+    connect(m_btnEnable, &QAbstractButton::toggled, this, &KLineEditTest::slotEnable);
 
     m_btnHide = new QPushButton("Hi&de", this);
-    connect(m_btnHide, SIGNAL(clicked()), SLOT(slotHide()));
+    connect(m_btnHide, &QAbstractButton::clicked, this, &KLineEditTest::slotHide);
 
     m_btnPlaceholderText = new QPushButton("Place Holder Text", this);
     m_btnPlaceholderText->setCheckable(true);
-    connect(m_btnPlaceholderText, SIGNAL(toggled(bool)), SLOT(slotPlaceholderText(bool)));
+    connect(m_btnPlaceholderText, &QAbstractButton::toggled, this, &KLineEditTest::slotPlaceholderText);
 
     QPushButton *btnStyle = new QPushButton("Stylesheet", this);
-    connect(btnStyle, SIGNAL(clicked()), SLOT(slotSetStyleSheet()));
+    connect(btnStyle, &QAbstractButton::clicked, this, &KLineEditTest::slotSetStyleSheet);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
     buttonLayout->addWidget(m_btnExit);

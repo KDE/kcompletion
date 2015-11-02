@@ -49,7 +49,7 @@ void KCompletionPrivate::addWeightedItem(const QString &item)
     int index = item.lastIndexOf(QLatin1Char(':'));
     if (index > 0) {
         bool ok;
-        weight = item.mid(index + 1).toUInt(&ok);
+        weight = item.midRef(index + 1).toUInt(&ok);
         if (!ok) {
             weight = 0;
         }

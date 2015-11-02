@@ -219,7 +219,7 @@ void KLineEdit::setClearButtonShown(bool show)
         }
 
         d->clearButton = new KLineEditButton(this);
-        d->clearButton->setObjectName("KLineEditButton");
+        d->clearButton->setObjectName(QStringLiteral("KLineEditButton"));
         d->clearButton->setCursor(Qt::ArrowCursor);
         d->clearButton->setToolTip(tr("Clear text", "@action:button Clear current text in the line edit"));
 
@@ -300,7 +300,7 @@ void KLineEditPrivate::updateClearButton()
     const int buttonWidth = clearButton->sizeHint().width();
     const QSize newButtonSize(buttonWidth, geom.height());
     const QFontMetrics fm(q->font());
-    const int em = fm.width("m");
+    const int em = fm.width(QStringLiteral("m"));
 
     // make sure we have enough room for the clear button
     // no point in showing it if we can't also see a few characters as well
@@ -346,7 +346,7 @@ void KLineEdit::setCompletionMode(KCompletion::CompletionMode mode)
         mode = KCompletion::CompletionNone;    // Override the request.
     }
 
-    if (!KAuthorized::authorize("lineedit_text_completion")) {
+    if (!KAuthorized::authorize(QStringLiteral("lineedit_text_completion"))) {
         mode = KCompletion::CompletionNone;
     }
 
@@ -535,7 +535,7 @@ void KLineEditPrivate::setSqueezedText()
 
     if (textWidth > labelWidth) {
         // start with the dots only
-        QString squeezedText = "...";
+        QString squeezedText = QStringLiteral("...");
         int squeezedWidth = fm.width(squeezedText);
 
         // estimate how many letters we can add to the dots on both sides
@@ -577,7 +577,7 @@ void KLineEditPrivate::setSqueezedText()
     } else {
         q->QLineEdit::setText(fullText);
 
-        q->setToolTip("");
+        q->setToolTip(QLatin1String(""));
         QToolTip::showText(q->pos(), QString()); // hide
     }
 
@@ -1100,9 +1100,9 @@ QMenu *KLineEdit::createStandardContextMenu()
             separatorAction = actionList.at(idx);
         }
         if (separatorAction) {
-            QAction *clearAllAction = new QAction(QIcon::fromTheme("edit-clear"), tr("C&lear"), this);
+            QAction *clearAllAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-clear")), tr("C&lear"), this);
             clearAllAction->setShortcuts(QKeySequence::keyBindings(QKeySequence::DeleteCompleteLine));
-            connect(clearAllAction, SIGNAL(triggered(bool)), SLOT(clear()));
+            connect(clearAllAction, &QAction::triggered, this, &QLineEdit::clear);
             if (text().isEmpty()) {
                 clearAllAction->setEnabled(false);
             }
@@ -1113,8 +1113,8 @@ QMenu *KLineEdit::createStandardContextMenu()
     // If a completion object is present and the input
     // widget is not read-only, show the Text Completion
     // menu item.
-    if (compObj() && !isReadOnly() && KAuthorized::authorize("lineedit_text_completion")) {
-        QMenu *subMenu = popup->addMenu(QIcon::fromTheme("text-completion"), tr("Text Completion", "@title:menu"));
+    if (compObj() && !isReadOnly() && KAuthorized::authorize(QStringLiteral("lineedit_text_completion"))) {
+        QMenu *subMenu = popup->addMenu(QIcon::fromTheme(QStringLiteral("text-completion")), tr("Text Completion", "@title:menu"));
         connect(subMenu, SIGNAL(triggered(QAction*)),
                 this, SLOT(_k_completionMenuActivated(QAction*)));
 
@@ -1307,8 +1307,8 @@ void KLineEdit::setCompletionBox(KCompletionBox *box)
     if (handleSignals()) {
         connect(d->completionBox, SIGNAL(currentTextChanged(QString)),
                 SLOT(_k_completionBoxTextChanged(QString)));
-        connect(d->completionBox, SIGNAL(userCancelled(QString)),
-                SLOT(userCancelled(QString)));
+        connect(d->completionBox, &KCompletionBox::userCancelled,
+                this, &KLineEdit::userCancelled);
         connect(d->completionBox, SIGNAL(activated(QString)),
                 SIGNAL(completionBoxActivated(QString)));
         connect(d->completionBox, SIGNAL(activated(QString)),
@@ -1417,7 +1417,7 @@ bool KLineEditPrivate::overrideShortcut(const QKeyEvent *e)
     // but doesn't dare force as "stronger than kaction shortcuts"...
     else if (e->matches(QKeySequence::SelectAll)) {
         return true;
-    } else if (qApp->platformName() == "xcb" && (key == Qt::CTRL + Qt::Key_E || key == Qt::CTRL + Qt::Key_U)) {
+    } else if (qApp->platformName() == QLatin1String("xcb") && (key == Qt::CTRL + Qt::Key_E || key == Qt::CTRL + Qt::Key_U)) {
         return true;
     }
 
@@ -1496,7 +1496,7 @@ KCompletionBox *KLineEdit::completionBox(bool create)
     Q_D(KLineEdit);
     if (create && !d->completionBox) {
         setCompletionBox(new KCompletionBox(this));
-        d->completionBox->setObjectName("completion box");
+        d->completionBox->setObjectName(QStringLiteral("completion box"));
         d->completionBox->setFont(font());
     }
 
@@ -1639,10 +1639,10 @@ void KLineEdit::setPasswordMode(bool passwordMode)
     if (passwordMode) {
         KConfigGroup cg(KSharedConfig::openConfig(), "Passwords");
         const QString val = cg.readEntry("EchoMode", "OneStar");
-        if (val == "NoEcho") {
+        if (val == QLatin1String("NoEcho")) {
             setEchoMode(NoEcho);
         } else {
-            d->threeStars = (val == "ThreeStars");
+            d->threeStars = (val == QLatin1String("ThreeStars"));
             setEchoMode(Password);
         }
     } else {
