@@ -245,13 +245,11 @@ public:
      * Enables/Disables handling of URL drops. If enabled and the user
      * drops an URL, the decoded URL will be inserted. Otherwise the default
      * behavior of QLineEdit is used, which inserts the encoded URL.
+     * Call setUrlDropsEnabled(false) if you need dropEvent to be called in a KLineEdit subclass.
      *
      * @param enable If @p true, insert decoded URLs
-     * @deprecated since 5.0. Use installEventFilter with a LineEditUrlDropEventFilter
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED void setUrlDropsEnabled(bool enable);
-#endif
+    void setUrlDropsEnabled(bool enable);  // KF6: remove it and don't create LineEditUrlDropEventFilter by default.
 
     /**
      * Returns @p true when decoded URL drops are enabled
