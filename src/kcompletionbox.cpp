@@ -61,7 +61,10 @@ void KCompletionBoxPrivate::init()
     upwardBox = false;
     emitSelected = true;
 
-    q->setWindowFlags(Qt::ToolTip);   // calls setVisible, so must be done after initializations
+    //we can't link to QXcbWindowFunctions::Combo
+    //also, q->setAttribute(Qt::WA_X11NetWmWindowTypeCombo); is broken in Qt xcb
+    q->setProperty("_q_xcb_wm_window_type", 0x001000);
+    q->setWindowFlags(Qt::Window | Qt::X11BypassWindowManagerHint); // calls setVisible, so must be done after initializations
     q->setUniformItemSizes(true);
 
     q->setLineWidth(1);
