@@ -11,3 +11,7 @@ libraries:
  - qmake: KCompletion
    cmake: "KF5::Completion"
 cmakename: KF5Completion
+
+public_lib: true
+group: Frameworks
+subgroup: Tier 2
