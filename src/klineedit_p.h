@@ -49,7 +49,7 @@ public:
         m_animation->setEasingCurve(QEasingCurve::InOutQuad);
     }
 
-    QSize sizeHint() const
+    QSize sizeHint() const Q_DECL_OVERRIDE
     {
         return m_pixmap.size() / m_pixmap.devicePixelRatio();
     }
@@ -117,7 +117,7 @@ public:
     }
 
 protected:
-    void paintEvent(QPaintEvent *event)
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE
     {
         Q_UNUSED(event)
 
@@ -166,7 +166,7 @@ protected:
     }
 
 protected:
-    virtual bool event(QEvent *event)
+    bool event(QEvent *event) Q_DECL_OVERRIDE
     {
         if (event->type() == QEvent::EnabledChange) {
             // QIcon::pixmap will return HiDPI pixmaps that are larger than the requested size => scale pixmap size back
@@ -194,7 +194,7 @@ public:
     {
     }
 
-    QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget) const;
+    QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget) const Q_DECL_OVERRIDE;
 
     int m_overlap;
     QPointer<QStyle> m_subStyle;
