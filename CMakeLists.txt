@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(KCompletion)
+set(KF5_VERSION "5.30.0") # handled by release scripts
+set(KF5_DEP_VERSION "5.29.0") # handled by release scripts
+project(KCompletion VERSION ${KF5_VERSION})
 
 # ECM setup
 include(FeatureSummary)
@@ -21,10 +23,7 @@ include(KDECMakeSettings)
 
 include(ECMPoQmTools)
 
-set(KF5_VERSION "5.30.0") # handled by release scripts
-set(KF5_DEP_VERSION "5.29.0") # handled by release scripts
-
-ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KCOMPLETION
+ecm_setup_version(PROJECT VARIABLE_PREFIX KCOMPLETION
   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kcompletion_version.h"
   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5CompletionConfigVersion.cmake"
   SOVERSION 5)
