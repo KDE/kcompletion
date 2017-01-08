@@ -1,0 +1,117 @@
+# translation of kdelibs4.po to Euskara/Basque (eu)
+# KDE: EUSKERA TRANSLATION
+# Copyright (C) 1999,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011, Free Software Foundation, Inc.
+#
+# Marcos <marcos@euskalgnu.org>, 2002,2003, 2004, 2005.
+# Ion Gaztañaga <igaztanaga@gmail.com>, 2005.
+# marcos <marcos@euskalgnu.org>, 2006, 2007, 2008, 2009, 2010.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009.
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2010, 2011, 2012, 2013, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2014-03-02 19:49+0100\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-doc@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Qt-Contexts: true\n"
+
+#: khistorycombobox.cpp:203
+#, fuzzy
+#| msgid "Clear &History"
+msgctxt "KHistoryComboBox|"
+msgid "Clear &History"
+msgstr "Garbitu &historia"
+
+#: klineedit.cpp:154
+#, fuzzy
+#| msgid "1"
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:224
+#, fuzzy
+#| msgctxt "@action:button Clear current text in the line edit"
+#| msgid "Clear text"
+msgctxt "KLineEdit|@action:button Clear current text in the line edit"
+msgid "Clear text"
+msgstr "Testu garbia"
+
+#: klineedit.cpp:1103
+#, fuzzy
+#| msgid "C&lear"
+msgctxt "KLineEdit|"
+msgid "C&lear"
+msgstr "&Garbitu"
+
+#: klineedit.cpp:1117
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Text Completion"
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Testu-osaketa"
+
+#: klineedit.cpp:1124
+#, fuzzy
+#| msgctxt "No border line"
+#| msgid "None"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Bat ere ez"
+
+#: klineedit.cpp:1125
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Manual"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Eskuz"
+
+#: klineedit.cpp:1126
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Automatikoa"
+
+#: klineedit.cpp:1127
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Dropdown List"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Goitibehera zerrenda"
+
+#: klineedit.cpp:1128
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Short Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Moztu automatikoki"
+
+#: klineedit.cpp:1129
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Dropdown List && Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Goitibehera zerrenda eta automatikoa"
+
+#: klineedit.cpp:1159
+#, fuzzy
+#| msgctxt "Encodings menu"
+#| msgid "Default"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "Lehenetsia"
