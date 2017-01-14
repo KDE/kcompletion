@@ -124,7 +124,6 @@ class KCompletionMatches;
  */
 class KCOMPLETION_EXPORT KCompletion : public QObject
 {
-    Q_ENUMS(CompOrder)
     Q_PROPERTY(CompOrder order READ order WRITE setOrder)
     Q_PROPERTY(bool ignoreCase READ ignoreCase WRITE setIgnoreCase)
     Q_PROPERTY(QStringList items READ items WRITE setItems)
@@ -175,6 +174,7 @@ public:
                      Insertion, ///< Use order of insertion
                      Weighted   ///< Use weighted order
                    };
+    Q_ENUM(CompOrder)
 
     /**
      * Constructor, nothing special here :)
