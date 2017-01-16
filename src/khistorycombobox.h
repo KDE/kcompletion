@@ -167,7 +167,7 @@ public:
      * own custom pixmaps, or use the KUrlPixmapProvider from KIO,
      * which uses KMimeType::pixmapForUrl to resolve icons.
      *
-     * Set @p provider to Q_NULLPTR if you want to disable pixmaps. Default no pixmaps.
+     * Set @p provider to nullptr if you want to disable pixmaps. Default no pixmaps.
      *
      * @see pixmapProvider
      */
