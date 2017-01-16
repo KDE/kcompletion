@@ -124,7 +124,7 @@ void KLineEditPrivate::init()
 {
     Q_Q(KLineEdit);
     //---
-    completionBox = 0L;
+    completionBox = nullptr;
     handleURLDrops = true;
     trapReturnKeyEvents = false;
 
@@ -140,7 +140,7 @@ void KLineEditPrivate::init()
         s_initialized = true;
     }
 
-    clearButton = 0;
+    clearButton = nullptr;
     clickInClear = false;
     wideEnoughForClear = true;
 
@@ -229,7 +229,7 @@ void KLineEdit::setClearButtonShown(bool show)
     } else {
         disconnect(this, SIGNAL(textChanged(QString)), this, SLOT(_k_updateClearButtonIcon(QString)));
         delete d->clearButton;
-        d->clearButton = 0;
+        d->clearButton = nullptr;
         d->clickInClear = false;
         if (d->style) {
             d->style.data()->m_overlap = 0;
@@ -240,7 +240,7 @@ void KLineEdit::setClearButtonShown(bool show)
 bool KLineEdit::isClearButtonShown() const
 {
     Q_D(const KLineEdit);
-    return d->clearButton != 0;
+    return d->clearButton != nullptr;
 }
 
 QSize KLineEdit::clearButtonUsedSize() const
@@ -248,7 +248,7 @@ QSize KLineEdit::clearButtonUsedSize() const
     Q_D(const KLineEdit);
     QSize s;
     if (d->clearButton) {
-        const int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth, 0, this);
+        const int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth, nullptr, this);
         s = d->clearButton->sizeHint();
         s.rwidth() += frameWidth;
     }
@@ -271,7 +271,7 @@ void KLineEditPrivate::_k_updateClearButtonIcon(const QString &text)
     if (clearButton->pixmap().isNull()) {
         QString iconName = q->layoutDirection() == Qt::LeftToRight ? "edit-clear-locationbar-rtl" : "edit-clear-locationbar-ltr";
 
-        int size = clearButton->style()->pixelMetric(QStyle::PM_SmallIconSize, 0, q);
+        int size = clearButton->style()->pixelMetric(QStyle::PM_SmallIconSize, nullptr, q);
         clearButton->setPixmap(QIcon::fromTheme(iconName).pixmap(size, size));
     }
 
@@ -296,7 +296,7 @@ void KLineEditPrivate::updateClearButton()
     }
 
     const QSize geom = q->size();
-    const int frameWidth = q->style()->pixelMetric(QStyle::PM_DefaultFrameWidth, 0, q);
+    const int frameWidth = q->style()->pixelMetric(QStyle::PM_DefaultFrameWidth, nullptr, q);
     const int buttonWidth = clearButton->sizeHint().width();
     const QSize newButtonSize(buttonWidth, geom.height());
     const QFontMetrics fm(q->font());
@@ -616,7 +616,7 @@ bool KLineEditPrivate::copySqueezedText(bool copy) const
         }
         QString t = squeezedText;
         t = t.mid(start, end - start);
-        q->disconnect(QApplication::clipboard(), SIGNAL(selectionChanged()), q, 0);
+        q->disconnect(QApplication::clipboard(), SIGNAL(selectionChanged()), q, nullptr);
         QApplication::clipboard()->setText(t, copy ? QClipboard::Clipboard : QClipboard::Selection);
         q->connect(QApplication::clipboard(), SIGNAL(selectionChanged()), q,
                 SLOT(_q_clipboardChanged()));
@@ -1093,7 +1093,7 @@ QMenu *KLineEdit::createStandardContextMenu()
         enum { UndoAct, RedoAct, Separator1, CutAct, CopyAct, PasteAct, DeleteAct, ClearAct,
                Separator2, SelectAllAct, NCountActs
              };
-        QAction *separatorAction = 0L;
+        QAction *separatorAction = nullptr;
         // separator we want is right after Delete right now.
         const int idx = actionList.indexOf(actionList[DeleteAct]) + 1;
         if (idx < actionList.count()) {
@@ -1454,14 +1454,14 @@ void KLineEdit::setCompletedItems(const QStringList &items, bool autoSuggest)
             QListWidgetItem *currentItem = d->completionBox->currentItem();
 
             QString currentSelection;
-            if (currentItem != 0) {
+            if (currentItem != nullptr) {
                 currentSelection = currentItem->text();
             }
 
             d->completionBox->setItems(items);
 
             const QList<QListWidgetItem *> matchedItems = d->completionBox->findItems(currentSelection, Qt::MatchExactly);
-            QListWidgetItem *matchedItem = matchedItems.isEmpty() ? 0 : matchedItems.first();
+            QListWidgetItem *matchedItem = matchedItems.isEmpty() ? nullptr : matchedItems.first();
 
             if (matchedItem) {
                 const bool blocked = d->completionBox->blockSignals(true);

@@ -157,7 +157,7 @@ public:
     *
     * @param parent The parent object of this widget
     */
-    explicit KComboBox(QWidget *parent = 0);
+    explicit KComboBox(QWidget *parent = nullptr);
 
     /**
     * Constructs an editable or read-only combo box.
@@ -165,7 +165,7 @@ public:
     * @param rw When @p true, widget will be editable.
     * @param parent The parent object of this widget.
     */
-    explicit KComboBox(bool rw, QWidget *parent = 0);
+    explicit KComboBox(bool rw, QWidget *parent = nullptr);
 
     /**
     * Destructor.

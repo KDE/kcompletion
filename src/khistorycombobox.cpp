@@ -92,7 +92,7 @@ void KHistoryComboBoxPrivate::init(bool useCompletion)
     q->setInsertPolicy(KHistoryComboBox::NoInsert);
     currentIndex = -1;
     rotated = false;
-    pixmapProvider = 0L;
+    pixmapProvider = nullptr;
 
     // obey HISTCONTROL setting
     QByteArray histControl = qgetenv("HISTCONTROL");

@@ -73,7 +73,7 @@ public:
             m_animation->setDuration(250);
         }
 
-        if (style()->styleHint(QStyle::SH_Widget_Animate, 0, this)) {
+        if (style()->styleHint(QStyle::SH_Widget_Animate, nullptr, this)) {
             if (m_animation->state() != QPropertyAnimation::Running) {
                 m_animation->start();
             }
@@ -127,7 +127,7 @@ protected:
         }
 
         const QSize pmSize(m_pixmap.size() / m_pixmap.devicePixelRatio());
-        if (style()->styleHint(QStyle::SH_Widget_Animate, 0, this)) {
+        if (style()->styleHint(QStyle::SH_Widget_Animate, nullptr, this)) {
 
             if (m_opacity == 0) {
                 if (m_animation->direction() == QPropertyAnimation::Backward) {

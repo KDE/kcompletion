@@ -167,7 +167,7 @@ void Form1::slotHighlighted(int row)
     }
 
     QListWidgetItem *i = ListBox1->item(row);
-    Q_ASSERT(i != 0);
+    Q_ASSERT(i != nullptr);
 
     QString text = i->text();
 

@@ -36,7 +36,7 @@
 class KZoneAllocator::MemBlock
 {
 public:
-    MemBlock(size_t s) : size(s), ref(0), older(0), newer(0)
+    MemBlock(size_t s) : size(s), ref(0), older(nullptr), newer(nullptr)
     {
         begin = new char[s];
     }
@@ -60,9 +60,9 @@ class KZoneAllocator::Private
 {
 public:
     Private()
-        : currentBlock(0), blockSize(1),
+        : currentBlock(nullptr), blockSize(1),
           blockOffset(0), log2(0), num_blocks(0),
-          hashList(0), hashSize(0), hashDirty(true)
+          hashList(nullptr), hashSize(0), hashDirty(true)
     {
     }
 
@@ -107,7 +107,7 @@ KZoneAllocator::~KZoneAllocator()
             delete d->hashList[i];
         }
         delete [] d->hashList;
-        d->hashList = 0;
+        d->hashList = nullptr;
     }
     MemBlock *next;
     for (; d->currentBlock; d->currentBlock = next) {
@@ -146,7 +146,7 @@ void KZoneAllocator::insertHash(MemBlock *b)
 */
 void KZoneAllocator::addBlock(MemBlock *b)
 {
-    b->newer = 0;
+    b->newer = nullptr;
     b->older = d->currentBlock;
     if (d->currentBlock) {
         b->older->newer = b;
@@ -174,7 +174,7 @@ void KZoneAllocator::initHash()
             delete d->hashList[i];
         }
         delete [] d->hashList;
-        d->hashList = 0;
+        d->hashList = nullptr;
     }
     d->hashSize = 1;
     while (d->hashSize < d->num_blocks) {
@@ -228,7 +228,7 @@ void KZoneAllocator::delBlock(MemBlock *b)
         b->newer->older = b->older;
     }
     if (b == d->currentBlock) {
-        d->currentBlock = 0;
+        d->currentBlock = nullptr;
         d->blockOffset = d->blockSize;
     }
     delete b;
@@ -245,7 +245,7 @@ KZoneAllocator::allocate(size_t _size)
     if ((unsigned long) _size + d->blockOffset > d->blockSize) {
         if (_size > d->blockSize) {
             qDebug("KZoneAllocator: allocating more than %zu bytes", (size_t)d->blockSize);
-            return 0;
+            return nullptr;
         }
         addBlock(new MemBlock(d->blockSize));
         d->blockOffset = 0;

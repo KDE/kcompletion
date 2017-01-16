@@ -151,7 +151,7 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 KComboBoxTest::~KComboBoxTest()
 {
     delete m_timer;
-    m_timer = 0;
+    m_timer = nullptr;
 }
 
 void KComboBoxTest::connectComboSignals(QComboBox *combo)

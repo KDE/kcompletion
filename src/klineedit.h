@@ -178,13 +178,13 @@ public:
      * @param string Text to be shown in the edit widget.
      * @param parent The parent widget of the line edit.
      */
-    explicit KLineEdit(const QString &string, QWidget *parent = 0);
+    explicit KLineEdit(const QString &string, QWidget *parent = nullptr);
 
     /**
      * Constructs a line edit
      * @param parent The parent widget of the line edit.
      */
-    explicit KLineEdit(QWidget *parent = 0);
+    explicit KLineEdit(QWidget *parent = nullptr);
 
     /**
      *  Destructor.

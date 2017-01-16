@@ -31,7 +31,7 @@ class KComboBoxPrivate
 {
 public:
     KComboBoxPrivate(KComboBox *parent)
-        : klineEdit(0L),
+        : klineEdit(nullptr),
           trapReturnKey(false),
           q_ptr(parent)
     {
@@ -56,7 +56,7 @@ public:
 void KComboBoxPrivate::init()
 {
     Q_Q(KComboBox);
-    q->setCompleter(0);
+    q->setCompleter(nullptr);
     q->QComboBox::setAutoCompletion(false); // otherwise setLineEdit will create a completer...
 
     if (q->isEditable()) {
@@ -74,7 +74,7 @@ void KComboBoxPrivate::_k_lineEditDeleted()
 
     // is it our delegate, that is destroyed?
     if (base == q->delegate()) {
-        q->setDelegate(0L);
+        q->setDelegate(nullptr);
     }
 }
 
@@ -271,7 +271,7 @@ KCompletionBox *KComboBox::completionBox(bool create)
     if (d->klineEdit) {
         return d->klineEdit->completionBox(create);
     }
-    return 0;
+    return nullptr;
 }
 
 QSize KComboBox::minimumSizeHint() const

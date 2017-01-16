@@ -54,7 +54,7 @@ void KCompletionBasePrivate::init()
 {
     Q_Q(KCompletionBase);
     completionMode = KCompletion::CompletionPopup;
-    delegate = 0;
+    delegate = nullptr;
     // Initialize all key-bindings to 0 by default so that
     // the event filter will use the global settings.
     q->useGlobalKeyBindings();

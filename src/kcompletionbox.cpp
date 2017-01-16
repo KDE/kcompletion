@@ -83,7 +83,7 @@ void KCompletionBoxPrivate::init()
 KCompletionBox::~KCompletionBox()
 {
     Q_D(KCompletionBox);
-    d->m_parent = 0L;
+    d->m_parent = nullptr;
 }
 
 QStringList KCompletionBox::items() const

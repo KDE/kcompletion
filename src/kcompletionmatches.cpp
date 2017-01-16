@@ -62,7 +62,7 @@ KCompletionMatches::KCompletionMatches(bool sort_P)
 KCompletionMatches::KCompletionMatches(const KCompletionMatchesWrapper &matches)
     : d_ptr(new KCompletionMatchesPrivate(matches.sorting(), this))
 {
-    if (matches.m_sortedList != 0L) {
+    if (matches.m_sortedList != nullptr) {
         KCompletionMatchesList::operator=(*matches.m_sortedList);
     } else {
         const QStringList l = matches.list();

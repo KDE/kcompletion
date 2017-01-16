@@ -19,7 +19,7 @@ class Form1 : public QWidget
     Q_OBJECT
 
 public:
-    Form1(QWidget *parent = 0);
+    Form1(QWidget *parent = nullptr);
     ~Form1();
 
     QGroupBox *GroupBox1;

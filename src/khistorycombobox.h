@@ -74,7 +74,7 @@ public:
      *
      * @p parent the parent object of this widget.
      */
-    explicit KHistoryComboBox(QWidget *parent = 0);
+    explicit KHistoryComboBox(QWidget *parent = nullptr);
 
     /**
     * Same as the previous constructor, but additionally has the option
@@ -82,7 +82,7 @@ public:
     * or not. If set to @p true, KHistoryComboBox will sync the completion to the
     * contents of the combobox.
     */
-    explicit KHistoryComboBox(bool useCompletion, QWidget *parent = 0);
+    explicit KHistoryComboBox(bool useCompletion, QWidget *parent = nullptr);
 
     /**
      * Destructs the combo, the completion-object and the pixmap-provider

@@ -14,7 +14,7 @@ class KComboBoxTest : public QWidget
     Q_OBJECT
 
 public:
-    KComboBoxTest(QWidget *parent = 0);
+    KComboBoxTest(QWidget *parent = nullptr);
     ~KComboBoxTest();
 
 private Q_SLOTS:

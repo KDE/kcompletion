@@ -34,7 +34,7 @@ class KCompTreeNode;
 class KCOMPLETION_EXPORT KCompTreeNodeList
 {
 public:
-    KCompTreeNodeList() : m_first(0), m_last(0), m_count(0) {}
+    KCompTreeNodeList() : m_first(nullptr), m_last(nullptr), m_count(0) {}
 
     KCompTreeNode *begin() const
     {
@@ -99,12 +99,12 @@ class KCOMPLETION_EXPORT KCompTreeNode : public QChar
 public:
     KCompTreeNode()
         : QChar(),
-          m_next(0),
+          m_next(nullptr),
           m_weight(0) {}
 
     explicit KCompTreeNode(const QChar &ch, uint weight = 0)
         : QChar(ch),
-          m_next(0),
+          m_next(nullptr),
           m_weight(weight) {}
 
     ~KCompTreeNode();
@@ -206,7 +206,7 @@ class KCOMPLETION_EXPORT KCompletionMatchesWrapper
 {
 public:
     KCompletionMatchesWrapper(KCompletion::CompOrder compOrder = KCompletion::Insertion)
-        : m_sortedList(compOrder == KCompletion::Weighted ? new KCompletionMatchesList : 0L),
+        : m_sortedList(compOrder == KCompletion::Weighted ? new KCompletionMatchesList : nullptr),
           m_dirty(false),
           m_compOrder(compOrder) {}
 
@@ -221,7 +221,7 @@ public:
             m_sortedList = new KCompletionMatchesList;
         } else if (compOrder != KCompletion::Weighted) {
             delete m_sortedList;
-            m_sortedList = 0L;
+            m_sortedList = nullptr;
         }
         m_compOrder = compOrder;
         m_stringList.clear();

@@ -109,7 +109,7 @@ QString KCompletionPrivate::findCompletion(const QString &string)
                 // don't just find the "first" match, but the one with the
                 // highest priority
 
-                const KCompTreeNode *temp_node = 0L;
+                const KCompTreeNode *temp_node = nullptr;
                 while (1) {
                     int count = node->childrenCount();
                     temp_node = node->firstChild();
@@ -562,7 +562,7 @@ KCompTreeNode *KCompTreeNode::insert(const QChar &ch, bool sorted)
 
         // FIXME, first (slow) sorted insertion implementation
         if (sorted) {
-            KCompTreeNode *prev = 0;
+            KCompTreeNode *prev = nullptr;
             KCompTreeNode *cur = m_children.begin();
             while (cur) {
                 if (ch > *cur) {
@@ -600,7 +600,7 @@ void KCompTreeNode::remove(const QString &str)
 
     QVector<KCompTreeNode *> deletables(string.length() + 1);
 
-    KCompTreeNode *child = 0L;
+    KCompTreeNode *child = nullptr;
     KCompTreeNode *parent = this;
     deletables.replace(0, parent);
 
@@ -781,12 +781,12 @@ void KCompTreeNodeList::append(KCompTreeNode *item)
     m_count++;
     if (!m_last) {
         m_last = item;
-        m_last->m_next = 0;
+        m_last->m_next = nullptr;
         m_first = item;
         return;
     }
     m_last->m_next = item;
-    item->m_next = 0;
+    item->m_next = nullptr;
     m_last = item;
 }
 
@@ -795,7 +795,7 @@ void KCompTreeNodeList::prepend(KCompTreeNode *item)
     m_count++;
     if (!m_last) {
         m_last = item;
-        m_last->m_next = 0;
+        m_last->m_next = nullptr;
         m_first = item;
         return;
     }
@@ -823,9 +823,9 @@ void KCompTreeNodeList::insert(KCompTreeNode *after, KCompTreeNode *item)
 KCompTreeNode *KCompTreeNodeList::remove(KCompTreeNode *item)
 {
     if (!m_first || !item) {
-        return 0;
+        return nullptr;
     }
-    KCompTreeNode *cur = 0;
+    KCompTreeNode *cur = nullptr;
 
     if (item == m_first) {
         m_first = m_first->m_next;
@@ -835,7 +835,7 @@ KCompTreeNode *KCompTreeNodeList::remove(KCompTreeNode *item)
             cur = cur->m_next;
         }
         if (!cur) {
-            return 0;
+            return nullptr;
         }
         cur->m_next = item->m_next;
     }
