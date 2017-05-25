@@ -33,6 +33,8 @@ class KCompletionMatchesWrapper;
 class KCompletionMatches;
 
 /**
+ * @class KCompletion kcompletion.h KCompletion
+ *
  * @short A generic class for completing QStrings
  *
  * This class offers easy use of "auto completion", "manual completion" or

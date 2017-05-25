@@ -43,6 +43,8 @@ class QUrl;
 class KLineEditPrivate;
 
 /**
+ * @class KLineEdit klineedit.h KLineEdit
+ *
  * An enhanced QLineEdit widget for inputting text.
  *
  * \b Detail \n

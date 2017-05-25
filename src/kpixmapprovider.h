@@ -25,6 +25,8 @@
 #include <QPixmap>
 
 /**
+ * @class KPixmapProvider kpixmapprovider.h KPixmapProvider
+ *
  * A tiny abstract class with just one method:
  * pixmapFor()
  *

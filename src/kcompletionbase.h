@@ -28,6 +28,8 @@
 class KCompletionBasePrivate;
 
 /**
+ * @class KCompletionBase kcompletionbase.h KCompletionBase
+ *
  * An abstract base class for adding a completion feature
  * into widgets.
  *

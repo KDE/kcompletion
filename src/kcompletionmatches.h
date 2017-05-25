@@ -32,6 +32,8 @@ class KCompletionMatchesPrivate;
 typedef KSortableList<QString> KCompletionMatchesList;
 
 /**
+ * @class KCompletionMatches kcompletionmatches.h KCompletionMatches
+ *
  * This structure is returned by KCompletion::allWeightedMatches().
  * It also keeps the weight of the matches, allowing
  * you to modify some matches or merge them with matches

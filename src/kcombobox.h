@@ -36,6 +36,8 @@ class QLineEdit;
 class QMenu;
 
 /**
+ * @class KComboBox kcombobox.h KComboBox
+ *
  * @short A combo box with completion support.
  *
  * This widget inherits from QComboBox and implements the following

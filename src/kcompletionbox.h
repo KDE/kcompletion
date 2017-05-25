@@ -30,6 +30,8 @@ class KCompletionBoxPrivate;
 class QEvent;
 
 /**
+ * @class KCompletionBox kcompletionbox.h KCompletionBox
+ *
  * @short A helper widget for "completion-widgets" (KLineEdit, KComboBox))
  *
  * A little utility class for "completion-widgets", like KLineEdit or

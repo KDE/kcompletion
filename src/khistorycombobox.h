@@ -29,6 +29,8 @@ class KPixmapProvider;
 class KHistoryComboBoxPrivate;
 
 /**
+ * @class KHistoryComboBox khistorycombobox.h KHistoryComboBox
+ *
  * @short A combobox for offering a history and completion
  *
  * A combobox which implements a history like a unix shell. You can navigate
