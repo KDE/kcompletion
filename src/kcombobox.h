@@ -524,6 +524,8 @@ protected:
     */
     virtual void setCompletedText(const QString &text, bool marked);
 
+    // TODO KF6: make public like in base classes, so consumers do not need to cast to base classes
+    // when they have a KComboBox (or subclasses) object and want to access this property
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
 
 private:
