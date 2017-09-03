@@ -1,0 +1,77 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeorg\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2016-11-19 20:11+0100\n"
+"PO-Revision-Date: 2017-07-13 11:17-0400\n"
+"Last-Translator: guoyunhebrave <guoyunhebrave@gmail.com>\n"
+"Language-Team: Chinese Simplified\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: kdeorg\n"
+"X-Crowdin-Language: zh-CN\n"
+"X-Crowdin-File: /kf5-trunk/messages/frameworks/baloo_file5.pot\n"
+
+#: khistorycombobox.cpp:203
+msgctxt "KHistoryComboBox|"
+msgid "Clear &History"
+msgstr "清除历史(&H)"
+
+#: klineedit.cpp:154
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:224
+msgctxt "KLineEdit|@action:button Clear current text in the line edit"
+msgid "Clear text"
+msgstr "清除文本"
+
+#: klineedit.cpp:1103
+msgctxt "KLineEdit|"
+msgid "C&lear"
+msgstr "清除(&L)"
+
+#: klineedit.cpp:1117
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "文本补全"
+
+#: klineedit.cpp:1124
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "无"
+
+#: klineedit.cpp:1125
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "手动"
+
+#: klineedit.cpp:1126
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "自动"
+
+#: klineedit.cpp:1127
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "下拉列表"
+
+#: klineedit.cpp:1128
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "半自动"
+
+#: klineedit.cpp:1129
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "下拉列表和自动"
+
+#: klineedit.cpp:1159
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "默认"
