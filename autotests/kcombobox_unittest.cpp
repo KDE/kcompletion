@@ -45,6 +45,10 @@ private:
         w.addItem(QStringLiteral("Hello world"));
         QVERIFY(w.lineEdit());
         QVERIFY(qobject_cast<KLineEdit *>(w.lineEdit()));
+        auto lineEdit = w.lineEdit();
+        // set editable again, don't recreate the line edit
+        w.setEditable(true);
+        QCOMPARE(w.lineEdit(), lineEdit);
         // KLineEdit signals
         QSignalSpy qReturnPressedSpy(w.lineEdit(), SIGNAL(returnPressed()));
         QSignalSpy kReturnPressedSpy(w.lineEdit(), SIGNAL(returnPressed(QString)));

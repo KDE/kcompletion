@@ -389,6 +389,10 @@ void KComboBox::setCurrentItem(const QString &item, bool insert, int index)
 
 void KComboBox::setEditable(bool editable)
 {
+    if (editable == isEditable()) {
+        return;
+    }
+
     if (editable) {
         // Create a KLineEdit instead of a QLineEdit
         // Compared to QComboBox::setEditable, we might be missing the SH_ComboBox_Popup code though...
