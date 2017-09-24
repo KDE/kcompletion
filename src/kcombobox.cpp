@@ -311,9 +311,16 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         edit = kedit;
     }
 
+    // reuse an existing completion object, if it was configured already
+    auto completion = compObj();
+
     QComboBox::setLineEdit(edit);
     d->klineEdit = qobject_cast<KLineEdit *>(edit);
     setDelegate(d->klineEdit);
+
+    if (completion && d->klineEdit) {
+        d->klineEdit->setCompletionObject(completion);
+    }
 
     // Connect the returnPressed signal for both Q[K]LineEdits'
     if (edit) {

@@ -132,6 +132,21 @@ private Q_SLOTS:
         delete testCombo; // not needed anymore
     }
 
+    void testLineEditCompletion()
+    {
+        // Test for KCombo's KLineEdit inheriting the completion object of the parent
+        KTestComboBox testCombo(false, nullptr);
+        QVERIFY(!testCombo.lineEdit());
+        auto completion = testCombo.completionObject();
+        QVERIFY(completion);
+        testCombo.setEditable(true);
+        auto lineEdit = qobject_cast<KLineEdit*>(testCombo.lineEdit());
+        QVERIFY(lineEdit);
+        QVERIFY(lineEdit->compObj());
+        QCOMPARE(lineEdit->compObj(), completion);
+        QCOMPARE(testCombo.completionObject(), completion);
+    }
+
     void testSelectionResetOnReturn()
     {
         // void QComboBoxPrivate::_q_returnPressed() calls lineEdit->deselect()
