@@ -118,7 +118,7 @@ KZoneAllocator::~KZoneAllocator()
 #ifndef NDEBUG // as this is called quite late in the app, we don't care
     // to use qDebug
     if (count > 1) {
-        fprintf(stderr, "zone still contained %d blocks", count);
+        fprintf(stderr, "zone still contained %u blocks", count);
     }
 #endif
     delete d;
