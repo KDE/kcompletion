@@ -45,7 +45,7 @@ class KHistoryComboBoxPrivate;
  * duplicates will be disabled when HISTCONTROL is set to "ignoredups" or
  * "ignoreboth". Otherwise, duplicates are enabled by default.
  *
- * \image html khistorycombobox.png "KDE History Combo Box"
+ * \image html khistorycombobox.png "KHistoryComboBox widget"
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */

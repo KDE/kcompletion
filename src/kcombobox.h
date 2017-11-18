@@ -138,7 +138,7 @@ class QMenu;
  * combo->setKeyBinding(KCompletionBase::TextCompletion, Qt::End);
  * \endcode
  *
- * \image html kcombobox.png "KDE Combo Boxes, one non-editable, one editable with KUrlCompletion"
+ * \image html kcombobox.png "KComboBox widgets, one non-editable, one editable with KUrlCompletion"
  *
  * @author Dawit Alemayehu <adawit@kde.org>
  */

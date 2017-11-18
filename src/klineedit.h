@@ -145,7 +145,7 @@ class KLineEditPrivate;
  * edit->useGlobalKeyBindings();
  * \endcode
  *
- * \image html klineedit.png "KDE Line Edit Widgets with clear-button"
+ * \image html klineedit.png "KLineEdit widgets with clear-button"
  *
  * @author Dawit Alemayehu <adawit@kde.org>
  */
