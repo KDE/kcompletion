@@ -42,7 +42,7 @@ private:
         KComboBox w(ctorArg /*initial value for editable*/);
         w.setEditable(true);
         w.setCompletionMode(KCompletion::CompletionPopup);
-        w.addItem("Hello world");
+        w.addItem(QStringLiteral("Hello world"));
         QVERIFY(w.lineEdit());
         QVERIFY(qobject_cast<KLineEdit *>(w.lineEdit()));
         // KLineEdit signals
@@ -79,7 +79,7 @@ private Q_SLOTS:
         QSignalSpy comboReturnPressedSpy(&w, SIGNAL(returnPressed()));
         QSignalSpy comboReturnPressedStringSpy(&w, SIGNAL(returnPressed(QString)));
         QSignalSpy comboActivatedSpy(&w, SIGNAL(activated(QString)));
-        QTest::keyClicks(&w, "Hello world");
+        QTest::keyClicks(&w, QStringLiteral("Hello world"));
         QTest::keyClick(&w, Qt::Key_Return);
         qApp->processEvents(); // QueuedConnection in KHistoryComboBox
         QCOMPARE(comboReturnPressedSpy.count(), 1);
@@ -93,7 +93,7 @@ private Q_SLOTS:
     {
         KHistoryComboBox w;
         QStringList items;
-        items << "One" << "Two" << "Three" << "Four";
+        items << QStringLiteral("One") << QStringLiteral("Two") << QStringLiteral("Three") << QStringLiteral("Four");
         w.addItems(items);
         QSignalSpy currentIndexChangedSpy(&w, SIGNAL(currentIndexChanged(int)));
         w.completionObject()->setItems(items);
@@ -108,7 +108,7 @@ private Q_SLOTS:
     {
         KHistoryComboBox combo;
         // uic generates code like this, let's make sure it compiles
-        combo.insertItems(0, QStringList() << "foo");
+        combo.insertItems(0, QStringList() << QStringLiteral("foo"));
     }
 
     void testHistoryComboReset()
@@ -117,7 +117,7 @@ private Q_SLOTS:
         //TODO: Finish
         KHistoryComboBox combo;
         QStringList items;
-        items << "One" << "Two";
+        items << QStringLiteral("One") << QStringLiteral("Two");
         combo.addItems(items);
         combo.reset();
     }
@@ -137,7 +137,7 @@ private Q_SLOTS:
         // void QComboBoxPrivate::_q_returnPressed() calls lineEdit->deselect()
         KHistoryComboBox *testCombo = new KHistoryComboBox(true, nullptr);
         QCOMPARE(testCombo->insertPolicy(), QComboBox::NoInsert); // not the Qt default; KHistoryComboBox changes that
-        QTest::keyClicks(testCombo, "Hello world");
+        QTest::keyClicks(testCombo, QStringLiteral("Hello world"));
         testCombo->lineEdit()->setSelection(5, 3);
         QVERIFY(testCombo->lineEdit()->hasSelectedText());
         QTest::keyClick(testCombo, Qt::Key_Return);

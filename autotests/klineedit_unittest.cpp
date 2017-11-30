@@ -41,7 +41,7 @@ private Q_SLOTS:
     void testReturnPressed()
     {
         KLineEdit w;
-        w.setText("Hello world");
+        w.setText(QStringLiteral("Hello world"));
         QSignalSpy qReturnPressedSpy(&w, SIGNAL(returnPressed()));
         QSignalSpy kReturnPressedSpy(&w, SIGNAL(returnPressed(QString)));
         QTest::keyClick(&w, Qt::Key_Return);
@@ -61,7 +61,7 @@ private Q_SLOTS:
 #ifndef KCOMPLETION_NO_DEPRECATED
         QSignalSpy userTextChangedSpy(&w, SIGNAL(userTextChanged(QString)));
 #endif
-        w.setText("Hello worl");
+        w.setText(QStringLiteral("Hello worl"));
 #ifndef KCOMPLETION_NO_DEPRECATED
         QCOMPARE(userTextChangedSpy.count(), 1);
         QCOMPARE(userTextChangedSpy[0][0].toString(), w.text());
@@ -89,7 +89,7 @@ private Q_SLOTS:
         QCOMPARE(textEditedSpy[0][0].toString(), w.text());
         QVERIFY(w.isModified());
 
-        w.setText("K"); // prepare for next test
+        w.setText(QStringLiteral("K")); // prepare for next test
 #ifndef KCOMPLETION_NO_DEPRECATED
         userTextChangedSpy.clear();
 #endif
@@ -102,7 +102,7 @@ private Q_SLOTS:
         KCompletion completion;
         completion.setSoundsEnabled(false);
         QStringList items;
-        items << "KDE is cool" << "KDE is really cool";
+        items << QStringLiteral("KDE is cool") << QStringLiteral("KDE is really cool");
         completion.setItems(items);
         w.setCompletionObject(&completion);
 
@@ -143,7 +143,7 @@ private Q_SLOTS:
 
         // Now with popup completion
         w.setCompletionMode(KCompletion::CompletionPopup);
-        w.setText("KDE");
+        w.setText(QStringLiteral("KDE"));
         QVERIFY(!w.isModified());
 #ifndef KCOMPLETION_NO_DEPRECATED
         userTextChangedSpy.clear();
@@ -188,7 +188,7 @@ private Q_SLOTS:
 #endif
 
         // Now when using the mouse in the popup completion
-        w.setText("KDE");
+        w.setText(QStringLiteral("KDE"));
         w.doCompletion(w.text()); // popup appears
         QCOMPARE(w.text(), QString::fromLatin1("KDE"));
         // Selecting an item in the popup completion changes the lineedit text and emits all 3 signals
@@ -203,13 +203,13 @@ private Q_SLOTS:
     void testCompletionBox()
     {
         KLineEdit w;
-        w.setText("/");
+        w.setText(QStringLiteral("/"));
         w.setCompletionMode(KCompletion::CompletionPopup);
         KCompletion completion;
         completion.setSoundsEnabled(false);
         w.setCompletionObject(&completion);
         QStringList items;
-        items << "/home/" << "/hold/" << "/hole/";
+        items << QStringLiteral("/home/") << QStringLiteral("/hold/") << QStringLiteral("/hole/");
         completion.setItems(items);
         QTest::keyClick(&w, 'h');
         QCOMPARE(w.text(), QString::fromLatin1("/h"));
@@ -230,7 +230,7 @@ private Q_SLOTS:
         QCOMPARE(w.text(), items.at(0));
 
         QStringList newItems;
-        newItems << "/home/kde";
+        newItems << QStringLiteral("/home/kde");
         completion.setItems(newItems);
         QTest::keyClick(&w, 'k');
         QCOMPARE(w.text(), QString("/home/k"));
@@ -243,10 +243,10 @@ private Q_SLOTS:
     void testPaste()
     {
         const QString origText = QApplication::clipboard()->text();
-        const QString pastedText = "Test paste from klineedit_unittest";
+        const QString pastedText = QStringLiteral("Test paste from klineedit_unittest");
         QApplication::clipboard()->setText(pastedText);
         KLineEdit w;
-        w.setText("Hello world");
+        w.setText(QStringLiteral("Hello world"));
         w.selectAll();
         QTest::keyClick(&w, Qt::Key_V, Qt::ControlModifier);
         QCOMPARE(w.text(), pastedText);

@@ -23,12 +23,12 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     // Qt combobox
     QHBoxLayout *hbox = new QHBoxLayout();
-    QLabel *lbl = new QLabel("&QCombobox:", this);
+    QLabel *lbl = new QLabel(QStringLiteral("&QCombobox:"), this);
     lbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
     hbox->addWidget(lbl);
 
     m_qc = new QComboBox(this);
-    m_qc->setObjectName(QLatin1String("QtReadOnlyCombo"));
+    m_qc->setObjectName(QStringLiteral("QtReadOnlyCombo"));
     lbl->setBuddy(m_qc);
     connectComboSignals(m_qc);
     hbox->addWidget(m_qc);
@@ -37,12 +37,12 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     // Read-only combobox
     hbox = new QHBoxLayout();
-    lbl = new QLabel("&Read-Only Combo:", this);
+    lbl = new QLabel(QStringLiteral("&Read-Only Combo:"), this);
     lbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
     hbox->addWidget(lbl);
 
     m_ro = new KComboBox(this);
-    m_ro->setObjectName("ReadOnlyCombo");
+    m_ro->setObjectName(QStringLiteral("ReadOnlyCombo"));
     lbl->setBuddy(m_ro);
     m_ro->setCompletionMode(KCompletion::CompletionAuto);
     connectComboSignals(m_ro);
@@ -52,12 +52,12 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     // Read-write combobox
     hbox = new QHBoxLayout();
-    lbl = new QLabel("&Editable Combo:", this);
+    lbl = new QLabel(QStringLiteral("&Editable Combo:"), this);
     lbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
     hbox->addWidget(lbl);
 
     m_rw = new KComboBox(true, this);
-    m_rw->setObjectName("ReadWriteCombo");
+    m_rw->setObjectName(QStringLiteral("ReadWriteCombo"));
     lbl->setBuddy(m_rw);
     m_rw->setDuplicatesEnabled(true);
     m_rw->setInsertPolicy(QComboBox::NoInsert);
@@ -68,12 +68,12 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     // History combobox...
     hbox = new QHBoxLayout();
-    lbl = new QLabel("&History Combo:", this);
+    lbl = new QLabel(QStringLiteral("&History Combo:"), this);
     lbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
     hbox->addWidget(lbl);
 
     m_hc = new KHistoryComboBox(this);
-    m_hc->setObjectName("HistoryCombo");
+    m_hc->setObjectName(QStringLiteral("HistoryCombo"));
     lbl->setBuddy(m_hc);
     m_hc->setDuplicatesEnabled(true);
     m_hc->setInsertPolicy(QComboBox::NoInsert);
@@ -84,12 +84,12 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     // Read-write combobox that is a replica of code in konqueror...
     hbox = new QHBoxLayout();
-    lbl = new QLabel("&Konq's Combo:", this);
+    lbl = new QLabel(QStringLiteral("&Konq's Combo:"), this);
     lbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
     hbox->addWidget(lbl);
 
     m_konqc = new KComboBox(true, this);
-    m_konqc->setObjectName("KonqyCombo");
+    m_konqc->setObjectName(QStringLiteral("KonqyCombo"));
     lbl->setBuddy(m_konqc);
     m_konqc->setMaxCount(10);
     connectComboSignals(m_konqc);
@@ -98,12 +98,12 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     // Create an exit button
     hbox = new QHBoxLayout();
-    m_btnExit = new QPushButton("E&xit", this);
+    m_btnExit = new QPushButton(QStringLiteral("E&xit"), this);
     QObject::connect(m_btnExit, &QAbstractButton::clicked, this, &KComboBoxTest::quitApp);
     hbox->addWidget(m_btnExit);
 
     // Create a disable button...
-    m_btnEnable = new QPushButton("Disa&ble", this);
+    m_btnEnable = new QPushButton(QStringLiteral("Disa&ble"), this);
     QObject::connect(m_btnEnable, &QAbstractButton::clicked, this, &KComboBoxTest::slotDisable);
     hbox->addWidget(m_btnEnable);
 
@@ -111,8 +111,8 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     // Popuplate the select-only list box
     QStringList list;
-    list << "Stone" << "Tree" << "Peables" << "Ocean" << "Sand" << "Chips"
-         << "Computer" << "Mankind";
+    list << QStringLiteral("Stone") << QStringLiteral("Tree") << QStringLiteral("Peables") << QStringLiteral("Ocean") << QStringLiteral("Sand") << QStringLiteral("Chips")
+         << QStringLiteral("Computer") << QStringLiteral("Mankind");
     list.sort();
 
     // Setup the qcombobox
@@ -128,10 +128,10 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     // Setup history combo
     m_hc->addItems(list);
-    m_hc->completionObject()->setItems(list + QStringList() << "One" << "Two" << "Three");
+    m_hc->completionObject()->setItems(list + QStringList() << QStringLiteral("One") << QStringLiteral("Two") << QStringLiteral("Three"));
 
     // Setup konq's combobox
-    KConfig historyConfig("konq_history", KConfig::SimpleConfig);
+    KConfig historyConfig(QStringLiteral("konq_history"), KConfig::SimpleConfig);
     KConfigGroup cg(&historyConfig, "Location Bar");
     KCompletion *s_pCompletion = new KCompletion;
     s_pCompletion->setOrder(KCompletion::Weighted);
@@ -141,7 +141,7 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     QPixmap pix(16, 16);
     pix.fill(Qt::blue);
-    m_konqc->addItem(pix, "http://www.kde.org");
+    m_konqc->addItem(pix, QStringLiteral("http://www.kde.org"));
     m_konqc->setCurrentIndex(m_konqc->count() - 1);
 
     m_timer = new QTimer(this);
@@ -181,9 +181,9 @@ void KComboBoxTest::slotTimeout()
     bool enabled = m_ro->isEnabled();
 
     if (enabled) {
-        m_btnEnable->setText("Ena&ble");
+        m_btnEnable->setText(QStringLiteral("Ena&ble"));
     } else {
-        m_btnEnable->setText("Disa&ble");
+        m_btnEnable->setText(QStringLiteral("Disa&ble"));
     }
 
     m_qc->setEnabled(!enabled);
@@ -232,7 +232,7 @@ void KComboBoxTest::quitApp()
 
 int main(int argc, char **argv)
 {
-    QApplication::setApplicationName("kcomboboxtest");
+    QApplication::setApplicationName(QStringLiteral("kcomboboxtest"));
 
     QApplication a(argc, argv);
 

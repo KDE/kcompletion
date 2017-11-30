@@ -18,13 +18,13 @@ KLineEditTest::KLineEditTest(QWidget *widget)
     QVBoxLayout *layout = new QVBoxLayout(this);
 
     QStringList list;
-    list << "Tree" << "Suuupa" << "Stroustrup" << "Stone" << "Slick"
-         << "Slashdot" << "Send" << "Peables" << "Mankind" << "Ocean"
-         << "Chips" << "Computer" << "Sandworm" << "Sandstorm" << "Chops";
+    list << QStringLiteral("Tree") << QStringLiteral("Suuupa") << QStringLiteral("Stroustrup") << QStringLiteral("Stone") << QStringLiteral("Slick")
+         << QStringLiteral("Slashdot") << QStringLiteral("Send") << QStringLiteral("Peables") << QStringLiteral("Mankind") << QStringLiteral("Ocean")
+         << QStringLiteral("Chips") << QStringLiteral("Computer") << QStringLiteral("Sandworm") << QStringLiteral("Sandstorm") << QStringLiteral("Chops");
     list.sort();
 
     m_lineedit = new KLineEdit(this);
-    m_lineedit->setObjectName("klineedittest");
+    m_lineedit->setObjectName(QStringLiteral("klineedittest"));
     m_lineedit->completionObject()->setItems(list);
     m_lineedit->setSqueezedTextEnabled(true);
     m_lineedit->setClearButtonShown(true);
@@ -34,42 +34,42 @@ KLineEditTest::KLineEditTest(QWidget *widget)
 
     QHBoxLayout *restrictedHBox = new QHBoxLayout;
     m_restrictedLine = new KLineEdit(this);
-    QRegExp regex(QString::fromUtf8("[aeiouyé]*"));
+    QRegExp regex(QStringLiteral("[aeiouyé]*"));
     QRegExpValidator *validator = new QRegExpValidator(regex, m_restrictedLine);
     m_restrictedLine->setValidator(validator);
     //connect(m_restrictedLine, SIGNAL(invalidChar(int)), this, SLOT(slotInvalidChar(int)));
     connect(m_restrictedLine, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));
     connect(m_restrictedLine, SIGNAL(returnPressed(QString)),
             SLOT(slotReturnPressed(QString)));
-    restrictedHBox->addWidget(new QLabel("Vowels only:", this));
+    restrictedHBox->addWidget(new QLabel(QStringLiteral("Vowels only:"), this));
     restrictedHBox->addWidget(m_restrictedLine);
     m_invalidCharLabel = new QLabel(this);
     restrictedHBox->addWidget(m_invalidCharLabel);
 
     // horizontal button layout
-    m_btnExit = new QPushButton("E&xit", this);
+    m_btnExit = new QPushButton(QStringLiteral("E&xit"), this);
     connect(m_btnExit, &QAbstractButton::clicked, this, &KLineEditTest::quitApp);
 
-    m_btnReadOnly = new QPushButton("&Read Only", this);
+    m_btnReadOnly = new QPushButton(QStringLiteral("&Read Only"), this);
     m_btnReadOnly->setCheckable(true);
     connect(m_btnReadOnly, &QAbstractButton::toggled, this, &KLineEditTest::slotReadOnly);
 
-    m_btnPassword = new QPushButton("&Password", this);
+    m_btnPassword = new QPushButton(QStringLiteral("&Password"), this);
     m_btnPassword->setCheckable(true);
     connect(m_btnPassword, &QAbstractButton::toggled, this, &KLineEditTest::slotPassword);
 
-    m_btnEnable = new QPushButton("Dis&able", this);
+    m_btnEnable = new QPushButton(QStringLiteral("Dis&able"), this);
     m_btnEnable->setCheckable(true);
     connect(m_btnEnable, &QAbstractButton::toggled, this, &KLineEditTest::slotEnable);
 
-    m_btnHide = new QPushButton("Hi&de", this);
+    m_btnHide = new QPushButton(QStringLiteral("Hi&de"), this);
     connect(m_btnHide, &QAbstractButton::clicked, this, &KLineEditTest::slotHide);
 
-    m_btnPlaceholderText = new QPushButton("Place Holder Text", this);
+    m_btnPlaceholderText = new QPushButton(QStringLiteral("Place Holder Text"), this);
     m_btnPlaceholderText->setCheckable(true);
     connect(m_btnPlaceholderText, &QAbstractButton::toggled, this, &KLineEditTest::slotPlaceholderText);
 
-    QPushButton *btnStyle = new QPushButton("Stylesheet", this);
+    QPushButton *btnStyle = new QPushButton(QStringLiteral("Stylesheet"), this);
     connect(btnStyle, &QAbstractButton::clicked, this, &KLineEditTest::slotSetStyleSheet);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
@@ -84,7 +84,7 @@ KLineEditTest::KLineEditTest(QWidget *widget)
     layout->addWidget(m_lineedit);
     layout->addLayout(restrictedHBox);
     layout->addLayout(buttonLayout);
-    setWindowTitle("KLineEdit Unit Test");
+    setWindowTitle(QStringLiteral("KLineEdit Unit Test"));
 }
 
 KLineEditTest::~KLineEditTest()
@@ -98,7 +98,7 @@ void KLineEditTest::quitApp()
 
 void KLineEditTest::slotSetStyleSheet()
 {
-    m_lineedit->setStyleSheet("QLineEdit{ background-color:#baf9ce }");
+    m_lineedit->setStyleSheet(QStringLiteral("QLineEdit{ background-color:#baf9ce }"));
 }
 
 void KLineEditTest::show()
@@ -151,8 +151,8 @@ void KLineEditTest::slotEnable(bool enable)
 void KLineEditTest::slotPlaceholderText(bool click)
 {
     if (click) {
-        m_lineedit->setText(""); // Clear before to add message
-        m_lineedit->setPlaceholderText("Click in this lineedit");
+        m_lineedit->setText(QLatin1String("")); // Clear before to add message
+        m_lineedit->setPlaceholderText(QStringLiteral("Click in this lineedit"));
     }
 }
 
@@ -167,7 +167,7 @@ void KLineEditTest::slotHide()
 
 void KLineEditTest::slotInvalidChar(int key)
 {
-    m_invalidCharLabel->setText(QString("Invalid char: %1").arg(key));
+    m_invalidCharLabel->setText(QStringLiteral("Invalid char: %1").arg(key));
 }
 
 int main(int argc, char **argv)
