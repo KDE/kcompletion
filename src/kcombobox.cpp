@@ -311,8 +311,9 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         edit = kedit;
     }
 
-    // reuse an existing completion object, if it was configured already
-    auto completion = compObj();
+    // reuse an existing completion object, if it does not belong to the previous
+    // line edit and gets destroyed with it
+    QPointer<KCompletion> completion = compObj();
 
     QComboBox::setLineEdit(edit);
     d->klineEdit = qobject_cast<KLineEdit *>(edit);
