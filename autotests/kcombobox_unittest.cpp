@@ -138,17 +138,62 @@ private Q_SLOTS:
 
     void testLineEditCompletion()
     {
-        // Test for KCombo's KLineEdit inheriting the completion object of the parent
-        KTestComboBox testCombo(false, nullptr);
-        QVERIFY(!testCombo.lineEdit());
-        auto completion = testCombo.completionObject();
-        QVERIFY(completion);
-        testCombo.setEditable(true);
-        auto lineEdit = qobject_cast<KLineEdit*>(testCombo.lineEdit());
-        QVERIFY(lineEdit);
-        QVERIFY(lineEdit->compObj());
-        QCOMPARE(lineEdit->compObj(), completion);
-        QCOMPARE(testCombo.completionObject(), completion);
+        QFETCH(bool, editable);
+        QPointer<KCompletion> completion;
+        QPointer<KLineEdit> lineEdit, lineEdit2;
+
+        {
+            // Test for KCombo's KLineEdit inheriting the completion object of the parent
+            KTestComboBox testCombo(editable, nullptr);
+
+            // we only have a line edit when we are editable already
+            QCOMPARE(static_cast<bool>(testCombo.lineEdit()), editable);
+
+            // we can always get a completion object
+            // NOTE: for an editable combo, this refers to the completion object of
+            // the internal line edit
+            // NOTE: for a not-yet-editable combo, this refers to the completion object
+            // that belongs to the combo directly
+            completion = testCombo.completionObject();
+            QVERIFY(completion);
+
+            // make editable
+            testCombo.setEditable(true);
+            QVERIFY(completion); // completion is still alive
+
+            // verify that the completion object was set on the line edit
+            lineEdit = qobject_cast<KLineEdit*>(testCombo.lineEdit());
+            QVERIFY(lineEdit);
+            QVERIFY(lineEdit->compObj());
+            QCOMPARE(lineEdit->compObj(), completion.data());
+            QCOMPARE(testCombo.completionObject(), completion.data());
+
+            // don't lose the completion and don't crash when we set a new line edit
+            // NOTE: only reuse the completion when it belongs to the combo box
+            lineEdit2 = new KLineEdit(&testCombo);
+            QVERIFY(!lineEdit2->compObj());
+            testCombo.setLineEdit(lineEdit2);
+            QVERIFY(!lineEdit); // first line edit got deleted now
+            if (editable) {
+                QVERIFY(!completion); // got deleted with the line edit
+                // but we get a new one from the second line edit
+                completion = testCombo.completionObject();
+            }
+                QVERIFY(completion);
+            QCOMPARE(lineEdit2->compObj(), completion.data());
+            QCOMPARE(testCombo.completionObject(), completion.data());
+        }
+
+        // ensure nothing gets leaked
+        QVERIFY(!completion);
+        QVERIFY(!lineEdit2);
+    }
+
+    void testLineEditCompletion_data()
+    {
+        QTest::addColumn<bool>("editable");
+        QTest::newRow("deferred-editable") << false;
+        QTest::newRow("editable") << true;
     }
 
     void testSelectionResetOnReturn()
