@@ -62,7 +62,7 @@ public:
      */
     QString typedText;
 
-    KPixmapProvider *pixmapProvider;
+    KPixmapProvider *pixmapProvider = nullptr;
     KHistoryComboBox * const q_ptr;
 
     /**
@@ -74,7 +74,7 @@ public:
      * Indicates that the user at least once rotated Up through the entire list
      * Needed to allow going back after rotation.
      */
-    bool rotated;
+    bool rotated = false;
 
     Q_DECLARE_PUBLIC(KHistoryComboBox)
 };

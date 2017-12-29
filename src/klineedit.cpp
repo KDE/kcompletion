@@ -276,7 +276,7 @@ void KLineEditPrivate::_k_updateClearButtonIcon(const QString &text)
     }
 
     // trigger animation
-    if (wideEnoughForClear && text.length() > 0) {
+    if (wideEnoughForClear && !text.isEmpty()) {
         clearButton->animateVisible(true);
     } else {
         clearButton->animateVisible(false);

@@ -38,7 +38,7 @@ public:
     QPointer<KCompletion> completionObject;
     KCompletionBase::KeyBindingMap keyBindingMap;
     // we may act as a proxy to another KCompletionBase object
-    KCompletionBase *delegate;
+    KCompletionBase *delegate = nullptr;
     KCompletionBase * const q_ptr;
     Q_DECLARE_PUBLIC(KCompletionBase)
 };

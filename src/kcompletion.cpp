@@ -365,9 +365,7 @@ QStringList KCompletion::substringCompletion(const QString &string) const
     }
 
     QStringList matches;
-    QStringList::ConstIterator it = list.constBegin();
-
-    for (; it != list.constEnd(); ++it) {
+    for (QStringList::ConstIterator it = list.constBegin(), total = list.constEnd(); it != total; ++it) {
         QString item = *it;
         if (item.indexOf(string, 0, Qt::CaseInsensitive) != -1) {     // always case insensitive
             postProcessMatch(&item);

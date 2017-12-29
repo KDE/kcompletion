@@ -31,9 +31,7 @@ class KComboBoxPrivate
 {
 public:
     KComboBoxPrivate(KComboBox *parent)
-        : klineEdit(nullptr),
-          trapReturnKey(false),
-          q_ptr(parent)
+        : q_ptr(parent)
     {
     }
     ~KComboBoxPrivate()
@@ -47,8 +45,8 @@ public:
 
     void _k_lineEditDeleted();
 
-    KLineEdit *klineEdit;
-    bool trapReturnKey;
+    KLineEdit *klineEdit = nullptr;
+    bool trapReturnKey = false;
     KComboBox * const q_ptr;
     Q_DECLARE_PUBLIC(KComboBox)
 };

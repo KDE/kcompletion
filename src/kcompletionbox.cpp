@@ -36,7 +36,7 @@ public:
     void cancelled();
     void _k_itemClicked(QListWidgetItem *);
 
-    QWidget *m_parent; // necessary to set the focus back
+    QWidget *m_parent = nullptr; // necessary to set the focus back
     QString cancelText;
     bool tabHandling;
     bool upwardBox;
@@ -89,7 +89,7 @@ KCompletionBox::~KCompletionBox()
 QStringList KCompletionBox::items() const
 {
     QStringList list;
-
+    list.reserve(count());
     for (int i = 0; i < count(); i++) {
         const QListWidgetItem *currItem = item(i);
 
