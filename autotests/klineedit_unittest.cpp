@@ -68,8 +68,33 @@ private Q_SLOTS:
 #endif
         QCOMPARE(textChangedSpy.count(), 1);
         QCOMPARE(textChangedSpy[0][0].toString(), w.text());
-        QCOMPARE(textEditedSpy.count(), 1);
+        QCOMPARE(textEditedSpy.count(), 0);
         QVERIFY(!w.isModified());
+#ifndef KCOMPLETION_NO_DEPRECATED
+        userTextChangedSpy.clear();
+#endif
+        textChangedSpy.clear();
+        textEditedSpy.clear();
+
+        // calling clear should emit textChanged and userTextChanged, but not textEdited
+        w.clear();
+        QCOMPARE(textChangedSpy.count(),1);
+        QCOMPARE(textEditedSpy.count(),0);
+#ifndef KCOMPLETION_NO_DEPRECATED
+        QCOMPARE(userTextChangedSpy.count(),1);
+#endif
+
+        //if text box is already empty, calling clear() shouldn't emit
+        // any more signals
+        w.clear();
+        QCOMPARE(textChangedSpy.count(),1);
+        QCOMPARE(textEditedSpy.count(),0);
+#ifndef KCOMPLETION_NO_DEPRECATED
+        QCOMPARE(userTextChangedSpy.count(),1);
+#endif
+
+        //set the text back for further tests below
+        w.setText("Hello worl");
 #ifndef KCOMPLETION_NO_DEPRECATED
         userTextChangedSpy.clear();
 #endif
@@ -85,7 +110,7 @@ private Q_SLOTS:
 #endif
         QCOMPARE(textChangedSpy.count(), 1);
         QCOMPARE(textChangedSpy[0][0].toString(), w.text());
-        QCOMPARE(textEditedSpy.count(), 2);
+        QCOMPARE(textEditedSpy.count(), 1);
         QCOMPARE(textEditedSpy[0][0].toString(), w.text());
         QVERIFY(w.isModified());
 
@@ -169,7 +194,7 @@ private Q_SLOTS:
         QCOMPARE(userTextChangedSpy.count(), 2);
 #endif
         QCOMPARE(textChangedSpy.count(), 2);
-        QCOMPARE(textEditedSpy.count(), 2);
+        QCOMPARE(textEditedSpy.count(), 0);
 #ifndef KCOMPLETION_NO_DEPRECATED
         userTextChangedSpy.clear();
 #endif

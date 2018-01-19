@@ -60,7 +60,6 @@ void KLineEditPrivate::_k_textChanged(const QString &text)
 #ifndef KCOMPLETION_NO_DEPRECATED
         emit q->userTextChanged(text);
 #endif
-        emit q->textEdited(text);
     }
 }
 
