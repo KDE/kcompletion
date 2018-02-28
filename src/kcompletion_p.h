@@ -267,12 +267,12 @@ public:
 
     QString first() const
     {
-        return list().first();
+        return list().constFirst();
     }
 
     QString last() const
     {
-        return list().last();
+        return list().constLast();
     }
 
     QStringList list() const;

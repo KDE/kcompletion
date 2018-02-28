@@ -172,6 +172,7 @@ QStringList KHistoryComboBox::historyItems() const
 {
     QStringList list;
     const int itemCount = count();
+    list.reserve(itemCount);
     for (int i = 0; i < itemCount; ++i) {
         list.append(itemText(i));
     }
