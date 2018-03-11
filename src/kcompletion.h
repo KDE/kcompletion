@@ -22,9 +22,9 @@
 
 #include <kcompletion_export.h>
 
-#include <QtCore/QObject>
-#include <QtCore/QStringList>
-#include <QtCore/QPointer>
+#include <QObject>
+#include <QStringList>
+#include <QPointer>
 #include <QKeySequence>
 
 class KCompTreeNode;

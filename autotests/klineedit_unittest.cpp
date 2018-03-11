@@ -19,7 +19,7 @@
 */
 
 #include <QClipboard>
-#include <QtTest/QtTest>
+#include <QtTest>
 #include <klineedit.h>
 #include <kcompletionbox.h>
 

@@ -2,7 +2,7 @@
 #define _KLINEEDITTEST_H
 
 #include <QWidget>
-#include <QtCore/QPointer>
+#include <QPointer>
 
 class QLabel;
 class QLineEdit;

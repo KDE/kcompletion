@@ -19,9 +19,9 @@
 #ifndef KCOMPLETIONTEST_H
 #define KCOMPLETIONTEST_H
 
-#include <QtTest/QtTest>
+#include <QtTest>
 #include "kcompletion.h"
-#include <QtCore/QStringList>
+#include <QStringList>
 
 class Test_KCompletion : public QObject
 {

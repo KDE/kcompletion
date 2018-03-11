@@ -10,7 +10,7 @@
 #include <QLayout>
 #include <QPixmap>
 #include <QLabel>
-#include <QtCore/QTimer>
+#include <QTimer>
 #include <QBoxLayout>
 #include <QDebug>
 

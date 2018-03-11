@@ -22,8 +22,8 @@
 
 #include <kcompletion_export.h>
 
-#include <QtCore/QPair>
-#include <QtCore/QList>
+#include <QPair>
+#include <QList>
 
 /**
  * \class KSortableItem ksortablelist.h <KSortableItem>

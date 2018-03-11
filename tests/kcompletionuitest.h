@@ -1,8 +1,8 @@
 #ifndef FORM1_H
 #define FORM1_H
 
-#include <QtCore/QStringList>
-#include <QtCore/QVariant>
+#include <QStringList>
+#include <QVariant>
 #include <QWidget>
 class QVBoxLayout;
 class QHBoxLayout;
