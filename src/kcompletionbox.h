@@ -64,7 +64,7 @@ public:
     /**
      * Destroys the box
      */
-    ~KCompletionBox();
+    ~KCompletionBox() Q_DECL_OVERRIDE;
 
     QSize sizeHint() const Q_DECL_OVERRIDE;
 

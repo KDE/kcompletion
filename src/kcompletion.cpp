@@ -42,7 +42,7 @@ void KCompletionPrivate::addWeightedItem(const QString &item)
         return;
     }
 
-    uint len = item.length();
+    int len = item.length();
     uint weight = 0;
 
     // find out the weighting of this item (appended to the string as ":num")
@@ -242,7 +242,7 @@ void KCompletion::addItem(const QString &item, uint weight)
     }
 
     KCompTreeNode *node = d->treeRoot;
-    uint len = item.length();
+    int len = item.length();
 
     bool sorted = (d->order == Sorted);
     bool weighted = ((d->order == Weighted) && weight > 1);
@@ -250,7 +250,7 @@ void KCompletion::addItem(const QString &item, uint weight)
     // knowing the weight of an item, we simply add this weight to all of its
     // nodes.
 
-    for (uint i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++) {
         node = node->insert(item.at(i), sorted);
         if (weighted) {
             node->confirm(weight - 1);    // node->insert() sets weighting to 1

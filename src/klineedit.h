@@ -191,7 +191,7 @@ public:
     /**
      *  Destructor.
      */
-    virtual ~KLineEdit();
+    ~KLineEdit() Q_DECL_OVERRIDE;
 
     /**
      * Sets @p url into the lineedit. It uses QUrl::toDisplayString() so

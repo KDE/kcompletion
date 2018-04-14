@@ -172,7 +172,7 @@ public:
     /**
     * Destructor.
     */
-    virtual ~KComboBox();
+    ~KComboBox() Q_DECL_OVERRIDE;
 
     /**
      * Deprecated to reflect Qt api changes

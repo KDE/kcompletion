@@ -89,7 +89,7 @@ public:
     /**
      * Destructs the combo, the completion-object and the pixmap-provider
      */
-    ~KHistoryComboBox();
+    ~KHistoryComboBox() Q_DECL_OVERRIDE;
 
     /**
      * Inserts @p items into the combobox. @p items might get
