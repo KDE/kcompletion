@@ -65,7 +65,13 @@ void KCompletionBoxPrivate::init()
     //also, q->setAttribute(Qt::WA_X11NetWmWindowTypeCombo); is broken in Qt xcb
     q->setProperty("_q_xcb_wm_window_type", 0x001000);
     q->setAttribute(Qt::WA_ShowWithoutActivating);
-    q->setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint); // calls setVisible, so must be done after initializations
+
+    //on wayland, we need an xdg-popup but we don't want it to grab
+    // calls setVisible, so must be done after initializations
+    if (qGuiApp->platformName() == QLatin1String("wayland"))
+        q->setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
+    else
+        q->setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
     q->setUniformItemSizes(true);
 
     q->setLineWidth(1);
