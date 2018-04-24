@@ -24,183 +24,14 @@
 
 #include "klineedit.h"
 
+#include <QApplication>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QPropertyAnimation>
 #include <QIcon>
-#include <QProxyStyle>
 
 class KCompletionBox;
 class LineEditUrlDropEventFilter;
-
-class KLineEditButton : public QWidget
-{
-    Q_OBJECT
-    Q_PROPERTY(int opacity READ opacity WRITE setOpacity)
-
-public:
-    KLineEditButton(QWidget *parent)
-        : QWidget(parent),
-          m_opacity(0)
-    {
-        m_animation = new QPropertyAnimation(this, "opacity", this);
-        m_animation->setStartValue(0);
-        m_animation->setEndValue(255);
-        m_animation->setEasingCurve(QEasingCurve::InOutQuad);
-    }
-
-    QSize sizeHint() const Q_DECL_OVERRIDE
-    {
-        return m_pixmap.size() / m_pixmap.devicePixelRatio();
-    }
-
-    void animateVisible(bool visible)
-    {
-        if (visible) {
-            if (m_animation->direction() == QPropertyAnimation::Forward && m_opacity == 255) {
-                return;
-            }
-
-            m_animation->setDirection(QPropertyAnimation::Forward);
-            m_animation->setDuration(150);
-            show();
-        } else {
-            if (m_animation->direction() == QPropertyAnimation::Backward && m_opacity == 0) {
-                return;
-            }
-
-            m_animation->setDirection(QPropertyAnimation::Backward);
-            m_animation->setDuration(250);
-        }
-
-        if (style()->styleHint(QStyle::SH_Widget_Animate, nullptr, this)) {
-            if (m_animation->state() != QPropertyAnimation::Running) {
-                m_animation->start();
-            }
-        } else {
-            setVisible(m_animation->direction() == QPropertyAnimation::Forward);
-        }
-    }
-
-    void setPixmap(const QPixmap &p)
-    {
-        m_pixmap = p;
-        m_icon = QIcon(p);
-    }
-
-    QPixmap pixmap() const
-    {
-        return m_pixmap;
-    }
-
-    void setAnimationsEnabled(bool animationsEnabled)
-    {
-        // We need to set the current time in the case that we had the clear
-        // button shown, for it being painted on the paintEvent(). Otherwise
-        // it wont be painted, resulting (m_opacity == 0) true,
-        // and therefore a bad painting. This is needed for the case that we
-        // come from a non animated widget and want it animated. (ereslibre)
-        if (animationsEnabled && m_animation->direction() == QPropertyAnimation::Forward) {
-            m_animation->setCurrentTime(150);
-        }
-    }
-
-    int opacity() const
-    {
-        return m_opacity;
-    }
-
-    void setOpacity(int value)
-    {
-        m_opacity = value;
-        update();
-    }
-
-protected:
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE
-    {
-        Q_UNUSED(event)
-
-        // check pixmap
-        if (m_pixmap.isNull()) {
-            return;
-        }
-
-        const QSize pmSize(m_pixmap.size() / m_pixmap.devicePixelRatio());
-        if (style()->styleHint(QStyle::SH_Widget_Animate, nullptr, this)) {
-
-            if (m_opacity == 0) {
-                if (m_animation->direction() == QPropertyAnimation::Backward) {
-                    hide();
-                }
-                return;
-            }
-
-            if (m_opacity < 255) {
-                // fade pixmap
-                QPixmap pm(m_pixmap);
-                QColor color(Qt::black);
-                color.setAlpha(m_opacity);
-                QPainter p(&pm);
-                p.setCompositionMode(QPainter::CompositionMode_DestinationIn);
-                p.fillRect(pm.rect(), color);
-                p.end();
-
-                // draw pixmap on widget
-                QPainter pp(this);
-                pp.drawPixmap((width() - pmSize.width()) / 2,
-                              (height() - pmSize.height()) / 2,
-                              pm);
-            } else {
-                QPainter p(this);
-                p.drawPixmap((width() - pmSize.width()) / 2,
-                             (height() - pmSize.height()) / 2,
-                             m_pixmap);
-            }
-        } else {
-            QPainter p(this);
-            p.drawPixmap((width() - pmSize.width()) / 2,
-                         (height() - pmSize.height()) / 2,
-                         m_pixmap);
-        }
-    }
-
-protected:
-    bool event(QEvent *event) Q_DECL_OVERRIDE
-    {
-        if (event->type() == QEvent::EnabledChange) {
-            // QIcon::pixmap will return HiDPI pixmaps that are larger than the requested size => scale pixmap size back
-            m_pixmap = m_icon.pixmap(m_pixmap.size() / m_pixmap.devicePixelRatio(), isEnabled() ? QIcon::Normal : QIcon::Disabled);
-        }
-        return QWidget::event(event);
-    }
-
-private:
-    QPropertyAnimation *m_animation;
-    int m_opacity;
-    QPixmap m_pixmap;
-    QIcon m_icon;
-};
-
-class KLineEditStyle : public QProxyStyle
-{
-    Q_OBJECT
-public:
-    KLineEditStyle(QStyle *style)
-        : QProxyStyle(),
-          m_overlap(0),
-          m_subStyle(style),
-          m_sentinel(false)
-    {
-    }
-
-    QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget) const Q_DECL_OVERRIDE;
-
-    int m_overlap;
-    QPointer<QStyle> m_subStyle;
-    QString m_lastStyleClass;
-    bool m_sentinel;
-};
 
 class KLineEditPrivate
 {
@@ -215,12 +46,7 @@ public:
     void _k_tripleClickTimeout();  // resets possibleTripleClick
     void _k_restoreSelectionColors();
     void _k_completionBoxTextChanged(const QString &text);
-    /**
-     * updates the icon of the clear button on text change
-     **/
-    void _k_updateClearButtonIcon(const QString &);
 
-    void adjustForReadOnly();
     void updateUserText(const QString &text);
 
     /**
@@ -240,11 +66,6 @@ public:
      */
     void setSqueezedText();
 
-    /**
-     * updates the geometry of the clear button on resize events
-     **/
-    void updateClearButton();
-
     QMap<KCompletion::CompletionMode, bool> disableCompletionMap;
 
     QColor previousHighlightColor;
@@ -255,9 +76,6 @@ public:
     QString squeezedText;
     QString userText;
     QString lastStyleClass;
-
-    KLineEditButton *clearButton;
-    QPointer<KLineEditStyle> style;
 
     KCompletionBox *completionBox;
 
@@ -289,8 +107,6 @@ public:
     bool italicizePlaceholder: 1;
     bool threeStars: 1;
     bool possibleTripleClick : 1; // set in mousePressEvent, deleted in tripleClickTimeout
-    bool clickInClear: 1;
-    bool wideEnoughForClear: 1;
     Q_DECLARE_PUBLIC(KLineEdit)
 };
 

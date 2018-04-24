@@ -364,13 +364,21 @@ public:
      * This makes the line edit display an icon on one side of the line edit
      * which, when clicked, clears the contents of the line edit.
      * This is useful for such things as location or search bars.
+     *
+     * @deprecated since 5.46 Use QLineEdit::setClearButtonEnabled
      **/
-    void setClearButtonShown(bool show);
+#ifndef KCOMPLETION_NO_DEPRECATED
+    KCOMPLETION_DEPRECATED void setClearButtonShown(bool show);
+#endif
 
     /**
      * @return whether or not the clear button is shown
+     *
+     * @deprecated since 5.46 Use QLineEdit::isClearButtonEnabled
      **/
-    bool isClearButtonShown() const;
+#ifndef KCOMPLETION_NO_DEPRECATED
+    KCOMPLETION_DEPRECATED bool isClearButtonShown() const;
+#endif
 
     /**
      * @return the size used by the clear button
@@ -631,7 +639,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _k_tripleClickTimeout())
     Q_PRIVATE_SLOT(d_func(), void _k_restoreSelectionColors())
     Q_PRIVATE_SLOT(d_func(), void _k_completionBoxTextChanged(const QString &))
-    Q_PRIVATE_SLOT(d_func(), void _k_updateClearButtonIcon(const QString &))
 };
 
 #endif

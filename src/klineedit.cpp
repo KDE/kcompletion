@@ -42,13 +42,10 @@
 #include <QMenu>
 #include <QToolTip>
 
-class KLineEditStyle;
-
 KLineEditPrivate::~KLineEditPrivate()
 {
 // causes a weird crash in KWord at least, so let Qt delete it for us.
 //        delete completionBox;
-    delete style.data();
 }
 
 void KLineEditPrivate::_k_textChanged(const QString &text)
@@ -79,43 +76,6 @@ void KLineEditPrivate::updateUserText(const QString &text)
     }
 }
 
-// This is called when the lineedit is readonly.
-// Either from setReadOnly() itself, or when we realize that
-// we became readonly and setReadOnly() wasn't called (because it's not virtual)
-// Typical case: comboBox->lineEdit()->setReadOnly(true)
-void KLineEditPrivate::adjustForReadOnly()
-{
-    if (style && style.data()->m_overlap) {
-        style.data()->m_overlap = 0;
-    }
-}
-
-
-QRect KLineEditStyle::subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget) const
-{
-    if (element == SE_LineEditContents) {
-        KLineEditStyle *unconstThis = const_cast<KLineEditStyle *>(this);
-
-        if (m_sentinel) {
-            // we are recursing: we're wrapping a style that wraps us!
-            unconstThis->m_subStyle.clear();
-        }
-
-        unconstThis->m_sentinel = true;
-        QStyle *s = m_subStyle ? m_subStyle.data() : baseStyle();
-        QRect rect = s->subElementRect(SE_LineEditContents, option, widget);
-        unconstThis->m_sentinel = false;
-
-        if (option->direction == Qt::LeftToRight) {
-            return rect.adjusted(0, 0, -m_overlap, 0);
-        } else {
-            return rect.adjusted(m_overlap, 0, 0, 0);
-        }
-    }
-
-    return QProxyStyle::subElementRect(element, option, widget);
-}
-
 bool KLineEditPrivate::s_backspacePerformsCompletion = false;
 bool KLineEditPrivate::s_initialized = false;
 
@@ -138,10 +98,6 @@ void KLineEditPrivate::init()
         s_backspacePerformsCompletion = config.readEntry("Backspace performs completion", false);
         s_initialized = true;
     }
-
-    clearButton = nullptr;
-    clickInClear = false;
-    wideEnoughForClear = true;
 
     urlDropEventFilter = new LineEditUrlDropEventFilter(q);
 
@@ -178,9 +134,6 @@ void KLineEditPrivate::init()
         previousHighlightColor = p.color(QPalette::Normal, QPalette::Highlight);
     }
 
-    style = new KLineEditStyle(q->style());
-    q->setStyle(style.data());
-
     q->connect(q, SIGNAL(textChanged(QString)), q, SLOT(_k_textChanged(QString)));
 }
 
@@ -211,121 +164,34 @@ QString KLineEdit::clickMessage() const
 
 void KLineEdit::setClearButtonShown(bool show)
 {
-    Q_D(KLineEdit);
+    setClearButtonEnabled(show);
     if (show) {
-        if (d->clearButton) {
-            return;
-        }
-
-        d->clearButton = new KLineEditButton(this);
-        d->clearButton->setObjectName(QStringLiteral("KLineEditButton"));
-        d->clearButton->setCursor(Qt::ArrowCursor);
-        d->clearButton->setToolTip(tr("Clear text", "@action:button Clear current text in the line edit"));
-
-        d->_k_updateClearButtonIcon(text());
-        d->updateClearButton();
-        connect(this, SIGNAL(textChanged(QString)), this, SLOT(_k_updateClearButtonIcon(QString)));
-    } else {
-        disconnect(this, SIGNAL(textChanged(QString)), this, SLOT(_k_updateClearButtonIcon(QString)));
-        delete d->clearButton;
-        d->clearButton = nullptr;
-        d->clickInClear = false;
-        if (d->style) {
-            d->style.data()->m_overlap = 0;
-        }
+        QAction *clearAction = findChild<QAction *>(QLatin1String("_q_qlineeditclearaction"));
+        connect(clearAction, &QAction::triggered, this, &KLineEdit::clearButtonClicked);
     }
 }
 
 bool KLineEdit::isClearButtonShown() const
 {
-    Q_D(const KLineEdit);
-    return d->clearButton != nullptr;
+    return isClearButtonEnabled();
 }
 
 QSize KLineEdit::clearButtonUsedSize() const
 {
     Q_D(const KLineEdit);
     QSize s;
-    if (d->clearButton) {
-        const int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth, nullptr, this);
-        s = d->clearButton->sizeHint();
-        s.rwidth() += frameWidth;
+
+    if (isClearButtonEnabled()) {
+        // from qlineedit_p.cpp
+
+        const int iconSize = height() < 34 ? 16 : 32;
+        const int buttonWidth = iconSize + 6;
+        const int buttonHeight = iconSize + 2;
+
+        s = QSize(buttonWidth, buttonHeight);
     }
+
     return s;
-}
-
-// Decides whether to show or hide the icon; called when the text changes
-void KLineEditPrivate::_k_updateClearButtonIcon(const QString &text)
-{
-    Q_Q(KLineEdit);
-    if (!clearButton) {
-        return;
-    }
-    if (q->isReadOnly()) {
-        adjustForReadOnly();
-        return;
-    }
-
-    // set proper icon if necessary
-    if (clearButton->pixmap().isNull()) {
-        QString iconName = q->layoutDirection() == Qt::LeftToRight ? "edit-clear-locationbar-rtl" : "edit-clear-locationbar-ltr";
-
-        int size = clearButton->style()->pixelMetric(QStyle::PM_SmallIconSize, nullptr, q);
-        clearButton->setPixmap(QIcon::fromTheme(iconName).pixmap(size, size));
-    }
-
-    // trigger animation
-    if (wideEnoughForClear && !text.isEmpty()) {
-        clearButton->animateVisible(true);
-    } else {
-        clearButton->animateVisible(false);
-    }
-}
-
-// Determine geometry of clear button. Called initially, and on resizeEvent.
-void KLineEditPrivate::updateClearButton()
-{
-    Q_Q(KLineEdit);
-    if (!clearButton) {
-        return;
-    }
-    if (q->isReadOnly()) {
-        adjustForReadOnly();
-        return;
-    }
-
-    const QSize geom = q->size();
-    const int frameWidth = q->style()->pixelMetric(QStyle::PM_DefaultFrameWidth, nullptr, q);
-    const int buttonWidth = clearButton->sizeHint().width();
-    const QSize newButtonSize(buttonWidth, geom.height());
-    const QFontMetrics fm(q->font());
-    const int em = fm.width(QStringLiteral("m"));
-
-    // make sure we have enough room for the clear button
-    // no point in showing it if we can't also see a few characters as well
-    const bool wideEnough = geom.width() > 4 * em + buttonWidth + frameWidth;
-
-    if (newButtonSize != clearButton->size()) {
-        clearButton->resize(newButtonSize);
-    }
-
-    if (style) {
-        style.data()->m_overlap = wideEnough ? buttonWidth + frameWidth : 0;
-    }
-
-    if (q->layoutDirection() == Qt::LeftToRight) {
-        clearButton->move(geom.width() - frameWidth - buttonWidth - 1, 0);
-    } else {
-        clearButton->move(frameWidth + 1, 0);
-    }
-
-    if (wideEnough != wideEnoughForClear) {
-        // we may (or may not) have been showing the button, but now our
-        // positiong on that matter has shifted, so let's ensure that it
-        // is properly visible (or not)
-        wideEnoughForClear = wideEnough;
-        _k_updateClearButtonIcon(q->text());
-    }
 }
 
 void KLineEdit::setCompletionMode(KCompletion::CompletionMode mode)
@@ -475,11 +341,6 @@ void KLineEdit::setReadOnly(bool readOnly)
             d->squeezedText = text();
             d->setSqueezedText();
         }
-
-        if (d->clearButton) {
-            d->clearButton->animateVisible(false);
-            d->adjustForReadOnly();
-        }
     } else {
         if (!d->squeezedText.isEmpty()) {
             setText(d->squeezedText);
@@ -487,7 +348,6 @@ void KLineEdit::setReadOnly(bool readOnly)
         }
 
         setBackgroundRole(d->bgRole);
-        d->updateClearButton();
     }
 }
 
@@ -631,7 +491,6 @@ void KLineEdit::resizeEvent(QResizeEvent *ev)
         d->setSqueezedText();
     }
 
-    d->updateClearButton();
     QLineEdit::resizeEvent(ev);
 }
 
@@ -1015,16 +874,6 @@ void KLineEdit::mouseDoubleClickEvent(QMouseEvent *e)
 void KLineEdit::mousePressEvent(QMouseEvent *e)
 {
     Q_D(KLineEdit);
-    if ((e->button() == Qt::LeftButton ||
-            e->button() == Qt::MidButton) &&
-            d->clearButton) {
-        d->clickInClear = (d->clearButton == childAt(e->pos()) || d->clearButton->underMouse());
-
-        if (d->clickInClear) {
-            d->possibleTripleClick = false;
-        }
-    }
-
     if (e->button() == Qt::LeftButton && d->possibleTripleClick) {
         selectAll();
         e->accept();
@@ -1047,25 +896,6 @@ void KLineEdit::mousePressEvent(QMouseEvent *e)
 void KLineEdit::mouseReleaseEvent(QMouseEvent *e)
 {
     Q_D(KLineEdit);
-    if (d->clickInClear) {
-        if (d->clearButton == childAt(e->pos()) || d->clearButton->underMouse()) {
-            QString newText;
-            if (e->button() == Qt::MidButton) {
-                newText = QApplication::clipboard()->text(QClipboard::Selection);
-                setText(newText);
-            } else {
-                setSelection(0, text().size());
-                del();
-                emit clearButtonClicked();
-            }
-            emit textChanged(newText);
-        }
-
-        d->clickInClear = false;
-        e->accept();
-        return;
-    }
-
     QLineEdit::mouseReleaseEvent(e);
 
     if (QApplication::clipboard()->supportsSelection()) {
@@ -1227,32 +1057,6 @@ bool KLineEdit::event(QEvent *ev)
         d->previousHighlightedTextColor = p.color(QPalette::Normal, QPalette::HighlightedText);
         d->previousHighlightColor = p.color(QPalette::Normal, QPalette::Highlight);
         setUserSelection(d->userSelection);
-    } else if (ev->type() == QEvent::StyleChange) {
-        // since we have our own style and it relies on this style to Get Things Right,
-        // if a style is set specifically on the widget (which would replace our own style!)
-        // hang on to this special style and re-instate our own style.
-        //FIXME: Qt currently has a grave bug where already deleted QStyleSheetStyle objects
-        // will get passed back in if we set a new style on it here. remove the qstrmcp test
-        // when this is fixed in Qt (or a better approach is found)
-        if (!qobject_cast<KLineEditStyle *>(style()) &&
-                qstrcmp(style()->metaObject()->className(), "QStyleSheetStyle") != 0 &&
-                QLatin1String(style()->metaObject()->className()) != d->lastStyleClass) {
-            KLineEditStyle *kleStyle = d->style.data();
-            if (!kleStyle) {
-                d->style = kleStyle = new KLineEditStyle(style());
-            }
-
-            kleStyle->m_subStyle = style();
-            // this guards against "wrap around" where another style, e.g. QStyleSheetStyle,
-            // is setting the style on QEvent::StyleChange
-            d->lastStyleClass = QLatin1String(style()->metaObject()->className());
-            setStyle(kleStyle);
-            d->lastStyleClass.clear();
-        }
-    } else if (ev->type() == QEvent::ApplicationLayoutDirectionChange
-               || ev->type() == QEvent::LayoutDirectionChange) {
-        d->_k_updateClearButtonIcon(text());
-        d->updateClearButton();
     }
 
     return QLineEdit::event(ev);
