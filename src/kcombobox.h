@@ -172,7 +172,7 @@ public:
     /**
     * Destructor.
     */
-    ~KComboBox() Q_DECL_OVERRIDE;
+    ~KComboBox() override;
 
     /**
      * Deprecated to reflect Qt api changes
@@ -482,13 +482,13 @@ public Q_SLOTS:
      * This function is an implementation for
      * KCompletionBase::setCompletedText.
      */
-    void setCompletedText(const QString &) Q_DECL_OVERRIDE;
+    void setCompletedText(const QString &) override;
 
     /**
      * Sets @p items into the completion box if completionMode() is
      * CompletionPopup. The popup will be shown immediately.
      */
-    void setCompletedItems(const QStringList &items, bool autosubject = true) Q_DECL_OVERRIDE;
+    void setCompletedItems(const QStringList &items, bool autosubject = true) override;
 
     /**
      * Selects the first item that matches @p item.
@@ -526,7 +526,7 @@ protected:
 
     // TODO KF6: make public like in base classes, so consumers do not need to cast to base classes
     // when they have a KComboBox (or subclasses) object and want to access this property
-    QSize minimumSizeHint() const Q_DECL_OVERRIDE;
+    QSize minimumSizeHint() const override;
 
 private:
     const QScopedPointer<KComboBoxPrivate> d_ptr;

@@ -89,7 +89,7 @@ public:
     /**
      * Destructs the combo, the completion-object and the pixmap-provider
      */
-    ~KHistoryComboBox() Q_DECL_OVERRIDE;
+    ~KHistoryComboBox() override;
 
     /**
      * Inserts @p items into the combobox. @p items might get
@@ -227,12 +227,12 @@ protected:
     /**
      * Handling key-events, the shortcuts to rotate the items.
      */
-    void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent *) override;
 
     /**
      * Handling wheel-events, to rotate the items.
      */
-    void wheelEvent(QWheelEvent *ev) Q_DECL_OVERRIDE;
+    void wheelEvent(QWheelEvent *ev) override;
 
     /**
      * Inserts @p items into the combo, honoring pixmapProvider()
