@@ -303,7 +303,7 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         KLineEdit *kedit = new KLineEdit(this);
 
         if (isEditable()) {
-            kedit->setClearButtonShown(true);
+            kedit->setClearButtonEnabled(true);
         }
 
         edit = kedit;
@@ -397,7 +397,7 @@ void KComboBox::setEditable(bool editable)
         // Compared to QComboBox::setEditable, we might be missing the SH_ComboBox_Popup code though...
         // If a style needs this, then we'll need to call QComboBox::setEditable and then setLineEdit again
         KLineEdit *edit = new KLineEdit(this);
-        edit->setClearButtonShown(true);
+        edit->setClearButtonEnabled(true);
         setLineEdit(edit);
     } else {
         QComboBox::setEditable(editable);

@@ -225,6 +225,7 @@ bool KCompletionBox::eventFilter(QObject *o, QEvent *e)
                     ev->accept();
                     return true;
                 }
+                Q_FALLTHROUGH();
             default:
                 break;
             }
