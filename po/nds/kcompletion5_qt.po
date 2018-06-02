@@ -1,0 +1,76 @@
+# Translation of kdelibs4.po to Low Saxon
+# Heiko Evermann <heiko@evermann.de>, 2004.
+# Heiko Evermann <heiko.evermann@gmx.de>, 2004, 2005.
+# Volker Jockheck <volkae@gmx.net>, 2004.
+# Sönke Dibbern <s_dibbern@web.de>, 2004, 2005, 2006, 2007, 2008, 2009, 2014.
+# Manfred Wiese <m.j.wiese@web.de>, 2008, 2009, 2010, 2011, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2014-03-31 23:29+0200\n"
+"Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
+"Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
+"Language: nds\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Qt-Contexts: true\n"
+
+#: khistorycombobox.cpp:204
+msgctxt "KHistoryComboBox|"
+msgid "Clear &History"
+msgstr "Vörgeschicht &wegdoon"
+
+#: klineedit.cpp:109
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:932
+msgctxt "KLineEdit|"
+msgid "C&lear"
+msgstr "&Leddig maken"
+
+#: klineedit.cpp:946
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Text kompletteren"
+
+#: klineedit.cpp:953
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Keen"
+
+#: klineedit.cpp:954
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Vun Hand"
+
+#: klineedit.cpp:955
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Automaatsch"
+
+#: klineedit.cpp:956
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Utklapplist"
+
+#: klineedit.cpp:957
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Kort automaatsch"
+
+#: klineedit.cpp:958
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Utklapplist && automaatsch"
+
+#: klineedit.cpp:988
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "Standard"
