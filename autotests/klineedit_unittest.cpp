@@ -19,6 +19,7 @@
 */
 
 #include <QClipboard>
+#include <QToolButton>
 #include <QtTest>
 #include <klineedit.h>
 #include <kcompletionbox.h>
@@ -276,6 +277,20 @@ private Q_SLOTS:
         QTest::keyClick(&w, Qt::Key_V, Qt::ControlModifier);
         QCOMPARE(w.text(), pastedText);
         QApplication::clipboard()->setText(origText);
+    }
+
+    void testClearButtonClicked()
+    {
+        KLineEdit w;
+        w.setText(QStringLiteral("Hello world"));
+        w.setClearButtonEnabled(true);
+        w.setClearButtonEnabled(false);
+        w.setClearButtonEnabled(true);
+        QSignalSpy spy(&w, &KLineEdit::clearButtonClicked);
+        QToolButton *tb = w.findChild<QToolButton*>();
+        QTest::mouseClick(tb, Qt::LeftButton, Qt::NoModifier);
+        QCOMPARE(w.text(), QString());
+        QCOMPARE(spy.count(), 1);
     }
 
 };

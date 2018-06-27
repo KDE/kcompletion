@@ -165,10 +165,6 @@ QString KLineEdit::clickMessage() const
 void KLineEdit::setClearButtonShown(bool show)
 {
     setClearButtonEnabled(show);
-    if (show) {
-        QAction *clearAction = findChild<QAction *>(QLatin1String("_q_qlineeditclearaction"));
-        connect(clearAction, &QAction::triggered, this, &KLineEdit::clearButtonClicked);
-    }
 }
 
 bool KLineEdit::isClearButtonShown() const
@@ -1057,6 +1053,16 @@ bool KLineEdit::event(QEvent *ev)
         d->previousHighlightedTextColor = p.color(QPalette::Normal, QPalette::HighlightedText);
         d->previousHighlightColor = p.color(QPalette::Normal, QPalette::Highlight);
         setUserSelection(d->userSelection);
+    } else if (ev->type() == QEvent::ChildAdded) {
+        QObject *obj = static_cast<QChildEvent*>(ev)->child();
+        if (obj) {
+            connect(obj, &QObject::objectNameChanged, this, [this, obj] {
+                if (obj->objectName() == QLatin1String("_q_qlineeditclearaction")) {
+                    QAction *action = qobject_cast<QAction*>(obj);
+                    connect(action, &QAction::triggered, this, &KLineEdit::clearButtonClicked);
+                }
+            });
+        }
     }
 
     return QLineEdit::event(ev);

@@ -27,7 +27,7 @@ KLineEditTest::KLineEditTest(QWidget *widget)
     m_lineedit->setObjectName(QStringLiteral("klineedittest"));
     m_lineedit->completionObject()->setItems(list);
     m_lineedit->setSqueezedTextEnabled(true);
-    m_lineedit->setClearButtonShown(true);
+    m_lineedit->setClearButtonEnabled(true);
     connect(m_lineedit, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));
     connect(m_lineedit, SIGNAL(returnPressed(QString)),
             SLOT(slotReturnPressed(QString)));
