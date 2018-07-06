@@ -1478,4 +1478,3 @@ void KLineEdit::doCompletion(const QString &text)
 }
 
 #include "moc_klineedit.cpp"
-#include "moc_klineedit_p.cpp"
