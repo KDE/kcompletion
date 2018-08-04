@@ -1,0 +1,116 @@
+# translation of kdelibs4.po to Macedonian
+#
+# Copyright (C) 2000,2002,2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+# Dimitar Indovski <dime@gord.com.mk>
+# Damjan Janevski <miopa@freemail.org.mk>
+# Dragan Sekulovski <d_sekulovski@yahoo.com>
+#
+# Maratonec , 2002.
+# Dragan Bocevski <d_bocevski@hotmail.com>, 2002.
+# Danko Ilik <danko@mindless.com>, 2002,2003.
+# Bozidar Proevski <bobibobi@freemail.com.mk>, 2002,2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010.
+# Danko Ilik <danko@on.net.mk>, 2003.
+# Darko Nikolovski <darkon@macedonia.homelinux.org>, 2003.
+# Ivan Dimitrov <ivan34mk@yahoo.com>, 2003.
+# Magdica Shambevska <magdica@yahoo.com>, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2010-01-27 10:39+0100\n"
+"Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
+"Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
+"Language: mk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: Plural-Forms: nplurals=3; plural=n%10==1 ? 0 : n%10==2 ? 1 : "
+"2;\n"
+"X-Qt-Contexts: true\n"
+
+#: khistorycombobox.cpp:204
+#, fuzzy
+#| msgid "Clear &History"
+msgctxt "KHistoryComboBox|"
+msgid "Clear &History"
+msgstr "Исчисти &историја"
+
+#: klineedit.cpp:109
+#, fuzzy
+#| msgid "1"
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:928
+#, fuzzy
+#| msgid "C&lear"
+msgctxt "KLineEdit|"
+msgid "C&lear"
+msgstr "&Исчисти"
+
+#: klineedit.cpp:942
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Text Completion"
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Довршување текст"
+
+#: klineedit.cpp:949
+#, fuzzy
+#| msgctxt "No border line"
+#| msgid "None"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Нема"
+
+#: klineedit.cpp:950
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Manual"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Рачно"
+
+#: klineedit.cpp:951
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Автоматски"
+
+#: klineedit.cpp:952
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Dropdown List"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Паѓачка листа"
+
+#: klineedit.cpp:953
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Short Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Кратко автоматски"
+
+#: klineedit.cpp:954
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Dropdown List && Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Паѓачка листа и автоматски"
+
+#: klineedit.cpp:984
+#, fuzzy
+#| msgctxt "Encodings menu"
+#| msgid "Default"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "Стандардно"
