@@ -1,0 +1,89 @@
+# translation of kdelibs4.po to Uzbek
+# Mashrab Kuvatov <kmashrab@uni-bremen.de>, 2003, 2004, 2005, 2006, 2008.
+# translation of kdelibs4.po to
+# Copyright (C) 2003, 2004, 2005, 2006, 2008 Free Software Foundation, Inc.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2008-05-30 17:29+0200\n"
+"Last-Translator: Mashrab Kuvatov <kmashrab@uni-bremen.de>\n"
+"Language-Team: Uzbek <floss-uz-l10n@googlegroups.com>\n"
+"Language: uz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Qt-Contexts: true\n"
+
+#: khistorycombobox.cpp:204
+#, fuzzy
+#| msgid "Clear &History"
+msgctxt "KHistoryComboBox|"
+msgid "Clear &History"
+msgstr "Tarixni &boʻshatish"
+
+#: klineedit.cpp:109
+#, fuzzy
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "%1%"
+
+#: klineedit.cpp:928
+#, fuzzy
+#| msgid "C&lear"
+msgctxt "KLineEdit|"
+msgid "C&lear"
+msgstr "T&ozalash"
+
+#: klineedit.cpp:942
+#, fuzzy
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Matnni tugatish"
+
+#: klineedit.cpp:949
+#, fuzzy
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Yoʻq"
+
+#: klineedit.cpp:950
+#, fuzzy
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Qoʻlbola"
+
+#: klineedit.cpp:951
+#, fuzzy
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Avtomatik"
+
+#: klineedit.cpp:952
+#, fuzzy
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Pastga tushar roʻyxat"
+
+#: klineedit.cpp:953
+#, fuzzy
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Qisqa avtomatik"
+
+#: klineedit.cpp:954
+#, fuzzy
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Pastga tushar roʻyxat"
+
+#: klineedit.cpp:984
+#, fuzzy
+#| msgctxt "Encodings menu"
+#| msgid "Default"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "Andoza"
