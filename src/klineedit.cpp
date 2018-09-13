@@ -107,7 +107,7 @@ void KLineEditPrivate::init()
     // By default the text is set in italic, which may not be appropriate
     // for some languages and scripts (e.g. for CJK ideographs).
     QString metaMsg = KLineEdit::tr("1", "Italic placeholder text in line edits: 0 no, 1 yes");
-    italicizePlaceholder = (metaMsg.trimmed() != QString('0'));
+    italicizePlaceholder = (metaMsg.trimmed() != QLatin1Char('0'));
     //---
     possibleTripleClick = false;
     bgRole = q->backgroundRole();
@@ -395,7 +395,7 @@ void KLineEditPrivate::setSqueezedText()
 
         // estimate how many letters we can add to the dots on both sides
         int letters = fullText.length() * (labelWidth - squeezedWidth) / textWidth / 2;
-        squeezedText = fullText.left(letters) + "..." + fullText.right(letters);
+        squeezedText = fullText.left(letters) + QStringLiteral("...") + fullText.right(letters);
         squeezedWidth = fm.width(squeezedText);
 
         if (squeezedWidth < labelWidth) {
@@ -403,17 +403,17 @@ void KLineEditPrivate::setSqueezedText()
             // add letters while text < label
             do {
                 letters++;
-                squeezedText = fullText.left(letters) + "..." + fullText.right(letters);
+                squeezedText = fullText.left(letters) + QStringLiteral("...") + fullText.right(letters);
                 squeezedWidth = fm.width(squeezedText);
             } while (squeezedWidth < labelWidth && letters <= fullLength / 2);
             letters--;
-            squeezedText = fullText.left(letters) + "..." + fullText.right(letters);
+            squeezedText = fullText.left(letters) + QStringLiteral("...") + fullText.right(letters);
         } else if (squeezedWidth > labelWidth) {
             // we estimated too long
             // remove letters while text > label
             do {
                 letters--;
-                squeezedText = fullText.left(letters) + "..." + fullText.right(letters);
+                squeezedText = fullText.left(letters) + QStringLiteral("...") + fullText.right(letters);
                 squeezedWidth = fm.width(squeezedText);
             } while (squeezedWidth > labelWidth && letters >= 5);
         }
