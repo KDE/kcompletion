@@ -354,13 +354,13 @@ protected:
     /**
      * Sets or removes the delegation object. If a delegation object is
      * set, all function calls will be forwarded to the delegation object.
-     * @param delegate the delegation object, or 0 to remove it
+     * @param delegate the delegation object, or @c nullptr to remove it
      */
     void setDelegate(KCompletionBase *delegate);
 
     /**
      * Returns the delegation object.
-     * @return the delegation object, or 0 if there is none
+     * @return the delegation object, or @c nullptr if there is none
      * @see setDelegate()
      */
     KCompletionBase *delegate() const;
