@@ -36,7 +36,7 @@ class LineEditUrlDropEventFilter;
 class KLineEditPrivate
 {
 public:
-    KLineEditPrivate(KLineEdit *parent)
+    explicit KLineEditPrivate(KLineEdit *parent)
         : q_ptr(parent) {}
 
     ~KLineEditPrivate();

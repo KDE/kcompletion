@@ -205,7 +205,7 @@ private:
 class KCOMPLETION_EXPORT KCompletionMatchesWrapper
 {
 public:
-    KCompletionMatchesWrapper(KCompletion::CompOrder compOrder = KCompletion::Insertion)
+    explicit KCompletionMatchesWrapper(KCompletion::CompOrder compOrder = KCompletion::Insertion)
         : m_sortedList(compOrder == KCompletion::Weighted ? new KCompletionMatchesList : nullptr),
           m_dirty(false),
           m_compOrder(compOrder) {}
@@ -299,7 +299,7 @@ public:
 class KCompletionPrivate
 {
 public:
-    KCompletionPrivate(KCompletion *parent)
+    explicit KCompletionPrivate(KCompletion *parent)
         : q_ptr(parent) {}
 
     void init();
