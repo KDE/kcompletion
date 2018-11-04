@@ -89,7 +89,7 @@ public:
     QAction *popupAutoCompletionAction;
     QAction *defaultAction;
 
-    KLineEdit *q_ptr;
+    KLineEdit * const q_ptr;
 
     int squeezedEnd;
     int squeezedStart;
