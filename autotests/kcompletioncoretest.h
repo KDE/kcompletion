@@ -16,8 +16,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KCOMPLETIONTEST_H
-#define KCOMPLETIONTEST_H
+#ifndef KCOMPLETIONCORETEST_H
+#define KCOMPLETIONCORETEST_H
 
 #include <QtTest>
 #include "kcompletion.h"

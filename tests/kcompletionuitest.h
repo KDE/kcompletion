@@ -1,5 +1,5 @@
-#ifndef FORM1_H
-#define FORM1_H
+#ifndef KCOMPLETIONUITEST_H
+#define KCOMPLETIONUITEST_H
 
 #include <QStringList>
 #include <QVariant>
@@ -53,4 +53,4 @@ protected:
     QVBoxLayout *Layout7;
 };
 
-#endif // FORM1_H
+#endif // KCOMPLETIONUITEST_H
