@@ -1,3 +1,5 @@
+#include "klineedittest.h"
+
 #include <QPushButton>
 #include <QTimer>
 #include <QBoxLayout>
@@ -10,7 +12,6 @@
 
 #include <klineedit.h>
 
-#include "klineedittest.h"
 
 KLineEditTest::KLineEditTest(QWidget *widget)
     : QWidget(widget)

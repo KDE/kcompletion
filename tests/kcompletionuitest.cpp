@@ -1,3 +1,5 @@
+#include "kcompletionuitest.h"
+
 #include <QApplication>
 #include <QLabel>
 #include <QListWidget>
@@ -7,7 +9,6 @@
 
 #include <klineedit.h>
 #include <khistorycombobox.h>
-#include "kcompletionuitest.h"
 
 /*
  *  Constructs a Form1 which is a child of 'parent', with the
