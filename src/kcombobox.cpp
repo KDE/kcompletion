@@ -26,6 +26,7 @@
 #include <klineedit.h>
 
 #include <QUrl>
+#include <QMenu>
 
 class KComboBoxPrivate
 {
@@ -323,7 +324,8 @@ void KComboBox::setLineEdit(QLineEdit *edit)
 
     // Connect the returnPressed signal for both Q[K]LineEdits'
     if (edit) {
-        connect(edit, SIGNAL(returnPressed()), SIGNAL(returnPressed()));
+        connect(edit, QOverload<>::of(&QLineEdit::returnPressed),
+                this, QOverload<>::of(&KComboBox::returnPressed));
     }
 
     if (d->klineEdit) {
@@ -333,30 +335,26 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         // when it is a KLineEdit!
         connect(edit, SIGNAL(destroyed()), SLOT(_k_lineEditDeleted()));
 
-        connect(d->klineEdit, SIGNAL(returnPressed(QString)),
-                SIGNAL(returnPressed(QString)));
+        connect(d->klineEdit, QOverload<const QString&>::of(&KLineEdit::returnPressed),
+                this, QOverload<const QString&>::of(&KComboBox::returnPressed));
 
-        connect(d->klineEdit, SIGNAL(completion(QString)),
-                SIGNAL(completion(QString)));
+        connect(d->klineEdit, &KLineEdit::completion,
+                this, &KComboBox::completion);
 
-        connect(d->klineEdit, SIGNAL(substringCompletion(QString)),
-                SIGNAL(substringCompletion(QString)));
+        connect(d->klineEdit, &KLineEdit::substringCompletion,
+                this, &KComboBox::substringCompletion);
 
-        connect(d->klineEdit,
-                SIGNAL(textRotation(KCompletionBase::KeyBindingType)),
-                SIGNAL(textRotation(KCompletionBase::KeyBindingType)));
+        connect(d->klineEdit, &KLineEdit::textRotation,
+                this, &KComboBox::textRotation);
 
-        connect(d->klineEdit,
-                SIGNAL(completionModeChanged(KCompletion::CompletionMode)),
-                SIGNAL(completionModeChanged(KCompletion::CompletionMode)));
+        connect(d->klineEdit, &KLineEdit::completionModeChanged,
+                this, &KComboBox::completionModeChanged);
 
-        connect(d->klineEdit,
-                SIGNAL(aboutToShowContextMenu(QMenu*)),
-                SIGNAL(aboutToShowContextMenu(QMenu*)));
+        connect(d->klineEdit, &KLineEdit::aboutToShowContextMenu,
+                this, &KComboBox::aboutToShowContextMenu);
 
-        connect(d->klineEdit,
-                SIGNAL(completionBoxActivated(QString)),
-                SIGNAL(activated(QString)));
+        connect(d->klineEdit, &KLineEdit::completionBoxActivated,
+                this, QOverload<const QString&>::of(&QComboBox::activated));
 
         d->klineEdit->setTrapReturnKey(d->trapReturnKey);
     }

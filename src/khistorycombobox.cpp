@@ -101,8 +101,10 @@ void KHistoryComboBoxPrivate::init(bool useCompletion)
     }
 
     q->connect(q, SIGNAL(aboutToShowContextMenu(QMenu*)), SLOT(_k_addContextMenuItems(QMenu*)));
-    q->connect(q, SIGNAL(activated(int)), SLOT(reset()));
-    q->connect(q, SIGNAL(returnPressed(QString)), SLOT(reset()));
+    QObject::connect(q, QOverload<int>::of(&QComboBox::activated),
+                     q, &KHistoryComboBox::reset);
+    QObject::connect(q, QOverload<const QString&>::of(&KComboBox::returnPressed),
+                     q, &KHistoryComboBox::reset);
     // We want _k_simulateActivated to be called _after_ QComboBoxPrivate::_q_returnPressed
     // otherwise there's a risk of emitting activated twice (_k_simulateActivated will find
     // the item, after some app's slotActivated inserted the item into the combo).
