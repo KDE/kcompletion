@@ -174,7 +174,6 @@ bool KLineEdit::isClearButtonShown() const
 
 QSize KLineEdit::clearButtonUsedSize() const
 {
-    Q_D(const KLineEdit);
     QSize s;
 
     if (isClearButtonEnabled()) {
