@@ -44,6 +44,8 @@ public:
     {
         delete [] begin;
     }
+    MemBlock(const MemBlock &) = delete;
+    MemBlock &operator=(const MemBlock &) = delete;
     bool is_in(void *ptr) const
     {
         return !(begin > (char *)ptr

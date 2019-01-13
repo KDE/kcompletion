@@ -57,6 +57,9 @@ public:
      */
     ~KZoneAllocator();
 
+    KZoneAllocator(const KZoneAllocator &) = delete;
+    KZoneAllocator &operator=(const KZoneAllocator &) = delete;
+
     /**
      * Allocates a memory block.
      * @param _size Size in bytes of the memory block. Memory is aligned to

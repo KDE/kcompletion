@@ -109,6 +109,9 @@ public:
 
     ~KCompTreeNode();
 
+    KCompTreeNode(const KCompTreeNode &) = delete;
+    KCompTreeNode &operator=(const KCompTreeNode &) = delete;
+
     void *operator new(size_t s)
     {
         Q_ASSERT(m_alloc);
@@ -214,6 +217,9 @@ public:
     {
         delete m_sortedList;
     }
+
+    KCompletionMatchesWrapper(const KCompletionMatchesWrapper &) = delete;
+    KCompletionMatchesWrapper &operator=(const KCompletionMatchesWrapper &) = delete;
 
     void setSorting(KCompletion::CompOrder compOrder)
     {
