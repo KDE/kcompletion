@@ -95,7 +95,7 @@ private Q_SLOTS:
 #endif
 
         //set the text back for further tests below
-        w.setText("Hello worl");
+        w.setText(QStringLiteral("Hello worl"));
 #ifndef KCOMPLETION_NO_DEPRECATED
         userTextChangedSpy.clear();
 #endif
