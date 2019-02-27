@@ -27,7 +27,7 @@ Form1::Form1(QWidget *parent)
     GroupBox1->setLayout(new QVBoxLayout());
     GroupBox1->setTitle(QStringLiteral("Completion Test"));
     GroupBox1->layout()->setSpacing(0);
-    GroupBox1->layout()->setMargin(0);
+    GroupBox1->layout()->setContentsMargins(0, 0, 0, 0);
     GroupBox1Layout = new QVBoxLayout;
     GroupBox1Layout->setAlignment(Qt::AlignTop);
     GroupBox1Layout->setSpacing(6);
@@ -37,11 +37,11 @@ Form1::Form1(QWidget *parent)
 
     Layout9 = new QVBoxLayout;
     Layout9->setSpacing(6);
-    Layout9->setMargin(0);
+    Layout9->setContentsMargins(0, 0, 0, 0);
 
     Layout1 = new QHBoxLayout;
     Layout1->setSpacing(6);
-    Layout1->setMargin(0);
+    Layout1->setContentsMargins(0, 0, 0, 0);
 
     TextLabel1 = new QLabel(GroupBox1);
     TextLabel1->setObjectName(QStringLiteral("TextLabel1"));
@@ -59,7 +59,7 @@ Form1::Form1(QWidget *parent)
 
     Layout2 = new QHBoxLayout;
     Layout2->setSpacing(6);
-    Layout2->setMargin(0);
+    Layout2->setContentsMargins(0, 0, 0, 0);
 
     combo = new KHistoryComboBox(GroupBox1);
     combo->setObjectName(QStringLiteral("history combo"));
@@ -84,7 +84,7 @@ Form1::Form1(QWidget *parent)
 
     Layout3 = new QHBoxLayout;
     Layout3->setSpacing(6);
-    Layout3->setMargin(0);
+    Layout3->setContentsMargins(0, 0, 0, 0);
     QSpacerItem *spacer = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     Layout3->addItem(spacer);
 
@@ -97,7 +97,7 @@ Form1::Form1(QWidget *parent)
 
     Layout8 = new QHBoxLayout;
     Layout8->setSpacing(6);
-    Layout8->setMargin(0);
+    Layout8->setContentsMargins(0, 0, 0, 0);
 
     ListBox1 = new QListWidget(GroupBox1);
     Layout8->addWidget(ListBox1);
@@ -107,7 +107,7 @@ Form1::Form1(QWidget *parent)
 
     Layout7 = new QVBoxLayout;
     Layout7->setSpacing(6);
-    Layout7->setMargin(0);
+    Layout7->setContentsMargins(0, 0, 0, 0);
 
     PushButton1_3 = new QPushButton(GroupBox1);
     PushButton1_3->setObjectName(QStringLiteral("PushButton1_3"));
