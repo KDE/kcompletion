@@ -19,7 +19,6 @@
 #ifndef KCOMPLETIONCORETEST_H
 #define KCOMPLETIONCORETEST_H
 
-#include <QtTest>
 #include "kcompletion.h"
 #include <QStringList>
 

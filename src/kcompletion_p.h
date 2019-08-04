@@ -25,6 +25,7 @@
 #include <kcompletionmatches.h>
 
 #include <kzoneallocator_p.h>
+#include <QSharedPointer>
 
 class KCompTreeNode;
 

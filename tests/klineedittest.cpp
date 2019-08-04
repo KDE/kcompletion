@@ -2,7 +2,6 @@
 
 #include <QPushButton>
 #include <QTimer>
-#include <QBoxLayout>
 #include <QApplication>
 #include <QDebug>
 #include <QLabel>

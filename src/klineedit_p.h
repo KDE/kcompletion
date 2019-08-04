@@ -24,11 +24,6 @@
 
 #include "klineedit.h"
 
-#include <QApplication>
-#include <QPainter>
-#include <QPaintEvent>
-#include <QPropertyAnimation>
-#include <QIcon>
 
 class KCompletionBox;
 class LineEditUrlDropEventFilter;

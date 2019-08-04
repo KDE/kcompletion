@@ -21,6 +21,8 @@
 #include <kcompletionbase.h>
 
 #include <kcompletion.h>
+#include <QPointer>
+#include <QKeySequence>
 
 class KCompletionBasePrivate
 {

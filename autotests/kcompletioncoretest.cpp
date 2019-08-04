@@ -17,8 +17,8 @@
 */
 
 #include "kcompletioncoretest.h"
-#include "QSignalSpy"
-
+#include <QSignalSpy>
+#include <QTest>
 #define clampet strings[0]
 #define coolcat strings[1]
 #define carpet strings[2]

@@ -2,7 +2,6 @@
 #define KCOMPLETIONUITEST_H
 
 #include <QStringList>
-#include <QVariant>
 #include <QWidget>
 class QVBoxLayout;
 class QHBoxLayout;

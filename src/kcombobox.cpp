@@ -26,6 +26,7 @@
 #include <klineedit.h>
 
 #include <QUrl>
+#include <QPointer>
 #include <QMenu>
 
 class KComboBoxPrivate
