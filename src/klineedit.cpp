@@ -387,7 +387,11 @@ void KLineEditPrivate::setSqueezedText()
     const int labelWidth = q->size().width() - 2 * q->style()->pixelMetric(QStyle::PM_DefaultFrameWidth) - 2;
     const int textWidth = fm.width(fullText);
 
+    // TODO: investigate use of QFontMetrics::elidedText for this
     if (textWidth > labelWidth) {
+        // TODO: better would be "…" char (0x2026), but for that one would need to ensure it's from the main font,
+        // otherwise if resulting in use of a new fallback font this can affect the metrics of the complete text,
+        // resulting in shifted characters
         const QString ellipsisText = QStringLiteral("...");
         // start with the dots only
         QString squeezedText = ellipsisText;
