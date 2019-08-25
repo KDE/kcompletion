@@ -436,7 +436,7 @@ void KLineEditPrivate::setSqueezedText()
     } else {
         q->QLineEdit::setText(fullText);
 
-        q->setToolTip(QLatin1String(""));
+        q->setToolTip(QString());
         QToolTip::showText(q->pos(), QString()); // hide
     }
 
