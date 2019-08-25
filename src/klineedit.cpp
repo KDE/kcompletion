@@ -388,13 +388,14 @@ void KLineEditPrivate::setSqueezedText()
     const int textWidth = fm.width(fullText);
 
     if (textWidth > labelWidth) {
+        const QString ellipsisText = QStringLiteral("...");
         // start with the dots only
-        QString squeezedText = QStringLiteral("...");
+        QString squeezedText = ellipsisText;
         int squeezedWidth = fm.width(squeezedText);
 
         // estimate how many letters we can add to the dots on both sides
         int letters = fullText.length() * (labelWidth - squeezedWidth) / textWidth / 2;
-        squeezedText = fullText.left(letters) + QStringLiteral("...") + fullText.right(letters);
+        squeezedText = fullText.left(letters) + ellipsisText + fullText.right(letters);
         squeezedWidth = fm.width(squeezedText);
 
         if (squeezedWidth < labelWidth) {
@@ -402,17 +403,17 @@ void KLineEditPrivate::setSqueezedText()
             // add letters while text < label
             do {
                 letters++;
-                squeezedText = fullText.left(letters) + QStringLiteral("...") + fullText.right(letters);
+                squeezedText = fullText.left(letters) + ellipsisText + fullText.right(letters);
                 squeezedWidth = fm.width(squeezedText);
             } while (squeezedWidth < labelWidth && letters <= fullLength / 2);
             letters--;
-            squeezedText = fullText.left(letters) + QStringLiteral("...") + fullText.right(letters);
+            squeezedText = fullText.left(letters) + ellipsisText + fullText.right(letters);
         } else if (squeezedWidth > labelWidth) {
             // we estimated too long
             // remove letters while text > label
             do {
                 letters--;
-                squeezedText = fullText.left(letters) + QStringLiteral("...") + fullText.right(letters);
+                squeezedText = fullText.left(letters) + ellipsisText + fullText.right(letters);
                 squeezedWidth = fm.width(squeezedText);
             } while (squeezedWidth > labelWidth && letters >= 5);
         }
