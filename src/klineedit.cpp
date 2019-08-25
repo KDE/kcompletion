@@ -399,7 +399,7 @@ void KLineEditPrivate::setSqueezedText()
 
         // estimate how many letters we can add to the dots on both sides
         int letters = fullText.length() * (labelWidth - squeezedWidth) / textWidth / 2;
-        squeezedText = fullText.left(letters) + ellipsisText + fullText.right(letters);
+        squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
         squeezedWidth = fm.width(squeezedText);
 
         if (squeezedWidth < labelWidth) {
@@ -407,17 +407,17 @@ void KLineEditPrivate::setSqueezedText()
             // add letters while text < label
             do {
                 letters++;
-                squeezedText = fullText.left(letters) + ellipsisText + fullText.right(letters);
+                squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
                 squeezedWidth = fm.width(squeezedText);
             } while (squeezedWidth < labelWidth && letters <= fullLength / 2);
             letters--;
-            squeezedText = fullText.left(letters) + ellipsisText + fullText.right(letters);
+            squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
         } else if (squeezedWidth > labelWidth) {
             // we estimated too long
             // remove letters while text > label
             do {
                 letters--;
-                squeezedText = fullText.left(letters) + ellipsisText + fullText.right(letters);
+                squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
                 squeezedWidth = fm.width(squeezedText);
             } while (squeezedWidth > labelWidth && letters >= 5);
         }
