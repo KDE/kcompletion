@@ -67,7 +67,7 @@ Test_KCompletion::insertionOrder()
     completion.setCompletionMode(KCompletion::CompletionShell);
     QCOMPARE(completion.makeCompletion(QStringLiteral("ca")), QStringLiteral("carp"));
     QVERIFY(spy1.count() == 1);
-    QVERIFY(spy1.takeFirst().at(0).toString() == QStringLiteral("carp"));
+    QVERIFY(spy1.takeFirst().at(0).toString() == QLatin1String("carp"));
     QVERIFY(spy3.count() == 1); spy3.takeFirst();
 
     QSignalSpy spy2(&completion, SIGNAL(matches(QStringList)));
