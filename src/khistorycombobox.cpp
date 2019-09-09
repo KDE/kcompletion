@@ -400,7 +400,7 @@ void KHistoryComboBox::wheelEvent(QWheelEvent *ev)
         return;
     }
     // Otherwise make it change the text without emitting activated
-    if (ev->delta() > 0) {
+    if (ev->angleDelta().y() > 0) {
         d->rotateUp();
     } else {
         d->rotateDown();
