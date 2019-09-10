@@ -639,7 +639,7 @@ QStringList KCompletionMatchesWrapper::list() const
     } else if (m_compOrder == KCompletion::Sorted) {
         QCollator c;
         c.setCaseSensitivity(Qt::CaseSensitive);
-        qStableSort(m_stringList.begin(), m_stringList.end(), c);
+        std::stable_sort(m_stringList.begin(), m_stringList.end(), c);
     }
 
     return m_stringList;

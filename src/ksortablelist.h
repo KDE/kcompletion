@@ -24,6 +24,7 @@
 
 #include <QPair>
 #include <QList>
+#include <algorithm>
 
 /**
  * \class KSortableItem ksortablelist.h <KSortableItem>
@@ -196,7 +197,7 @@ public:
      */
     void sort()
     {
-        qSort(*this);
+        std::sort(this->begin(), this->end());
     }
 };
 

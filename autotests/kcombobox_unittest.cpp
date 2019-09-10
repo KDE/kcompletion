@@ -55,7 +55,11 @@ private:
         // KComboBox signals
         QSignalSpy comboReturnPressedSpy(&w, SIGNAL(returnPressed()));
         QSignalSpy comboReturnPressedStringSpy(&w, SIGNAL(returnPressed(QString)));
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
         QSignalSpy comboActivatedSpy(&w, SIGNAL(activated(QString)));
+#else
+        QSignalSpy comboActivatedSpy(&w, &QComboBox::textActivated);
+#endif
         QTest::keyClick(&w, Qt::Key_Return);
         QCOMPARE(qReturnPressedSpy.count(), 1);
         QCOMPARE(kReturnPressedSpy.count(), 1);
@@ -78,11 +82,17 @@ private Q_SLOTS:
     {
         KHistoryComboBox w;
         QVERIFY(qobject_cast<KLineEdit *>(w.lineEdit()));
-        connect(&w, SIGNAL(activated(QString)),
-                &w, SLOT(addToHistory(QString)));
         QSignalSpy comboReturnPressedSpy(&w, SIGNAL(returnPressed()));
         QSignalSpy comboReturnPressedStringSpy(&w, SIGNAL(returnPressed(QString)));
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+        connect(&w, SIGNAL(activated(QString)),
+                &w, SLOT(addToHistory(QString)));
         QSignalSpy comboActivatedSpy(&w, SIGNAL(activated(QString)));
+#else
+        connect(&w, &KHistoryComboBox::textActivated,
+                &w, &KHistoryComboBox::addToHistory);
+        QSignalSpy comboActivatedSpy(&w, &QComboBox::textActivated);
+#endif
         QTest::keyClicks(&w, QStringLiteral("Hello world"));
         QTest::keyClick(&w, Qt::Key_Return);
         qApp->processEvents(); // QueuedConnection in KHistoryComboBox

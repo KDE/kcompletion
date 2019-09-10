@@ -56,10 +56,9 @@ public:
 void KComboBoxPrivate::init()
 {
     Q_Q(KComboBox);
-    q->QComboBox::setAutoCompletion(false); // otherwise setLineEdit will create a completer...
 
     if (q->isEditable()) {
-        q->setCompleter(nullptr);
+        q->setCompleter(nullptr); // remove the builtin completer, we have our own
         q->lineEdit()->setContextMenuPolicy(Qt::DefaultContextMenu);
     }
 }
@@ -354,8 +353,15 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         connect(d->klineEdit, &KLineEdit::aboutToShowContextMenu,
                 this, &KComboBox::aboutToShowContextMenu);
 
+        // match the declaration of the deprecated signal
+#if QT_DEPRECATED_SINCE(5, 15) || QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
         connect(d->klineEdit, &KLineEdit::completionBoxActivated,
                 this, QOverload<const QString&>::of(&QComboBox::activated));
+#endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        connect(d->klineEdit, &KLineEdit::completionBoxActivated,
+                this, QOverload<const QString&>::of(&QComboBox::textActivated));
+#endif
 
         d->klineEdit->setTrapReturnKey(d->trapReturnKey);
     }

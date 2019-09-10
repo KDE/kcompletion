@@ -385,7 +385,7 @@ void KLineEditPrivate::setSqueezedText()
     const int fullLength = fullText.length();
     const QFontMetrics fm(q->fontMetrics());
     const int labelWidth = q->size().width() - 2 * q->style()->pixelMetric(QStyle::PM_DefaultFrameWidth) - 2;
-    const int textWidth = fm.width(fullText);
+    const int textWidth = fm.boundingRect(fullText).width();
 
     // TODO: investigate use of QFontMetrics::elidedText for this
     if (textWidth > labelWidth) {
@@ -395,12 +395,12 @@ void KLineEditPrivate::setSqueezedText()
         const QString ellipsisText = QStringLiteral("...");
         // start with the dots only
         QString squeezedText = ellipsisText;
-        int squeezedWidth = fm.width(squeezedText);
+        int squeezedWidth = fm.boundingRect(squeezedText).width();
 
         // estimate how many letters we can add to the dots on both sides
         int letters = fullText.length() * (labelWidth - squeezedWidth) / textWidth / 2;
         squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
-        squeezedWidth = fm.width(squeezedText);
+        squeezedWidth = fm.boundingRect(squeezedText).width();
 
         if (squeezedWidth < labelWidth) {
             // we estimated too short
@@ -408,7 +408,7 @@ void KLineEditPrivate::setSqueezedText()
             do {
                 letters++;
                 squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
-                squeezedWidth = fm.width(squeezedText);
+                squeezedWidth = fm.boundingRect(squeezedText).width();
             } while (squeezedWidth < labelWidth && letters <= fullLength / 2);
             letters--;
             squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
@@ -418,7 +418,7 @@ void KLineEditPrivate::setSqueezedText()
             do {
                 letters--;
                 squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
-                squeezedWidth = fm.width(squeezedText);
+                squeezedWidth = fm.boundingRect(squeezedText).width();
             } while (squeezedWidth > labelWidth && letters >= 5);
         }
 

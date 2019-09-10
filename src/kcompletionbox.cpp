@@ -25,8 +25,9 @@
 
 #include <QApplication>
 #include <QDesktopWidget>
-#include <QScrollBar>
 #include <QKeyEvent>
+#include <QScrollBar>
+#include <QScreen>
 
 class KCompletionBoxPrivate
 {
@@ -305,18 +306,21 @@ void KCompletionBox::resizeAndReposition()
     int x = currentPos.x(), y = currentPos.y();
     if (d->m_parent) {
         if (!isVisible()) {
-            QPoint orig = globalPositionHint();
-            QRect screenSize = QApplication::desktop()->screenGeometry(orig);
+            const QPoint orig = globalPositionHint();
+            QScreen *screen = QGuiApplication::screenAt(orig);
+            if (screen) {
+                const QRect screenSize = screen->geometry();
 
-            x = orig.x() + geom.x();
-            y = orig.y() + geom.y();
+                x = orig.x() + geom.x();
+                y = orig.y() + geom.y();
 
-            if (x + width() > screenSize.right()) {
-                x = screenSize.right() - width();
-            }
-            if (y + height() > screenSize.bottom()) {
-                y = y - height() - d->m_parent->height();
-                d->upwardBox = true;
+                if (x + width() > screenSize.right()) {
+                    x = screenSize.right() - width();
+                }
+                if (y + height() > screenSize.bottom()) {
+                    y = y - height() - d->m_parent->height();
+                    d->upwardBox = true;
+                }
             }
         } else {
             // Are we above our parent? If so we must keep bottom edge anchored.

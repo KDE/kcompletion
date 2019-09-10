@@ -463,7 +463,12 @@ void KHistoryComboBoxPrivate::_k_simulateActivated(const QString &text)
        which is perhaps reasonable. Generate the signal ourselves if that's the case.
     */
     if ((q->insertPolicy() == q->NoInsert && q->findText(text, Qt::MatchFixedString | Qt::MatchCaseSensitive) == -1)) {
+#if QT_DEPRECATED_SINCE(5, 15) || QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
         emit q->activated(text);
+#endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        emit q->textActivated(text);
+#endif
     }
 
     /*
@@ -471,7 +476,12 @@ void KHistoryComboBoxPrivate::_k_simulateActivated(const QString &text)
        InsertAtCurrent
     */
     else if (q->insertPolicy() != q->InsertAtCurrent && q->count() >= q->maxCount()) {
+#if QT_DEPRECATED_SINCE(5, 15) || QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
         emit q->activated(text);
+#endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        emit q->textActivated(text);
+#endif
     }
 }
 

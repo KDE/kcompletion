@@ -10,15 +10,10 @@
 #include <klineedit.h>
 #include <khistorycombobox.h>
 
-/*
- *  Constructs a Form1 which is a child of 'parent', with the
- *  widget flags set to 'f'
- */
 Form1::Form1(QWidget *parent)
     : QWidget(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    setObjectName(QStringLiteral("Form1"));
     resize(559, 465);
     setWindowTitle(QStringLiteral("Form1"));
     Form1Layout = new QVBoxLayout(this);
@@ -30,8 +25,6 @@ Form1::Form1(QWidget *parent)
     GroupBox1->layout()->setContentsMargins(0, 0, 0, 0);
     GroupBox1Layout = new QVBoxLayout;
     GroupBox1Layout->setAlignment(Qt::AlignTop);
-    GroupBox1Layout->setSpacing(6);
-    GroupBox1Layout->setMargin(11);
     GroupBox1->layout()->addItem(GroupBox1Layout);
     GroupBox1Layout->setParent(GroupBox1->layout());
 
