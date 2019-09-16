@@ -56,11 +56,6 @@ public:
 void KComboBoxPrivate::init()
 {
     Q_Q(KComboBox);
-
-    if (q->isEditable()) {
-        q->setCompleter(nullptr); // remove the builtin completer, we have our own
-        q->lineEdit()->setContextMenuPolicy(Qt::DefaultContextMenu);
-    }
 }
 
 void KComboBoxPrivate::_k_lineEditDeleted()
@@ -315,6 +310,7 @@ void KComboBox::setLineEdit(QLineEdit *edit)
     QPointer<KCompletion> completion = compObj();
 
     QComboBox::setLineEdit(edit);
+    edit->setCompleter(nullptr); // remove Qt's builtin completer (set by setLineEdit), we have our own
     d->klineEdit = qobject_cast<KLineEdit *>(edit);
     setDelegate(d->klineEdit);
 
