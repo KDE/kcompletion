@@ -64,7 +64,7 @@ class QMenu;
  * internally whenever a completion object is created through either one of the
  * methods mentioned above. If you do not need this functionality, simply use
  * KCompletionBase::setHandleSignals(bool) or alternatively set the boolean
- * parameter in the @p setCompletionObject call to false.
+ * parameter in the @c setCompletionObject call to false.
  *
  * Beware: The completion object can be deleted on you, especially if a call
  * such as setEditable(false) is made. Store the pointer at your own risk,
@@ -77,7 +77,7 @@ class QMenu;
  * useGlobalSettings(). An alternate method would be to default individual
  * key bindings by using setKeyBinding() with the default second argument.
  *
- * A non-editable combo box only has one completion mode, @p CompletionAuto.
+ * A non-editable combo box only has one completion mode, @c CompletionAuto.
  * Unlike an editable combo box, the CompletionAuto mode works by matching
  * any typed key with the first letter of entries in the combo box. Please note
  * that if you call setEditable(false) to change an editable combo box to a
@@ -164,7 +164,7 @@ public:
     /**
     * Constructs an editable or read-only combo box.
     *
-    * @param rw When @p true, widget will be editable.
+    * @param rw When @c true, widget will be editable.
     * @param parent The parent object of this widget.
     */
     explicit KComboBox(bool rw, QWidget *parent = nullptr);
@@ -267,7 +267,7 @@ public:
     /**
     * Reimplemented from QComboBox.
     *
-    * If @p true, the completion mode will be set to automatic.
+    * If @c true, the completion mode will be set to automatic.
     * Otherwise, it is defaulted to the global setting. This
     * method has been replaced by the more comprehensive
     * setCompletionMode().
@@ -279,11 +279,11 @@ public:
     /**
     * Reimplemented from QComboBox.
     *
-    * Returns @p true if the current completion mode is set
+    * Returns @c true if the current completion mode is set
     * to automatic. See its more comprehensive replacement
     * completionMode().
     *
-    * @return @p true when completion mode is automatic.
+    * @return @c true when completion mode is automatic.
     */
     bool autoCompletion() const;
 
@@ -298,7 +298,7 @@ public:
     * Call this function with the argument set to false to disable the popup
     * menu.
     *
-    * @param showMenu If @p true, show the context menu.
+    * @param showMenu If @c true, show the context menu.
     * @deprecated since 4.5, use setContextMenuPolicy instead
     */
 #ifndef KCOMPLETION_NO_DEPRECATED
@@ -312,7 +312,7 @@ public:
      * be inserted. Otherwise the default behavior of QComboBox is used,
      * which inserts the encoded URL.
      *
-     * @param enable If @p true, insert decoded URLs
+     * @param enable If @c true, insert decoded URLs
      * @deprecated since 5.0. Use lineEdit()->installEventFilter with a LineEditUrlDropEventFilter
      */
 #ifndef KCOMPLETION_NO_DEPRECATED
@@ -320,7 +320,7 @@ public:
 #endif
 
     /**
-     * Returns @p true when decoded URL drops are enabled
+     * Returns @c true when decoded URL drops are enabled
      */
     bool urlDropsEnabled() const;
 
@@ -328,10 +328,10 @@ public:
      * Convenience method which iterates over all items and checks if
      * any of them is equal to @p text.
      *
-     * If @p text is an empty string, @p false
+     * If @p text is an empty string, @c false
      * is returned.
      *
-     * @return @p true if an item with the string @p text is in the combo box.
+     * @return @c true if an item with the string @p text is in the combo box.
      */
     bool contains(const QString &text) const;
 
@@ -351,8 +351,8 @@ public:
     void setTrapReturnKey(bool trap);
 
     /**
-     * @return @p true if key events of Key_Return or Key_Enter will
-     * be stopped; @p false if they will be propagated.
+     * @return @c true if key events of Key_Return or Key_Enter will
+     * be stopped; @c false if they will be propagated.
      *
      * @see setTrapReturnKey ()
      */
@@ -415,7 +415,7 @@ Q_SIGNALS:
     * The argument is the current text being edited.
     *
     * Note that this signal is @em not available when the widget is non-editable
-    * or the completion mode is set to @p CompletionNone.
+    * or the completion mode is set to @c CompletionNone.
     */
     void completion(const QString &);
 
@@ -428,8 +428,8 @@ Q_SIGNALS:
      * Emitted when the text rotation key bindings are pressed.
      *
      * The argument indicates which key binding was pressed. In this case this
-     * can be either one of four values: @p PrevCompletionMatch,
-     * @p NextCompletionMatch, @p RotateUp or @p RotateDown.
+     * can be either one of four values: @c PrevCompletionMatch,
+     * @c NextCompletionMatch, @c RotateUp or @c RotateDown.
      *
      * Note that this signal is @em not emitted if the completion
      * mode is set to CompletionNone.
@@ -468,7 +468,7 @@ public Q_SLOTS:
     * iteration will not work if there are no previous matches, i.e.
     * no text has been completed and the *nix shell history list
     * rotation is only available if the insertion policy for this
-    * widget is set either @p QComobBox::AtTop or @p QComboBox::AtBottom.
+    * widget is set either @c QComobBox::AtTop or @c QComboBox::AtBottom.
     * For other insertion modes whatever has been typed by the user
     * when the rotation event was initiated will be lost.
     *
@@ -504,7 +504,7 @@ protected Q_SLOTS:
     * Completes text according to the completion mode.
     *
     * Note: this method is not invoked if the completion mode is
-    * set to @p CompletionNone. Also if the mode is set to @p CompletionShell
+    * set to @c CompletionNone. Also if the mode is set to @c CompletionShell
     * and multiple matches are found, this method will complete the
     * text to the first match with a beep to indicate that there are
     * more matches. Then any successive completion key event iterates

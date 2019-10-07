@@ -89,7 +89,7 @@ public:
      * Returns a pointer to the current completion object.
      *
      * If the completion object does not exist, it is automatically created and
-     * by default handles all the completion signals internally unless @p handleSignals
+     * by default handles all the completion signals internally unless @c handleSignals
      * is set to false. It is also automatically destroyed when the destructor
      * is called. You can change this default behavior using the
      * @ref setAutoDeleteCompletionObject and @ref setHandleSignals member
@@ -161,9 +161,9 @@ public:
      * Sets the widget's ability to emit text completion and
      * rotation signals.
      *
-     * Invoking this function with @p enable set to @p false will
+     * Invoking this function with @p enable set to @c false will
      * cause the completion and rotation signals not to be emitted.
-     * However, unlike setting the completion object to @p NULL
+     * However, unlike setting the completion object to @c nullptr
      * using setCompletionObject, disabling the emission of
      * the signals through this method does not affect the current
      * completion object.
@@ -232,7 +232,7 @@ public:
      * NOTE: To use a modifier key (Shift, Ctrl, Alt) as part of
      * the key binding simply @p sum up the values of the
      * modifier and the actual key. For example, to use CTRL+E, supply
-     * @p "Qt::CtrlButton + Qt::Key_E" as the second argument to this
+     * @c "Qt::CtrlButton + Qt::Key_E" as the second argument to this
      * function.
      *
      * @param item the feature whose key binding needs to be set:

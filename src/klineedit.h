@@ -63,7 +63,7 @@ class KLineEditPrivate;
  * user in filling out the remaining text. The text rotation signal is
  * intended to be used to iterate through the list of all possible matches
  * whenever there is more than one match for the entered text. The
- * @p returnPressed( const QString& ) signals are the same as QLineEdit's
+ * @c returnPressed( const QString& ) signals are the same as QLineEdit's
  * except it provides the current text in the widget as its argument whenever
  * appropriate.
  *
@@ -85,10 +85,10 @@ class KLineEditPrivate;
  * individual key-bindings by using setKeyBinding() with the default
  * second argument.
  *
- * If @p EchoMode for this widget is set to something other than @p QLineEdit::Normal,
+ * If @c EchoMode for this widget is set to something other than @c QLineEdit::Normal,
  * the completion mode will always be defaulted to CompletionNone.
  * This is done purposefully to guard against protected entries such as passwords being
- * cached in KCompletion's list. Hence, if the @p EchoMode is not QLineEdit::Normal, the
+ * cached in KCompletion's list. Hence, if the @c EchoMode is not QLineEdit::Normal, the
  * completion mode is automatically disabled.
  *
  * A read-only KLineEdit will have the same background color as a
@@ -228,7 +228,7 @@ public:
      * Call this function with the argument set to false to disable the popup
      * menu.
      *
-     * @param showMenu If @p true, show the context menu.
+     * @param showMenu If @c true, show the context menu.
      * @deprecated since 4.5, use setContextMenuPolicy instead
      */
 #ifndef KCOMPLETION_NO_DEPRECATED
@@ -236,7 +236,7 @@ public:
 #endif
 
     /**
-     * Returns @p true when the context menu is enabled.
+     * Returns @c true when the context menu is enabled.
      * @deprecated since 4.5, use contextMenuPolicy instead
      */
 #ifndef KCOMPLETION_NO_DEPRECATED
@@ -249,21 +249,21 @@ public:
      * behavior of QLineEdit is used, which inserts the encoded URL.
      * Call setUrlDropsEnabled(false) if you need dropEvent to be called in a KLineEdit subclass.
      *
-     * @param enable If @p true, insert decoded URLs
+     * @param enable If @c true, insert decoded URLs
      */
     void setUrlDropsEnabled(bool enable);  // KF6: remove it and don't create LineEditUrlDropEventFilter by default.
 
     /**
-     * Returns @p true when decoded URL drops are enabled
+     * Returns @c true when decoded URL drops are enabled
      */
     bool urlDropsEnabled() const;
 
     /**
-     * By default, KLineEdit recognizes @p Key_Return and @p Key_Enter and emits
+     * By default, KLineEdit recognizes @c Key_Return and @c Key_Enter and emits
      * the returnPressed() signals, but it also lets the event pass,
      * for example causing a dialog's default-button to be called.
      *
-     * Call this method with @p trap = @p true to make @p KLineEdit stop these
+     * Call this method with @p trap = @c true to make @c KLineEdit stop these
      * events. The signals will still be emitted of course.
      *
      * @see trapReturnKey()
@@ -271,8 +271,8 @@ public:
     void setTrapReturnKey(bool trap);
 
     /**
-     * @returns @p true if keyevents of @p Key_Return or
-     * @p Key_Enter will be stopped or if they will be propagated.
+     * @returns @c true if keyevents of @c Key_Return or
+     * @c Key_Enter will be stopped or if they will be propagated.
      *
      * @see setTrapReturnKey ()
      */
@@ -406,7 +406,7 @@ Q_SIGNALS:
      * Emitted when the user presses the return key.
      *
      *  The argument is the current text. Note that this
-     * signal is @em not emitted if the widget's @p EchoMode is set to
+     * signal is @em not emitted if the widget's @c EchoMode is set to
      * QLineEdit::EchoMode.
      */
     void returnPressed(const QString &);
@@ -415,7 +415,7 @@ Q_SIGNALS:
      * Emitted when the completion key is pressed.
      *
      * Please note that this signal is @em not emitted if the
-     * completion mode is set to @p CompletionNone or @p EchoMode is
+     * completion mode is set to @c CompletionNone or @c EchoMode is
      * @em normal.
      */
     void completion(const QString &);
@@ -450,7 +450,7 @@ Q_SIGNALS:
      * KCompletionBase::setKeyBinding for details.
      *
      * Note that this signal is @em not emitted if the completion
-     * mode is set to @p CompletionNone or @p echoMode() is @em not  normal.
+     * mode is set to @c CompletionNone or @c echoMode() is @em not  normal.
      */
     void textRotation(KCompletionBase::KeyBindingType);
 

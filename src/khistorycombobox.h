@@ -81,7 +81,7 @@ public:
     /**
     * Same as the previous constructor, but additionally has the option
     * to specify whether you want to let KHistoryComboBox handle completion
-    * or not. If set to @p true, KHistoryComboBox will sync the completion to the
+    * or not. If set to @c true, KHistoryComboBox will sync the completion to the
     * contents of the combobox.
     */
     explicit KHistoryComboBox(bool useCompletion, QWidget *parent = nullptr);
@@ -103,7 +103,7 @@ public:
      * Inserts @p items into the combobox. @p items might get
      * truncated if it is longer than maxCount()
      *
-     * Set @p setCompletionList to true, if you don't have a list of
+     * Set @c setCompletionList to true, if you don't have a list of
      * completions. This tells KHistoryComboBox to use all the items for the
      * completion object as well.
      * You won't have the benefit of weighted completion though, so normally
@@ -133,7 +133,7 @@ public:
      * Be sure to use different names for saving with KConfig if you have more
      * than one KHistoryComboBox.
      *
-     * Note: When @p setCompletionList is true, the items are inserted into the
+     * Note: When @c setCompletionList is true, the items are inserted into the
      * KCompletion object with mode KCompletion::Insertion and the mode is set
      * to KCompletion::Weighted afterwards.
      *
@@ -155,7 +155,7 @@ public:
     /**
      * Removes all items named @p item.
      *
-     * @return @p true if at least one item was removed.
+     * @return @c true if at least one item was removed.
      *
      * @see addToHistory
      */
