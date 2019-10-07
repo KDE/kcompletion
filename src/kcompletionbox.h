@@ -208,11 +208,12 @@ protected:
      */
     QRect calculateGeometry() const;
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
     /**
      * @deprecated since 5.0, use resizeAndReposition instead.
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED void sizeAndPosition()
+    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletionBox::resizeAndReposition()")
+    void sizeAndPosition()
     {
         resizeAndReposition();
     }

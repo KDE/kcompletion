@@ -130,12 +130,13 @@ public:
         return this->second;
     }
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 0)
     /**
      * @return the first value (the key)
-     * @deprecated use key()
+     * @deprecated Since 4.0. Use key()
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED Key index() const
+    KCOMPLETION_DEPRECATED_VERSION(4, 0, "Use KSortableItem::key()")
+    Key index() const
     {
         return this->first;
     }

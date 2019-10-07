@@ -261,11 +261,12 @@ public:
      */
     QList<QKeySequence> keyBinding(KeyBindingType item) const;
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
     /**
      * @deprecated since 5.0, use keyBinding instead
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED QList<QKeySequence> getKeyBinding(KeyBindingType item) const
+    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletionBase::keyBinding(KeyBindingType)")
+    QList<QKeySequence> getKeyBinding(KeyBindingType item) const
     {
         return keyBinding(item);
     }
@@ -334,11 +335,12 @@ protected:
      */
     KeyBindingMap keyBindingMap() const;
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
     /**
      * @deprecated since 5.0, use keyBindingMap instead
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED KeyBindingMap getKeyBindings() const
+    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletionBase::keyBindingMap()")
+    KeyBindingMap getKeyBindings() const
     {
         return keyBindingMap();
     }

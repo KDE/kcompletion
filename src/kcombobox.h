@@ -146,7 +146,7 @@ class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase //
 {
     Q_OBJECT
     Q_PROPERTY(bool autoCompletion READ autoCompletion WRITE setAutoCompletion)
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
     Q_PROPERTY(bool urlDropsEnabled READ urlDropsEnabled WRITE setUrlDropsEnabled)
 #endif
     Q_PROPERTY(bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey)
@@ -174,24 +174,28 @@ public:
     */
     ~KComboBox() override;
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
     /**
      * Deprecated to reflect Qt api changes
      * @deprecated since 4.5
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED void insertURL(const QUrl &url, int index = -1)
+    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use KComboBox::insertUrl(int, const QUrl&)")
+    void insertURL(const QUrl &url, int index = -1)
     {
         insertUrl(index < 0 ? count() : index, url);
     }
-    KCOMPLETION_DEPRECATED void insertURL(const QPixmap &pixmap, const QUrl &url, int index = -1)
+    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use KComboBox::insertUrl(int, const QIcon&, const QUrl&)")
+    void insertURL(const QPixmap &pixmap, const QUrl &url, int index = -1)
     {
         insertUrl(index < 0 ? count() : index, QIcon(pixmap), url);
     }
-    KCOMPLETION_DEPRECATED void changeURL(const QUrl &url, int index)
+    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use KComboBox::changeUrl(int, const QUrl&)")
+    void changeURL(const QUrl &url, int index)
     {
         changeUrl(index, url);
     }
-    KCOMPLETION_DEPRECATED void changeURL(const QPixmap &pixmap, const QUrl &url, int index)
+    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use KComboBox::changeUrl(int, const QIcon&, const QUrl&)")
+    void changeURL(const QPixmap &pixmap, const QUrl &url, int index)
     {
         changeUrl(index, QIcon(pixmap), url);
     }
@@ -287,6 +291,7 @@ public:
     */
     bool autoCompletion() const;
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
     /**
     * Enables or disables the popup (context) menu.
     *
@@ -301,10 +306,11 @@ public:
     * @param showMenu If @c true, show the context menu.
     * @deprecated since 4.5, use setContextMenuPolicy instead
     */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    virtual KCOMPLETION_DEPRECATED void setContextMenuEnabled(bool showMenu);
+    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use QWidget::setContextMenuPolicy(...)")
+    virtual void setContextMenuEnabled(bool showMenu);
 #endif
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
     /**
      * Enables/Disables handling of URL drops.
      *
@@ -315,8 +321,8 @@ public:
      * @param enable If @c true, insert decoded URLs
      * @deprecated since 5.0. Use lineEdit()->installEventFilter with a LineEditUrlDropEventFilter
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED void setUrlDropsEnabled(bool enable);
+    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KComboBox::lineEdit()->installEventFilter(...) with a LineEditUrlDropEventFilter")
+    void setUrlDropsEnabled(bool enable);
 #endif
 
     /**

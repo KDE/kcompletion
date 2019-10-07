@@ -133,7 +133,7 @@ bool KComboBox::autoCompletion() const
     return completionMode() == KCompletion::CompletionAuto;
 }
 
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
 void KComboBox::setContextMenuEnabled(bool showMenu)
 {
     Q_D(KComboBox);
@@ -141,7 +141,9 @@ void KComboBox::setContextMenuEnabled(bool showMenu)
         d->klineEdit->setContextMenuPolicy(showMenu ? Qt::DefaultContextMenu : Qt::NoContextMenu);
     }
 }
+#endif
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
 void KComboBox::setUrlDropsEnabled(bool enable)
 {
     Q_D(KComboBox);

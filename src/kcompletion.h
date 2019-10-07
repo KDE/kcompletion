@@ -402,6 +402,7 @@ public Q_SLOTS:
      */
     QString nextMatch();
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
     /**
      * Attempts to complete "string" and emits the completion via match().
      * Same as makeCompletion(), but in this case as a slot.
@@ -409,30 +410,36 @@ public Q_SLOTS:
      * @see makeCompletion
      * @deprecated since 5.0, use makeCompletion() instead
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED void slotMakeCompletion(const QString &string)     //inline (redirect)
+    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletion::makeCompletion(const QString &)")
+    void slotMakeCompletion(const QString &string)     //inline (redirect)
     {
         (void) makeCompletion(string);
     }
+#endif
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
     /**
      * Searches the previous matching item and emits it via match().
      * Same as previousMatch(), but in this case as a slot.
      * @see previousMatch
      * @deprecated since 5.0, use previousMatch() instead
      */
-    KCOMPLETION_DEPRECATED void slotPreviousMatch()   //inline (redirect)
+    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletion::previousMatch()")
+    void slotPreviousMatch()   //inline (redirect)
     {
         (void) previousMatch();
     }
+#endif
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
     /**
      * Searches the next matching item and emits it via match().
      * Same as nextMatch(), but in this case as a slot.
      * @see nextMatch
      * @deprecated since 5.0, use nextMatch() instead
      */
-    KCOMPLETION_DEPRECATED void slotNextMatch()   //inline (redirect)
+    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletion::nextMatch()")
+    void slotNextMatch()   //inline (redirect)
     {
         (void) nextMatch();
     }

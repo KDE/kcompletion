@@ -59,11 +59,11 @@ private Q_SLOTS:
         // setText emits textChanged and userTextChanged, but not textEdited
         QSignalSpy textChangedSpy(&w, SIGNAL(textChanged(QString)));
         QSignalSpy textEditedSpy(&w, SIGNAL(textEdited(QString)));
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         QSignalSpy userTextChangedSpy(&w, SIGNAL(userTextChanged(QString)));
 #endif
         w.setText(QStringLiteral("Hello worl"));
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         QCOMPARE(userTextChangedSpy.count(), 1);
         QCOMPARE(userTextChangedSpy[0][0].toString(), w.text());
 #endif
@@ -71,7 +71,7 @@ private Q_SLOTS:
         QCOMPARE(textChangedSpy[0][0].toString(), w.text());
         QCOMPARE(textEditedSpy.count(), 0);
         QVERIFY(!w.isModified());
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         userTextChangedSpy.clear();
 #endif
         textChangedSpy.clear();
@@ -81,7 +81,7 @@ private Q_SLOTS:
         w.clear();
         QCOMPARE(textChangedSpy.count(),1);
         QCOMPARE(textEditedSpy.count(),0);
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         QCOMPARE(userTextChangedSpy.count(),1);
 #endif
 
@@ -90,13 +90,13 @@ private Q_SLOTS:
         w.clear();
         QCOMPARE(textChangedSpy.count(),1);
         QCOMPARE(textEditedSpy.count(),0);
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         QCOMPARE(userTextChangedSpy.count(),1);
 #endif
 
         //set the text back for further tests below
         w.setText(QStringLiteral("Hello worl"));
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         userTextChangedSpy.clear();
 #endif
         textChangedSpy.clear();
@@ -105,7 +105,7 @@ private Q_SLOTS:
         // typing emits all three signals
         QTest::keyClick(&w, Qt::Key_D);
         QCOMPARE(w.text(), QString::fromLatin1("Hello world"));
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         QCOMPARE(userTextChangedSpy.count(), 1);
         QCOMPARE(userTextChangedSpy[0][0].toString(), w.text());
 #endif
@@ -116,7 +116,7 @@ private Q_SLOTS:
         QVERIFY(w.isModified());
 
         w.setText(QStringLiteral("K")); // prepare for next test
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         userTextChangedSpy.clear();
 #endif
         textChangedSpy.clear();
@@ -135,14 +135,14 @@ private Q_SLOTS:
         w.doCompletion(w.text());
         QCOMPARE(w.text(), items.at(0));
 
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         QCOMPARE(userTextChangedSpy.count(), 0);
 #endif
         QCOMPARE(textChangedSpy.count(), 1);
         QCOMPARE(textChangedSpy[0][0].toString(), w.text());
         QCOMPARE(textEditedSpy.count(), 0);
         QVERIFY(!w.isModified());
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         userTextChangedSpy.clear();
 #endif
         textChangedSpy.clear();
@@ -152,7 +152,7 @@ private Q_SLOTS:
         QTest::keyClick(&w, Qt::Key_Right);
         QCOMPARE(w.text(), items.at(0));
 
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         QCOMPARE(userTextChangedSpy.count(), 1);
         QCOMPARE(userTextChangedSpy[0][0].toString(), w.text());
 #endif
@@ -161,7 +161,7 @@ private Q_SLOTS:
         QCOMPARE(textEditedSpy.count(), 1);
         QCOMPARE(textEditedSpy[0][0].toString(), w.text());
         QVERIFY(w.isModified());
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         userTextChangedSpy.clear();
 #endif
         textChangedSpy.clear();
@@ -171,14 +171,14 @@ private Q_SLOTS:
         w.setCompletionMode(KCompletion::CompletionPopup);
         w.setText(QStringLiteral("KDE"));
         QVERIFY(!w.isModified());
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         userTextChangedSpy.clear();
 #endif
         textChangedSpy.clear();
         textEditedSpy.clear();
         w.doCompletion(w.text()); // popup appears
         QCOMPARE(w.text(), QString::fromLatin1("KDE"));
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         QCOMPARE(textChangedSpy.count() + userTextChangedSpy.count() + textEditedSpy.count(), 0);
 #else
         QCOMPARE(textChangedSpy.count() + textEditedSpy.count(), 0);
@@ -191,12 +191,12 @@ private Q_SLOTS:
 
         // Selecting an item in the popup completion changes the lineedit text
         // and emits textChanged and userTextChanged, but not textEdited.
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         QCOMPARE(userTextChangedSpy.count(), 2);
 #endif
         QCOMPARE(textChangedSpy.count(), 2);
         QCOMPARE(textEditedSpy.count(), 0);
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         userTextChangedSpy.clear();
 #endif
         textChangedSpy.clear();
@@ -209,7 +209,7 @@ private Q_SLOTS:
         // Nothing else happens, the text was already set in the lineedit
         QCOMPARE(textChangedSpy.count(), 0);
         QCOMPARE(textEditedSpy.count(), 0);
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         QCOMPARE(userTextChangedSpy.count(), 0);
 #endif
 

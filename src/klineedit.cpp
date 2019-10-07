@@ -54,7 +54,7 @@ void KLineEditPrivate::_k_textChanged(const QString &text)
     // COMPAT (as documented): emit userTextChanged whenever textChanged is emitted
     if (!completionRunning && (text != userText)) {
         userText = text;
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
         emit q->userTextChanged(text);
 #endif
     }
@@ -68,7 +68,7 @@ void KLineEditPrivate::updateUserText(const QString &text)
     if (!completionRunning && (text != userText)) {
         userText = text;
         q->setModified(true);
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
         emit q->userTextChanged(text);
 #endif
         emit q->textEdited(text);
@@ -155,22 +155,26 @@ KLineEdit::~KLineEdit()
 {
 }
 
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
 QString KLineEdit::clickMessage() const
 {
     return placeholderText();
 }
 #endif
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 46)
 void KLineEdit::setClearButtonShown(bool show)
 {
     setClearButtonEnabled(show);
 }
+#endif
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 46)
 bool KLineEdit::isClearButtonShown() const
 {
     return isClearButtonEnabled();
 }
+#endif
 
 QSize KLineEdit::clearButtonUsedSize() const
 {
@@ -1072,7 +1076,7 @@ bool KLineEdit::event(QEvent *ev)
     return QLineEdit::event(ev);
 }
 
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
 void KLineEdit::setUrlDropsEnabled(bool enable)
 {
     Q_D(KLineEdit);
@@ -1425,21 +1429,21 @@ void KLineEdit::paintEvent(QPaintEvent *ev)
     }
 }
 
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
 void KLineEdit::setClickMessage(const QString &msg)
 {
     setPlaceholderText(msg);
 }
 #endif
 
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
 void KLineEdit::setContextMenuEnabled(bool showMenu)
 {
     QLineEdit::setContextMenuPolicy(showMenu ? Qt::DefaultContextMenu : Qt::NoContextMenu);
 }
 #endif
 
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
 bool KLineEdit::isContextMenuEnabled() const
 {
     return (contextMenuPolicy() == Qt::DefaultContextMenu);

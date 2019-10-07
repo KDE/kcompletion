@@ -157,18 +157,20 @@ class KCOMPLETION_EXPORT KLineEdit : public QLineEdit, public KCompletionBase //
 
     Q_OBJECT
     Q_DECLARE_PRIVATE(KLineEdit)
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
     Q_PROPERTY(bool contextMenuEnabled READ isContextMenuEnabled WRITE setContextMenuEnabled)
 #endif
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
     Q_PROPERTY(bool urlDropsEnabled READ urlDropsEnabled WRITE setUrlDropsEnabled)
 #endif
     Q_PROPERTY(bool trapEnterKeyEvent READ trapReturnKey WRITE setTrapReturnKey)
     Q_PROPERTY(bool squeezedTextEnabled READ isSqueezedTextEnabled WRITE setSqueezedTextEnabled)
-#ifndef KCOMPLETION_NO_DEPRECATED
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
     Q_PROPERTY(QString clickMessage READ clickMessage WRITE setClickMessage)
 #endif
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 46)
     Q_PROPERTY(bool showClearButton READ isClearButtonShown WRITE setClearButtonShown)
+#endif
     Q_PROPERTY(bool passwordMode READ passwordMode WRITE setPasswordMode)
 
 public:
@@ -217,6 +219,7 @@ public:
      */
     void setCompletionModeDisabled(KCompletion::CompletionMode mode, bool disable = true);
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
     /**
      * Enables/disables the popup (context) menu.
      *
@@ -231,16 +234,17 @@ public:
      * @param showMenu If @c true, show the context menu.
      * @deprecated since 4.5, use setContextMenuPolicy instead
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    virtual KCOMPLETION_DEPRECATED void setContextMenuEnabled(bool showMenu);
+    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use QWidget::setContextMenuPolicy(Qt::ContextMenuPolicy)")
+    virtual void setContextMenuEnabled(bool showMenu);
 #endif
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
     /**
      * Returns @c true when the context menu is enabled.
      * @deprecated since 4.5, use contextMenuPolicy instead
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED bool isContextMenuEnabled() const;
+    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use QWidget::contextMenuPolicy()")
+    bool isContextMenuEnabled() const;
 #endif
 
     /**
@@ -342,24 +346,27 @@ public:
     */
     void setCompletionBox(KCompletionBox *box);
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
     /**
      * This makes the line edit display a grayed-out hinting text as long as
      * the user didn't enter any text. It is often used as indication about
      * the purpose of the line edit.
      * @deprecated since 5.0, use QLineEdit::setPlaceholderText instead.
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED void setClickMessage(const QString &msg);
+    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use QLineEdit::setPlaceholderText(const QString&)")
+    void setClickMessage(const QString &msg);
 #endif
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
     /**
      * @return the message set with setClickMessage
      * @deprecated since 5.0, use QLineEdit::placeholderText instead.
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED QString clickMessage() const;
+    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use QLineEdit::placeholderText()")
+    QString clickMessage() const;
 #endif
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 46)
     /**
      * This makes the line edit display an icon on one side of the line edit
      * which, when clicked, clears the contents of the line edit.
@@ -367,17 +374,18 @@ public:
      *
      * @deprecated since 5.46 Use QLineEdit::setClearButtonEnabled
      **/
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED void setClearButtonShown(bool show);
+    KCOMPLETION_DEPRECATED_VERSION(5, 46, "Use QLineEdit::setClearButtonEnabled(bool)")
+    void setClearButtonShown(bool show);
 #endif
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 46)
     /**
      * @return whether or not the clear button is shown
      *
      * @deprecated since 5.46 Use QLineEdit::isClearButtonEnabled
      **/
-#ifndef KCOMPLETION_NO_DEPRECATED
-    KCOMPLETION_DEPRECATED bool isClearButtonShown() const;
+    KCOMPLETION_DEPRECATED_VERSION(5, 46, "Use QLineEdit::isClearButtonEnabled()")
+    bool isClearButtonShown() const;
 #endif
 
     /**
@@ -425,6 +433,7 @@ Q_SIGNALS:
      */
     void substringCompletion(const QString &);
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
     /**
      * Emitted when the text is changed NOT by the suggested autocompletion:
      * either when the user is physically typing keys, or when the text is changed programmatically,
@@ -437,7 +446,7 @@ Q_SIGNALS:
      * (by typing or accepting autocompletion), without side effects from
      * suggested autocompletion either. userTextChanged isn't needed anymore.
      */
-#ifndef KCOMPLETION_NO_DEPRECATED
+    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use QLineEdit::textEdited(const QString&)")
     QT_MOC_COMPAT void userTextChanged(const QString &);
 #endif
 
