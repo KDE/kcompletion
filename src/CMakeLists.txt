@@ -18,7 +18,7 @@ add_library(KF5Completion ${kcompletion_SRCS})
 add_library(KF5::Completion ALIAS KF5Completion)
 ecm_generate_export_header(KF5Completion
     BASE_NAME KCompletion
-    # GROUP_BASE_NAME KF <- enable once all of KF modules use ecm_generate_export_header
+    GROUP_BASE_NAME KF
     VERSION ${KF5_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 4.0 4.5 5.0 5.46
