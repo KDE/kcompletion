@@ -1,0 +1,79 @@
+# Hausa translation for kdelibs strings.
+# Copyright 2009 Adriaan de Groot, Mustapha Abubakar, Ibrahim Dasuna
+# This file is distributed under the same license as the kdelibs package.
+#
+# Adriaan de Groot <groot@kde.org>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2009-03-17 11:22+0100\n"
+"Last-Translator: Adriaan de Groot <groot@kde.org>\n"
+"Language-Team: Hausa <kde-i18n-doc@lists.kde.org>\n"
+"Language: ha\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 0.2\n"
+"X-Qt-Contexts: true\n"
+
+#: khistorycombobox.cpp:206
+msgctxt "KHistoryComboBox|"
+msgid "Clear &History"
+msgstr ""
+
+#: klineedit.cpp:109
+#, fuzzy
+#| msgid "1"
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:936
+msgctxt "KLineEdit|"
+msgid "C&lear"
+msgstr ""
+
+#: klineedit.cpp:950
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr ""
+
+#: klineedit.cpp:957
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr ""
+
+#: klineedit.cpp:958
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr ""
+
+#: klineedit.cpp:959
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr ""
+
+#: klineedit.cpp:960
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr ""
+
+#: klineedit.cpp:961
+#, fuzzy
+#| msgid "Shortcut"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Gajeran hanya"
+
+#: klineedit.cpp:962
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr ""
+
+#: klineedit.cpp:992
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr ""
