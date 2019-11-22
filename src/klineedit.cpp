@@ -39,6 +39,7 @@
 #include <QTimer>
 #include <QApplication>
 #include <QClipboard>
+#include <QKeyEvent>
 #include <QMenu>
 #include <QToolTip>
 
