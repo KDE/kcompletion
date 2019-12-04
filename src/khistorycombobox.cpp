@@ -431,20 +431,17 @@ void KHistoryComboBox::setPixmapProvider(KPixmapProvider *provider)
 void KHistoryComboBox::insertItems(const QStringList &items)
 {
     Q_D(KHistoryComboBox);
-    QStringList::ConstIterator it = items.constBegin();
-    const QStringList::ConstIterator itEnd = items.constEnd();
 
-    while (it != itEnd) {
-        const QString item = *it;
-        if (!item.isEmpty()) {   // only insert non-empty items
-            if (d->pixmapProvider)
-                addItem(d->pixmapProvider->pixmapFor(item, iconSize().height()),
-                        item);
-            else {
-                addItem(item);
-            }
+    for (const QString item : items) {
+        if (item.isEmpty()) {
+            continue;
         }
-        ++it;
+
+        if (d->pixmapProvider) {
+            addItem(d->pixmapProvider->pixmapFor(item, iconSize().height()), item);
+        } else {
+            addItem(item);
+        }
     }
 }
 
