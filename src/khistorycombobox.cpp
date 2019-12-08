@@ -76,6 +76,8 @@ public:
      */
     bool rotated = false;
 
+    std::function<QIcon(QString)> iconProvider;
+
     Q_DECLARE_PUBLIC(KHistoryComboBox)
 };
 
@@ -237,7 +239,9 @@ void KHistoryComboBox::addToHistory(const QString &item)
     }
 
     // now add the item
-    if (d->pixmapProvider) {
+    if (d->iconProvider) {
+        insertItem(0, d->iconProvider(item), item);
+    } else if (d->pixmapProvider) {
         insertItem(0, d->pixmapProvider->pixmapFor(item, iconSize().height()), item);
     } else {
         insertItem(0, item);
@@ -408,6 +412,7 @@ void KHistoryComboBox::wheelEvent(QWheelEvent *ev)
     ev->accept();
 }
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
 void KHistoryComboBox::setPixmapProvider(KPixmapProvider *provider)
 {
     Q_D(KHistoryComboBox);
@@ -427,6 +432,13 @@ void KHistoryComboBox::setPixmapProvider(KPixmapProvider *provider)
         insertItems(items);
     }
 }
+#endif
+
+void KHistoryComboBox::setIconProvider(std::function<QIcon(const QString &)> providerFunction)
+{
+    Q_D(KHistoryComboBox);
+    d->iconProvider = providerFunction;
+}
 
 void KHistoryComboBox::insertItems(const QStringList &items)
 {
@@ -437,7 +449,9 @@ void KHistoryComboBox::insertItems(const QStringList &items)
             continue;
         }
 
-        if (d->pixmapProvider) {
+        if (d->iconProvider) {
+            addItem(d->iconProvider(item), item);
+        } else if (d->pixmapProvider) {
             addItem(d->pixmapProvider->pixmapFor(item, iconSize().height()), item);
         } else {
             addItem(item);
@@ -482,11 +496,13 @@ void KHistoryComboBoxPrivate::_k_simulateActivated(const QString &text)
     }
 }
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
 KPixmapProvider *KHistoryComboBox::pixmapProvider() const
 {
     Q_D(const KHistoryComboBox);
     return d->pixmapProvider;
 }
+#endif
 
 void KHistoryComboBox::reset()
 {

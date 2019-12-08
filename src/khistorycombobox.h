@@ -25,6 +25,8 @@
 #include <kcombobox.h>
 #include <kcompletion_export.h>
 
+#include <functional>
+
 class KPixmapProvider;
 class KHistoryComboBoxPrivate;
 
@@ -172,15 +174,28 @@ public:
      * Set @p provider to nullptr if you want to disable pixmaps. Default no pixmaps.
      *
      * @see pixmapProvider
+     * @deprecated since 5.66, use setIconProvider
      */
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 66)
+    KCOMPLETION_DEPRECATED_VERSION(5, 66, "Use setIconProvider")
     void setPixmapProvider(KPixmapProvider *provider);
 
     /**
      * @returns the current pixmap provider.
      * @see setPixmapProvider
      * @see KPixmapProvider
+     * @deprecated since 5.66, unused
      */
+    KCOMPLETION_DEPRECATED_VERSION(5, 66, "unused")
     KPixmapProvider *pixmapProvider() const;
+#endif
+
+    /**
+     * Sets an icon provider, so that items in the combobox can have an icon.
+     * The provider is a function that takes a QString and returns a QIcon
+     * @since 5.66
+     */
+    void setIconProvider(std::function<QIcon(const QString &)> providerFunction);
 
     using QComboBox::insertItems;
 
