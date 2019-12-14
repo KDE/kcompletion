@@ -20,10 +20,13 @@
 
 #include "kpixmapprovider.h"
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
+
 KPixmapProvider::~KPixmapProvider() {}
 
 void KPixmapProvider::virtual_hook(int, void *)
 {
     /*BASE::virtual_hook( id, data );*/
 }
+#endif
 
