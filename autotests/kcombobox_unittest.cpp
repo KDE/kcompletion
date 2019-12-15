@@ -18,7 +18,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <QtTest>
+#include <QTest>
+#include <QSignalSpy>
 #include <khistorycombobox.h>
 #include <klineedit.h>
 

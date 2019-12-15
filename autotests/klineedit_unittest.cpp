@@ -20,7 +20,8 @@
 
 #include <QClipboard>
 #include <QToolButton>
-#include <QtTest>
+#include <QTest>
+#include <QSignalSpy>
 #include <klineedit.h>
 #include <kcompletionbox.h>
 
