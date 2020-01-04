@@ -6,8 +6,8 @@
 #include <QDebug>
 #include <QLabel>
 #include <QHBoxLayout>
-#include <QRegExp>
-#include <QRegExpValidator>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 
 #include <klineedit.h>
 
@@ -34,8 +34,8 @@ KLineEditTest::KLineEditTest(QWidget *widget)
 
     QHBoxLayout *restrictedHBox = new QHBoxLayout;
     m_restrictedLine = new KLineEdit(this);
-    QRegExp regex(QStringLiteral("[aeiouyé]*"));
-    QRegExpValidator *validator = new QRegExpValidator(regex, m_restrictedLine);
+    QRegularExpression regex(QStringLiteral("[aeiouyé]*"));
+    QRegularExpressionValidator *validator = new QRegularExpressionValidator(regex, m_restrictedLine);
     m_restrictedLine->setValidator(validator);
     //connect(m_restrictedLine, SIGNAL(invalidChar(int)), this, SLOT(slotInvalidChar(int)));
     connect(m_restrictedLine, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));
