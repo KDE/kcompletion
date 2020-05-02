@@ -934,7 +934,7 @@ QMenu *KLineEdit::createStandardContextMenu()
             separatorAction = actionList.at(idx);
         }
         if (separatorAction) {
-            QAction *clearAllAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-clear")), tr("C&lear"), this);
+            QAction *clearAllAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-clear")), tr("C&lear", "@action:inmenu"), this);
             clearAllAction->setShortcuts(QKeySequence::keyBindings(QKeySequence::DeleteCompleteLine));
             connect(clearAllAction, &QAction::triggered, this, &QLineEdit::clear);
             if (text().isEmpty()) {
