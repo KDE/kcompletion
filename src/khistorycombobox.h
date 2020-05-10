@@ -163,6 +163,7 @@ public:
      */
     bool removeFromHistory(const QString &item);
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 66)
     /**
      * Sets a pixmap provider, so that items in the combobox can have a pixmap.
      * KPixmapProvider is just an abstract class with the one pure virtual
@@ -176,10 +177,11 @@ public:
      * @see pixmapProvider
      * @deprecated since 5.66, use setIconProvider
      */
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 66)
     KCOMPLETION_DEPRECATED_VERSION(5, 66, "Use setIconProvider")
     void setPixmapProvider(KPixmapProvider *provider);
+#endif
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 66)
     /**
      * @returns the current pixmap provider.
      * @see setPixmapProvider
