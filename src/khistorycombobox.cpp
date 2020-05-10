@@ -62,7 +62,9 @@ public:
      */
     QString typedText;
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
     KPixmapProvider *pixmapProvider = nullptr;
+#endif
     KHistoryComboBox * const q_ptr;
 
     /**
@@ -94,7 +96,9 @@ void KHistoryComboBoxPrivate::init(bool useCompletion)
     q->setInsertPolicy(KHistoryComboBox::NoInsert);
     currentIndex = -1;
     rotated = false;
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
     pixmapProvider = nullptr;
+#endif
 
     // obey HISTCONTROL setting
     QByteArray histControl = qgetenv("HISTCONTROL");
@@ -132,8 +136,10 @@ KHistoryComboBox::KHistoryComboBox(bool useCompletion,
 
 KHistoryComboBox::~KHistoryComboBox()
 {
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
     Q_D(KHistoryComboBox);
     delete d->pixmapProvider;
+#endif
 }
 
 void KHistoryComboBox::setHistoryItems(const QStringList &items)
@@ -241,8 +247,10 @@ void KHistoryComboBox::addToHistory(const QString &item)
     // now add the item
     if (d->iconProvider) {
         insertItem(0, d->iconProvider(item), item);
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
     } else if (d->pixmapProvider) {
         insertItem(0, d->pixmapProvider->pixmapFor(item, iconSize().height()), item);
+#endif
     } else {
         insertItem(0, item);
     }
@@ -451,8 +459,10 @@ void KHistoryComboBox::insertItems(const QStringList &items)
 
         if (d->iconProvider) {
             addItem(d->iconProvider(item), item);
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
         } else if (d->pixmapProvider) {
             addItem(d->pixmapProvider->pixmapFor(item, iconSize().height()), item);
+#endif
         } else {
             addItem(item);
         }
