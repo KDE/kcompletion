@@ -485,7 +485,11 @@ void KHistoryComboBoxPrivate::_k_simulateActivated(const QString &text)
     */
     if ((q->insertPolicy() == q->NoInsert && q->findText(text, Qt::MatchFixedString | Qt::MatchCaseSensitive) == -1)) {
 #if QT_DEPRECATED_SINCE(5, 15) || QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
+QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
         emit q->activated(text);
+QT_WARNING_POP
 #endif
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
         emit q->textActivated(text);
@@ -498,7 +502,11 @@ void KHistoryComboBoxPrivate::_k_simulateActivated(const QString &text)
     */
     else if (q->insertPolicy() != q->InsertAtCurrent && q->count() >= q->maxCount()) {
 #if QT_DEPRECATED_SINCE(5, 15) || QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
+QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
         emit q->activated(text);
+QT_WARNING_POP
 #endif
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
         emit q->textActivated(text);
