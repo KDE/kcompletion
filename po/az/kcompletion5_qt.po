@@ -1,0 +1,75 @@
+# Xəyyam <xxmn77@gmail.com>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"PO-Revision-Date: 2020-04-10 22:12+0400\n"
+"Last-Translator: Xəyyam <xxmn77@gmail.com>\n"
+"Language-Team: Azerbaijani\n"
+"Language: az\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Qt-Contexts: true\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 19.12.3\n"
+
+#: khistorycombobox.cpp:214
+#, fuzzy
+#| msgctxt "KHistoryComboBox|"
+#| msgid "Clear &History"
+msgctxt "KHistoryComboBox|@action:inmenu"
+msgid "Clear &History"
+msgstr "&Tarixçəni Sil"
+
+#: klineedit.cpp:110
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:937
+#, fuzzy
+#| msgctxt "KLineEdit|"
+#| msgid "C&lear"
+msgctxt "KLineEdit|@action:inmenu"
+msgid "C&lear"
+msgstr "T&əmizlə"
+
+#: klineedit.cpp:951
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Mətin Doldurma"
+
+#: klineedit.cpp:958
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Heç biri"
+
+#: klineedit.cpp:959
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Əl ilə"
+
+#: klineedit.cpp:960
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Avtomatik"
+
+#: klineedit.cpp:961
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Açılan Siyahıdan"
+
+#: klineedit.cpp:962
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Yarı Avtomatik"
+
+#: klineedit.cpp:963
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Açılan Syahı && Avtomatik"
+
+#: klineedit.cpp:993
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "Əsas göstərici"

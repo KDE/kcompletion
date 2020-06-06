@@ -1,0 +1,86 @@
+# translation of kdelibs4.po to galician
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# mvillarino <mvillarino@users.sourceforge.net>, 2007, 2008, 2009.
+# Marce Villarino <mvillarino@kde-espana.es>, 2008, 2009.
+# marce villarino <mvillarino@users.sourceforge.net>, 2009.
+# marce villarino <mvillarino@gmail.com>, 2009.
+# Marce Villarino <mvillarino@kde-espana.es>, 2009, 2010, 2011, 2012.
+# Xosé <xosecalvo@gmail.com>, 2010.
+# Marce Villarino <mvillarino@kde-espana.es>, 2011, 2012, 2013, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2014-05-12 23:36+0200\n"
+"Last-Translator: Marce Villarino <mvillarino@kde-espana.org>\n"
+"Language-Team: Galician <kde-i18n-doc@kde.org>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Qt-Contexts: true\n"
+
+#: khistorycombobox.cpp:214
+#, fuzzy
+#| msgctxt "KHistoryComboBox|"
+#| msgid "Clear &History"
+msgctxt "KHistoryComboBox|@action:inmenu"
+msgid "Clear &History"
+msgstr "Limpar o &historial"
+
+#: klineedit.cpp:110
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:937
+#, fuzzy
+#| msgctxt "KLineEdit|"
+#| msgid "C&lear"
+msgctxt "KLineEdit|@action:inmenu"
+msgid "C&lear"
+msgstr "&Limpar"
+
+#: klineedit.cpp:951
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Completado de textos"
+
+#: klineedit.cpp:958
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Ningún"
+
+#: klineedit.cpp:959
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Manual"
+
+#: klineedit.cpp:960
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Automático"
+
+#: klineedit.cpp:961
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Lista despregábel"
+
+#: klineedit.cpp:962
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Curto automático"
+
+#: klineedit.cpp:963
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Lista despregábel e automático"
+
+#: klineedit.cpp:993
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "Predeterminado"
