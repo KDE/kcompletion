@@ -1,0 +1,105 @@
+# translation of kdelibs4.po to Gujarati
+# Copyright (C) 2008 This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Kartik Mistry <kartik.mistry@gmail.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2009-11-22 00:01+0530\n"
+"Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
+"Language-Team: Gujarati <team@utkarsh.org>\n"
+"Language: gu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: KBabel 1.11.4\n"
+"X-Qt-Contexts: true\n"
+
+#: khistorycombobox.cpp:214
+#, fuzzy
+#| msgid "Clear &History"
+msgctxt "KHistoryComboBox|@action:inmenu"
+msgid "Clear &History"
+msgstr "ઈતિહાસ સાફ કરો (&H)"
+
+#: klineedit.cpp:110
+#, fuzzy
+#| msgid "1"
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "૧"
+
+#: klineedit.cpp:937
+#, fuzzy
+#| msgid "C&lear"
+msgctxt "KLineEdit|@action:inmenu"
+msgid "C&lear"
+msgstr "સાફ કરો (&l)"
+
+#: klineedit.cpp:951
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Text Completion"
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "લખાણ પૂર્તિ"
+
+#: klineedit.cpp:958
+#, fuzzy
+#| msgctxt "No border line"
+#| msgid "None"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "કંઇ નહી"
+
+#: klineedit.cpp:959
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Manual"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "જાતે"
+
+#: klineedit.cpp:960
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "આપમેળે"
+
+#: klineedit.cpp:961
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Dropdown List"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "નીચે આવતી યાદી"
+
+#: klineedit.cpp:962
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Short Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "આપોઆપ ટૂંકુ કરો"
+
+#: klineedit.cpp:963
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Dropdown List && Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "નીચે આવતી યાદી && આપમેળે"
+
+#: klineedit.cpp:993
+#, fuzzy
+#| msgctxt "Encodings menu"
+#| msgid "Default"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "મૂળભૂત"
