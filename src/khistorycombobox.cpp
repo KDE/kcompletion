@@ -11,7 +11,7 @@
 #include "khistorycombobox.h"
 
 #include <kpixmapprovider.h>
-#include <kstandardshortcut.h>
+#include <KStandardShortcut>
 
 #include <QAbstractItemView>
 #include <QApplication>

@@ -15,12 +15,12 @@
 #include "klineedit.h"
 #include "klineedit_p.h"
 
-#include <kauthorized.h>
-#include <ksharedconfig.h>
-#include <kconfiggroup.h>
-#include <kcursor.h>
+#include <KAuthorized>
+#include <KSharedConfig>
+#include <KConfigGroup>
+#include <KCursor>
 #include <kcompletionbox.h>
-#include <kstandardshortcut.h>
+#include <KStandardShortcut>
 #include <lineediturldropeventfilter.h>
 
 #include <QTimer>

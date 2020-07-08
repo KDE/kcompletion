@@ -2,8 +2,8 @@
 
 #include <assert.h>
 
-#include <kconfiggroup.h>
-#include <kconfig.h>
+#include <KConfigGroup>
+#include <KConfig>
 
 #include <QApplication>
 #include <QPushButton>
