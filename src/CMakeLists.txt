@@ -14,6 +14,14 @@ set(kcompletion_SRCS
   ${kcompletion_QM_LOADER}
 )
 
+ecm_qt_declare_logging_category(kcompletion_SRCS
+    HEADER kcompletion_debug.h
+    IDENTIFIER KCOMPLETION_LOG
+    CATEGORY_NAME kf.completion
+    DESCRIPTION "KCompletion"
+    EXPORT KCOMPLETION
+)
+
 add_library(KF5Completion ${kcompletion_SRCS})
 add_library(KF5::Completion ALIAS KF5Completion)
 ecm_generate_export_header(KF5Completion
@@ -118,3 +126,9 @@ endif()
 include(ECMGeneratePriFile)
 ecm_generate_pri_file(BASE_NAME KCompletion LIB_NAME KF5Completion DEPS "widgets" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KCompletion)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+
+ecm_qt_install_logging_categories(
+    EXPORT KCOMPLETION
+    FILE kcompletion.categories
+    DESTINATION "${KDE_INSTALL_LOGGINGCATEGORIESDIR}"
+)

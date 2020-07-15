@@ -7,8 +7,8 @@
 
 #include "kcompletion.h"
 #include "kcompletion_p.h"
+#include <kcompletion_debug.h>
 
-#include <QDebug>
 #include <QCollator>
 
 void KCompletionPrivate::init()

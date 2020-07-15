@@ -16,6 +16,8 @@
 
 #include "kzoneallocator_p.h"
 
+#include <kcompletion_debug.h>
+
 #include <QList>
 
 #include <stdio.h>
@@ -233,7 +235,7 @@ KZoneAllocator::allocate(size_t _size)
 
     if ((unsigned long) _size + d->blockOffset > d->blockSize) {
         if (_size > d->blockSize) {
-            qDebug("KZoneAllocator: allocating more than %zu bytes", (size_t)d->blockSize);
+            qCDebug(KCOMPLETION_LOG, "KZoneAllocator: allocating more than %zu bytes", (size_t)d->blockSize);
             return nullptr;
         }
         addBlock(new MemBlock(d->blockSize));

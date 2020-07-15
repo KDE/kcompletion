@@ -10,6 +10,7 @@
 
 #include "kcombobox.h"
 
+#include <kcompletion_debug.h>
 #include <kcompletionbox.h>
 #include <klineedit.h>
 
@@ -195,7 +196,7 @@ void KComboBox::setTrapReturnKey(bool trap)
     if (d->klineEdit) {
         d->klineEdit->setTrapReturnKey(trap);
     } else {
-        qWarning("KComboBox::setTrapReturnKey not supported with a non-KLineEdit.");
+        qCWarning(KCOMPLETION_LOG) << "KComboBox::setTrapReturnKey not supported with a non-KLineEdit.";
     }
 }
 
