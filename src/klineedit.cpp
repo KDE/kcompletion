@@ -222,7 +222,7 @@ void KLineEdit::setCompletionModeDisabled(KCompletion::CompletionMode mode, bool
 void KLineEdit::setCompletedText(const QString &t, bool marked)
 {
     Q_D(KLineEdit);
-    if (!d->autoSuggest) {
+    if (!d->autoSuggest || t.startsWith(text().back()) ) {
         return;
     }
 
