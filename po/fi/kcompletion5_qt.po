@@ -1,0 +1,94 @@
+# Finnish messages for kdelibs4.
+# Copyright © 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kdelibs package.
+# Kim Enkovaara <kim.enkovaara@iki.fi>, 2002,2003, 2005, 2006, 2007.
+# Tapio Kautto <eleknader@phnet.fi>, 2003, 2004.
+# Mikko Ikola <kola@netikka.fi>, 2003.
+# Teemu Rytilahti <teemu.rytilahti@d5k.net>, 2003, 2008.
+# Mikko Ikola <ikola@iki.fi>, 2003.
+# Teemu Rytilahti <teemu.rytilahti@kde-fi.org>, 2003, 2004, 2008.
+# Niklas Laxström <niklas.laxstrom+kdetrans@gmail.com>, 2006, 2007.
+# Joonas Niilola <juippis@roskakori.org>, 2006.
+# Mikko Piippo <piippo@cc.helsinki.fi>, 2007.
+# Teemu Rytilahti <tpr@d5k.net>, 2008.
+# Tommi Nieminen <translator@legisign.org>, 2009, 2010, 2011, 2020.
+# Jorma Karvonen <karvonen.jorma@gmail.com>, 2010.
+# Lasse Liehu <lasse.liehu@gmail.com>, 2006, 2010, 2011, 2012, 2013, 2014, 2015.
+#
+# KDE Finnish translation sprint participants:
+# Author: Artnay
+# Author: Jl
+# Author: Lliehu
+# Author: Niklas Laxström
+# Author: Suhviksi
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2020-06-23 13:24+0300\n"
+"Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
+"Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 20.04.2\n"
+"X-POT-Import-Date: 2013-01-13 20:43:21+0000\n"
+"X-Qt-Contexts: true\n"
+
+#: khistorycombobox.cpp:202
+msgctxt "KHistoryComboBox|@action:inmenu"
+msgid "Clear &History"
+msgstr "Tyhjennä &historia"
+
+#: klineedit.cpp:97
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:924
+msgctxt "KLineEdit|@action:inmenu"
+msgid "C&lear"
+msgstr "T&yhjennä"
+
+#: klineedit.cpp:938
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Tekstin täydennys"
+
+#: klineedit.cpp:945
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Ei täydennystä"
+
+#: klineedit.cpp:946
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Manuaalinen"
+
+#: klineedit.cpp:947
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Automaattinen"
+
+#: klineedit.cpp:948
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Pudotusluettelo"
+
+#: klineedit.cpp:949
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Lyhyt automaattinen"
+
+#: klineedit.cpp:950
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Pudotusluettelo ja automaattinen"
+
+#: klineedit.cpp:980
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "Oletus"
