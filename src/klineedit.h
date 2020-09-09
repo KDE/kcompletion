@@ -360,7 +360,7 @@ public:
      * This is useful for such things as location or search bars.
      *
      * @deprecated since 5.46 Use QLineEdit::setClearButtonEnabled
-     **/
+     */
     KCOMPLETION_DEPRECATED_VERSION(5, 46, "Use QLineEdit::setClearButtonEnabled(bool)")
     void setClearButtonShown(bool show);
 #endif
@@ -370,7 +370,7 @@ public:
      * @return whether or not the clear button is shown
      *
      * @deprecated since 5.46 Use QLineEdit::isClearButtonEnabled
-     **/
+     */
     KCOMPLETION_DEPRECATED_VERSION(5, 46, "Use QLineEdit::isClearButtonEnabled()")
     bool isClearButtonShown() const;
 #endif
@@ -378,7 +378,7 @@ public:
     /**
      * @return the size used by the clear button
      * @since 4.1
-     **/
+     */
     QSize clearButtonUsedSize() const;
 
     /**

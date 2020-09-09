@@ -125,7 +125,7 @@ public:
      * This enum describes the completion mode used for by the KCompletion class.
      *
      * @since 5.0
-     **/
+     */
     enum CompletionMode {
         /**
          * No completion is used.
