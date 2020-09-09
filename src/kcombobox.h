@@ -353,14 +353,13 @@ public:
     bool trapReturnKey() const;
 
     /**
-     * @returns the completion box that is used in completion mode
-     * CompletionPopup and CompletionPopupAuto.
-     *
      * This method will create a completion box by calling
      * KLineEdit::completionBox, if none is there yet.
      *
      * @param create Set this to false if you don't want the box to be created
      *               i.e. to test if it is available.
+     * @returns the completion box that is used in completion mode
+     * CompletionPopup and CompletionPopupAuto.
      */
     KCompletionBox *completionBox(bool create = true);
 

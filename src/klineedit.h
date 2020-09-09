@@ -270,12 +270,12 @@ public:
     bool trapReturnKey() const;
 
     /**
-     * @returns the completion-box, that is used in completion mode
-     * CompletionPopup.
      * This method will create a completion-box if none is there, yet.
      *
      * @param create Set this to false if you don't want the box to be created
      *               i.e. to test if it is available.
+     * @returns the completion-box, that is used in completion mode
+     * CompletionPopup.
      */
     virtual KCompletionBox *completionBox(bool create = true);
 

@@ -14,18 +14,15 @@
 
 /**
  * @class KPixmapProvider kpixmapprovider.h KPixmapProvider
- *
- * A tiny abstract class with just one method:
- * pixmapFor()
+ * @short An abstract interface for looking up icons
  *
  * It will be called whenever an icon is searched for @p text.
  *
  * Used e.g. by KHistoryComboBox
  *
- * @deprecated since 5.66. Use an std::function that takes a QString and returns a QIcon/QPixmap
- *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
- * @short an abstract interface for looking up icons
+ *
+ * @deprecated Since 5.66, use a std::function that takes a QString and returns a QIcon/QPixmap
  */
 #if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 66)
 class KCOMPLETION_EXPORT KPixmapProvider
@@ -37,8 +34,8 @@ public:
      * @param text the text that is associated with the pixmap
      * @param size the size of the icon in pixels, 0 for defaylt size.
      *             See KIconLoader::StdSize.
-     * @deprecated since 5.66. Use an std::function that takes a QString and returns a QIcon/QPixmap.
      * @return the pixmap for the arguments, or null if there is none
+     * @deprecated Since 5.66, use a std::function that takes a QString and returns a QIcon/QPixmap.
      */
     KCOMPLETION_DEPRECATED_VERSION(5, 66, "Use an std::function that takes a QString and returns a QIcon/QPixmap")
     virtual QPixmap pixmapFor(const QString &text, int size = 0) = 0;

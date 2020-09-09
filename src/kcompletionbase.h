@@ -244,8 +244,8 @@ public:
      *
      * @param item the item to check
      * @return the key binding used for the feature given by @p item.
-     * @since 5.0
      * @see setKeyBinding
+     * @since 5.0
      */
     QList<QKeySequence> keyBinding(KeyBindingType item) const;
 
