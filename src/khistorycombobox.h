@@ -123,7 +123,7 @@ public:
      * Be sure to use different names for saving with KConfig if you have more
      * than one KHistoryComboBox.
      *
-     * Note: When @c setCompletionList is true, the items are inserted into the
+     * @note When @c setCompletionList is true, the items are inserted into the
      * KCompletion object with mode KCompletion::Insertion and the mode is set
      * to KCompletion::Weighted afterwards.
      *
@@ -201,7 +201,7 @@ public Q_SLOTS:
      * If duplicatesEnabled() is false, any equal existing item will be
      * removed before @p item is added.
      *
-     * Note: By using this method and not the Q and KComboBox insertItem()
+     * @note By using this method and not the Q and KComboBox insertItem()
      * methods, you make sure that the combobox stays in sync with the
      * completion. It would be annoying if completion would give an item
      * not in the combobox, and vice versa.
@@ -243,7 +243,7 @@ protected:
      * Inserts @p items into the combo, honoring pixmapProvider()
      * Does not update the completionObject.
      *
-     * Note: duplicatesEnabled() is not honored here.
+     * @note duplicatesEnabled() is not honored here.
      *
      * Called from setHistoryItems() and setPixmapProvider()
      */

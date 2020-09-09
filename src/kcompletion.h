@@ -101,7 +101,7 @@ class KCompletionMatches;
  * items of each file in a different KCompletion object, so that you know (and
  * tell the user) where a completion comes from.
  *
- * Note: KCompletion does not work with strings that contain 0x0 characters
+ * @note KCompletion does not work with strings that contain 0x0 characters
  *       (unicode null), as this is used internally as a delimiter.
  *
  * You may inherit from KCompletion and override makeCompletion() in
@@ -197,10 +197,9 @@ public:
      * if you need to save the state of a KCompletion object and restore it
      * later.
      *
-     * Important note: when order() == Weighted, then every item in the
+     * @note When order() == Weighted, then every item in the
      * stringlist has its weight appended, delimited by a colon. E.g. an item
      * "www.kde.org" might look like "www.kde.org:4", where 4 is the weight.
-     *
      * This is necessary so that you can save the items along with its
      * weighting on disk and load them back with setItems(), restoring its
      * weight as well. If you really don't want the appended weightings, call
@@ -243,7 +242,7 @@ public:
      * bar, where the user enters URLs. The more often a URL is entered, the
      * higher priority it gets.
      *
-     * Note: Setting the order to sorted only affects new inserted items,
+     * @note Setting the order to sorted only affects new inserted items,
      * already existing items will stay in the current order. So you probably
      * want to call setOrder(Sorted) before inserting items if you want
      * everything sorted.
@@ -442,10 +441,9 @@ public Q_SLOTS:
      * Sets the list of items available for completion. Removes all previous
      * items.
      *
-     * Notice: when order() == Weighted, then the weighting is looked up for
+     * @note When order() == Weighted, then the weighting is looked up for
      * every item in the stringlist. Every item should have ":number" appended,
      * where number is an unsigned integer, specifying the weighting.
-     *
      * If you don't like this, call
      * setOrder(KCompletion::Insertion)
      * before calling setItems().

@@ -497,7 +497,7 @@ protected Q_SLOTS:
     /**
     * Completes text according to the completion mode.
     *
-    * Note: this method is not invoked if the completion mode is
+    * @note This method is not invoked if the completion mode is
     * set to @c CompletionNone. Also if the mode is set to @c CompletionShell
     * and multiple matches are found, this method will complete the
     * text to the first match with a beep to indicate that there are
