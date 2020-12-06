@@ -36,7 +36,7 @@ class QMenu;
  *   @li a popup menu item that can be used to allow the user to change
  * the text completion mode on the fly.
  *
- * To support these new features, KComboBox emits a few additional signals
+ * To support these additional features, KComboBox emits a few additional signals
  * such as completion(const QString&) and textRotation(KeyBindingType).
  * The completion signal can be connected to a slot that will assist the user in
  * filling out the remaining text while the rotation signal can be used to traverse
