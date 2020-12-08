@@ -38,6 +38,7 @@ public:
 
     KLineEdit *klineEdit = nullptr;
     bool trapReturnKey = false;
+    QPointer<QMenu> contextMenu;
     KComboBox * const q_ptr;
     Q_DECLARE_PUBLIC(KComboBox)
 };
@@ -60,7 +61,6 @@ void KComboBoxPrivate::_k_lineEditDeleted()
         q->setDelegate(nullptr);
     }
 }
-
 
 KComboBox::KComboBox(QWidget *parent)
     : QComboBox(parent),
@@ -337,8 +337,11 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         connect(d->klineEdit, &KLineEdit::completionModeChanged,
                 this, &KComboBox::completionModeChanged);
 
-        connect(d->klineEdit, &KLineEdit::aboutToShowContextMenu,
-                this, &KComboBox::aboutToShowContextMenu);
+        connect(d->klineEdit, &KLineEdit::aboutToShowContextMenu, [this](QMenu *menu){
+            Q_D(KComboBox);
+            d->contextMenu = menu;
+            emit aboutToShowContextMenu(menu);
+        });
 
         // match the declaration of the deprecated signal
 #if QT_DEPRECATED_SINCE(5, 15) || QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
@@ -356,6 +359,11 @@ QT_WARNING_POP
 
         d->klineEdit->setTrapReturnKey(d->trapReturnKey);
     }
+}
+
+QMenu *KComboBox::contextMenu() const
+{
+    return d_ptr->contextMenu;
 }
 
 void KComboBox::setCurrentItem(const QString &item, bool insert, int index)
@@ -396,6 +404,9 @@ void KComboBox::setEditable(bool editable)
         edit->setClearButtonEnabled(true);
         setLineEdit(edit);
     } else {
+        if (d_ptr->contextMenu) {
+            d_ptr->contextMenu->close();
+        }
         QComboBox::setEditable(editable);
     }
 }

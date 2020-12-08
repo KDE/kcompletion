@@ -383,6 +383,14 @@ public:
      */
     void setEditable(bool editable);
 
+    /**
+     * Pointer to KLineEdit's context menu, or nullptr if it does not exist at
+     * the given moment.
+     *
+     * @since 5.78
+     */
+    QMenu *contextMenu() const;
+
 Q_SIGNALS:
     /**
     * Emitted when the user presses the Enter key.
