@@ -220,7 +220,7 @@ public:
      * NOTE: To use a modifier key (Shift, Ctrl, Alt) as part of
      * the key binding simply @p sum up the values of the
      * modifier and the actual key. For example, to use CTRL+E, supply
-     * @c "Qt::CtrlButton + Qt::Key_E" as the second argument to this
+     * @c "Qt::CtrlButton | Qt::Key_E" as the second argument to this
      * function.
      *
      * @param item the feature whose key binding needs to be set:
