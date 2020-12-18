@@ -344,7 +344,7 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         });
 
         // match the declaration of the deprecated signal
-#if QT_DEPRECATED_SINCE(5, 15) || QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+#if QT_DEPRECATED_SINCE(5, 15)
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
 QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
@@ -352,10 +352,8 @@ QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
                 this, QOverload<const QString&>::of(&QComboBox::activated));
 QT_WARNING_POP
 #endif
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
         connect(d->klineEdit, &KLineEdit::completionBoxActivated,
                 this, QOverload<const QString&>::of(&QComboBox::textActivated));
-#endif
 
         d->klineEdit->setTrapReturnKey(d->trapReturnKey);
     }
