@@ -353,7 +353,7 @@ QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
 QT_WARNING_POP
 #endif
         connect(d->klineEdit, &KLineEdit::completionBoxActivated,
-                this, QOverload<const QString&>::of(&QComboBox::textActivated));
+                this, &QComboBox::textActivated);
 
         d->klineEdit->setTrapReturnKey(d->trapReturnKey);
     }
