@@ -17,6 +17,7 @@
 #include <QUrl>
 #include <QPointer>
 #include <QMenu>
+#include <QTimer>
 
 class KComboBoxPrivate
 {
@@ -407,6 +408,15 @@ void KComboBox::setEditable(bool editable)
         }
         QComboBox::setEditable(editable);
     }
+
+    // We're working around the QComboBox's own layout,
+    // so we have to reeimplement size updating. Yes,
+    // the QComboBox uses a 20ms timer internally.
+    QTimer::singleShot(20, [=] {
+        updateGeometry();
+        adjustSize();
+        update();
+    });
 }
 
 #include "moc_kcombobox.cpp"
