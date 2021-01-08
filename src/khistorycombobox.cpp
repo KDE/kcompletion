@@ -9,6 +9,7 @@
 */
 
 #include "khistorycombobox.h"
+#include "kcombobox_p.h"
 
 #include <kpixmapprovider.h>
 #include <KStandardShortcut>
@@ -19,11 +20,14 @@
 #include <QWheelEvent>
 #include <QComboBox>
 
-class KHistoryComboBoxPrivate
+class KHistoryComboBoxPrivate : public KComboBoxPrivate
 {
+    Q_DECLARE_PUBLIC(KHistoryComboBox)
+
 public:
-    KHistoryComboBoxPrivate(KHistoryComboBox *parent):
-        q_ptr(parent) {}
+    KHistoryComboBoxPrivate(KHistoryComboBox *q)
+        : KComboBoxPrivate(q)
+    {}
 
     void init(bool useCompletion);
     void rotateUp();
@@ -53,7 +57,6 @@ public:
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
     KPixmapProvider *pixmapProvider = nullptr;
 #endif
-    KHistoryComboBox * const q_ptr;
 
     /**
      * The current index in the combobox, used for Up and Down
@@ -67,8 +70,6 @@ public:
     bool rotated = false;
 
     std::function<QIcon(QString)> iconProvider;
-
-    Q_DECLARE_PUBLIC(KHistoryComboBox)
 };
 
 void KHistoryComboBoxPrivate::init(bool useCompletion)
@@ -107,19 +108,21 @@ void KHistoryComboBoxPrivate::init(bool useCompletion)
 
 // we are always read-write
 KHistoryComboBox::KHistoryComboBox(QWidget *parent)
-    : KComboBox(true, parent), d_ptr(new KHistoryComboBoxPrivate(this))
+    : KComboBox(*new KHistoryComboBoxPrivate(this), parent)
 {
     Q_D(KHistoryComboBox);
     d->init(true);   // using completion
+    setEditable(true);
 }
 
 // we are always read-write
 KHistoryComboBox::KHistoryComboBox(bool useCompletion,
                                    QWidget *parent)
-    : KComboBox(true, parent), d_ptr(new KHistoryComboBoxPrivate(this))
+    : KComboBox(*new KHistoryComboBoxPrivate(this), parent)
 {
     Q_D(KHistoryComboBox);
     d->init(useCompletion);
+    setEditable(true);
 }
 
 KHistoryComboBox::~KHistoryComboBox()

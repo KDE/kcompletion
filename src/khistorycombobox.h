@@ -43,8 +43,6 @@ class KCOMPLETION_EXPORT KHistoryComboBox : public KComboBox
 {
     Q_OBJECT
 
-    Q_DECLARE_PRIVATE(KHistoryComboBox)
-
     Q_PROPERTY(QStringList historyItems READ historyItems WRITE setHistoryItems)
 
 public:
@@ -255,7 +253,12 @@ protected:
     bool useCompletion() const;
 
 private:
-    const QScopedPointer<KHistoryComboBoxPrivate> d_ptr;
+    Q_DECLARE_PRIVATE_D(KComboBox::d_ptr, KHistoryComboBox)
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 79)
+    // Unused, kept for ABI compatibility
+    const void * __kcompletion_d_do_not_use;
+#endif
+
     Q_PRIVATE_SLOT(d_func(), void _k_clear())
     Q_PRIVATE_SLOT(d_func(), void _k_addContextMenuItems(QMenu *))
     Q_PRIVATE_SLOT(d_func(), void _k_simulateActivated(const QString &))

@@ -16,6 +16,7 @@
 #include <kcompletion_export.h>
 
 #include <QComboBox>
+#include <memory>
 
 class KCompletionBox;
 class KComboBoxPrivate;
@@ -138,7 +139,6 @@ class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase //
     Q_PROPERTY(bool urlDropsEnabled READ urlDropsEnabled WRITE setUrlDropsEnabled)
 #endif
     Q_PROPERTY(bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey)
-    Q_DECLARE_PRIVATE(KComboBox)
 
 public:
 
@@ -529,8 +529,15 @@ protected:
     // when they have a KComboBox (or subclasses) object and want to access this property
     QSize minimumSizeHint() const override;
 
+protected:
+    KComboBox(KComboBoxPrivate &dd, QWidget *parent);
+
 private:
-    const QScopedPointer<KComboBoxPrivate> d_ptr;
+    friend class KHistoryComboBox;
+    Q_DECLARE_PRIVATE(KComboBox)
+    std::unique_ptr<KComboBoxPrivate> const d_ptr;
+    // KF6 TODO: change private d_ptr to protected d_ptr, remove friend
+
     Q_PRIVATE_SLOT(d_func(), void _k_lineEditDeleted())
 };
 

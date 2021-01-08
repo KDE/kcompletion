@@ -9,39 +9,13 @@
 */
 
 #include "kcombobox.h"
+#include "kcombobox_p.h"
 
 #include <kcompletion_debug.h>
 #include <kcompletionbox.h>
-#include <klineedit.h>
 
 #include <QUrl>
-#include <QPointer>
-#include <QMenu>
 
-class KComboBoxPrivate
-{
-public:
-    KComboBoxPrivate(KComboBox *parent)
-        : q_ptr(parent)
-    {
-    }
-    ~KComboBoxPrivate()
-    {
-    }
-
-    /**
-     * Initializes the variables upon construction.
-     */
-    void init();
-
-    void _k_lineEditDeleted();
-
-    KLineEdit *klineEdit = nullptr;
-    bool trapReturnKey = false;
-    QPointer<QMenu> contextMenu;
-    KComboBox * const q_ptr;
-    Q_DECLARE_PUBLIC(KComboBox)
-};
 
 void KComboBoxPrivate::init()
 {
@@ -63,19 +37,22 @@ void KComboBoxPrivate::_k_lineEditDeleted()
 }
 
 KComboBox::KComboBox(QWidget *parent)
+    : KComboBox(*new KComboBoxPrivate(this), parent)
+{
+}
+
+KComboBox::KComboBox(KComboBoxPrivate &dd, QWidget *parent)
     : QComboBox(parent),
-      d_ptr(new KComboBoxPrivate(this))
+      d_ptr(&dd)
 {
     Q_D(KComboBox);
+
     d->init();
 }
 
 KComboBox::KComboBox(bool rw, QWidget *parent)
-    : QComboBox(parent),
-      d_ptr(new KComboBoxPrivate(this))
+    : KComboBox(*new KComboBoxPrivate(this), parent)
 {
-    Q_D(KComboBox);
-    d->init();
     setEditable(rw);
 }
 
