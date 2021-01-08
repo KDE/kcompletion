@@ -14,6 +14,7 @@
 #include <QStringList>
 #include <QPointer>
 #include <QKeySequence>
+#include <memory>
 
 class KCompTreeNode;
 class KCompletionPrivate;
@@ -558,7 +559,7 @@ protected:
 
 private:
     Q_DISABLE_COPY(KCompletion)
-    const QScopedPointer<KCompletionPrivate> d_ptr;
+    std::unique_ptr<KCompletionPrivate> const d_ptr;
 };
 
 #endif // KCOMPLETION_H

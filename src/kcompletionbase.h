@@ -12,6 +12,7 @@
 #include <kcompletion_export.h>
 
 #include <QMap>
+#include <memory>
 
 class KCompletionBasePrivate;
 
@@ -362,7 +363,7 @@ protected:
 
 private:
     Q_DISABLE_COPY(KCompletionBase)
-    const QScopedPointer<KCompletionBasePrivate> d_ptr;
+    std::unique_ptr<KCompletionBasePrivate> const d_ptr;
 };
 
 #endif // KCOMPLETIONBASE_H

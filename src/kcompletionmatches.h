@@ -12,7 +12,7 @@
 #include <kcompletion_export.h>
 
 #include <QStringList>
-#include <QScopedPointer>
+#include <memory>
 
 class KCompletionMatchesWrapper;
 class KCompletionMatchesPrivate;
@@ -89,7 +89,7 @@ public:
     bool sorting() const;
 
 private:
-    const QScopedPointer<KCompletionMatchesPrivate> d_ptr;
+    std::unique_ptr<KCompletionMatchesPrivate> const d_ptr;
 };
 
 #endif // KCOMPLETIONMATCHES_H

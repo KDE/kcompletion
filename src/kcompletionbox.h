@@ -12,6 +12,7 @@
 #define KCOMPLETIONBOX_H
 
 #include <QListWidget>
+#include <memory>
 #include "kcompletion_export.h"
 
 class KCompletionBoxPrivate;
@@ -234,7 +235,7 @@ protected Q_SLOTS:
     virtual void slotActivated(QListWidgetItem *);
 
 private:
-    const QScopedPointer<KCompletionBoxPrivate> d_ptr;
+    std::unique_ptr<KCompletionBoxPrivate> const d_ptr;
 
     Q_PRIVATE_SLOT(d_func(), void _k_itemClicked(QListWidgetItem *))
 };

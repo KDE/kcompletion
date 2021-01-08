@@ -22,6 +22,7 @@
 #include <kcompletion_export.h>
 
 #include <QLineEdit>
+#include <memory>
 
 class QAction;
 class QMenu;
@@ -628,7 +629,7 @@ protected:
     void paintEvent(QPaintEvent *ev) override;
 
 private:
-    const QScopedPointer<KLineEditPrivate> d_ptr;
+    std::unique_ptr<KLineEditPrivate> const d_ptr;
 
     Q_PRIVATE_SLOT(d_func(), void _k_textChanged(const QString &))
     Q_PRIVATE_SLOT(d_func(), void _k_completionMenuActivated(QAction *))
