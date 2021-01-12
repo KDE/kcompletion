@@ -1222,7 +1222,7 @@ bool KLineEditPrivate::overrideShortcut(const QKeyEvent *e)
     // but doesn't dare force as "stronger than kaction shortcuts"...
     else if (e->matches(QKeySequence::SelectAll)) {
         return true;
-    } else if (qApp->platformName() == QLatin1String("xcb") && (key == Qt::CTRL | Qt::Key_E || key == Qt::CTRL | Qt::Key_U)) {
+    } else if (qApp->platformName() == QLatin1String("xcb") && (key == (Qt::CTRL | Qt::Key_E) || key == (Qt::CTRL | Qt::Key_U))) {
         return true;
     }
 
