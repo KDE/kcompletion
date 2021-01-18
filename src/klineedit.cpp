@@ -43,7 +43,7 @@ void KLineEditPrivate::_k_textChanged(const QString &text)
     if (!completionRunning && (text != userText)) {
         userText = text;
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
-        emit q->userTextChanged(text);
+        Q_EMIT q->userTextChanged(text);
 #endif
     }
 }
@@ -57,10 +57,10 @@ void KLineEditPrivate::updateUserText(const QString &text)
         userText = text;
         q->setModified(true);
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
-        emit q->userTextChanged(text);
+        Q_EMIT q->userTextChanged(text);
 #endif
-        emit q->textEdited(text);
-        emit q->textChanged(text);
+        Q_EMIT q->textEdited(text);
+        Q_EMIT q->textChanged(text);
     }
 }
 
@@ -568,11 +568,11 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
                                               e->modifiers() == Qt::KeypadModifier)));
 
             if (stopEvent) {
-                emit QLineEdit::returnPressed();
+                Q_EMIT QLineEdit::returnPressed();
                 e->accept();
             }
 
-            emit returnPressed(displayText());
+            Q_EMIT returnPressed(displayText());
 
             if (trap) {
                 d->completionBox->hide();
@@ -796,7 +796,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
 
         if (cut.contains(key)) {
             if (emitSignals()) {
-                emit textRotation(KCompletionBase::PrevCompletionMatch);
+                Q_EMIT textRotation(KCompletionBase::PrevCompletionMatch);
             }
             if (handleSignals()) {
                 rotateText(KCompletionBase::PrevCompletionMatch);
@@ -813,7 +813,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
 
         if (cut.contains(key)) {
             if (emitSignals()) {
-                emit textRotation(KCompletionBase::NextCompletionMatch);
+                Q_EMIT textRotation(KCompletionBase::NextCompletionMatch);
             }
             if (handleSignals()) {
                 rotateText(KCompletionBase::NextCompletionMatch);
@@ -832,7 +832,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
 
             if (cut.contains(key)) {
                 if (emitSignals()) {
-                    emit substringCompletion(text());
+                    Q_EMIT substringCompletion(text());
                 }
                 if (handleSignals()) {
                     setCompletedItems(compObj()->substringCompletion(text()));
@@ -994,7 +994,7 @@ void KLineEdit::contextMenuEvent(QContextMenuEvent *e)
     // ### do we really need this?  Yes, Please do not remove!  This
     // allows applications to extend the popup menu without having to
     // inherit from this class! (DA)
-    emit aboutToShowContextMenu(popup);
+    Q_EMIT aboutToShowContextMenu(popup);
 
     popup->exec(e->globalPos());
     delete popup;
@@ -1029,7 +1029,7 @@ void KLineEditPrivate::_k_completionMenuActivated(QAction  *act)
                 completionBox && completionBox->isVisible()) {
             completionBox->hide();
         }
-        emit q->completionModeChanged(q->completionMode());
+        Q_EMIT q->completionModeChanged(q->completionMode());
     }
 }
 
@@ -1464,7 +1464,7 @@ void KLineEdit::doCompletion(const QString &text)
 {
     Q_D(KLineEdit);
     if (emitSignals()) {
-        emit completion(text); // emit when requested...
+        Q_EMIT completion(text); // emit when requested...
     }
     d->completionRunning = true;
     if (handleSignals()) {

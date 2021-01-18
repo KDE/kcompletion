@@ -461,7 +461,7 @@ void KHistoryComboBoxPrivate::_k_clear()
 {
     Q_Q(KHistoryComboBox);
     q->clearHistory();
-    emit q->cleared();
+    Q_EMIT q->cleared();
 }
 
 void KHistoryComboBoxPrivate::_k_simulateActivated(const QString &text)
@@ -476,10 +476,10 @@ void KHistoryComboBoxPrivate::_k_simulateActivated(const QString &text)
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
 QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
-        emit q->activated(text);
+        Q_EMIT q->activated(text);
 QT_WARNING_POP
 #endif
-        emit q->textActivated(text);
+        Q_EMIT q->textActivated(text);
     }
 
     /*
@@ -491,10 +491,10 @@ QT_WARNING_POP
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
 QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
-        emit q->activated(text);
+        Q_EMIT q->activated(text);
 QT_WARNING_POP
 #endif
-        emit q->textActivated(text);
+        Q_EMIT q->textActivated(text);
     }
 }
 

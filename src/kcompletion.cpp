@@ -299,7 +299,7 @@ QString KCompletion::makeCompletion(const QString &string)
         d->matches.findAllCompletions(d->treeRoot, string, d->ignoreCase, d->hasMultipleMatches);
         QStringList l = d->matches.list();
         postProcessMatches(&l);
-        emit matches(l);
+        Q_EMIT matches(l);
 
         return QString();
     }
@@ -317,7 +317,7 @@ QString KCompletion::makeCompletion(const QString &string)
     }
 
     if (d->hasMultipleMatches) {
-        emit multipleMatches();
+        Q_EMIT multipleMatches();
     }
 
     d->lastString = string;
@@ -327,7 +327,7 @@ QString KCompletion::makeCompletion(const QString &string)
 
     if (!string.isEmpty()) {   // only emit match when string is not empty
         //qDebug() << "KCompletion: Match: " << completion;
-        emit match(completion);
+        Q_EMIT match(completion);
     }
 
     return completion;
@@ -461,7 +461,7 @@ QString KCompletion::nextMatch()
         d->currentMatch = completion;
         d->rotationIndex = 0;
         postProcessMatch(&completion);
-        emit match(completion);
+        Q_EMIT match(completion);
         return completion;
     }
 
@@ -475,7 +475,7 @@ QString KCompletion::nextMatch()
     completion = matches[ d->rotationIndex ];
     d->currentMatch = completion;
     postProcessMatch(&completion);
-    emit match(completion);
+    Q_EMIT match(completion);
     return completion;
 }
 
@@ -499,7 +499,7 @@ QString KCompletion::previousMatch()
         d->currentMatch = completion;
         d->rotationIndex = 0;
         postProcessMatch(&completion);
-        emit match(completion);
+        Q_EMIT match(completion);
         return completion;
     }
 
@@ -515,7 +515,7 @@ QString KCompletion::previousMatch()
     completion = matches[ d->rotationIndex ];
     d->currentMatch = completion;
     postProcessMatch(&completion);
-    emit match(completion);
+    Q_EMIT match(completion);
     return completion;
 }
 

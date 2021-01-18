@@ -340,7 +340,7 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         connect(d->klineEdit, &KLineEdit::aboutToShowContextMenu, [this](QMenu *menu){
             Q_D(KComboBox);
             d->contextMenu = menu;
-            emit aboutToShowContextMenu(menu);
+            Q_EMIT aboutToShowContextMenu(menu);
         });
 
         // match the declaration of the deprecated signal
