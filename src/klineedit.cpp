@@ -23,6 +23,7 @@
 #include <KStandardShortcut>
 #include <lineediturldropeventfilter.h>
 
+#include <QActionGroup>
 #include <QTimer>
 #include <QApplication>
 #include <QClipboard>
