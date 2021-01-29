@@ -27,7 +27,7 @@ add_library(KF5::Completion ALIAS KF5Completion)
 ecm_generate_export_header(KF5Completion
     BASE_NAME KCompletion
     GROUP_BASE_NAME KF
-    VERSION ${KF5_VERSION}
+    VERSION ${KF_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 4.0 4.5 5.0 5.46 5.66
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
@@ -101,7 +101,7 @@ if(BUILD_QCH)
         KF5Completion_QCH
         NAME KCompletion
         BASE_NAME KF5Completion
-        VERSION ${KF5_VERSION}
+        VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
             ${KCompletion_HEADERS}
