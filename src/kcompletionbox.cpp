@@ -12,7 +12,6 @@
 #include "klineedit.h"
 
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QKeyEvent>
 #include <QScrollBar>
 #include <QScreen>
