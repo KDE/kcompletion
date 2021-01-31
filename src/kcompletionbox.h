@@ -177,11 +177,22 @@ public Q_SLOTS:
     void setVisible(bool visible) override;
 
 Q_SIGNALS:
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 81)
     /**
-     * Emitted when an item was selected, contains the text of
-     * the selected item.
+     * Emitted when an item is selected, @p text is the text of the selected item.
+     *
+     * @deprecated since 5.81, use KCompletionBox::textActivated(const QString &);
      */
-    void activated(const QString &);
+    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use KCompletionBox::textActivated(const QString &)")
+    void activated(const QString &text); // clazy:exclude=overloaded-signal
+#endif
+
+    /**
+     * Emitted when an item is selected, @p text is the text of the selected item.
+     *
+     * @since 5.81
+     */
+    void textActivated(const QString &text);
 
     /**
      * Emitted whenever the user chooses to ignore the available
@@ -229,8 +240,9 @@ protected:
 
 protected Q_SLOTS:
     /**
-     * Called when an item was activated. Emits
-     * activated() with the item.
+     * Called when an item is activated. Emits KCompletionBox::textActivated(const QString &) with the item text.
+     *
+     * @note For releases <= 5.81, this slot emitted KCompletionBox::activated(const QString &) with the item text.
      */
     virtual void slotActivated(QListWidgetItem *);
 

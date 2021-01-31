@@ -208,9 +208,19 @@ private Q_SLOTS:
         QCOMPARE(w.text(), QString::fromLatin1("KDE"));
         // Selecting an item in the popup completion changes the lineedit text and emits all 3 signals
         const QRect rect = w.completionBox()->visualRect(w.completionBox()->model()->index(1, 0));
-        QSignalSpy activatedSpy(w.completionBox(), SIGNAL(activated(QString)));
+
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
+        QSignalSpy activatedSpy(w.completionBox(), QOverload<const QString &>::of(&KCompletionBox::activated));
+#endif
+        QSignalSpy textActivatedSpy(w.completionBox(), &KCompletionBox::textActivated);
+
         QTest::mouseClick(w.completionBox()->viewport(), Qt::LeftButton, Qt::NoModifier, rect.center());
+
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
         QCOMPARE(activatedSpy.count(), 1);
+#endif
+        QCOMPARE(textActivatedSpy.count(), 1);
+
         QCOMPARE(w.text(), items.at(1));
         QVERIFY(w.isModified());
     }
