@@ -96,13 +96,22 @@ void KHistoryComboBoxPrivate::init(bool useCompletion)
         q->setDuplicatesEnabled(false);
     }
 
-    q->connect(q, SIGNAL(aboutToShowContextMenu(QMenu *)), SLOT(_k_addContextMenuItems(QMenu *)));
+    q->connect(q, SIGNAL(aboutToShowContextMenu(QMenu*)), SLOT(_k_addContextMenuItems(QMenu*)));
     QObject::connect(q, QOverload<int>::of(&QComboBox::activated), q, &KHistoryComboBox::reset);
-    QObject::connect(q, QOverload<const QString &>::of(&KComboBox::returnPressed), q, &KHistoryComboBox::reset);
+    QObject::connect(q, QOverload<const QString &>::of(&KComboBox::returnPressed), q, [q]() {
+        q->reset();
+    });
     // We want _k_simulateActivated to be called _after_ QComboBoxPrivate::_q_returnPressed
     // otherwise there's a risk of emitting activated twice (_k_simulateActivated will find
     // the item, after some app's slotActivated inserted the item into the combo).
-    q->connect(q, SIGNAL(returnPressed(QString)), SLOT(_k_simulateActivated(QString)), Qt::QueuedConnection);
+    q->connect(
+        q,
+        QOverload<const QString &>::of(&KComboBox::returnPressed),
+        q,
+        [this](const QString &text) {
+            _k_simulateActivated(text);
+        },
+        Qt::QueuedConnection);
 }
 
 // we are always read-write

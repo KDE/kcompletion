@@ -39,11 +39,12 @@ class QMenu;
  *
  * To support these additional features, KComboBox emits a few additional signals
  * such as completion(const QString&) and textRotation(KeyBindingType).
+ *
  * The completion signal can be connected to a slot that will assist the user in
  * filling out the remaining text while the rotation signal can be used to traverse
  * through all possible matches whenever text completion results in multiple matches.
- * Additionally, the returnPressed() and returnPressed(const QString&)
- * signals are emitted when the user presses the Enter/Return key.
+ * Additionally, the returnPressed(const QString &) signal is emitted when the user
+ * presses the Return or Enter key.
  *
  * KCombobox by default creates a completion object when you invoke the
  * completionObject(bool) member function for the first time or
@@ -53,7 +54,7 @@ class QMenu;
  * internally whenever a completion object is created through either one of the
  * methods mentioned above. If you do not need this functionality, simply use
  * KCompletionBase::setHandleSignals(bool) or alternatively set the boolean
- * parameter in the @c setCompletionObject call to false.
+ * parameter in the @c setCompletionObject() call to @c false.
  *
  * Beware: The completion object can be deleted on you, especially if a call
  * such as setEditable(false) is made. Store the pointer at your own risk,
@@ -89,15 +90,15 @@ class QMenu;
  * and is done to give visual distinction between the three different modes:
  * disabled, read-only, and editable.
  *
- * \b Usage \n
+ * \b Usage
  *
  * To enable the basic completion feature:
  *
  * \code
  * KComboBox *combo = new KComboBox(true, this);
  * KCompletion *comp = combo->completionObject();
- * // Connect to the return pressed signal - optional
- * connect(combo,SIGNAL(returnPressed(const QString&)),comp,SLOT(addItem(const QString&)));
+ * // Connect to the Return pressed signal - optional
+ * connect(combo, &KComboBox::returnPressed, comp, [this](const QString &text) { addItem(text); });
  *
  * // Provide the to be completed strings. Note that those are separate from the combo's
  * // contents.
@@ -109,14 +110,14 @@ class QMenu;
  * \code
  * KComboBox *combo = new KComboBox(this);
  * KUrlCompletion *comp = new KUrlCompletion();
+ * // You can either delete the allocated completion object manually when you
+ * // don't need it anymore, or call setAutoDeleteCompletionObject(true) and it
+ * // will be deleted automatically
+ * comp->setAutoDeleteCompletionObject(true);
  * combo->setCompletionObject(comp);
  * // Connect to the return pressed signal - optional
- * connect(combo,SIGNAL(returnPressed(const QString&)),comp,SLOT(addItem(const QString&)));
+ * connect(combo, &KComboBox::returnPressed, comp, [this](const QString &text) { addItem(text); });
  * \endcode
- *
- * Note that you have to either delete the allocated completion object
- * when you don't need it anymore, or call
- * setAutoDeleteCompletionObject(true);
  *
  * Miscellaneous function calls:
  *
@@ -329,25 +330,24 @@ public:
     bool contains(const QString &text) const;
 
     /**
-     * By default, KComboBox recognizes Key_Return and Key_Enter
-     * and emits the returnPressed() signals, but it also lets the
-     * event pass, for example causing a dialog's default button to
-     * be called.
+     * By default, KComboBox recognizes Key_Return and Key_Enter and emits the
+     * returnPressed(const QString &) signal, but it also lets the event pass,
+     * for example causing a dialog's default button to be called.
      *
-     * Call this method with @p trap equal to true to make KComboBox
-     * stop these events. The signals will still be emitted of course.
+     * Call this method with @p trap set to true to make KComboBox stop these
+     * events. The signals will still be emitted of course.
      *
-     * Only affects editable combo boxes.
+     * @note This only affects editable combo boxes.
      *
      * @see setTrapReturnKey()
      */
     void setTrapReturnKey(bool trap);
 
     /**
-     * @return @c true if key events of Key_Return or Key_Enter will
-     * be stopped; @c false if they will be propagated.
+     * @return @c true if Key_Return or Key_Enter input events will be stopped or
+     * @c false if they will be propagated.
      *
-     * @see setTrapReturnKey ()
+     * @see setTrapReturnKey()
      */
     bool trapReturnKey() const;
 
@@ -391,23 +391,27 @@ public:
     QMenu *contextMenu() const;
 
 Q_SIGNALS:
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 81)
     /**
      * Emitted when the user presses the Enter key.
      *
      * Note that this signal is only emitted when the widget is editable.
+     *
+     * @deprecated since 5.81, use KComboBox::returnPressed(const QString &) signal
      */
-    void returnPressed();
+    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use KComboBox::returnPressed(const QString &)")
+    void returnPressed(); // clazy:exclude=overloaded-signal
+#endif
 
     /**
-     * Emitted when the user presses the Enter key.
+     * Emitted when the user presses the Return or Enter key.
      *
-     * The argument is the current text being edited. This signal is just like
-     * returnPressed() except that it contains the current text as its argument.
+     * The argument is the current text being edited.
      *
-     * Note that this signal is only emitted when the
-     * widget is editable.
-     */
-    void returnPressed(const QString &);
+     * @note This signal is only emitted when the widget is editable.
+     *
+    */
+    void returnPressed(const QString &text); // clazy:exclude=overloaded-signal
 
     /**
      * Emitted when the completion key is pressed.

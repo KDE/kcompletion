@@ -43,17 +43,25 @@ private:
         // KLineEdit signals
         QSignalSpy qReturnPressedSpy(w.lineEdit(), SIGNAL(returnPressed()));
         QSignalSpy kReturnPressedSpy(w.lineEdit(), SIGNAL(returnPressed(QString)));
+
         // KComboBox signals
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
         QSignalSpy comboReturnPressedSpy(&w, SIGNAL(returnPressed()));
-        QSignalSpy comboReturnPressedStringSpy(&w, SIGNAL(returnPressed(QString)));
+#endif
+        QSignalSpy comboReturnPressedStringSpy(&w, QOverload<const QString &>::of(&KComboBox::returnPressed));
+
         QSignalSpy comboActivatedSpy(&w, &QComboBox::textActivated);
         QTest::keyClick(&w, Qt::Key_Return);
         QCOMPARE(qReturnPressedSpy.count(), 1);
         QCOMPARE(kReturnPressedSpy.count(), 1);
         QCOMPARE(kReturnPressedSpy[0][0].toString(), QString("Hello world"));
+
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
         QCOMPARE(comboReturnPressedSpy.count(), 1);
+#endif
         QCOMPARE(comboReturnPressedStringSpy.count(), 1);
         QCOMPARE(comboReturnPressedStringSpy[0][0].toString(), QString("Hello world"));
+
         QCOMPARE(comboActivatedSpy.count(), 1);
         QCOMPARE(comboActivatedSpy[0][0].toString(), QString("Hello world"));
     }
@@ -69,16 +77,21 @@ private Q_SLOTS:
     {
         KHistoryComboBox w;
         QVERIFY(qobject_cast<KLineEdit *>(w.lineEdit()));
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
         QSignalSpy comboReturnPressedSpy(&w, SIGNAL(returnPressed()));
+#endif
         QSignalSpy comboReturnPressedStringSpy(&w, SIGNAL(returnPressed(QString)));
         connect(&w, &KHistoryComboBox::textActivated, &w, &KHistoryComboBox::addToHistory);
         QSignalSpy comboActivatedSpy(&w, &QComboBox::textActivated);
         QTest::keyClicks(&w, QStringLiteral("Hello world"));
         QTest::keyClick(&w, Qt::Key_Return);
         qApp->processEvents(); // QueuedConnection in KHistoryComboBox
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
         QCOMPARE(comboReturnPressedSpy.count(), 1);
+#endif
         QCOMPARE(comboReturnPressedStringSpy.count(), 1);
         QCOMPARE(comboReturnPressedStringSpy[0][0].toString(), QString("Hello world"));
+
         QCOMPARE(comboActivatedSpy.count(), 1);
         QCOMPARE(comboActivatedSpy[0][0].toString(), QString("Hello world"));
     }
