@@ -33,11 +33,21 @@ private Q_SLOTS:
         KLineEdit w;
         w.setText(QStringLiteral("Hello world"));
         QSignalSpy qReturnPressedSpy(&w, SIGNAL(returnPressed()));
+
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
         QSignalSpy kReturnPressedSpy(&w, SIGNAL(returnPressed(QString)));
+#endif
+        QSignalSpy returnKeyPressedSpy(&w, &KLineEdit::returnKeyPressed);
+
         QTest::keyClick(&w, Qt::Key_Return);
         QCOMPARE(qReturnPressedSpy.count(), 1);
+
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
         QCOMPARE(kReturnPressedSpy.count(), 1);
         QCOMPARE(kReturnPressedSpy[0][0].toString(), QString("Hello world"));
+#endif
+        QCOMPARE(returnKeyPressedSpy.count(), 1);
+        QCOMPARE(returnKeyPressedSpy.at(0).at(0).toString(), QStringLiteral("Hello world"));
     }
 
     void testTextEditedSignals()

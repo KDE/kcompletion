@@ -296,7 +296,7 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         // when it is a KLineEdit!
         connect(edit, SIGNAL(destroyed()), SLOT(_k_lineEditDeleted()));
 
-        connect(d->klineEdit, QOverload<const QString &>::of(&KLineEdit::returnPressed), this, QOverload<const QString &>::of(&KComboBox::returnPressed));
+        connect(d->klineEdit, &KLineEdit::returnKeyPressed, this, QOverload<const QString &>::of(&KComboBox::returnPressed));
 
         connect(d->klineEdit, &KLineEdit::completion, this, &KComboBox::completion);
 

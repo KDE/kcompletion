@@ -38,102 +38,103 @@ class KLineEditPrivate;
  * \b Detail \n
  *
  * This widget inherits from QLineEdit and implements the following
- * additional functionalities: a completion object that provides both
- * automatic and manual text completion as well as multiple match iteration
- * features, configurable key-bindings to activate these features and a
- * popup-menu item that can be used to allow the user to set text completion
- * modes on the fly based on their preference.
+ * additional functionalities:
+ * @li a completion object that provides both automatic and manual text
+ * completion as well as multiple match iteration features
+ * @li configurable key-bindings to activate these features
+ * @li a popup-menu item that can be used to allow the user to set text
+ * completion modes on the fly based on their preference
  *
- * To support these new features KLineEdit also emits a few more
- * additional signals. These are: completion( const QString& ),
- * textRotation( KeyBindingType ), and returnPressed( const QString& ).
- * The completion signal can be connected to a slot that will assist the
- * user in filling out the remaining text. The text rotation signal is
- * intended to be used to iterate through the list of all possible matches
- * whenever there is more than one match for the entered text. The
- * @c returnPressed( const QString& ) signals are the same as QLineEdit's
- * except it provides the current text in the widget as its argument whenever
- * appropriate.
+ * To support these features KLineEdit also emits a few more additional
+ * signals:
+ * @li @c completion(const QString &): this signal can be connected to
+ * a slot that will assist the user in filling out the remaining text
+ * @li @c textRotation(KeyBindingType): this signal is intended to be
+ * used to iterate through the list of all possible matches whenever
+ * there is more than one match for the entered text
+ * @li @c returnKeyPressed(const QString &): this signal provides the
+ * current text in the widget as its argument whenever appropriate (this
+ * is in addition to the @c QLineEdit::returnPressed() signal which KLineEdit
+ * inherits from QLineEdit).
  *
  * This widget by default creates a completion object when you invoke
- * the completionObject( bool ) member function for the first time or
- * use setCompletionObject( KCompletion*, bool ) to assign your own
+ * the @c completionObject(bool) member function for the first time or
+ * use @c setCompletionObject(KCompletion *, bool) to assign your own
  * completion object. Additionally, to make this widget more functional,
  * KLineEdit will by default handle the text rotation and completion
  * events internally when a completion object is created through either one
  * of the methods mentioned above. If you do not need this functionality,
- * simply use KCompletionBase::setHandleSignals( bool ) or set the
- * boolean parameter in the above functions to false.
+ * simply use @c KCompletionBase::setHandleSignals(bool) or set the boolean
+ * parameter in the above functions to false.
  *
  * The default key-bindings for completion and rotation is determined
  * from the global settings in KStandardShortcut. These values, however,
- * can be overridden locally by invoking KCompletionBase::setKeyBinding().
+ * can be overridden locally by invoking @c KCompletionBase::setKeyBinding().
  * The values can easily be reverted back to the default setting, by simply
- * calling useGlobalSettings(). An alternate method would be to default
+ * calling @c useGlobalSettings(). An alternate method would be to default
  * individual key-bindings by using setKeyBinding() with the default
  * second argument.
  *
  * If @c EchoMode for this widget is set to something other than @c QLineEdit::Normal,
  * the completion mode will always be defaulted to CompletionNone.
- * This is done purposefully to guard against protected entries such as passwords being
- * cached in KCompletion's list. Hence, if the @c EchoMode is not QLineEdit::Normal, the
- * completion mode is automatically disabled.
+ * This is done purposefully to guard against protected entries, such as
+ * passwords, being cached in KCompletion's list. Hence, if the @c EchoMode
+ * is not @c QLineEdit::Normal, the completion mode is automatically disabled.
  *
- * A read-only KLineEdit will have the same background color as a
- * disabled KLineEdit, but its foreground color will be the one used
- * for the read-write mode. This differs from QLineEdit's implementation
- * and is done to give visual distinction between the three different modes:
- * disabled, read-only, and read-write.
+ * A read-only KLineEdit will have the same background color as a disabled
+ * KLineEdit, but its foreground color will be the one used for the read-write
+ * mode. This differs from QLineEdit's implementation and is done to give visual
+ * distinction between the three different modes: disabled, read-only, and read-write.
  *
- * KLineEdit has also a password mode which depends of globals KDE settings. Use
- * KLineEdit::setPasswordMode instead of QLineEdit::echoMode property to have a password field.
+ * KLineEdit also has a password mode which depends on global KDE settings.
+ * Use @c KLineEdit::setPasswordMode() instead of @c QLineEdit::echoMode property
+ * to have a password field.
  *
- * \b Usage \n
+ * @b Usage
  *
  * To enable the basic completion feature:
  *
- * \code
- * KLineEdit *edit = new KLineEdit( this );
+ * @code
+ * KLineEdit *edit = new KLineEdit(this);
  * KCompletion *comp = edit->completionObject();
- * // Connect to the return pressed signal - optional
- * connect(edit,SIGNAL(returnPressed(const QString&)),comp,SLOT(addItem(const QString&)));
- * \endcode
+ * // Connect to the Return pressed signal - optional
+ * connect(edit, &KLineEdit::returnKeyPressed, comp, [this](const QString &text) { addItem(text); });
+ * @endcode
  *
- * To use a customized completion objects or your
- * own completion object:
+ * To use a customized completion object or your own completion object:
  *
- * \code
- * KLineEdit *edit = new KLineEdit( this );
+ * @code
+ * KLineEdit *edit = new KLineEdit(this);
  * KUrlCompletion *comp = new KUrlCompletion();
- * edit->setCompletionObject( comp );
+ * edit->setCompletionObject(comp);
  * // Connect to the return pressed signal - optional
- * connect(edit,SIGNAL(returnPressed(const QString&)),comp,SLOT(addItem(const QString&)));
- * \endcode
+ * connect(edit, &KLineEdit::returnKeyPressed, comp, [this](const QString &text) { addItem(text); });
+ * @endcode
  *
  * Note if you specify your own completion object you have to either delete
  * it when you don't need it anymore, or you can tell KLineEdit to delete it
  * for you:
- * \code
- * edit->setAutoDeleteCompletionObject( true );
- * \endcode
+ * @code
+ * edit->setAutoDeleteCompletionObject(true);
+ * @endcode
  *
  * <b>Miscellaneous function calls :</b>\n
  *
- * \code
- * // Tell the widget to not handle completion and iteration automatically.
- * edit->setHandleSignals( false );
+ * @code
+ * // Tell the widget to not handle completion and iteration automatically
+ * edit->setHandleSignals(false);
  *
- * // Set your own key-bindings for a text completion mode.
- * edit->setKeyBinding( KCompletionBase::TextCompletion, Qt::End );
+ * // Set your own key-bindings for a text completion mode
+ * edit->setKeyBinding(KCompletionBase::TextCompletion, Qt::End);
  *
  * // Hide the context (popup) menu
- * edit->setContextMenuPolicy( Qt::NoContextMenu );
+ * edit->setContextMenuPolicy(Qt::NoContextMenu);
  *
- * // Default the key-bindings back to the default system settings.
+ * // Default the key-bindings back to the default system settings
  * edit->useGlobalKeyBindings();
- * \endcode
+ * @endcode
  *
- * \image html klineedit.png "KLineEdit widgets with clear-button"
+ * @image html klineedit.png "KLineEdit widgets with clear-button"
  *
  * @author Dawit Alemayehu <adawit@kde.org>
  */
@@ -391,20 +392,34 @@ public:
     void doCompletion(const QString &text);
 
 Q_SIGNALS:
-
     /**
      * Emitted whenever the completion box is activated.
      */
     void completionBoxActivated(const QString &);
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 81)
     /**
-     * Emitted when the user presses the return key.
+     * Emitted when the user presses the Return or Enter key.
      *
      *  The argument is the current text. Note that this
      * signal is @em not emitted if the widget's @c EchoMode is set to
      * QLineEdit::EchoMode.
+     *
+     * @deprecated since 5.81, use KLineEdit::returnKeyPressed(const QString &)
      */
-    void returnPressed(const QString &);
+    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use KLineEdit::returnKeyPressed(const QString &)")
+    void returnPressed(const QString &text); // clazy:exclude=overloaded-signal
+#endif
+
+    /**
+     * Emitted when the user presses the Return or Enter key.
+     *
+     * The argument is the current text. Note that this signal is @em not emitted
+     * if the widget's @c EchoMode is set to QLineEdit::EchoMode.
+     *
+     * @since 5.81
+     */
+    void returnKeyPressed(const QString &text);
 
     /**
      * Emitted when the completion key is pressed.

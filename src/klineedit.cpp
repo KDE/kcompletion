@@ -569,9 +569,10 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
                 Q_EMIT QLineEdit::returnPressed();
                 e->accept();
             }
-
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
             Q_EMIT returnPressed(displayText());
-
+#endif
+            Q_EMIT returnKeyPressed(displayText());
             if (trap) {
                 d->completionBox->hide();
                 deselect();
