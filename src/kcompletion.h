@@ -152,17 +152,18 @@ public:
          * Lists all possible matches in a popup list box to choose from, and automatically
          * fills the result whenever possible.
          */
-        CompletionPopupAuto
+        CompletionPopupAuto,
     };
 
     /**
      * Constants that represent the order in which KCompletion performs
      * completion lookups.
      */
-    enum CompOrder { Sorted,    ///< Use alphabetically sorted order
-                     Insertion, ///< Use order of insertion
-                     Weighted   ///< Use weighted order
-                   };
+    enum CompOrder {
+        Sorted, ///< Use alphabetically sorted order
+        Insertion, ///< Use order of insertion
+        Weighted, ///< Use weighted order
+    };
     Q_ENUM(CompOrder)
 
     /**

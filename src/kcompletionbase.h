@@ -58,7 +58,7 @@ public:
         /**
          * Substring completion (by default Ctrl-T).
          */
-        SubstringCompletion
+        SubstringCompletion,
     };
 
     // Map for the key binding types mentioned above.
