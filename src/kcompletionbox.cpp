@@ -113,14 +113,14 @@ bool KCompletionBox::eventFilter(QObject *o, QEvent *e)
         return false;
     }
 
-    if (wid && wid == d->m_parent &&
-            (type == QEvent::Move || type == QEvent::Resize)) {
+    if (wid && wid == d->m_parent //
+        && (type == QEvent::Move || type == QEvent::Resize)) {
         resizeAndReposition();
         return false;
     }
 
-    if (wid && (wid->windowFlags() & Qt::Window) &&
-            type == QEvent::Move && wid == d->m_parent->window()) {
+    if (wid && (wid->windowFlags() & Qt::Window) //
+        && type == QEvent::Move && wid == d->m_parent->window()) {
         hide();
         return false;
     }
@@ -171,9 +171,8 @@ bool KCompletionBox::eventFilter(QObject *o, QEvent *e)
             case Qt::Key_Up:
                 // If there is no selected item and we've popped up above
                 // our parent, select the first item when they press up.
-                if (!selectedItems().isEmpty() ||
-                        mapToGlobal(QPoint(0, 0)).y() >
-                        d->m_parent->mapToGlobal(QPoint(0, 0)).y()) {
+                if (!selectedItems().isEmpty() //
+                    || mapToGlobal(QPoint(0, 0)).y() > d->m_parent->mapToGlobal(QPoint(0, 0)).y()) {
                     up();
                 } else {
                     down();

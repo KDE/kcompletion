@@ -176,10 +176,12 @@ void Form1::slotHighlighted(int row)
 
 QStringList Form1::defaultItems() const
 {
+    // clang-format off
     QStringList items;
     items << QStringLiteral("Super") << QStringLiteral("Sushi") << QStringLiteral("Samson") << QStringLiteral("Sucks") << QStringLiteral("Sumo") << QStringLiteral("Schumi");
     items << QStringLiteral("Slashdot") << QStringLiteral("sUpEr") << QStringLiteral("SUshi") << QStringLiteral("sUshi") << QStringLiteral("sUShi");
     items << QStringLiteral("sushI") << QStringLiteral("SushI");
+    // clang-format on
     return items;
 }
 

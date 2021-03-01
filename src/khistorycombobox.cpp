@@ -357,9 +357,8 @@ void KHistoryComboBoxPrivate::rotateDown()
 
     const QString currText = q->currentText();
     // skip duplicates/empty items
-    while (currentIndex >= 0 &&
-            (currText == q->itemText(currentIndex) ||
-             q->itemText(currentIndex).isEmpty())) {
+    while (currentIndex >= 0 //
+           && (currText == q->itemText(currentIndex) || q->itemText(currentIndex).isEmpty())) {
         --currentIndex;
     }
 

@@ -106,9 +106,9 @@ void KLineEditPrivate::init()
     KCursor::setAutoHideCursor(q, true, true);
 
     KCompletion::CompletionMode mode = q->completionMode();
-    autoSuggest = (mode == KCompletion::CompletionMan ||
-                      mode == KCompletion::CompletionPopupAuto ||
-                      mode == KCompletion::CompletionAuto);
+    autoSuggest = (mode == KCompletion::CompletionMan //
+                   || mode == KCompletion::CompletionPopupAuto //
+                   || mode == KCompletion::CompletionAuto);
     q->connect(q, SIGNAL(selectionChanged()), q, SLOT(_k_restoreSelectionColors()));
 
     if (handleURLDrops) {
@@ -187,9 +187,9 @@ void KLineEdit::setCompletionMode(KCompletion::CompletionMode mode)
     Q_D(KLineEdit);
     KCompletion::CompletionMode oldMode = completionMode();
 
-    if (oldMode != mode && (oldMode == KCompletion::CompletionPopup ||
-                            oldMode == KCompletion::CompletionPopupAuto) &&
-            d->completionBox && d->completionBox->isVisible()) {
+    if (oldMode != mode //
+        && (oldMode == KCompletion::CompletionPopup || oldMode == KCompletion::CompletionPopupAuto) //
+        && d->completionBox && d->completionBox->isVisible()) {
         d->completionBox->hide();
     }
 
@@ -244,19 +244,19 @@ void KLineEdit::setCompletedText(const QString &t, bool marked)
 void KLineEdit::setCompletedText(const QString &text)
 {
     KCompletion::CompletionMode mode = completionMode();
-    const bool marked = (mode == KCompletion::CompletionAuto ||
-                         mode == KCompletion::CompletionMan ||
-                         mode == KCompletion::CompletionPopup ||
-                         mode == KCompletion::CompletionPopupAuto);
+    const bool marked = (mode == KCompletion::CompletionAuto //
+                         || mode == KCompletion::CompletionMan //
+                         || mode == KCompletion::CompletionPopup //
+                         || mode == KCompletion::CompletionPopupAuto);
     setCompletedText(text, marked);
 }
 
 void KLineEdit::rotateText(KCompletionBase::KeyBindingType type)
 {
     KCompletion *comp = compObj();
-    if (comp &&
-            (type == KCompletionBase::PrevCompletionMatch ||
-             type == KCompletionBase::NextCompletionMatch)) {
+    if (comp && //
+        (type == KCompletionBase::PrevCompletionMatch //
+         || type == KCompletionBase::NextCompletionMatch)) {
         QString input;
 
         if (type == KCompletionBase::PrevCompletionMatch) {
@@ -564,9 +564,10 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
             completionMode() != KCompletion::CompletionNone) {
         if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter) {
             const bool trap = (d->completionBox && d->completionBox->isVisible());
-            const bool stopEvent = (trap || (d->trapReturnKeyEvents &&
-                                             (e->modifiers() == Qt::NoButton ||
-                                              e->modifiers() == Qt::KeypadModifier)));
+            const bool stopEvent = (trap
+                                    || (d->trapReturnKeyEvents //
+                                        && (e->modifiers() == Qt::NoButton || //
+                                            e->modifiers() == Qt::KeypadModifier)));
 
             if (stopEvent) {
                 Q_EMIT QLineEdit::returnPressed();
@@ -589,16 +590,17 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
 
         const KeyBindingMap keys = keyBindingMap();
         const KCompletion::CompletionMode mode = completionMode();
-        const bool noModifier = (e->modifiers() == Qt::NoButton ||
-                                 e->modifiers() == Qt::ShiftModifier ||
-                                 e->modifiers() == Qt::KeypadModifier);
+        const bool noModifier = (e->modifiers() == Qt::NoButton //
+                                 || e->modifiers() == Qt::ShiftModifier //
+                                 || e->modifiers() == Qt::KeypadModifier);
 
-        if ((mode == KCompletion::CompletionAuto ||
-             mode == KCompletion::CompletionPopupAuto ||
-             mode == KCompletion::CompletionMan) && noModifier) {
-            if (!d->userSelection && hasSelectedText() &&
-                    (e->key() == Qt::Key_Right || e->key() == Qt::Key_Left) &&
-                    e->modifiers() == Qt::NoButton) {
+        if ((mode == KCompletion::CompletionAuto //
+             || mode == KCompletion::CompletionPopupAuto //
+             || mode == KCompletion::CompletionMan) //
+            && noModifier) {
+            if (!d->userSelection && hasSelectedText() //
+                && (e->key() == Qt::Key_Right || e->key() == Qt::Key_Left) //
+                && e->modifiers() == Qt::NoButton) {
                 const QString old_txt = text();
                 d->disableRestoreSelection = true;
                 const int start = selectionStart();
@@ -630,14 +632,15 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
                 e->ignore();
                 return;
             }
-
         }
 
-        if ((mode == KCompletion::CompletionAuto ||
-             mode == KCompletion::CompletionMan) && noModifier) {
+        if ((mode == KCompletion::CompletionAuto //
+             || mode == KCompletion::CompletionMan)
+            && noModifier) {
             const QString keycode = e->text();
-            if (!keycode.isEmpty() && (keycode.unicode()->isPrint() ||
-                                       e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Delete)) {
+            if (!keycode.isEmpty()
+                && (keycode.unicode()->isPrint() //
+                    || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Delete)) {
                 const bool hasUserSelection = d->userSelection;
                 const bool hadSelection = hasSelectedText();
 
@@ -691,9 +694,8 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
                 return;
             }
 
-        } else if ((mode == KCompletion::CompletionPopup ||
-                    mode == KCompletion::CompletionPopupAuto) &&
-                   noModifier && !e->text().isEmpty()) {
+        } else if ((mode == KCompletion::CompletionPopup || mode == KCompletion::CompletionPopupAuto) //
+                   && noModifier && !e->text().isEmpty()) {
             const QString old_txt = text();
             const bool hasUserSelection = d->userSelection;
             const bool hadSelection = hasSelectedText();
@@ -707,9 +709,9 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
             // autocompletion, so we want to process events at the cursor position
             // as if there was no selection. After processing the key event, we
             // can set the new autocompletion again.
-            if (hadSelection && !hasUserSelection && start > cPos &&
-                    ((!keycode.isEmpty() && keycode.unicode()->isPrint()) ||
-                     e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Delete)) {
+            if (hadSelection && !hasUserSelection && start > cPos
+                && ((!keycode.isEmpty() && keycode.unicode()->isPrint()) //
+                    || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Delete)) {
                 del();
                 setCursorPosition(cPos);
                 cursorNotAtEnd = true;
@@ -727,9 +729,9 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
 
             QString txt = text();
             int len = txt.length();
-            if ((txt != old_txt || txt != e->text()) && len/* && ( cursorPosition() == len || force )*/ &&
-                    ((!keycode.isEmpty() && keycode.unicode()->isPrint()) ||
-                     e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Delete)) {
+            if ((txt != old_txt || txt != e->text()) && len /* && ( cursorPosition() == len || force )*/
+                && ((!keycode.isEmpty() && keycode.unicode()->isPrint()) //
+                    || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Delete)) {
                 if (e->key() == Qt::Key_Backspace) {
                     if (hadSelection && !hasUserSelection && !cursorNotAtEnd) {
                         backspace();
@@ -752,8 +754,8 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
 
                 doCompletion(txt);
 
-                if ((e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Delete) &&
-                        mode == KCompletion::CompletionPopupAuto) {
+                if ((e->key() == Qt::Key_Backspace || e->key() == Qt::Key_Delete) //
+                    && mode == KCompletion::CompletionPopupAuto) {
                     d->autoSuggest = true;
                 }
 
@@ -1035,9 +1037,9 @@ void KLineEditPrivate::_k_completionMenuActivated(QAction  *act)
     }
 
     if (oldMode != q->completionMode()) {
-        if ((oldMode == KCompletion::CompletionPopup ||
-                oldMode == KCompletion::CompletionPopupAuto) &&
-                completionBox && completionBox->isVisible()) {
+        if ((oldMode == KCompletion::CompletionPopup || oldMode == KCompletion::CompletionPopupAuto) //
+            && completionBox //
+            && completionBox->isVisible()) {
             completionBox->hide();
         }
         Q_EMIT q->completionModeChanged(q->completionMode());
@@ -1240,8 +1242,8 @@ bool KLineEditPrivate::overrideShortcut(const QKeyEvent *e)
     if (completionBox && completionBox->isVisible()) {
         const int key = e->key();
         const Qt::KeyboardModifiers modifiers = e->modifiers();
-        if ((key == Qt::Key_Backtab || key == Qt::Key_Tab) &&
-                (modifiers == Qt::NoModifier || (modifiers & Qt::ShiftModifier))) {
+        if ((key == Qt::Key_Backtab || key == Qt::Key_Tab) //
+            && (modifiers == Qt::NoModifier || (modifiers & Qt::ShiftModifier))) {
             return true;
         }
     }
@@ -1261,8 +1263,8 @@ void KLineEdit::setCompletedItems(const QStringList &items, bool autoSuggest)
         txt = text();
     }
 
-    if (!items.isEmpty() &&
-            !(items.count() == 1 && txt == items.first())) {
+    if (!items.isEmpty() //
+        && !(items.count() == 1 && txt == items.first())) {
         // create completion box if non-existent
         completionBox();
 

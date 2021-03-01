@@ -20,14 +20,14 @@
 void
 Test_KCompletion::initTestCase()
 {
-    strings << QStringLiteral("clampet@test.org")
-            << QStringLiteral("coolcat@test.org")
-            << QStringLiteral("carpet@test.org")
-            << QStringLiteral("carp@test.org");
-    wstrings << QStringLiteral("clampet@test.org:30")
-             << QStringLiteral("coolcat@test.org:20")
-             << QStringLiteral("carpet@test.org:40")
-             << QStringLiteral("carp@test.org:7");
+    strings = QStringList{QStringLiteral("clampet@test.org"), //
+                          QStringLiteral("coolcat@test.org"),
+                          QStringLiteral("carpet@test.org"),
+                          QStringLiteral("carp@test.org")};
+    wstrings = QStringList{QStringLiteral("clampet@test.org:30"),
+                           QStringLiteral("coolcat@test.org:20"),
+                           QStringLiteral("carpet@test.org:40"),
+                           QStringLiteral("carp@test.org:7")};
     qRegisterMetaType<QStringList>("QStringList");
 }
 
