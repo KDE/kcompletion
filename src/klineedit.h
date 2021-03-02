@@ -18,8 +18,8 @@
 #define KLINEEDIT_H
 
 #include <kcompletion.h>
-#include <kcompletionbase.h>
 #include <kcompletion_export.h>
+#include <kcompletionbase.h>
 
 #include <QLineEdit>
 #include <memory>
@@ -138,7 +138,7 @@ class KLineEditPrivate;
  * @author Dawit Alemayehu <adawit@kde.org>
  */
 
-class KCOMPLETION_EXPORT KLineEdit : public QLineEdit, public KCompletionBase //krazy:exclude=qclasses
+class KCOMPLETION_EXPORT KLineEdit : public QLineEdit, public KCompletionBase // krazy:exclude=qclasses
 {
     friend class KComboBox;
     friend class KLineEditStyle;
@@ -162,7 +162,6 @@ class KCOMPLETION_EXPORT KLineEdit : public QLineEdit, public KCompletionBase //
     Q_PROPERTY(bool passwordMode READ passwordMode WRITE setPasswordMode)
 
 public:
-
     /**
      * Constructs a KLineEdit object with a default text, a parent,
      * and a name.
@@ -190,13 +189,13 @@ public:
     void setUrl(const QUrl &url);
 
     /**
-    * Reimplemented from KCompletionBase for internal reasons.
-    *
-    * This function is re-implemented in order to make sure that
-    * the EchoMode is acceptable before we set the completion mode.
-    *
-    * See KCompletionBase::setCompletionMode
-    */
+     * Reimplemented from KCompletionBase for internal reasons.
+     *
+     * This function is re-implemented in order to make sure that
+     * the EchoMode is acceptable before we set the completion mode.
+     *
+     * See KCompletionBase::setCompletionMode
+     */
     void setCompletionMode(KCompletion::CompletionMode mode) override;
 
     /**
@@ -243,7 +242,7 @@ public:
      *
      * @param enable If @c true, insert decoded URLs
      */
-    void setUrlDropsEnabled(bool enable);  // KF6: remove it and don't create LineEditUrlDropEventFilter by default.
+    void setUrlDropsEnabled(bool enable); // KF6: remove it and don't create LineEditUrlDropEventFilter by default.
 
     /**
      * Returns @c true when decoded URL drops are enabled
@@ -331,7 +330,7 @@ public:
      * This will do nothing if a completion-box already exists.
      *
      * @param box The KCompletionBox to set
-    */
+     */
     void setCompletionBox(KCompletionBox *box);
 
 #if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
@@ -537,9 +536,9 @@ public Q_SLOTS:
 protected Q_SLOTS:
 
     /**
-    * Completes the remaining text with a matching one from
-    * a given list.
-    */
+     * Completes the remaining text with a matching one from
+     * a given list.
+     */
     virtual void makeCompletion(const QString &);
 
     /**
@@ -550,69 +549,68 @@ protected Q_SLOTS:
     void userCancelled(const QString &cancelText);
 
 protected:
-
     /**
      * Reimplemented for internal reasons. API not affected.
      */
     bool event(QEvent *) override;
 
     /**
-    * Reimplemented for internal reasons. API not affected.
-    *
-    * See QLineEdit::resizeEvent().
-    */
+     * Reimplemented for internal reasons. API not affected.
+     *
+     * See QLineEdit::resizeEvent().
+     */
     void resizeEvent(QResizeEvent *) override;
 
     /**
-    * Reimplemented for internal reasons. API not affected.
-    *
-    * See QLineEdit::keyPressEvent().
-    */
+     * Reimplemented for internal reasons. API not affected.
+     *
+     * See QLineEdit::keyPressEvent().
+     */
     void keyPressEvent(QKeyEvent *) override;
 
     /**
-    * Reimplemented for internal reasons. API not affected.
-    *
-    * See QLineEdit::mousePressEvent().
-    */
+     * Reimplemented for internal reasons. API not affected.
+     *
+     * See QLineEdit::mousePressEvent().
+     */
     void mousePressEvent(QMouseEvent *) override;
 
     /**
-    * Reimplemented for internal reasons. API not affected.
-    *
-    * See QLineEdit::mouseReleaseEvent().
-    */
+     * Reimplemented for internal reasons. API not affected.
+     *
+     * See QLineEdit::mouseReleaseEvent().
+     */
     void mouseReleaseEvent(QMouseEvent *) override;
 
     /**
-    * Reimplemented for internal reasons. API not affected.
-    *
-    * See QWidget::mouseDoubleClickEvent().
-    */
+     * Reimplemented for internal reasons. API not affected.
+     *
+     * See QWidget::mouseDoubleClickEvent().
+     */
     void mouseDoubleClickEvent(QMouseEvent *) override;
 
     /**
-    * Reimplemented for internal reasons. API not affected.
-    *
-    * See QLineEdit::contextMenuEvent().
-    */
+     * Reimplemented for internal reasons. API not affected.
+     *
+     * See QLineEdit::contextMenuEvent().
+     */
     void contextMenuEvent(QContextMenuEvent *) override;
 
     /**
-    * Reimplemented for internal reasons. API not affected.
-    *
-    * See QLineEdit::createStandardContextMenu().
-    */
+     * Reimplemented for internal reasons. API not affected.
+     *
+     * See QLineEdit::createStandardContextMenu().
+     */
     QMenu *createStandardContextMenu();
 
     /**
-    * This function simply sets the lineedit text and
-    * highlights the text appropriately if the boolean
-    * value is set to true.
-    *
-    * @param text
-    * @param marked
-    */
+     * This function simply sets the lineedit text and
+     * highlights the text appropriately if the boolean
+     * value is set to true.
+     *
+     * @param text
+     * @param marked
+     */
     virtual void setCompletedText(const QString & /*text*/, bool /*marked*/);
 
     /**
@@ -623,7 +621,7 @@ protected:
 
     /**
      * Whether in current state text should be auto-suggested
-    */
+     */
     bool autoSuggest() const;
 
     void paintEvent(QPaintEvent *ev) override;

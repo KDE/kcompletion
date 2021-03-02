@@ -2,17 +2,17 @@
 
 #include <assert.h>
 
-#include <KConfigGroup>
 #include <KConfig>
+#include <KConfigGroup>
 
 #include <QApplication>
-#include <QPushButton>
-#include <QLayout>
-#include <QPixmap>
-#include <QLabel>
-#include <QTimer>
 #include <QBoxLayout>
 #include <QDebug>
+#include <QLabel>
+#include <QLayout>
+#include <QPixmap>
+#include <QPushButton>
+#include <QTimer>
 
 #include <khistorycombobox.h>
 
@@ -111,8 +111,8 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     // Popuplate the select-only list box
     QStringList list;
-    list << QStringLiteral("Stone") << QStringLiteral("Tree") << QStringLiteral("Peables") << QStringLiteral("Ocean") << QStringLiteral("Sand") << QStringLiteral("Chips")
-         << QStringLiteral("Computer") << QStringLiteral("Mankind");
+    list << QStringLiteral("Stone") << QStringLiteral("Tree") << QStringLiteral("Peables") << QStringLiteral("Ocean") << QStringLiteral("Sand")
+         << QStringLiteral("Chips") << QStringLiteral("Computer") << QStringLiteral("Mankind");
     list.sort();
 
     // Setup the qcombobox
@@ -240,4 +240,3 @@ int main(int argc, char **argv)
     t->show();
     return a.exec();
 }
-

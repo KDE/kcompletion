@@ -12,8 +12,8 @@
 
 #include <kcompletionmatches.h>
 
-#include <kzoneallocator_p.h>
 #include <QSharedPointer>
+#include <kzoneallocator_p.h>
 
 class KCompTreeNode;
 
@@ -23,7 +23,12 @@ class KCompTreeNode;
 class KCOMPLETION_EXPORT KCompTreeNodeList
 {
 public:
-    KCompTreeNodeList() : m_first(nullptr), m_last(nullptr), m_count(0) {}
+    KCompTreeNodeList()
+        : m_first(nullptr)
+        , m_last(nullptr)
+        , m_count(0)
+    {
+    }
 
     KCompTreeNode *begin() const
     {
@@ -87,14 +92,18 @@ class KCOMPLETION_EXPORT KCompTreeNode : public QChar
 {
 public:
     KCompTreeNode()
-        : QChar(),
-          m_next(nullptr),
-          m_weight(0) {}
+        : QChar()
+        , m_next(nullptr)
+        , m_weight(0)
+    {
+    }
 
     explicit KCompTreeNode(const QChar &ch, uint weight = 0)
-        : QChar(ch),
-          m_next(nullptr),
-          m_weight(weight) {}
+        : QChar(ch)
+        , m_next(nullptr)
+        , m_weight(weight)
+    {
+    }
 
     ~KCompTreeNode();
 
@@ -167,7 +176,7 @@ public:
         return m_children.begin();
     }
 
-    inline const KCompTreeNode *lastChild()  const
+    inline const KCompTreeNode *lastChild() const
     {
         return m_children.end();
     }
@@ -198,9 +207,11 @@ class KCOMPLETION_EXPORT KCompletionMatchesWrapper
 {
 public:
     explicit KCompletionMatchesWrapper(KCompletion::CompOrder compOrder = KCompletion::Insertion)
-        : m_sortedList(compOrder == KCompletion::Weighted ? new KCompletionMatchesList : nullptr),
-          m_dirty(false),
-          m_compOrder(compOrder) {}
+        : m_sortedList(compOrder == KCompletion::Weighted ? new KCompletionMatchesList : nullptr)
+        , m_dirty(false)
+        , m_compOrder(compOrder)
+    {
+    }
 
     ~KCompletionMatchesWrapper()
     {
@@ -272,18 +283,11 @@ public:
 
     QStringList list() const;
 
-    void findAllCompletions(const KCompTreeNode *,
-                            const QString &,
-                            bool ignoreCase,
-                            bool &hasMultipleMatches);
+    void findAllCompletions(const KCompTreeNode *, const QString &, bool ignoreCase, bool &hasMultipleMatches);
 
-    void extractStringsFromNode(const KCompTreeNode *,
-                                const QString &beginning,
-                                bool addWeight = false);
+    void extractStringsFromNode(const KCompTreeNode *, const QString &beginning, bool addWeight = false);
 
-    void extractStringsFromNodeCI(const KCompTreeNode *,
-                                  const QString &beginning,
-                                  const QString &restString);
+    void extractStringsFromNodeCI(const KCompTreeNode *, const QString &beginning, const QString &restString);
 
     mutable QStringList m_stringList;
     KCompletionMatchesList *m_sortedList;
@@ -295,7 +299,9 @@ class KCompletionPrivate
 {
 public:
     explicit KCompletionPrivate(KCompletion *parent)
-        : q_ptr(parent) {}
+        : q_ptr(parent)
+    {
+    }
 
     void init();
 
@@ -318,7 +324,7 @@ public:
     QString lastMatch;
     QString currentMatch;
     KCompTreeNode *treeRoot;
-    KCompletion * const q_ptr;
+    KCompletion *const q_ptr;
     int rotationIndex;
     // TODO: Change hasMultipleMatches to bitfield after moving findAllCompletions()
     // to KCompletionMatchesPrivate

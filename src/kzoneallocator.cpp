@@ -25,20 +25,23 @@
 class KZoneAllocator::MemBlock
 {
 public:
-    MemBlock(size_t s) : size(s), ref(0), older(nullptr), newer(nullptr)
+    MemBlock(size_t s)
+        : size(s)
+        , ref(0)
+        , older(nullptr)
+        , newer(nullptr)
     {
         begin = new char[s];
     }
     ~MemBlock()
     {
-        delete [] begin;
+        delete[] begin;
     }
     MemBlock(const MemBlock &) = delete;
     MemBlock &operator=(const MemBlock &) = delete;
     bool is_in(void *ptr) const
     {
-        return !(begin > (char *)ptr
-                 || (begin + size) <= (char *)ptr);
+        return !(begin > (char *)ptr || (begin + size) <= (char *)ptr);
     }
     size_t size;
     unsigned int ref;
@@ -51,9 +54,14 @@ class KZoneAllocator::Private
 {
 public:
     Private()
-        : currentBlock(nullptr), blockSize(1),
-          blockOffset(0), log2(0), num_blocks(0),
-          hashList(nullptr), hashSize(0), hashDirty(true)
+        : currentBlock(nullptr)
+        , blockSize(1)
+        , blockOffset(0)
+        , log2(0)
+        , num_blocks(0)
+        , hashList(nullptr)
+        , hashSize(0)
+        , hashDirty(true)
     {
     }
 
@@ -97,7 +105,7 @@ KZoneAllocator::~KZoneAllocator()
         for (unsigned int i = 0; i < d->hashSize; i++) {
             delete d->hashList[i];
         }
-        delete [] d->hashList;
+        delete[] d->hashList;
         d->hashList = nullptr;
     }
     MemBlock *next;
@@ -164,7 +172,7 @@ void KZoneAllocator::initHash()
         for (unsigned int i = 0; i < d->hashSize; i++) {
             delete d->hashList[i];
         }
-        delete [] d->hashList;
+        delete[] d->hashList;
         d->hashList = nullptr;
     }
     d->hashSize = 1;
@@ -226,21 +234,20 @@ void KZoneAllocator::delBlock(MemBlock *b)
     d->num_blocks--;
 }
 
-void *
-KZoneAllocator::allocate(size_t _size)
+void *KZoneAllocator::allocate(size_t _size)
 {
     // Use the size of (void *) as alignment
     const size_t alignment = sizeof(void *) - 1;
     _size = (_size + alignment) & ~alignment;
 
-    if ((unsigned long) _size + d->blockOffset > d->blockSize) {
+    if ((unsigned long)_size + d->blockOffset > d->blockSize) {
         if (_size > d->blockSize) {
             qCDebug(KCOMPLETION_LOG, "KZoneAllocator: allocating more than %zu bytes", (size_t)d->blockSize);
             return nullptr;
         }
         addBlock(new MemBlock(d->blockSize));
         d->blockOffset = 0;
-        //qDebug ("Allocating block #%d (%x)\n", d->num_blocks, d->currentBlock->begin);
+        // qDebug ("Allocating block #%d (%x)\n", d->num_blocks, d->currentBlock->begin);
     }
     void *result = (void *)(d->currentBlock->begin + d->blockOffset);
     d->currentBlock->ref++;
@@ -248,8 +255,7 @@ KZoneAllocator::allocate(size_t _size)
     return result;
 }
 
-void
-KZoneAllocator::deallocate(void *ptr)
+void KZoneAllocator::deallocate(void *ptr)
 {
     if (d->hashDirty) {
         initHash();
@@ -260,7 +266,7 @@ KZoneAllocator::deallocate(void *ptr)
     if (!list) {
         /* Can happen with certain usage pattern of intermixed free_since()
            and deallocate().  */
-        //qDebug("Uhoh");
+        // qDebug("Uhoh");
         return;
     }
     QList<MemBlock *>::ConstIterator it = list->begin();
@@ -280,11 +286,10 @@ KZoneAllocator::deallocate(void *ptr)
     }
     /* Can happen with certain usage pattern of intermixed free_since()
        and deallocate().  */
-    //qDebug("Uhoh2");
+    // qDebug("Uhoh2");
 }
 
-void
-KZoneAllocator::free_since(void *ptr)
+void KZoneAllocator::free_since(void *ptr)
 {
     /* If we have a d->hashList and it's not yet dirty, see, if we will dirty
        it by removing too many blocks.  This will make the below delBlock()s

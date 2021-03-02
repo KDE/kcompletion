@@ -12,8 +12,8 @@
 
 #include <kcompletion.h>
 
-#include <kcompletionbase.h>
 #include <kcompletion_export.h>
+#include <kcompletionbase.h>
 
 #include <QComboBox>
 #include <memory>
@@ -131,7 +131,7 @@ class QMenu;
  *
  * @author Dawit Alemayehu <adawit@kde.org>
  */
-class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase //krazy:exclude=qclasses
+class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase // krazy:exclude=qclasses
 {
     Q_OBJECT
     Q_PROPERTY(bool autoCompletion READ autoCompletion WRITE setAutoCompletion)
@@ -141,25 +141,24 @@ class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase //
     Q_PROPERTY(bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey)
 
 public:
-
     /**
-    * Constructs a read-only (or rather select-only) combo box.
-    *
-    * @param parent The parent object of this widget
-    */
+     * Constructs a read-only (or rather select-only) combo box.
+     *
+     * @param parent The parent object of this widget
+     */
     explicit KComboBox(QWidget *parent = nullptr);
 
     /**
-    * Constructs an editable or read-only combo box.
-    *
-    * @param rw When @c true, widget will be editable.
-    * @param parent The parent object of this widget.
-    */
+     * Constructs an editable or read-only combo box.
+     *
+     * @param rw When @c true, widget will be editable.
+     * @param parent The parent object of this widget.
+     */
     explicit KComboBox(bool rw, QWidget *parent = nullptr);
 
     /**
-    * Destructor.
-    */
+     * Destructor.
+     */
     ~KComboBox() override;
 
 #if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
@@ -211,7 +210,7 @@ public:
      * QUrl::toDisplayString() is used so that the url is properly decoded
      * for displaying.
      */
-    void addUrl(const QIcon &icon,  const QUrl &url);
+    void addUrl(const QIcon &icon, const QUrl &url);
 
     /**
      * Inserts @p url at position @p index into the combo box.
@@ -247,53 +246,53 @@ public:
     void changeUrl(int index, const QIcon &icon, const QUrl &url);
 
     /**
-    * Returns the current cursor position.
-    *
-    * This method always returns a -1 if the combo box is @em not
-    * editable (read-only).
-    *
-    * @return Current cursor position.
-    */
+     * Returns the current cursor position.
+     *
+     * This method always returns a -1 if the combo box is @em not
+     * editable (read-only).
+     *
+     * @return Current cursor position.
+     */
     int cursorPosition() const;
 
     /**
-    * Reimplemented from QComboBox.
-    *
-    * If @c true, the completion mode will be set to automatic.
-    * Otherwise, it is defaulted to the global setting. This
-    * method has been replaced by the more comprehensive
-    * setCompletionMode().
-    *
-    * @param autocomplete Flag to enable/disable automatic completion mode.
-    */
+     * Reimplemented from QComboBox.
+     *
+     * If @c true, the completion mode will be set to automatic.
+     * Otherwise, it is defaulted to the global setting. This
+     * method has been replaced by the more comprehensive
+     * setCompletionMode().
+     *
+     * @param autocomplete Flag to enable/disable automatic completion mode.
+     */
     virtual void setAutoCompletion(bool autocomplete);
 
     /**
-    * Reimplemented from QComboBox.
-    *
-    * Returns @c true if the current completion mode is set
-    * to automatic. See its more comprehensive replacement
-    * completionMode().
-    *
-    * @return @c true when completion mode is automatic.
-    */
+     * Reimplemented from QComboBox.
+     *
+     * Returns @c true if the current completion mode is set
+     * to automatic. See its more comprehensive replacement
+     * completionMode().
+     *
+     * @return @c true when completion mode is automatic.
+     */
     bool autoCompletion() const;
 
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
     /**
-    * Enables or disables the popup (context) menu.
-    *
-    * This method only works if this widget is editable, and
-    * allows you to enable/disable the context menu. It does nothing if invoked
-    * for a non-editable combo box.
-    *
-    * By default, the context menu is created if this widget is editable.
-    * Call this function with the argument set to false to disable the popup
-    * menu.
-    *
-    * @param showMenu If @c true, show the context menu.
-    * @deprecated since 4.5, use setContextMenuPolicy instead
-    */
+     * Enables or disables the popup (context) menu.
+     *
+     * This method only works if this widget is editable, and
+     * allows you to enable/disable the context menu. It does nothing if invoked
+     * for a non-editable combo box.
+     *
+     * By default, the context menu is created if this widget is editable.
+     * Call this function with the argument set to false to disable the popup
+     * menu.
+     *
+     * @param showMenu If @c true, show the context menu.
+     * @deprecated since 4.5, use setContextMenuPolicy instead
+     */
     KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use QWidget::setContextMenuPolicy(...)")
     virtual void setContextMenuEnabled(bool showMenu);
 #endif
@@ -393,31 +392,31 @@ public:
 
 Q_SIGNALS:
     /**
-    * Emitted when the user presses the Enter key.
-    *
-    * Note that this signal is only emitted when the widget is editable.
-    */
+     * Emitted when the user presses the Enter key.
+     *
+     * Note that this signal is only emitted when the widget is editable.
+     */
     void returnPressed();
 
     /**
-    * Emitted when the user presses the Enter key.
-    *
-    * The argument is the current text being edited. This signal is just like
-    * returnPressed() except that it contains the current text as its argument.
-    *
-    * Note that this signal is only emitted when the
-    * widget is editable.
-    */
+     * Emitted when the user presses the Enter key.
+     *
+     * The argument is the current text being edited. This signal is just like
+     * returnPressed() except that it contains the current text as its argument.
+     *
+     * Note that this signal is only emitted when the
+     * widget is editable.
+     */
     void returnPressed(const QString &);
 
     /**
-    * Emitted when the completion key is pressed.
-    *
-    * The argument is the current text being edited.
-    *
-    * Note that this signal is @em not available when the widget is non-editable
-    * or the completion mode is set to @c CompletionNone.
-    */
+     * Emitted when the completion key is pressed.
+     *
+     * The argument is the current text being edited.
+     *
+     * Note that this signal is @em not available when the widget is non-editable
+     * or the completion mode is set to @c CompletionNone.
+     */
     void completion(const QString &);
 
     /**
@@ -459,22 +458,22 @@ Q_SIGNALS:
 public Q_SLOTS:
 
     /**
-    * Iterates through all possible matches of the completed text
-    * or the history list.
-    *
-    * Depending on the value of the argument, this function either
-    * iterates through the history list of this widget or all the
-    * possible matches in whenever multiple matches result from a
-    * text completion request. Note that the all-possible-match
-    * iteration will not work if there are no previous matches, i.e.
-    * no text has been completed and the *nix shell history list
-    * rotation is only available if the insertion policy for this
-    * widget is set either @c QComobBox::AtTop or @c QComboBox::AtBottom.
-    * For other insertion modes whatever has been typed by the user
-    * when the rotation event was initiated will be lost.
-    *
-    * @param type The key binding invoked.
-    */
+     * Iterates through all possible matches of the completed text
+     * or the history list.
+     *
+     * Depending on the value of the argument, this function either
+     * iterates through the history list of this widget or all the
+     * possible matches in whenever multiple matches result from a
+     * text completion request. Note that the all-possible-match
+     * iteration will not work if there are no previous matches, i.e.
+     * no text has been completed and the *nix shell history list
+     * rotation is only available if the insertion policy for this
+     * widget is set either @c QComobBox::AtTop or @c QComboBox::AtBottom.
+     * For other insertion modes whatever has been typed by the user
+     * when the rotation event was initiated will be lost.
+     *
+     * @param type The key binding invoked.
+     */
     void rotateText(KCompletionBase::KeyBindingType type);
 
     /**
@@ -502,27 +501,27 @@ public Q_SLOTS:
 protected Q_SLOTS:
 
     /**
-    * Completes text according to the completion mode.
-    *
-    * @note This method is not invoked if the completion mode is
-    * set to @c CompletionNone. Also if the mode is set to @c CompletionShell
-    * and multiple matches are found, this method will complete the
-    * text to the first match with a beep to indicate that there are
-    * more matches. Then any successive completion key event iterates
-    * through the remaining matches. This way the rotation functionality
-    * is left to iterate through the list as usual.
-    */
+     * Completes text according to the completion mode.
+     *
+     * @note This method is not invoked if the completion mode is
+     * set to @c CompletionNone. Also if the mode is set to @c CompletionShell
+     * and multiple matches are found, this method will complete the
+     * text to the first match with a beep to indicate that there are
+     * more matches. Then any successive completion key event iterates
+     * through the remaining matches. This way the rotation functionality
+     * is left to iterate through the list as usual.
+     */
     virtual void makeCompletion(const QString &);
 
 protected:
     /**
-    * This function sets the line edit text and
-    * highlights the text appropriately if the boolean
-    * value is set to true.
-    *
-    * @param text The text to be set in the line edit
-    * @param marked Whether the text inserted should be highlighted
-    */
+     * This function sets the line edit text and
+     * highlights the text appropriately if the boolean
+     * value is set to true.
+     *
+     * @param text The text to be set in the line edit
+     * @param marked Whether the text inserted should be highlighted
+     */
     virtual void setCompletedText(const QString &text, bool marked);
 
     // TODO KF6: make public like in base classes, so consumers do not need to cast to base classes
@@ -542,4 +541,3 @@ private:
 };
 
 #endif
-

@@ -1,14 +1,14 @@
 #include "kcompletionuitest.h"
 
 #include <QApplication>
+#include <QGroupBox>
 #include <QLabel>
+#include <QLayout>
 #include <QListWidget>
 #include <QPushButton>
-#include <QLayout>
-#include <QGroupBox>
 
-#include <klineedit.h>
 #include <khistorycombobox.h>
+#include <klineedit.h>
 
 Form1::Form1(QWidget *parent)
     : QWidget(parent)
@@ -59,8 +59,7 @@ Form1::Form1(QWidget *parent)
     combo->setCompletionObject(edit->completionObject());
     // combo->setMaxCount( 5 );
     combo->setHistoryItems(defaultItems(), true);
-    connect(combo, SIGNAL(activated(QString)),
-            combo, SLOT(addToHistory(QString)));
+    connect(combo, SIGNAL(activated(QString)), combo, SLOT(addToHistory(QString)));
     combo->setToolTip(QStringLiteral("KHistoryComboBox"));
     Layout2->addWidget(combo);
 
@@ -94,8 +93,7 @@ Form1::Form1(QWidget *parent)
 
     ListBox1 = new QListWidget(GroupBox1);
     Layout8->addWidget(ListBox1);
-    connect(ListBox1, &QListWidget::currentRowChanged,
-            this, &Form1::slotHighlighted);
+    connect(ListBox1, &QListWidget::currentRowChanged, this, &Form1::slotHighlighted);
     ListBox1->setToolTip(QStringLiteral("Contains the contents of the completion object.\n:x is the weighting, i.e. how often an item has been inserted"));
 
     Layout7 = new QVBoxLayout;
@@ -111,8 +109,7 @@ Form1::Form1(QWidget *parent)
     PushButton1_2 = new QPushButton(GroupBox1);
     PushButton1_2->setObjectName(QStringLiteral("PushButton1_2"));
     PushButton1_2->setText(QStringLiteral("Clear"));
-    connect(PushButton1_2, &QAbstractButton::clicked,
-            edit->completionObject(), &KCompletion::clear);
+    connect(PushButton1_2, &QAbstractButton::clicked, edit->completionObject(), &KCompletion::clear);
     Layout7->addWidget(PushButton1_2);
     Layout8->addLayout(Layout7);
     Layout9->addLayout(Layout8);
@@ -196,4 +193,3 @@ int main(int argc, char **argv)
 
     return app.exec();
 }
-

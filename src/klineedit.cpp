@@ -16,25 +16,25 @@
 #include "klineedit_p.h"
 
 #include <KAuthorized>
-#include <KSharedConfig>
 #include <KConfigGroup>
 #include <KCursor>
-#include <kcompletionbox.h>
+#include <KSharedConfig>
 #include <KStandardShortcut>
+#include <kcompletionbox.h>
 #include <lineediturldropeventfilter.h>
 
 #include <QActionGroup>
-#include <QTimer>
 #include <QApplication>
 #include <QClipboard>
 #include <QKeyEvent>
 #include <QMenu>
+#include <QTimer>
 #include <QToolTip>
 
 KLineEditPrivate::~KLineEditPrivate()
 {
-// causes a weird crash in KWord at least, so let Qt delete it for us.
-//        delete completionBox;
+    // causes a weird crash in KWord at least, so let Qt delete it for us.
+    //        delete completionBox;
 }
 
 void KLineEditPrivate::_k_textChanged(const QString &text)
@@ -127,14 +127,16 @@ void KLineEditPrivate::init()
 }
 
 KLineEdit::KLineEdit(const QString &string, QWidget *parent)
-    : QLineEdit(string, parent), d_ptr(new KLineEditPrivate(this))
+    : QLineEdit(string, parent)
+    , d_ptr(new KLineEditPrivate(this))
 {
     Q_D(KLineEdit);
     d->init();
 }
 
 KLineEdit::KLineEdit(QWidget *parent)
-    : QLineEdit(parent), d_ptr(new KLineEditPrivate(this))
+    : QLineEdit(parent)
+    , d_ptr(new KLineEditPrivate(this))
 {
     Q_D(KLineEdit);
     d->init();
@@ -196,16 +198,14 @@ void KLineEdit::setCompletionMode(KCompletion::CompletionMode mode)
     // If the widgets echo mode is not Normal, no completion
     // feature will be enabled even if one is requested.
     if (echoMode() != QLineEdit::Normal) {
-        mode = KCompletion::CompletionNone;    // Override the request.
+        mode = KCompletion::CompletionNone; // Override the request.
     }
 
     if (!KAuthorized::authorize(QStringLiteral("lineedit_text_completion"))) {
         mode = KCompletion::CompletionNone;
     }
 
-    if (mode == KCompletion::CompletionPopupAuto ||
-            mode == KCompletion::CompletionAuto ||
-            mode == KCompletion::CompletionMan) {
+    if (mode == KCompletion::CompletionPopupAuto || mode == KCompletion::CompletionAuto || mode == KCompletion::CompletionMan) {
         d->autoSuggest = true;
     } else {
         d->autoSuggest = false;
@@ -217,7 +217,7 @@ void KLineEdit::setCompletionMode(KCompletion::CompletionMode mode)
 void KLineEdit::setCompletionModeDisabled(KCompletion::CompletionMode mode, bool disable)
 {
     Q_D(KLineEdit);
-    d->disableCompletionMap[ mode ] = disable;
+    d->disableCompletionMap[mode] = disable;
 }
 
 void KLineEdit::setCompletedText(const QString &t, bool marked)
@@ -238,7 +238,6 @@ void KLineEdit::setCompletedText(const QString &t, bool marked)
     } else {
         setUserSelection(true);
     }
-
 }
 
 void KLineEdit::setCompletedText(const QString &text)
@@ -280,13 +279,12 @@ void KLineEdit::makeCompletion(const QString &text)
     KCompletion::CompletionMode mode = completionMode();
 
     if (!comp || mode == KCompletion::CompletionNone) {
-        return;    // No completion object...
+        return; // No completion object...
     }
 
     const QString match = comp->makeCompletion(text);
 
-    if (mode == KCompletion::CompletionPopup ||
-            mode == KCompletion::CompletionPopupAuto) {
+    if (mode == KCompletion::CompletionPopup || mode == KCompletion::CompletionPopupAuto) {
         if (match.isEmpty()) {
             if (d->completionBox) {
                 d->completionBox->hide();
@@ -470,8 +468,7 @@ bool KLineEditPrivate::copySqueezedText(bool copy) const
         t = t.mid(start, end - start);
         q->disconnect(QApplication::clipboard(), SIGNAL(selectionChanged()), q, nullptr);
         QApplication::clipboard()->setText(t, copy ? QClipboard::Clipboard : QClipboard::Selection);
-        q->connect(QApplication::clipboard(), SIGNAL(selectionChanged()), q,
-                SLOT(_q_clipboardChanged()));
+        q->connect(QApplication::clipboard(), SIGNAL(selectionChanged()), q, SLOT(_q_clipboardChanged()));
         return true;
     }
     return false;
@@ -560,8 +557,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
 
     // Filter key-events if EchoMode is normal and
     // completion mode is not set to CompletionNone
-    if (echoMode() == QLineEdit::Normal &&
-            completionMode() != KCompletion::CompletionNone) {
+    if (echoMode() == QLineEdit::Normal && completionMode() != KCompletion::CompletionNone) {
         if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter) {
             const bool trap = (d->completionBox && d->completionBox->isVisible());
             const bool stopEvent = (trap
@@ -613,7 +609,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
                 // keep cursor at cPosition
                 setSelection(old_txt.length(), cPosition - old_txt.length());
                 if (e->key() == Qt::Key_Right && cPosition > start) {
-                    //the user explicitly accepted the autocompletion
+                    // the user explicitly accepted the autocompletion
                     d->updateUserText(text());
                 }
 
@@ -724,7 +720,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
             d->disableRestoreSelection = false;
 
             if ((selectedLength != selectedText().length()) && !hasUserSelection) {
-                d->_k_restoreSelectionColors();    // and set userSelection to true
+                d->_k_restoreSelectionColors(); // and set userSelection to true
             }
 
             QString txt = text();
@@ -851,7 +847,7 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
     QLineEdit::keyPressEvent(e);
 
     if (selectedLength != selectedText().length()) {
-        d->_k_restoreSelectionColors();    // and set userSelection to true
+        d->_k_restoreSelectionColors(); // and set userSelection to true
     }
 }
 
@@ -860,8 +856,7 @@ void KLineEdit::mouseDoubleClickEvent(QMouseEvent *e)
     Q_D(KLineEdit);
     if (e->button() == Qt::LeftButton) {
         d->possibleTripleClick = true;
-        QTimer::singleShot(QApplication::doubleClickInterval(), this,
-                           SLOT(_k_tripleClickTimeout()));
+        QTimer::singleShot(QApplication::doubleClickInterval(), this, SLOT(_k_tripleClickTimeout()));
     }
     QLineEdit::mouseDoubleClickEvent(e);
 }
@@ -949,8 +944,7 @@ QMenu *KLineEdit::createStandardContextMenu()
     // menu item.
     if (compObj() && !isReadOnly() && KAuthorized::authorize(QStringLiteral("lineedit_text_completion"))) {
         QMenu *subMenu = popup->addMenu(QIcon::fromTheme(QStringLiteral("text-completion")), tr("Text Completion", "@title:menu"));
-        connect(subMenu, SIGNAL(triggered(QAction*)),
-                this, SLOT(_k_completionMenuActivated(QAction*)));
+        connect(subMenu, SIGNAL(triggered(QAction *)), this, SLOT(_k_completionMenuActivated(QAction *)));
 
         popup->addSeparator();
 
@@ -963,7 +957,7 @@ QMenu *KLineEdit::createStandardContextMenu()
         d->popupAutoCompletionAction = ag->addAction(tr("Dropdown List && Automatic", "@item:inmenu Text Completion"));
         subMenu->addActions(ag->actions());
 
-        //subMenu->setAccel( KStandardShortcut::completion(), ShellCompletion );
+        // subMenu->setAccel( KStandardShortcut::completion(), ShellCompletion );
 
         d->shellCompletionAction->setCheckable(true);
         d->noCompletionAction->setCheckable(true);
@@ -972,12 +966,12 @@ QMenu *KLineEdit::createStandardContextMenu()
         d->shortAutoCompletionAction->setCheckable(true);
         d->popupAutoCompletionAction->setCheckable(true);
 
-        d->shellCompletionAction->setEnabled(!d->disableCompletionMap[ KCompletion::CompletionShell ]);
-        d->noCompletionAction->setEnabled(!d->disableCompletionMap[ KCompletion::CompletionNone ]);
-        d->popupCompletionAction->setEnabled(!d->disableCompletionMap[ KCompletion::CompletionPopup ]);
-        d->autoCompletionAction->setEnabled(!d->disableCompletionMap[ KCompletion::CompletionAuto ]);
-        d->shortAutoCompletionAction->setEnabled(!d->disableCompletionMap[ KCompletion::CompletionMan ]);
-        d->popupAutoCompletionAction->setEnabled(!d->disableCompletionMap[ KCompletion::CompletionPopupAuto ]);
+        d->shellCompletionAction->setEnabled(!d->disableCompletionMap[KCompletion::CompletionShell]);
+        d->noCompletionAction->setEnabled(!d->disableCompletionMap[KCompletion::CompletionNone]);
+        d->popupCompletionAction->setEnabled(!d->disableCompletionMap[KCompletion::CompletionPopup]);
+        d->autoCompletionAction->setEnabled(!d->disableCompletionMap[KCompletion::CompletionAuto]);
+        d->shortAutoCompletionAction->setEnabled(!d->disableCompletionMap[KCompletion::CompletionMan]);
+        d->popupAutoCompletionAction->setEnabled(!d->disableCompletionMap[KCompletion::CompletionPopupAuto]);
 
         const KCompletion::CompletionMode mode = completionMode();
         d->noCompletionAction->setChecked(mode == KCompletion::CompletionNone);
@@ -988,7 +982,7 @@ QMenu *KLineEdit::createStandardContextMenu()
         d->popupAutoCompletionAction->setChecked(mode == KCompletion::CompletionPopupAuto);
 
         const KCompletion::CompletionMode defaultMode = KCompletion::CompletionPopup;
-        if (mode != defaultMode && !d->disableCompletionMap[ defaultMode ]) {
+        if (mode != defaultMode && !d->disableCompletionMap[defaultMode]) {
             subMenu->addSeparator();
             d->defaultAction = subMenu->addAction(tr("Default", "@item:inmenu Text Completion"));
         }
@@ -1013,14 +1007,14 @@ void KLineEdit::contextMenuEvent(QContextMenuEvent *e)
     delete popup;
 }
 
-void KLineEditPrivate::_k_completionMenuActivated(QAction  *act)
+void KLineEditPrivate::_k_completionMenuActivated(QAction *act)
 {
     Q_Q(KLineEdit);
     KCompletion::CompletionMode oldMode = q->completionMode();
 
     if (act == noCompletionAction) {
         q->setCompletionMode(KCompletion::CompletionNone);
-    } else if (act ==  shellCompletionAction) {
+    } else if (act == shellCompletionAction) {
         q->setCompletionMode(KCompletion::CompletionShell);
     } else if (act == autoCompletionAction) {
         q->setCompletionMode(KCompletion::CompletionAuto);
@@ -1055,19 +1049,18 @@ bool KLineEdit::event(QEvent *ev)
         if (d->overrideShortcut(e)) {
             ev->accept();
         }
-    } else if (ev->type() == QEvent::ApplicationPaletteChange
-               || ev->type() == QEvent::PaletteChange) {
+    } else if (ev->type() == QEvent::ApplicationPaletteChange || ev->type() == QEvent::PaletteChange) {
         // Assume the widget uses the application's palette
         QPalette p = QApplication::palette();
         d->previousHighlightedTextColor = p.color(QPalette::Normal, QPalette::HighlightedText);
         d->previousHighlightColor = p.color(QPalette::Normal, QPalette::Highlight);
         setUserSelection(d->userSelection);
     } else if (ev->type() == QEvent::ChildAdded) {
-        QObject *obj = static_cast<QChildEvent*>(ev)->child();
+        QObject *obj = static_cast<QChildEvent *>(ev)->child();
         if (obj) {
             connect(obj, &QObject::objectNameChanged, this, [this, obj] {
                 if (obj->objectName() == QLatin1String("_q_qlineeditclearaction")) {
-                    QAction *action = qobject_cast<QAction*>(obj);
+                    QAction *action = qobject_cast<QAction *>(obj);
                     connect(action, &QAction::triggered, this, &KLineEdit::clearButtonClicked);
                 }
             });
@@ -1123,14 +1116,10 @@ void KLineEdit::setCompletionBox(KCompletionBox *box)
 
     d->completionBox = box;
     if (handleSignals()) {
-        connect(d->completionBox, SIGNAL(currentTextChanged(QString)),
-                SLOT(_k_completionBoxTextChanged(QString)));
-        connect(d->completionBox, &KCompletionBox::userCancelled,
-                this, &KLineEdit::userCancelled);
-        connect(d->completionBox, SIGNAL(activated(QString)),
-                SIGNAL(completionBoxActivated(QString)));
-        connect(d->completionBox, SIGNAL(activated(QString)),
-                SIGNAL(textEdited(QString)));
+        connect(d->completionBox, SIGNAL(currentTextChanged(QString)), SLOT(_k_completionBoxTextChanged(QString)));
+        connect(d->completionBox, &KCompletionBox::userCancelled, this, &KLineEdit::userCancelled);
+        connect(d->completionBox, SIGNAL(activated(QString)), SIGNAL(completionBoxActivated(QString)));
+        connect(d->completionBox, SIGNAL(activated(QString)), SIGNAL(textEdited(QString)));
     }
 }
 
@@ -1325,12 +1314,10 @@ void KLineEdit::setCompletionObject(KCompletion *comp, bool handle)
 {
     KCompletion *oldComp = compObj();
     if (oldComp && handleSignals())
-        disconnect(oldComp, SIGNAL(matches(QStringList)),
-                   this, SLOT(setCompletedItems(QStringList)));
+        disconnect(oldComp, SIGNAL(matches(QStringList)), this, SLOT(setCompletedItems(QStringList)));
 
     if (comp && handle)
-        connect(comp, SIGNAL(matches(QStringList)),
-                this, SLOT(setCompletedItems(QStringList)));
+        connect(comp, SIGNAL(matches(QStringList)), this, SLOT(setCompletedItems(QStringList)));
 
     KCompletionBase::setCompletionObject(comp, handle);
 }
@@ -1338,8 +1325,8 @@ void KLineEdit::setCompletionObject(KCompletion *comp, bool handle)
 void KLineEdit::setUserSelection(bool userSelection)
 {
     Q_D(KLineEdit);
-    //if !d->userSelection && userSelection we are accepting a completion,
-    //so trigger an update
+    // if !d->userSelection && userSelection we are accepting a completion,
+    // so trigger an update
 
     if (!d->userSelection && userSelection) {
         d->updateUserText(text());
@@ -1377,7 +1364,7 @@ void KLineEditPrivate::_k_completionBoxTextChanged(const QString &text)
     if (!text.isEmpty()) {
         q->setText(text);
         q->setModified(true);
-        q->end(false);   // force cursor at end
+        q->end(false); // force cursor at end
     }
 }
 
@@ -1481,7 +1468,7 @@ void KLineEdit::doCompletion(const QString &text)
     }
     d->completionRunning = true;
     if (handleSignals()) {
-        makeCompletion(text);  // handle when requested...
+        makeCompletion(text); // handle when requested...
     }
     d->completionRunning = false;
 }

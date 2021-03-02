@@ -5,15 +5,18 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#include <QTest>
 #include <QSignalSpy>
+#include <QTest>
 #include <khistorycombobox.h>
 #include <klineedit.h>
 
 class KTestComboBox : public KComboBox
 {
 public:
-    KTestComboBox(bool rw, QWidget *parent = nullptr) : KComboBox(rw, parent) {}
+    KTestComboBox(bool rw, QWidget *parent = nullptr)
+        : KComboBox(rw, parent)
+    {
+    }
     KCompletionBase *delegate() const
     {
         return KCompletionBase::delegate();
@@ -68,8 +71,7 @@ private Q_SLOTS:
         QVERIFY(qobject_cast<KLineEdit *>(w.lineEdit()));
         QSignalSpy comboReturnPressedSpy(&w, SIGNAL(returnPressed()));
         QSignalSpy comboReturnPressedStringSpy(&w, SIGNAL(returnPressed(QString)));
-        connect(&w, &KHistoryComboBox::textActivated,
-                &w, &KHistoryComboBox::addToHistory);
+        connect(&w, &KHistoryComboBox::textActivated, &w, &KHistoryComboBox::addToHistory);
         QSignalSpy comboActivatedSpy(&w, &QComboBox::textActivated);
         QTest::keyClicks(&w, QStringLiteral("Hello world"));
         QTest::keyClick(&w, Qt::Key_Return);
@@ -105,8 +107,8 @@ private Q_SLOTS:
 
     void testHistoryComboReset()
     {
-        //It only tests that it doesn't crash
-        //TODO: Finish
+        // It only tests that it doesn't crash
+        // TODO: Finish
         KHistoryComboBox combo;
         QStringList items;
         items << QStringLiteral("One") << QStringLiteral("Two");
@@ -117,7 +119,7 @@ private Q_SLOTS:
     void testDeleteLineEdit()
     {
         // Test for KCombo's KLineEdit destruction
-        KTestComboBox *testCombo = new KTestComboBox(true, nullptr);   // rw, with KLineEdit
+        KTestComboBox *testCombo = new KTestComboBox(true, nullptr); // rw, with KLineEdit
         testCombo->setEditable(false); // destroys our KLineEdit, with deleteLater
         qApp->sendPostedEvents(nullptr, QEvent::DeferredDelete);
         QVERIFY(testCombo->KTestComboBox::delegate() == nullptr);
@@ -150,7 +152,7 @@ private Q_SLOTS:
             QVERIFY(completion); // completion is still alive
 
             // verify that the completion object was set on the line edit
-            lineEdit = qobject_cast<KLineEdit*>(testCombo.lineEdit());
+            lineEdit = qobject_cast<KLineEdit *>(testCombo.lineEdit());
             QVERIFY(lineEdit);
             QVERIFY(lineEdit->compObj());
             QCOMPARE(lineEdit->compObj(), completion.data());
@@ -167,7 +169,7 @@ private Q_SLOTS:
                 // but we get a new one from the second line edit
                 completion = testCombo.completionObject();
             }
-                QVERIFY(completion);
+            QVERIFY(completion);
             QCOMPARE(lineEdit2->compObj(), completion.data());
             QCOMPARE(testCombo.completionObject(), completion.data());
         }

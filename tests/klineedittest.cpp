@@ -1,16 +1,15 @@
 #include "klineedittest.h"
 
-#include <QPushButton>
-#include <QTimer>
 #include <QApplication>
 #include <QDebug>
-#include <QLabel>
 #include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
+#include <QTimer>
 
 #include <klineedit.h>
-
 
 KLineEditTest::KLineEditTest(QWidget *widget)
     : QWidget(widget)
@@ -29,18 +28,16 @@ KLineEditTest::KLineEditTest(QWidget *widget)
     m_lineedit->setSqueezedTextEnabled(true);
     m_lineedit->setClearButtonEnabled(true);
     connect(m_lineedit, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));
-    connect(m_lineedit, SIGNAL(returnPressed(QString)),
-            SLOT(slotReturnPressed(QString)));
+    connect(m_lineedit, SIGNAL(returnPressed(QString)), SLOT(slotReturnPressed(QString)));
 
     QHBoxLayout *restrictedHBox = new QHBoxLayout;
     m_restrictedLine = new KLineEdit(this);
     QRegularExpression regex(QStringLiteral("[aeiouyé]*"));
     QRegularExpressionValidator *validator = new QRegularExpressionValidator(regex, m_restrictedLine);
     m_restrictedLine->setValidator(validator);
-    //connect(m_restrictedLine, SIGNAL(invalidChar(int)), this, SLOT(slotInvalidChar(int)));
+    // connect(m_restrictedLine, SIGNAL(invalidChar(int)), this, SLOT(slotInvalidChar(int)));
     connect(m_restrictedLine, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));
-    connect(m_restrictedLine, SIGNAL(returnPressed(QString)),
-            SLOT(slotReturnPressed(QString)));
+    connect(m_restrictedLine, SIGNAL(returnPressed(QString)), SLOT(slotReturnPressed(QString)));
     restrictedHBox->addWidget(new QLabel(QStringLiteral("Vowels only:"), this));
     restrictedHBox->addWidget(m_restrictedLine);
     m_invalidCharLabel = new QLabel(this);
@@ -160,8 +157,9 @@ void KLineEditTest::slotHide()
 {
     m_lineedit->hide();
     m_btnHide->setEnabled(false);
-    m_lineedit->setText("My dog ate the homework, whaaaaaaaaaaaaaaaaaaaaaaa"
-                        "aaaaaaaaaaaaaaaaaaaaaaaaa! I want my mommy!");
+    m_lineedit->setText(
+        "My dog ate the homework, whaaaaaaaaaaaaaaaaaaaaaaa"
+        "aaaaaaaaaaaaaaaaaaaaaaaaa! I want my mommy!");
     QTimer::singleShot(1000, this, SLOT(show()));
 }
 
@@ -174,13 +172,13 @@ int main(int argc, char **argv)
 {
     QApplication a(argc, argv);
     KLineEditTest *t = new KLineEditTest();
-    //t->lineEdit()->setTrapReturnKey( true );
-    //t->lineEdit()->completionBox()->setTabHandling( false );
+    // t->lineEdit()->setTrapReturnKey( true );
+    // t->lineEdit()->completionBox()->setTabHandling( false );
     t->lineEdit()->setSqueezedTextEnabled(true);
-    t->lineEdit()->setText("This is a really really really really really really "
-                           "really really long line because I am a talkative fool!"
-                           "I mean ... REALLY talkative. If you don't believe me, ask my cousin.");
+    t->lineEdit()->setText(
+        "This is a really really really really really really "
+        "really really long line because I am a talkative fool!"
+        "I mean ... REALLY talkative. If you don't believe me, ask my cousin.");
     t->show();
     return a.exec();
 }
-

@@ -13,13 +13,16 @@
 
 #include <QApplication>
 #include <QKeyEvent>
-#include <QScrollBar>
 #include <QScreen>
+#include <QScrollBar>
 
 class KCompletionBoxPrivate
 {
 public:
-    KCompletionBoxPrivate(KCompletionBox *parent): q_ptr(parent){}
+    KCompletionBoxPrivate(KCompletionBox *parent)
+        : q_ptr(parent)
+    {
+    }
     void init();
     void cancelled();
     void _k_itemClicked(QListWidgetItem *);
@@ -30,12 +33,13 @@ public:
     bool upwardBox;
     bool emitSelected;
 
-    KCompletionBox * const q_ptr;
+    KCompletionBox *const q_ptr;
     Q_DECLARE_PUBLIC(KCompletionBox)
 };
 
 KCompletionBox::KCompletionBox(QWidget *parent)
-    : QListWidget(parent), d_ptr(new KCompletionBoxPrivate(this))
+    : QListWidget(parent)
+    , d_ptr(new KCompletionBoxPrivate(this))
 {
     Q_D(KCompletionBox);
     d->m_parent = parent;
@@ -49,12 +53,12 @@ void KCompletionBoxPrivate::init()
     upwardBox = false;
     emitSelected = true;
 
-    //we can't link to QXcbWindowFunctions::Combo
-    //also, q->setAttribute(Qt::WA_X11NetWmWindowTypeCombo); is broken in Qt xcb
+    // we can't link to QXcbWindowFunctions::Combo
+    // also, q->setAttribute(Qt::WA_X11NetWmWindowTypeCombo); is broken in Qt xcb
     q->setProperty("_q_xcb_wm_window_type", 0x001000);
     q->setAttribute(Qt::WA_ShowWithoutActivating);
 
-    //on wayland, we need an xdg-popup but we don't want it to grab
+    // on wayland, we need an xdg-popup but we don't want it to grab
     // calls setVisible, so must be done after initializations
     if (qGuiApp->platformName() == QLatin1String("wayland"))
         q->setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
@@ -68,10 +72,8 @@ void KCompletionBoxPrivate::init()
     q->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     q->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    q->connect(q, &QListWidget::itemDoubleClicked,
-            q, &KCompletionBox::slotActivated);
-    q->connect(q, SIGNAL(itemClicked(QListWidgetItem*)),
-            SLOT(_k_itemClicked(QListWidgetItem*)));
+    q->connect(q, &QListWidget::itemDoubleClicked, q, &KCompletionBox::slotActivated);
+    q->connect(q, SIGNAL(itemClicked(QListWidgetItem *)), SLOT(_k_itemClicked(QListWidgetItem *)));
 }
 
 KCompletionBox::~KCompletionBox()
@@ -140,8 +142,7 @@ bool KCompletionBox::eventFilter(QObject *o, QEvent *e)
             QKeyEvent *ev = static_cast<QKeyEvent *>(e);
             switch (ev->key()) {
             case Qt::Key_Backtab:
-                if (d->tabHandling && (ev->modifiers() == Qt::NoButton ||
-                                       (ev->modifiers() & Qt::ShiftModifier))) {
+                if (d->tabHandling && (ev->modifiers() == Qt::NoButton || (ev->modifiers() & Qt::ShiftModifier))) {
                     up();
                     ev->accept();
                     return true;
@@ -195,7 +196,7 @@ bool KCompletionBox::eventFilter(QObject *o, QEvent *e)
             case Qt::Key_Return:
                 if (ev->modifiers() & Qt::ShiftModifier) {
                     hide();
-                    ev->accept();  // Consume the Enter event
+                    ev->accept(); // Consume the Enter event
                     return true;
                 }
                 break;
@@ -232,8 +233,7 @@ bool KCompletionBox::eventFilter(QObject *o, QEvent *e)
                 return true;
             case Qt::Key_Tab:
             case Qt::Key_Backtab:
-                if (ev->modifiers() == Qt::NoButton ||
-                        (ev->modifiers() & Qt::ShiftModifier)) {
+                if (ev->modifiers() == Qt::NoButton || (ev->modifiers() & Qt::ShiftModifier)) {
                     ev->accept();
                     return true;
                 }
@@ -252,9 +252,9 @@ bool KCompletionBox::eventFilter(QObject *o, QEvent *e)
             QFocusEvent *event = static_cast<QFocusEvent *>(e);
             if (event->reason() != Qt::PopupFocusReason
 #ifdef Q_OS_WIN
-                    && (event->reason() != Qt::ActiveWindowFocusReason || QApplication::activeWindow() != this)
+                && (event->reason() != Qt::ActiveWindowFocusReason || QApplication::activeWindow() != this)
 #endif
-               ) {
+            ) {
                 hide();
             }
         }
@@ -467,7 +467,7 @@ void KCompletionBoxPrivate::cancelled()
 class KCompletionBoxItem : public QListWidgetItem
 {
 public:
-    //Returns true if dirty.
+    // Returns true if dirty.
     bool reuse(const QString &newText)
     {
         if (text() == newText) {

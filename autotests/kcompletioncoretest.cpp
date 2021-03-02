@@ -17,8 +17,7 @@
 #define wcarpet wstrings[2]
 #define wcarp wstrings[3]
 
-void
-Test_KCompletion::initTestCase()
+void Test_KCompletion::initTestCase()
 {
     strings = QStringList{QStringLiteral("clampet@test.org"), //
                           QStringLiteral("coolcat@test.org"),
@@ -31,16 +30,14 @@ Test_KCompletion::initTestCase()
     qRegisterMetaType<QStringList>("QStringList");
 }
 
-void
-Test_KCompletion::isEmpty()
+void Test_KCompletion::isEmpty()
 {
     KCompletion completion;
     QVERIFY(completion.isEmpty());
     QVERIFY(completion.items().isEmpty());
 }
 
-void
-Test_KCompletion::insertionOrder()
+void Test_KCompletion::insertionOrder()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);
@@ -57,7 +54,8 @@ Test_KCompletion::insertionOrder()
     QCOMPARE(completion.makeCompletion(QStringLiteral("ca")), QStringLiteral("carp"));
     QVERIFY(spy1.count() == 1);
     QVERIFY(spy1.takeFirst().at(0).toString() == QLatin1String("carp"));
-    QVERIFY(spy3.count() == 1); spy3.takeFirst();
+    QVERIFY(spy3.count() == 1);
+    spy3.takeFirst();
 
     QSignalSpy spy2(&completion, SIGNAL(matches(QStringList)));
     completion.makeCompletion(QStringLiteral("ca"));
@@ -74,8 +72,7 @@ Test_KCompletion::insertionOrder()
     QVERIFY(spy1.takeFirst().at(0).toString() == carpet);
 }
 
-void
-Test_KCompletion::sortedOrder()
+void Test_KCompletion::sortedOrder()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);
@@ -92,7 +89,8 @@ Test_KCompletion::sortedOrder()
     QCOMPARE(completion.makeCompletion(QStringLiteral("ca")), QStringLiteral("carp"));
     QVERIFY(spy1.count() == 1);
     QCOMPARE(spy1.takeFirst().at(0).toString(), QStringLiteral("carp"));
-    QVERIFY(spy3.count() == 1); spy3.takeFirst();
+    QVERIFY(spy3.count() == 1);
+    spy3.takeFirst();
 
     QSignalSpy spy2(&completion, SIGNAL(matches(QStringList)));
     completion.makeCompletion(QStringLiteral("ca"));
@@ -110,8 +108,7 @@ Test_KCompletion::sortedOrder()
     QCOMPARE(spy1.takeFirst().at(0).toString(), carp);
 }
 
-void
-Test_KCompletion::weightedOrder()
+void Test_KCompletion::weightedOrder()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);
@@ -127,7 +124,8 @@ Test_KCompletion::weightedOrder()
     completion.setCompletionMode(KCompletion::CompletionShell);
     QCOMPARE(completion.makeCompletion(QStringLiteral("ca")), QStringLiteral("carp"));
     spy1.takeFirst(); // empty the list
-    QVERIFY(spy3.count() == 1); spy3.takeFirst();
+    QVERIFY(spy3.count() == 1);
+    spy3.takeFirst();
 
     QSignalSpy spy2(&completion, SIGNAL(matches(QStringList)));
     completion.makeCompletion(QStringLiteral("ca"));
@@ -149,8 +147,7 @@ Test_KCompletion::weightedOrder()
     QCOMPARE(matches[2], carp);
 }
 
-void
-Test_KCompletion::substringCompletion_Insertion()
+void Test_KCompletion::substringCompletion_Insertion()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);
@@ -184,8 +181,7 @@ Test_KCompletion::substringCompletion_Insertion()
     QCOMPARE(matches[1], carpet);
 }
 
-void
-Test_KCompletion::substringCompletion_Sorted()
+void Test_KCompletion::substringCompletion_Sorted()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);
@@ -219,8 +215,7 @@ Test_KCompletion::substringCompletion_Sorted()
     QCOMPARE(matches[1], clampet);
 }
 
-void
-Test_KCompletion::substringCompletion_Weighted()
+void Test_KCompletion::substringCompletion_Weighted()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);
@@ -254,8 +249,7 @@ Test_KCompletion::substringCompletion_Weighted()
     QCOMPARE(matches[1], clampet);
 }
 
-void
-Test_KCompletion::allMatches_Insertion()
+void Test_KCompletion::allMatches_Insertion()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);
@@ -281,8 +275,7 @@ Test_KCompletion::allMatches_Insertion()
     QVERIFY(matches.count() == 0);
 }
 
-void
-Test_KCompletion::allMatches_Sorted()
+void Test_KCompletion::allMatches_Sorted()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);
@@ -308,8 +301,7 @@ Test_KCompletion::allMatches_Sorted()
     QVERIFY(matches.count() == 0);
 }
 
-void
-Test_KCompletion::allMatches_Weighted()
+void Test_KCompletion::allMatches_Weighted()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);
@@ -335,8 +327,7 @@ Test_KCompletion::allMatches_Weighted()
     QVERIFY(matches.count() == 0);
 }
 
-void
-Test_KCompletion::cycleMatches_Insertion()
+void Test_KCompletion::cycleMatches_Insertion()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);
@@ -351,8 +342,7 @@ Test_KCompletion::cycleMatches_Insertion()
     QCOMPARE(completion.previousMatch(), carp);
 }
 
-void
-Test_KCompletion::cycleMatches_Sorted()
+void Test_KCompletion::cycleMatches_Sorted()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);
@@ -367,8 +357,7 @@ Test_KCompletion::cycleMatches_Sorted()
     QCOMPARE(completion.previousMatch(), carpet);
 }
 
-void
-Test_KCompletion::cycleMatches_Weighted()
+void Test_KCompletion::cycleMatches_Weighted()
 {
     KCompletion completion;
     completion.setSoundsEnabled(false);

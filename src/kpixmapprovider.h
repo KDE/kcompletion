@@ -9,8 +9,8 @@
 #ifndef KPIXMAPPROVIDER_H
 #define KPIXMAPPROVIDER_H
 
-#include <kcompletion_export.h>
 #include <QPixmap>
+#include <kcompletion_export.h>
 
 /**
  * @class KPixmapProvider kpixmapprovider.h KPixmapProvider
@@ -39,6 +39,7 @@ public:
      */
     KCOMPLETION_DEPRECATED_VERSION(5, 66, "Use an std::function that takes a QString and returns a QIcon/QPixmap")
     virtual QPixmap pixmapFor(const QString &text, int size = 0) = 0;
+
 protected:
     /** Virtual hook, used to add new "virtual" functions while maintaining
     binary compatibility. Unused in this class.

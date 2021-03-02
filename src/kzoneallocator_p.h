@@ -15,7 +15,8 @@
 
 #include <cstddef> // size_t
 
-template <typename T> class QList;
+template<typename T>
+class QList;
 
 /**
  * \class KZoneAllocator kallocator.h <KZoneAllocator>
@@ -107,6 +108,7 @@ protected:
     void delBlock(MemBlock *b);
     void insertHash(MemBlock *b);
     void initHash();
+
 private:
     class Private;
     Private *const d;

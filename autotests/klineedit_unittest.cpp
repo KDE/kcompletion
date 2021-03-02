@@ -7,11 +7,11 @@
 */
 
 #include <QClipboard>
-#include <QToolButton>
-#include <QTest>
 #include <QSignalSpy>
-#include <klineedit.h>
+#include <QTest>
+#include <QToolButton>
 #include <kcompletionbox.h>
+#include <klineedit.h>
 
 class KLineEdit_UnitTest : public QObject
 {
@@ -68,22 +68,22 @@ private Q_SLOTS:
 
         // calling clear should emit textChanged and userTextChanged, but not textEdited
         w.clear();
-        QCOMPARE(textChangedSpy.count(),1);
-        QCOMPARE(textEditedSpy.count(),0);
+        QCOMPARE(textChangedSpy.count(), 1);
+        QCOMPARE(textEditedSpy.count(), 0);
 #if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
-        QCOMPARE(userTextChangedSpy.count(),1);
+        QCOMPARE(userTextChangedSpy.count(), 1);
 #endif
 
-        //if text box is already empty, calling clear() shouldn't emit
+        // if text box is already empty, calling clear() shouldn't emit
         // any more signals
         w.clear();
-        QCOMPARE(textChangedSpy.count(),1);
-        QCOMPARE(textEditedSpy.count(),0);
+        QCOMPARE(textChangedSpy.count(), 1);
+        QCOMPARE(textEditedSpy.count(), 0);
 #if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
-        QCOMPARE(userTextChangedSpy.count(),1);
+        QCOMPARE(userTextChangedSpy.count(), 1);
 #endif
 
-        //set the text back for further tests below
+        // set the text back for further tests below
         w.setText(QStringLiteral("Hello worl"));
 #if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
         userTextChangedSpy.clear();
@@ -237,9 +237,9 @@ private Q_SLOTS:
         QCOMPARE(w.text(), items.at(0));
         w.completionBox()->down(); // select 2nd item
         QCOMPARE(w.text(), items.at(1));
-        w.completionBox()->up();   // select 1st item again
+        w.completionBox()->up(); // select 1st item again
         QCOMPARE(w.text(), items.at(0));
-        w.completionBox()->up();   // select last item
+        w.completionBox()->up(); // select last item
         QCOMPARE(w.text(), items.at(2));
         w.completionBox()->down(); // select 1st item again
         QCOMPARE(w.text(), items.at(0));
@@ -249,7 +249,7 @@ private Q_SLOTS:
         completion.setItems(newItems);
         QTest::keyClick(&w, 'k');
         QCOMPARE(w.text(), QString("/home/k"));
-        //QCOMPARE(w.completionBox()->currentRow(), -1); // #247552
+        // QCOMPARE(w.completionBox()->currentRow(), -1); // #247552
         w.completionBox()->down(); // select the item
         QCOMPARE(w.completionBox()->items(), newItems);
         QCOMPARE(w.text(), newItems.at(0));
@@ -276,12 +276,11 @@ private Q_SLOTS:
         w.setClearButtonEnabled(false);
         w.setClearButtonEnabled(true);
         QSignalSpy spy(&w, &KLineEdit::clearButtonClicked);
-        QToolButton *tb = w.findChild<QToolButton*>();
+        QToolButton *tb = w.findChild<QToolButton *>();
         QTest::mouseClick(tb, Qt::LeftButton, Qt::NoModifier);
         QCOMPARE(w.text(), QString());
         QCOMPARE(spy.count(), 1);
     }
-
 };
 
 QTEST_MAIN(KLineEdit_UnitTest)

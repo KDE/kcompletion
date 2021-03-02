@@ -29,7 +29,6 @@ private Q_SLOTS:
     void slotCurrentIndexChanged(const QString &);
 
 private:
-
     void connectComboSignals(QComboBox *combo);
 
     QComboBox *m_qc;

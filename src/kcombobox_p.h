@@ -15,8 +15,8 @@
 
 #include "klineedit.h"
 
-#include <QPointer>
 #include <QMenu>
+#include <QPointer>
 
 class KComboBoxPrivate
 {
@@ -36,7 +36,7 @@ public:
 
     void _k_lineEditDeleted();
 
-    KComboBox * const q_ptr;
+    KComboBox *const q_ptr;
 
     KLineEdit *klineEdit = nullptr;
     bool trapReturnKey = false;

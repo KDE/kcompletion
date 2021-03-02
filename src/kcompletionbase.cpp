@@ -8,13 +8,16 @@
 
 #include <kcompletionbase.h>
 
-#include <QPointer>
 #include <QKeySequence>
+#include <QPointer>
 
 class KCompletionBasePrivate
 {
 public:
-    KCompletionBasePrivate(KCompletionBase *parent) : q_ptr(parent){}
+    KCompletionBasePrivate(KCompletionBase *parent)
+        : q_ptr(parent)
+    {
+    }
 
     ~KCompletionBasePrivate();
 
@@ -28,7 +31,7 @@ public:
     KCompletionBase::KeyBindingMap keyBindingMap;
     // we may act as a proxy to another KCompletionBase object
     KCompletionBase *delegate = nullptr;
-    KCompletionBase * const q_ptr;
+    KCompletionBase *const q_ptr;
     Q_DECLARE_PUBLIC(KCompletionBase)
 };
 
@@ -52,7 +55,6 @@ void KCompletionBasePrivate::init()
     q->setHandleSignals(true);
     q->setEmitSignals(false);
 }
-
 
 KCompletionBase::KCompletionBase()
     : d_ptr(new KCompletionBasePrivate(this))
@@ -135,8 +137,7 @@ void KCompletionBase::setHandleSignals(bool handle)
 bool KCompletionBase::isCompletionObjectAutoDeleted() const
 {
     Q_D(const KCompletionBase);
-    return d->delegate ? d->delegate->isCompletionObjectAutoDeleted()
-           : d->autoDeleteCompletionObject;
+    return d->delegate ? d->delegate->isCompletionObjectAutoDeleted() : d->autoDeleteCompletionObject;
 }
 
 void KCompletionBase::setAutoDeleteCompletionObject(bool autoDelete)
@@ -223,7 +224,7 @@ bool KCompletionBase::setKeyBinding(KeyBindingType item, const QList<QKeySequenc
 QList<QKeySequence> KCompletionBase::keyBinding(KeyBindingType item) const
 {
     Q_D(const KCompletionBase);
-    return d->delegate ? d->delegate->keyBinding(item) : d->keyBindingMap[ item ];
+    return d->delegate ? d->delegate->keyBinding(item) : d->keyBindingMap[item];
 }
 
 void KCompletionBase::useGlobalKeyBindings()
@@ -244,8 +245,7 @@ void KCompletionBase::useGlobalKeyBindings()
 KCompletion *KCompletionBase::compObj() const
 {
     Q_D(const KCompletionBase);
-    return d->delegate ? d->delegate->compObj()
-           : static_cast<KCompletion *>(d->completionObject);
+    return d->delegate ? d->delegate->compObj() : static_cast<KCompletion *>(d->completionObject);
 }
 
 KCompletionBase::KeyBindingMap KCompletionBase::keyBindingMap() const

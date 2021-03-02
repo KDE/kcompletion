@@ -10,10 +10,10 @@
 
 #include <kcompletion_export.h>
 
-#include <QObject>
-#include <QStringList>
-#include <QPointer>
 #include <QKeySequence>
+#include <QObject>
+#include <QPointer>
+#include <QStringList>
 #include <memory>
 
 class KCompTreeNode;
@@ -398,9 +398,9 @@ public Q_SLOTS:
      * @deprecated since 5.0, use makeCompletion() instead
      */
     KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletion::makeCompletion(const QString &)")
-    void slotMakeCompletion(const QString &string)     //inline (redirect)
+    void slotMakeCompletion(const QString &string) // inline (redirect)
     {
-        (void) makeCompletion(string);
+        (void)makeCompletion(string);
     }
 #endif
 
@@ -412,9 +412,9 @@ public Q_SLOTS:
      * @deprecated since 5.0, use previousMatch() instead
      */
     KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletion::previousMatch()")
-    void slotPreviousMatch()   //inline (redirect)
+    void slotPreviousMatch() // inline (redirect)
     {
-        (void) previousMatch();
+        (void)previousMatch();
     }
 #endif
 
@@ -426,9 +426,9 @@ public Q_SLOTS:
      * @deprecated since 5.0, use nextMatch() instead
      */
     KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletion::nextMatch()")
-    void slotNextMatch()   //inline (redirect)
+    void slotNextMatch() // inline (redirect)
     {
-        (void) nextMatch();
+        (void)nextMatch();
     }
 #endif
 

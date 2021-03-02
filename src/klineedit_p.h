@@ -11,7 +11,6 @@
 
 #include "klineedit.h"
 
-
 class KCompletionBox;
 class LineEditUrlDropEventFilter;
 
@@ -19,13 +18,15 @@ class KLineEditPrivate
 {
 public:
     explicit KLineEditPrivate(KLineEdit *parent)
-        : q_ptr(parent) {}
+        : q_ptr(parent)
+    {
+    }
 
     ~KLineEditPrivate();
 
     void _k_textChanged(const QString &text);
     void _k_completionMenuActivated(QAction *act);
-    void _k_tripleClickTimeout();  // resets possibleTripleClick
+    void _k_tripleClickTimeout(); // resets possibleTripleClick
     void _k_restoreSelectionColors();
     void _k_completionBoxTextChanged(const QString &text);
 
@@ -71,7 +72,7 @@ public:
     QAction *popupAutoCompletionAction;
     QAction *defaultAction;
 
-    KLineEdit * const q_ptr;
+    KLineEdit *const q_ptr;
 
     int squeezedEnd;
     int squeezedStart;
@@ -79,19 +80,17 @@ public:
     static bool s_initialized;
     static bool s_backspacePerformsCompletion; // Configuration option
 
-    bool userSelection: 1;
+    bool userSelection : 1;
     bool autoSuggest : 1;
-    bool disableRestoreSelection: 1;
-    bool handleURLDrops: 1;
-    bool trapReturnKeyEvents: 1;
-    bool enableSqueezedText: 1;
-    bool completionRunning: 1;
-    bool italicizePlaceholder: 1;
-    bool threeStars: 1;
+    bool disableRestoreSelection : 1;
+    bool handleURLDrops : 1;
+    bool trapReturnKeyEvents : 1;
+    bool enableSqueezedText : 1;
+    bool completionRunning : 1;
+    bool italicizePlaceholder : 1;
+    bool threeStars : 1;
     bool possibleTripleClick : 1; // set in mousePressEvent, deleted in tripleClickTimeout
     Q_DECLARE_PUBLIC(KLineEdit)
 };
 
-
 #endif
-

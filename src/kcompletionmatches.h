@@ -8,8 +8,8 @@
 #ifndef KCOMPLETIONMATCHES_H
 #define KCOMPLETIONMATCHES_H
 
-#include <ksortablelist.h>
 #include <kcompletion_export.h>
+#include <ksortablelist.h>
 
 #include <QStringList>
 #include <memory>

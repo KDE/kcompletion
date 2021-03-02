@@ -10,8 +10,8 @@
 
 #include <kcompletion_export.h>
 
-#include <QPair>
 #include <QList>
+#include <QPair>
 #include <algorithm>
 
 /**
@@ -21,7 +21,8 @@
  * for sorting.
  * @see KSortableList
  */
-template<typename T, typename Key = int> class KSortableItem : public QPair<Key, T>
+template<typename T, typename Key = int>
+class KSortableItem : public QPair<Key, T>
 {
 public:
     /**
@@ -29,25 +30,32 @@ public:
      * @param i the first value (the key)
      * @param t the second value (the item)
      */
-    KSortableItem(Key i, const T &t) : QPair<Key, T>(i, t) {}
+    KSortableItem(Key i, const T &t)
+        : QPair<Key, T>(i, t)
+    {
+    }
     /**
      * Creates a new KSortableItem that copies another one.
      * @param rhs the other item to copy
      */
     KSortableItem(const KSortableItem<T, Key> &rhs)
-        : QPair<Key, T>(rhs.first, rhs.second) {}
+        : QPair<Key, T>(rhs.first, rhs.second)
+    {
+    }
 
     /**
      * Creates a new KSortableItem with uninitialized values.
      */
-    KSortableItem() {}
+    KSortableItem()
+    {
+    }
 
     /**
      * Assignment operator, just copies the item.
      */
     KSortableItem<T, Key> &operator=(const KSortableItem<T, Key> &i)
     {
-        this->first  = i.first;
+        this->first = i.first;
         this->second = i.second;
         return *this;
     }
@@ -57,7 +65,7 @@ public:
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator> (const KSortableItem<T, Key> &i2) const
+    bool operator>(const KSortableItem<T, Key> &i2) const
     {
         return (i2.first < this->first);
     }
@@ -65,7 +73,7 @@ public:
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator< (const KSortableItem<T, Key> &i2) const
+    bool operator<(const KSortableItem<T, Key> &i2) const
     {
         return (this->first < i2.first);
     }
@@ -73,7 +81,7 @@ public:
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator>= (const KSortableItem<T, Key> &i2) const
+    bool operator>=(const KSortableItem<T, Key> &i2) const
     {
         return (this->first >= i2.first);
     }
@@ -81,7 +89,7 @@ public:
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator<= (const KSortableItem<T, Key> &i2) const
+    bool operator<=(const KSortableItem<T, Key> &i2) const
     {
         return !(i2.first < this->first);
     }
@@ -89,7 +97,7 @@ public:
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator== (const KSortableItem<T, Key> &i2) const
+    bool operator==(const KSortableItem<T, Key> &i2) const
     {
         return (this->first == i2.first);
     }
@@ -97,7 +105,7 @@ public:
      * Compares the two items. This implementation only compares
      * the first value.
      */
-    bool operator!= (const KSortableItem<T, Key> &i2) const
+    bool operator!=(const KSortableItem<T, Key> &i2) const
     {
         return (this->first != i2.first);
     }
@@ -148,8 +156,8 @@ public:
  * to store that key in the items, or calculate that key many times for the same item
  * during sorting if that calculation is expensive.
  */
-template <typename T, typename Key = int>
-class KSortableList : public QList<KSortableItem<T, Key> >
+template<typename T, typename Key = int>
+class KSortableList : public QList<KSortableItem<T, Key>>
 {
 public:
     /**
@@ -159,7 +167,7 @@ public:
      */
     void insert(Key i, const T &t)
     {
-        QList<KSortableItem<T, Key> >::append(KSortableItem<T, Key>(i, t));
+        QList<KSortableItem<T, Key>>::append(KSortableItem<T, Key>(i, t));
     }
     // add more as you please...
 
@@ -169,7 +177,7 @@ public:
      */
     T &operator[](Key i)
     {
-        return QList<KSortableItem<T, Key> >::operator[](i).value();
+        return QList<KSortableItem<T, Key>>::operator[](i).value();
     }
 
     /**
@@ -178,7 +186,7 @@ public:
      */
     const T &operator[](Key i) const
     {
-        return QList<KSortableItem<T, Key> >::operator[](i).value();
+        return QList<KSortableItem<T, Key>>::operator[](i).value();
     }
 
     /**

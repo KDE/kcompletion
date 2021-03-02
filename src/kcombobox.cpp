@@ -16,7 +16,6 @@
 
 #include <QUrl>
 
-
 void KComboBoxPrivate::init()
 {
     Q_Q(KComboBox);
@@ -42,8 +41,8 @@ KComboBox::KComboBox(QWidget *parent)
 }
 
 KComboBox::KComboBox(KComboBoxPrivate &dd, QWidget *parent)
-    : QComboBox(parent),
-      d_ptr(&dd)
+    : QComboBox(parent)
+    , d_ptr(&dd)
 {
     Q_D(KComboBox);
 
@@ -256,8 +255,7 @@ QSize KComboBox::minimumSizeHint() const
 void KComboBox::setLineEdit(QLineEdit *edit)
 {
     Q_D(KComboBox);
-    if (!isEditable() && edit &&
-            !qstrcmp(edit->metaObject()->className(), "QLineEdit")) {
+    if (!isEditable() && edit && !qstrcmp(edit->metaObject()->className(), "QLineEdit")) {
         // uic generates code that creates a read-only KComboBox and then
         // calls combo->setEditable(true), which causes QComboBox to set up
         // a dumb QLineEdit instead of our nice KLineEdit.
@@ -288,8 +286,7 @@ void KComboBox::setLineEdit(QLineEdit *edit)
 
     // Connect the returnPressed signal for both Q[K]LineEdits'
     if (edit) {
-        connect(edit, QOverload<>::of(&QLineEdit::returnPressed),
-                this, QOverload<>::of(&KComboBox::returnPressed));
+        connect(edit, QOverload<>::of(&QLineEdit::returnPressed), this, QOverload<>::of(&KComboBox::returnPressed));
     }
 
     if (d->klineEdit) {
@@ -299,22 +296,17 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         // when it is a KLineEdit!
         connect(edit, SIGNAL(destroyed()), SLOT(_k_lineEditDeleted()));
 
-        connect(d->klineEdit, QOverload<const QString&>::of(&KLineEdit::returnPressed),
-                this, QOverload<const QString&>::of(&KComboBox::returnPressed));
+        connect(d->klineEdit, QOverload<const QString &>::of(&KLineEdit::returnPressed), this, QOverload<const QString &>::of(&KComboBox::returnPressed));
 
-        connect(d->klineEdit, &KLineEdit::completion,
-                this, &KComboBox::completion);
+        connect(d->klineEdit, &KLineEdit::completion, this, &KComboBox::completion);
 
-        connect(d->klineEdit, &KLineEdit::substringCompletion,
-                this, &KComboBox::substringCompletion);
+        connect(d->klineEdit, &KLineEdit::substringCompletion, this, &KComboBox::substringCompletion);
 
-        connect(d->klineEdit, &KLineEdit::textRotation,
-                this, &KComboBox::textRotation);
+        connect(d->klineEdit, &KLineEdit::textRotation, this, &KComboBox::textRotation);
 
-        connect(d->klineEdit, &KLineEdit::completionModeChanged,
-                this, &KComboBox::completionModeChanged);
+        connect(d->klineEdit, &KLineEdit::completionModeChanged, this, &KComboBox::completionModeChanged);
 
-        connect(d->klineEdit, &KLineEdit::aboutToShowContextMenu, [this](QMenu *menu){
+        connect(d->klineEdit, &KLineEdit::aboutToShowContextMenu, [this](QMenu *menu) {
             Q_D(KComboBox);
             d->contextMenu = menu;
             Q_EMIT aboutToShowContextMenu(menu);
@@ -322,15 +314,13 @@ void KComboBox::setLineEdit(QLineEdit *edit)
 
         // match the declaration of the deprecated signal
 #if QT_DEPRECATED_SINCE(5, 15)
-QT_WARNING_PUSH
-QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
-QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
-        connect(d->klineEdit, &KLineEdit::completionBoxActivated,
-                this, QOverload<const QString&>::of(&QComboBox::activated));
-QT_WARNING_POP
+        QT_WARNING_PUSH
+        QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
+        QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
+        connect(d->klineEdit, &KLineEdit::completionBoxActivated, this, QOverload<const QString &>::of(&QComboBox::activated));
+        QT_WARNING_POP
 #endif
-        connect(d->klineEdit, &KLineEdit::completionBoxActivated,
-                this, &QComboBox::textActivated);
+        connect(d->klineEdit, &KLineEdit::completionBoxActivated, this, &QComboBox::textActivated);
 
         d->klineEdit->setTrapReturnKey(d->trapReturnKey);
     }

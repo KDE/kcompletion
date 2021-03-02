@@ -11,9 +11,9 @@
 #ifndef KCOMPLETIONBOX_H
 #define KCOMPLETIONBOX_H
 
+#include "kcompletion_export.h"
 #include <QListWidget>
 #include <memory>
-#include "kcompletion_export.h"
 
 class KCompletionBoxPrivate;
 class QEvent;

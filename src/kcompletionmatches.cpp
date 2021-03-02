@@ -14,18 +14,20 @@ class KCompletionMatchesPrivate
 {
 public:
     KCompletionMatchesPrivate(bool sort, KCompletionMatches *parent)
-        : sorting(sort),
-          q_ptr(parent) {}
+        : sorting(sort)
+        , q_ptr(parent)
+    {
+    }
 
     bool sorting;
-    KCompletionMatches * const q_ptr;
+    KCompletionMatches *const q_ptr;
 
     Q_DECLARE_PUBLIC(KCompletionMatches)
 };
 
 KCompletionMatches::KCompletionMatches(const KCompletionMatches &o)
-    : KSortableList<QString, int>(),
-      d_ptr(new KCompletionMatchesPrivate(o.sorting(), this))
+    : KSortableList<QString, int>()
+    , d_ptr(new KCompletionMatchesPrivate(o.sorting(), this))
 {
     *this = KCompletionMatches::operator=(o);
 }
@@ -54,9 +56,7 @@ KCompletionMatches::KCompletionMatches(const KCompletionMatchesWrapper &matches)
         KCompletionMatchesList::operator=(*matches.m_sortedList);
     } else {
         const QStringList l = matches.list();
-        for (QStringList::ConstIterator it = l.begin();
-                it != l.end();
-                ++it) {
+        for (QStringList::ConstIterator it = l.begin(); it != l.end(); ++it) {
             prepend(KSortableItem<QString, int>(1, *it));
         }
     }
@@ -70,7 +70,7 @@ QStringList KCompletionMatches::list(bool sort_P) const
 {
     Q_D(const KCompletionMatches);
     if (d->sorting && sort_P) {
-        const_cast< KCompletionMatches * >(this)->sort();
+        const_cast<KCompletionMatches *>(this)->sort();
     }
     QStringList stringList;
     // high weight == sorted last -> reverse the sorting here

@@ -11,14 +11,14 @@
 #include "khistorycombobox.h"
 #include "kcombobox_p.h"
 
-#include <kpixmapprovider.h>
 #include <KStandardShortcut>
+#include <kpixmapprovider.h>
 
 #include <QAbstractItemView>
 #include <QApplication>
+#include <QComboBox>
 #include <QMenu>
 #include <QWheelEvent>
-#include <QComboBox>
 
 class KHistoryComboBoxPrivate : public KComboBoxPrivate
 {
@@ -27,7 +27,8 @@ class KHistoryComboBoxPrivate : public KComboBoxPrivate
 public:
     KHistoryComboBoxPrivate(KHistoryComboBox *q)
         : KComboBoxPrivate(q)
-    {}
+    {
+    }
 
     void init(bool useCompletion);
     void rotateUp();
@@ -50,7 +51,7 @@ public:
     void _k_simulateActivated(const QString &);
 
     /**
-    * The text typed before Up or Down was pressed.
+     * The text typed before Up or Down was pressed.
      */
     QString typedText;
 
@@ -95,11 +96,9 @@ void KHistoryComboBoxPrivate::init(bool useCompletion)
         q->setDuplicatesEnabled(false);
     }
 
-    q->connect(q, SIGNAL(aboutToShowContextMenu(QMenu*)), SLOT(_k_addContextMenuItems(QMenu*)));
-    QObject::connect(q, QOverload<int>::of(&QComboBox::activated),
-                     q, &KHistoryComboBox::reset);
-    QObject::connect(q, QOverload<const QString&>::of(&KComboBox::returnPressed),
-                     q, &KHistoryComboBox::reset);
+    q->connect(q, SIGNAL(aboutToShowContextMenu(QMenu *)), SLOT(_k_addContextMenuItems(QMenu *)));
+    QObject::connect(q, QOverload<int>::of(&QComboBox::activated), q, &KHistoryComboBox::reset);
+    QObject::connect(q, QOverload<const QString &>::of(&KComboBox::returnPressed), q, &KHistoryComboBox::reset);
     // We want _k_simulateActivated to be called _after_ QComboBoxPrivate::_q_returnPressed
     // otherwise there's a risk of emitting activated twice (_k_simulateActivated will find
     // the item, after some app's slotActivated inserted the item into the combo).
@@ -111,13 +110,12 @@ KHistoryComboBox::KHistoryComboBox(QWidget *parent)
     : KComboBox(*new KHistoryComboBoxPrivate(this), parent)
 {
     Q_D(KHistoryComboBox);
-    d->init(true);   // using completion
+    d->init(true); // using completion
     setEditable(true);
 }
 
 // we are always read-write
-KHistoryComboBox::KHistoryComboBox(bool useCompletion,
-                                   QWidget *parent)
+KHistoryComboBox::KHistoryComboBox(bool useCompletion, QWidget *parent)
     : KComboBox(*new KHistoryComboBoxPrivate(this), parent)
 {
     Q_D(KHistoryComboBox);
@@ -138,8 +136,7 @@ void KHistoryComboBox::setHistoryItems(const QStringList &items)
     setHistoryItems(items, false);
 }
 
-void KHistoryComboBox::setHistoryItems(const QStringList &items,
-                                       bool setCompletionList)
+void KHistoryComboBox::setHistoryItems(const QStringList &items, bool setCompletionList)
 {
     QStringList insertingItems = items;
     KComboBox::clear();
@@ -203,7 +200,8 @@ void KHistoryComboBoxPrivate::_k_addContextMenuItems(QMenu *menu)
         menu->addSeparator();
         QAction *clearHistory = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-clear-history")),
                                                 KHistoryComboBox::tr("Clear &History", "@action:inmenu"),
-                                                q, SLOT(_k_clear()));
+                                                q,
+                                                SLOT(_k_clear()));
         if (!q->count()) {
             clearHistory->setEnabled(false);
         }
@@ -322,9 +320,7 @@ void KHistoryComboBoxPrivate::rotateUp()
     const int last = q->count() - 1; // last valid index
     const QString currText = q->currentText();
 
-    while (currentIndex < last &&
-            (currText == q->itemText(currentIndex) ||
-             q->itemText(currentIndex).isEmpty())) {
+    while (currentIndex < last && (currText == q->itemText(currentIndex) || q->itemText(currentIndex).isEmpty())) {
         ++currentIndex;
     }
 
@@ -475,11 +471,11 @@ void KHistoryComboBoxPrivate::_k_simulateActivated(const QString &text)
     */
     if ((q->insertPolicy() == q->NoInsert && q->findText(text, Qt::MatchFixedString | Qt::MatchCaseSensitive) == -1)) {
 #if QT_DEPRECATED_SINCE(5, 15)
-QT_WARNING_PUSH
-QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
-QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
+        QT_WARNING_PUSH
+        QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
+        QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
         Q_EMIT q->activated(text);
-QT_WARNING_POP
+        QT_WARNING_POP
 #endif
         Q_EMIT q->textActivated(text);
     }
@@ -490,11 +486,11 @@ QT_WARNING_POP
     */
     else if (q->insertPolicy() != q->InsertAtCurrent && q->count() >= q->maxCount()) {
 #if QT_DEPRECATED_SINCE(5, 15)
-QT_WARNING_PUSH
-QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
-QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
+        QT_WARNING_PUSH
+        QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
+        QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
         Q_EMIT q->activated(text);
-QT_WARNING_POP
+        QT_WARNING_POP
 #endif
         Q_EMIT q->textActivated(text);
     }

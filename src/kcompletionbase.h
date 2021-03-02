@@ -62,7 +62,7 @@ public:
     };
 
     // Map for the key binding types mentioned above.
-    typedef QMap<KeyBindingType, QList<QKeySequence> > KeyBindingMap;
+    typedef QMap<KeyBindingType, QList<QKeySequence>> KeyBindingMap;
 
     /**
      * Default constructor.

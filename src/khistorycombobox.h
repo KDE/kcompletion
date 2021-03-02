@@ -67,11 +67,11 @@ public:
     explicit KHistoryComboBox(QWidget *parent = nullptr);
 
     /**
-    * Same as the previous constructor, but additionally has the option
-    * to specify whether you want to let KHistoryComboBox handle completion
-    * or not. If set to @c true, KHistoryComboBox will sync the completion to the
-    * contents of the combobox.
-    */
+     * Same as the previous constructor, but additionally has the option
+     * to specify whether you want to let KHistoryComboBox handle completion
+     * or not. If set to @c true, KHistoryComboBox will sync the completion to the
+     * contents of the combobox.
+     */
     explicit KHistoryComboBox(bool useCompletion, QWidget *parent = nullptr);
 
     /**
@@ -256,7 +256,7 @@ private:
     Q_DECLARE_PRIVATE_D(KComboBox::d_ptr, KHistoryComboBox)
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 79)
     // Unused, kept for ABI compatibility
-    const void * __kcompletion_d_do_not_use;
+    const void *__kcompletion_d_do_not_use;
 #endif
 
     Q_PRIVATE_SLOT(d_func(), void _k_clear())
@@ -267,4 +267,3 @@ private:
 };
 
 #endif
-
