@@ -1,0 +1,101 @@
+# Agron Selimaj <as9902613@gmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: kde4libs\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2012-01-19 00:20-0500\n"
+"Last-Translator: Agron Selimaj <as9902613@gmail.com>\n"
+"Language-Team: Albanian <sq@li.org>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2010-11-24 03:19+0000\n"
+"X-Generator: Lokalize 1.2\n"
+"X-Qt-Contexts: true\n"
+
+#: khistorycombobox.cpp:202
+#, fuzzy
+#| msgid "Clear &History"
+msgctxt "KHistoryComboBox|@action:inmenu"
+msgid "Clear &History"
+msgstr "Pastro &Historinë"
+
+#: klineedit.cpp:98
+#, fuzzy
+#| msgid "1"
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:932
+#, fuzzy
+#| msgid "C&lear"
+msgctxt "KLineEdit|@action:inmenu"
+msgid "C&lear"
+msgstr "P&astro"
+
+#: klineedit.cpp:946
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Text Completion"
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Plotësim i Tekstit"
+
+#: klineedit.cpp:952
+#, fuzzy
+#| msgid "None"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Asnjë"
+
+#: klineedit.cpp:953
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Manual"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Manual"
+
+#: klineedit.cpp:954
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Automatik"
+
+#: klineedit.cpp:955
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Dropdown List"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Listë në rënie"
+
+#: klineedit.cpp:956
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Short Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Automatike e Shkurtër"
+
+#: klineedit.cpp:957
+#, fuzzy
+#| msgctxt "@item:inmenu Text Completion"
+#| msgid "Dropdown List && Automatic"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Listë në Rënie && Automatike"
+
+#: klineedit.cpp:987
+#, fuzzy
+#| msgctxt "Encodings menu"
+#| msgid "Default"
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "I Parazgjedhur"
