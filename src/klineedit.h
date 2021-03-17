@@ -405,9 +405,9 @@ Q_SIGNALS:
      * signal is @em not emitted if the widget's @c EchoMode is set to
      * QLineEdit::EchoMode.
      *
-     * @deprecated since 5.81, use KLineEdit::returnKeyPressed(const QString &)
+     * @deprecated since 5.81, use the KLineEdit::returnKeyPressed(const QString &) signal instead
      */
-    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use KLineEdit::returnKeyPressed(const QString &)")
+    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use the KLineEdit::returnKeyPressed(const QString &) signal instead")
     void returnPressed(const QString &text); // clazy:exclude=overloaded-signal
 #endif
 

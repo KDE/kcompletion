@@ -181,9 +181,9 @@ Q_SIGNALS:
     /**
      * Emitted when an item is selected, @p text is the text of the selected item.
      *
-     * @deprecated since 5.81, use KCompletionBox::textActivated(const QString &);
+     * @deprecated since 5.81, use the KCompletionBox::textActivated(const QString &) signal instead
      */
-    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use KCompletionBox::textActivated(const QString &)")
+    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use the KCompletionBox::textActivated(const QString &) signal instead")
     void activated(const QString &text); // clazy:exclude=overloaded-signal
 #endif
 

@@ -397,9 +397,9 @@ Q_SIGNALS:
      *
      * Note that this signal is only emitted when the widget is editable.
      *
-     * @deprecated since 5.81, use KComboBox::returnPressed(const QString &) signal
+     * @deprecated since 5.81, use the KComboBox::returnPressed(const QString &) signal
      */
-    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use KComboBox::returnPressed(const QString &)")
+    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use the KComboBox::returnPressed(const QString &) signal instead")
     void returnPressed(); // clazy:exclude=overloaded-signal
 #endif
 
