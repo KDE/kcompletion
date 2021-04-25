@@ -384,6 +384,7 @@ void KLineEditPrivate::setSqueezedText()
 
     // TODO: investigate use of QFontMetrics::elidedText for this
     if (textWidth > labelWidth) {
+        const QStringView sview{fullText};
         // TODO: better would be "…" char (0x2026), but for that one would need to ensure it's from the main font,
         // otherwise if resulting in use of a new fallback font this can affect the metrics of the complete text,
         // resulting in shifted characters
@@ -394,7 +395,7 @@ void KLineEditPrivate::setSqueezedText()
 
         // estimate how many letters we can add to the dots on both sides
         int letters = fullText.length() * (labelWidth - squeezedWidth) / textWidth / 2;
-        squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
+        squeezedText = sview.left(letters) + ellipsisText + sview.right(letters);
         squeezedWidth = fm.boundingRect(squeezedText).width();
 
         if (squeezedWidth < labelWidth) {
@@ -402,17 +403,17 @@ void KLineEditPrivate::setSqueezedText()
             // add letters while text < label
             do {
                 letters++;
-                squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
+                squeezedText = sview.left(letters) + ellipsisText + sview.right(letters);
                 squeezedWidth = fm.boundingRect(squeezedText).width();
             } while (squeezedWidth < labelWidth && letters <= fullLength / 2);
             letters--;
-            squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
+            squeezedText = sview.left(letters) + ellipsisText + sview.right(letters);
         } else if (squeezedWidth > labelWidth) {
             // we estimated too long
             // remove letters while text > label
             do {
                 letters--;
-                squeezedText = fullText.leftRef(letters) + ellipsisText + fullText.rightRef(letters);
+                squeezedText = sview.left(letters) + ellipsisText + sview.right(letters);
                 squeezedWidth = fm.boundingRect(squeezedText).width();
             } while (squeezedWidth > labelWidth && letters >= 5);
         }

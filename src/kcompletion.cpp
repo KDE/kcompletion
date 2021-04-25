@@ -38,7 +38,11 @@ void KCompletionPrivate::addWeightedItem(const QString &item)
     int index = item.lastIndexOf(QLatin1Char(':'));
     if (index > 0) {
         bool ok;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        weight = QStringView(item).mid(index + 1).toUInt(&ok);
+#else
         weight = item.midRef(index + 1).toUInt(&ok);
+#endif
         if (!ok) {
             weight = 0;
         }
