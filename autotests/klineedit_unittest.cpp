@@ -32,10 +32,10 @@ private Q_SLOTS:
     {
         KLineEdit w;
         w.setText(QStringLiteral("Hello world"));
-        QSignalSpy qReturnPressedSpy(&w, SIGNAL(returnPressed()));
+        QSignalSpy qReturnPressedSpy(&w, &QLineEdit::returnPressed);
 
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QSignalSpy kReturnPressedSpy(&w, SIGNAL(returnPressed(QString)));
+        QSignalSpy kReturnPressedSpy(&w, QOverload<const QString &>::of(&KLineEdit::returnPressed));
 #endif
         QSignalSpy returnKeyPressedSpy(&w, &KLineEdit::returnKeyPressed);
 
@@ -56,10 +56,10 @@ private Q_SLOTS:
         QVERIFY(!w.isModified());
 
         // setText emits textChanged and userTextChanged, but not textEdited
-        QSignalSpy textChangedSpy(&w, SIGNAL(textChanged(QString)));
-        QSignalSpy textEditedSpy(&w, SIGNAL(textEdited(QString)));
+        QSignalSpy textChangedSpy(&w, &QLineEdit::textChanged);
+        QSignalSpy textEditedSpy(&w, &QLineEdit::textEdited);
 #if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
-        QSignalSpy userTextChangedSpy(&w, SIGNAL(userTextChanged(QString)));
+        QSignalSpy userTextChangedSpy(&w, &KLineEdit::userTextChanged);
 #endif
         w.setText(QStringLiteral("Hello worl"));
 #if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)

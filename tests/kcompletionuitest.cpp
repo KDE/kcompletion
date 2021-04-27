@@ -59,7 +59,7 @@ Form1::Form1(QWidget *parent)
     combo->setCompletionObject(edit->completionObject());
     // combo->setMaxCount( 5 );
     combo->setHistoryItems(defaultItems(), true);
-    connect(combo, SIGNAL(activated(QString)), combo, SLOT(addToHistory(QString)));
+    connect(combo, &QComboBox::textActivated, combo, &KHistoryComboBox::addToHistory);
     combo->setToolTip(QStringLiteral("KHistoryComboBox"));
     Layout2->addWidget(combo);
 

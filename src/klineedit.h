@@ -643,12 +643,6 @@ protected:
 
 private:
     std::unique_ptr<KLineEditPrivate> const d_ptr;
-
-    Q_PRIVATE_SLOT(d_func(), void _k_textChanged(const QString &))
-    Q_PRIVATE_SLOT(d_func(), void _k_completionMenuActivated(QAction *))
-    Q_PRIVATE_SLOT(d_func(), void _k_tripleClickTimeout())
-    Q_PRIVATE_SLOT(d_func(), void _k_restoreSelectionColors())
-    Q_PRIVATE_SLOT(d_func(), void _k_completionBoxTextChanged(const QString &))
 };
 
 #endif

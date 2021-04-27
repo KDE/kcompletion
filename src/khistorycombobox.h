@@ -259,10 +259,6 @@ private:
     const void *__kcompletion_d_do_not_use;
 #endif
 
-    Q_PRIVATE_SLOT(d_func(), void _k_clear())
-    Q_PRIVATE_SLOT(d_func(), void _k_addContextMenuItems(QMenu *))
-    Q_PRIVATE_SLOT(d_func(), void _k_simulateActivated(const QString &))
-
     Q_DISABLE_COPY(KHistoryComboBox)
 };
 

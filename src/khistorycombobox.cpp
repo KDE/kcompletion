@@ -96,7 +96,9 @@ void KHistoryComboBoxPrivate::init(bool useCompletion)
         q->setDuplicatesEnabled(false);
     }
 
-    q->connect(q, SIGNAL(aboutToShowContextMenu(QMenu*)), SLOT(_k_addContextMenuItems(QMenu*)));
+    q->connect(q, &KComboBox::aboutToShowContextMenu, q, [this](QMenu *menu) {
+        _k_addContextMenuItems(menu);
+    });
     QObject::connect(q, QOverload<int>::of(&QComboBox::activated), q, &KHistoryComboBox::reset);
     QObject::connect(q, QOverload<const QString &>::of(&KComboBox::returnPressed), q, [q]() {
         q->reset();
@@ -207,10 +209,10 @@ void KHistoryComboBoxPrivate::_k_addContextMenuItems(QMenu *menu)
     Q_Q(KHistoryComboBox);
     if (menu) {
         menu->addSeparator();
-        QAction *clearHistory = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-clear-history")),
-                                                KHistoryComboBox::tr("Clear &History", "@action:inmenu"),
-                                                q,
-                                                SLOT(_k_clear()));
+        QAction *clearHistory =
+            menu->addAction(QIcon::fromTheme(QStringLiteral("edit-clear-history")), KHistoryComboBox::tr("Clear &History", "@action:inmenu"), q, [this]() {
+                _k_clear();
+            });
         if (!q->count()) {
             clearHistory->setEnabled(false);
         }

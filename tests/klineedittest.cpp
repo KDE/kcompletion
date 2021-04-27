@@ -27,8 +27,8 @@ KLineEditTest::KLineEditTest(QWidget *widget)
     m_lineedit->completionObject()->setItems(list);
     m_lineedit->setSqueezedTextEnabled(true);
     m_lineedit->setClearButtonEnabled(true);
-    connect(m_lineedit, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));
-    connect(m_lineedit, SIGNAL(returnPressed(QString)), SLOT(slotReturnPressed(QString)));
+    connect(m_lineedit, &QLineEdit::returnPressed, this, &KLineEditTest::slotReturnPressed);
+    connect(m_lineedit, &KLineEdit::returnKeyPressed, this, &KLineEditTest::slotReturnKeyPressed);
 
     QHBoxLayout *restrictedHBox = new QHBoxLayout;
     m_restrictedLine = new KLineEdit(this);
@@ -36,8 +36,8 @@ KLineEditTest::KLineEditTest(QWidget *widget)
     QRegularExpressionValidator *validator = new QRegularExpressionValidator(regex, m_restrictedLine);
     m_restrictedLine->setValidator(validator);
     // connect(m_restrictedLine, SIGNAL(invalidChar(int)), this, SLOT(slotInvalidChar(int)));
-    connect(m_restrictedLine, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));
-    connect(m_restrictedLine, SIGNAL(returnPressed(QString)), SLOT(slotReturnPressed(QString)));
+    connect(m_restrictedLine, &QLineEdit::returnPressed, this, &KLineEditTest::slotReturnPressed);
+    connect(m_restrictedLine, &KLineEdit::returnKeyPressed, this, &KLineEditTest::slotReturnKeyPressed);
     restrictedHBox->addWidget(new QLabel(QStringLiteral("Vowels only:"), this));
     restrictedHBox->addWidget(m_restrictedLine);
     m_invalidCharLabel = new QLabel(this);
@@ -114,7 +114,7 @@ void KLineEditTest::slotReturnPressed()
     qDebug() << "Return pressed";
 }
 
-void KLineEditTest::slotReturnPressed(const QString &text)
+void KLineEditTest::slotReturnKeyPressed(const QString &text)
 {
     qDebug() << "Return pressed: " << text;
 }
@@ -160,7 +160,7 @@ void KLineEditTest::slotHide()
     m_lineedit->setText(
         "My dog ate the homework, whaaaaaaaaaaaaaaaaaaaaaaa"
         "aaaaaaaaaaaaaaaaaaaaaaaaa! I want my mommy!");
-    QTimer::singleShot(1000, this, SLOT(show()));
+    QTimer::singleShot(1000, this, &KLineEditTest::show);
 }
 
 void KLineEditTest::slotInvalidChar(int key)

@@ -248,8 +248,6 @@ protected Q_SLOTS:
 
 private:
     std::unique_ptr<KCompletionBoxPrivate> const d_ptr;
-
-    Q_PRIVATE_SLOT(d_func(), void _k_itemClicked(QListWidgetItem *))
 };
 
 #endif // KCOMPLETIONBOX_H

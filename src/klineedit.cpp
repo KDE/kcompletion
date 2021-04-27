@@ -109,7 +109,9 @@ void KLineEditPrivate::init()
     autoSuggest = (mode == KCompletion::CompletionMan //
                    || mode == KCompletion::CompletionPopupAuto //
                    || mode == KCompletion::CompletionAuto);
-    q->connect(q, SIGNAL(selectionChanged()), q, SLOT(_k_restoreSelectionColors()));
+    q->connect(q, &KLineEdit::selectionChanged, q, [this]() {
+        _k_restoreSelectionColors();
+    });
 
     if (handleURLDrops) {
         q->installEventFilter(urlDropEventFilter);
@@ -123,7 +125,9 @@ void KLineEditPrivate::init()
         previousHighlightColor = p.color(QPalette::Normal, QPalette::Highlight);
     }
 
-    q->connect(q, SIGNAL(textChanged(QString)), q, SLOT(_k_textChanged(QString)));
+    q->connect(q, &KLineEdit::textChanged, q, [this](const QString &text) {
+        _k_textChanged(text);
+    });
 }
 
 KLineEdit::KLineEdit(const QString &string, QWidget *parent)
@@ -466,9 +470,7 @@ bool KLineEditPrivate::copySqueezedText(bool copy) const
         }
         QString t = squeezedText;
         t = t.mid(start, end - start);
-        q->disconnect(QApplication::clipboard(), SIGNAL(selectionChanged()), q, nullptr);
         QApplication::clipboard()->setText(t, copy ? QClipboard::Clipboard : QClipboard::Selection);
-        q->connect(QApplication::clipboard(), SIGNAL(selectionChanged()), q, SLOT(_q_clipboardChanged()));
         return true;
     }
     return false;
@@ -857,7 +859,9 @@ void KLineEdit::mouseDoubleClickEvent(QMouseEvent *e)
     Q_D(KLineEdit);
     if (e->button() == Qt::LeftButton) {
         d->possibleTripleClick = true;
-        QTimer::singleShot(QApplication::doubleClickInterval(), this, SLOT(_k_tripleClickTimeout()));
+        QTimer::singleShot(QApplication::doubleClickInterval(), this, [d]() {
+            d->_k_tripleClickTimeout();
+        });
     }
     QLineEdit::mouseDoubleClickEvent(e);
 }
@@ -945,7 +949,9 @@ QMenu *KLineEdit::createStandardContextMenu()
     // menu item.
     if (compObj() && !isReadOnly() && KAuthorized::authorize(QStringLiteral("lineedit_text_completion"))) {
         QMenu *subMenu = popup->addMenu(QIcon::fromTheme(QStringLiteral("text-completion")), tr("Text Completion", "@title:menu"));
-        connect(subMenu, SIGNAL(triggered(QAction *)), this, SLOT(_k_completionMenuActivated(QAction *)));
+        connect(subMenu, &QMenu::triggered, this, [d](QAction *action) {
+            d->_k_completionMenuActivated(action);
+        });
 
         popup->addSeparator();
 
@@ -1117,7 +1123,10 @@ void KLineEdit::setCompletionBox(KCompletionBox *box)
 
     d->completionBox = box;
     if (handleSignals()) {
-        connect(d->completionBox, SIGNAL(currentTextChanged(QString)), SLOT(_k_completionBoxTextChanged(QString)));
+        connect(d->completionBox, &KCompletionBox::currentTextChanged, this, [d](const QString &text) {
+            d->_k_completionBoxTextChanged(text);
+        });
+
         connect(d->completionBox, &KCompletionBox::userCancelled, this, &KLineEdit::userCancelled);
 
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)

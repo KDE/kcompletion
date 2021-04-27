@@ -42,7 +42,7 @@ private:
         w.setEditable(true);
         QCOMPARE(w.lineEdit(), lineEdit);
         // KLineEdit signals
-        QSignalSpy qReturnPressedSpy(w.lineEdit(), SIGNAL(returnPressed()));
+        QSignalSpy qReturnPressedSpy(w.lineEdit(), &QLineEdit::returnPressed);
 
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
         QSignalSpy kEditReturnPressedSpy(lineEdit, QOverload<const QString &>::of(&KLineEdit::returnPressed));
@@ -51,7 +51,7 @@ private:
 
         // KComboBox signals
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QSignalSpy comboReturnPressedSpy(&w, SIGNAL(returnPressed()));
+        QSignalSpy comboReturnPressedSpy(&w, QOverload<>::of(&KComboBox::returnPressed));
 #endif
         QSignalSpy comboReturnPressedStringSpy(&w, QOverload<const QString &>::of(&KComboBox::returnPressed));
 
@@ -88,9 +88,9 @@ private Q_SLOTS:
         KHistoryComboBox w;
         QVERIFY(qobject_cast<KLineEdit *>(w.lineEdit()));
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QSignalSpy comboReturnPressedSpy(&w, SIGNAL(returnPressed()));
+        QSignalSpy comboReturnPressedSpy(&w, QOverload<>::of(&KComboBox::returnPressed));
 #endif
-        QSignalSpy comboReturnPressedStringSpy(&w, SIGNAL(returnPressed(QString)));
+        QSignalSpy comboReturnPressedStringSpy(&w, QOverload<const QString &>::of(&KComboBox::returnPressed));
         connect(&w, &KHistoryComboBox::textActivated, &w, &KHistoryComboBox::addToHistory);
         QSignalSpy comboActivatedSpy(&w, &QComboBox::textActivated);
         QTest::keyClicks(&w, QStringLiteral("Hello world"));
@@ -112,7 +112,7 @@ private Q_SLOTS:
         QStringList items;
         items << QStringLiteral("One") << QStringLiteral("Two") << QStringLiteral("Three") << QStringLiteral("Four");
         w.addItems(items);
-        QSignalSpy currentIndexChangedSpy(&w, SIGNAL(currentIndexChanged(int)));
+        QSignalSpy currentIndexChangedSpy(&w, &QComboBox::currentIndexChanged);
         w.completionObject()->setItems(items);
         QCOMPARE(w.currentIndex(), 0);
         QTest::keyClick(&w, Qt::Key_Up);
