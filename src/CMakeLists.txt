@@ -41,7 +41,7 @@ target_link_libraries(KF5Completion PUBLIC Qt5::Widgets
                                             KF5::WidgetsAddons   # KCursor
 )
 
-set_target_properties(KF5Completion PROPERTIES VERSION   ${KCOMPLETION_VERSION_STRING}
+set_target_properties(KF5Completion PROPERTIES VERSION   ${KCOMPLETION_VERSION}
                                                SOVERSION ${KCOMPLETION_SOVERSION}
                                                EXPORT_NAME Completion
 )
