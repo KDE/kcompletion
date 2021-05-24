@@ -1,6 +1,9 @@
-ecm_create_qm_loader(kcompletion_QM_LOADER kcompletion5_qt)
+add_library(KF5Completion)
+add_library(KF5::Completion ALIAS KF5Completion)
 
-set(kcompletion_SRCS
+ecm_create_qm_loader(KF5Completion kcompletion5_qt)
+
+target_sources(KF5Completion PRIVATE
   kcombobox.cpp
   kcompletion.cpp
   kcompletionbase.cpp
@@ -11,10 +14,9 @@ set(kcompletion_SRCS
   kzoneallocator.cpp
   kcompletionbase.cpp
   kcompletionmatches.cpp
-  ${kcompletion_QM_LOADER}
 )
 
-ecm_qt_declare_logging_category(kcompletion_SRCS
+ecm_qt_declare_logging_category(KF5Completion
     HEADER kcompletion_debug.h
     IDENTIFIER KCOMPLETION_LOG
     CATEGORY_NAME kf.completion
@@ -22,8 +24,6 @@ ecm_qt_declare_logging_category(kcompletion_SRCS
     EXPORT KCOMPLETION
 )
 
-add_library(KF5Completion ${kcompletion_SRCS})
-add_library(KF5::Completion ALIAS KF5Completion)
 ecm_generate_export_header(KF5Completion
     BASE_NAME KCompletion
     GROUP_BASE_NAME KF
