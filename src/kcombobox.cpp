@@ -284,10 +284,12 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         d->klineEdit->setCompletionObject(completion);
     }
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
     // Connect the returnPressed signal for both Q[K]LineEdits'
     if (edit) {
         connect(edit, QOverload<>::of(&QLineEdit::returnPressed), this, QOverload<>::of(&KComboBox::returnPressed));
     }
+#endif
 
     if (d->klineEdit) {
         // someone calling KComboBox::setEditable(false) destroys our

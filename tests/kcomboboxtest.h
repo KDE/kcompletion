@@ -1,6 +1,8 @@
 #ifndef _KCOMBOBOXTEST_H
 #define _KCOMBOBOXTEST_H
 
+#include <kcompletion_export.h>
+
 #include <QWidget>
 
 class QTimer;
@@ -21,7 +23,9 @@ private Q_SLOTS:
     void quitApp();
     void slotTimeout();
     void slotDisable();
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
     void slotReturnPressed();
+#endif
     void slotReturnPressed(const QString &);
     void slotActivated(int);
     void slotActivated(const QString &);
