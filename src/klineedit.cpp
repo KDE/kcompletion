@@ -1454,6 +1454,7 @@ bool KLineEdit::isContextMenuEnabled() const
 }
 #endif
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 83)
 void KLineEdit::setPasswordMode(bool passwordMode)
 {
     Q_D(KLineEdit);
@@ -1470,11 +1471,14 @@ void KLineEdit::setPasswordMode(bool passwordMode)
         setEchoMode(Normal);
     }
 }
+#endif
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 83)
 bool KLineEdit::passwordMode() const
 {
     return echoMode() == NoEcho || echoMode() == Password;
 }
+#endif
 
 void KLineEdit::doCompletion(const QString &text)
 {

@@ -133,7 +133,11 @@ void KLineEditTest::slotReadOnly(bool ro)
 
 void KLineEditTest::slotPassword(bool pw)
 {
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 83)
     m_lineedit->setPasswordMode(pw);
+#else
+    m_lineedit->setEchoMode(pw ? QLineEdit::Password : QLineEdit::Normal);
+#endif
     QString text = (pw) ? "&Normal Text" : "&Password";
     m_btnPassword->setText(text);
 }

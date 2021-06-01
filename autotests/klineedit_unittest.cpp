@@ -18,6 +18,7 @@ class KLineEdit_UnitTest : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 83)
     void testPassword()
     {
         KLineEdit w;
@@ -27,6 +28,7 @@ private Q_SLOTS:
         QTest::keyClick(&w, Qt::Key_3);
         QCOMPARE(w.text(), QString("123"));
     }
+#endif
 
     void testReturnPressed()
     {

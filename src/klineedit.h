@@ -86,10 +86,6 @@ class KLineEditPrivate;
  * mode. This differs from QLineEdit's implementation and is done to give visual
  * distinction between the three different modes: disabled, read-only, and read-write.
  *
- * KLineEdit also has a password mode which depends on global KDE settings.
- * Use @c KLineEdit::setPasswordMode() instead of @c QLineEdit::echoMode property
- * to have a password field.
- *
  * @b Usage
  *
  * To enable the basic completion feature:
@@ -160,7 +156,9 @@ class KCOMPLETION_EXPORT KLineEdit : public QLineEdit, public KCompletionBase //
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 46)
     Q_PROPERTY(bool showClearButton READ isClearButtonShown WRITE setClearButtonShown)
 #endif
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 83)
     Q_PROPERTY(bool passwordMode READ passwordMode WRITE setPasswordMode)
+#endif
 
 public:
     /**
@@ -536,17 +534,27 @@ public Q_SLOTS:
      */
     virtual void setText(const QString &);
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 83)
     /**
      * @brief set the line edit in password mode.
      * this change the EchoMode according to KDE preferences.
      * @param passwordMode true to set in password mode
+     *
+     * @deprecated Since 5.83, use KPasswordLineEdit or QLineEdit::setEchoMode(QLineEdit::EchoMode).
      */
+    KCOMPLETION_DEPRECATED_VERSION(5, 83, "Use KPasswordLineEdit or QLineEdit::setEchoMode(QLineEdit::EchoMode)")
     void setPasswordMode(bool passwordMode = true);
+#endif
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 83)
     /**
      * @return returns true if the lineedit is set to password mode echoing
+     *
+     * @deprecated Since 5.83, see setPasswordMode(bool)
      */
+    KCOMPLETION_DEPRECATED_VERSION(5, 83, "See API docs")
     bool passwordMode() const;
+#endif
 
 protected Q_SLOTS:
 
