@@ -198,7 +198,7 @@ public:
     void setCompletionMode(KCompletion::CompletionMode mode) override;
 
     /**
-     * Disables completion modes by makeing them non-checkable.
+     * Disables completion modes by making them non-checkable.
      *
      * The context menu allows to change the completion mode.
      * This method allows to disable some modes.

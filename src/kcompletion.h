@@ -495,7 +495,7 @@ Q_SIGNALS:
      *
      * In particular, makeCompletion(), previousMatch() and nextMatch()
      * all emit this signal; makeCompletion() will only emit it when a
-     * match is found, but the other methods will alwasy emit it (and so
+     * match is found, but the other methods will always emit it (and so
      * may emit it with an empty string).
      *
      * @param item the matching item, or QString() if there were no more

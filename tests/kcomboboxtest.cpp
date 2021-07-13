@@ -109,7 +109,7 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     vbox->addLayout(hbox);
 
-    // Popuplate the select-only list box
+    // Populate the select-only list box
     QStringList list;
     list << QStringLiteral("Stone") << QStringLiteral("Tree") << QStringLiteral("Peables") << QStringLiteral("Ocean") << QStringLiteral("Sand")
          << QStringLiteral("Chips") << QStringLiteral("Computer") << QStringLiteral("Mankind");
