@@ -449,7 +449,7 @@ void KHistoryComboBox::insertItems(const QStringList &items)
 {
     Q_D(KHistoryComboBox);
 
-    for (const QString item : items) {
+    for (const QString &item : items) {
         if (item.isEmpty()) {
             continue;
         }
