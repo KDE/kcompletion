@@ -454,7 +454,8 @@ bool KLineEditPrivate::copySqueezedText(bool copy) const
         if (!that->hasSelectedText()) {
             return false;
         }
-        int start = q->selectionStart(), end = start + q->selectedText().length();
+        int start = q->selectionStart();
+        int end = start + q->selectedText().length();
         if (start >= squeezedStart + 3) {
             start = start - 3 - squeezedStart + squeezedEnd;
         } else if (start > squeezedStart) {
@@ -1329,11 +1330,13 @@ KCompletionBox *KLineEdit::completionBox(bool create)
 void KLineEdit::setCompletionObject(KCompletion *comp, bool handle)
 {
     KCompletion *oldComp = compObj();
-    if (oldComp && handleSignals())
+    if (oldComp && handleSignals()) {
         disconnect(oldComp, SIGNAL(matches(QStringList)), this, SLOT(setCompletedItems(QStringList)));
+    }
 
-    if (comp && handle)
+    if (comp && handle) {
         connect(comp, SIGNAL(matches(QStringList)), this, SLOT(setCompletedItems(QStringList)));
+    }
 
     KCompletionBase::setCompletionObject(comp, handle);
 }

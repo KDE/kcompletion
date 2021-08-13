@@ -739,11 +739,13 @@ void KCompletionMatchesWrapper::extractStringsFromNodeCI(const KCompTreeNode *no
 
     QChar ch1 = restString.at(0);
     QString newRest = restString.mid(1);
-    KCompTreeNode *child1, *child2;
+    KCompTreeNode *child1;
+    KCompTreeNode *child2;
 
     child1 = node->find(ch1); // the correct match
-    if (child1)
+    if (child1) {
         extractStringsFromNodeCI(child1, beginning + QChar(*child1), newRest);
+    }
 
     // append the case insensitive matches, if available
     if (ch1.isLetter()) {
@@ -754,8 +756,9 @@ void KCompletionMatchesWrapper::extractStringsFromNodeCI(const KCompTreeNode *no
         }
         if (ch1 != ch2) {
             child2 = node->find(ch2);
-            if (child2)
+            if (child2) {
                 extractStringsFromNodeCI(child2, beginning + QChar(*child2), newRest);
+            }
         }
     }
 }

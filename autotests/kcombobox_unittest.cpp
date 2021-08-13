@@ -153,7 +153,8 @@ private Q_SLOTS:
     {
         QFETCH(bool, editable);
         QPointer<KCompletion> completion;
-        QPointer<KLineEdit> lineEdit, lineEdit2;
+        QPointer<KLineEdit> lineEdit;
+        QPointer<KLineEdit> lineEdit2;
 
         {
             // Test for KCombo's KLineEdit inheriting the completion object of the parent

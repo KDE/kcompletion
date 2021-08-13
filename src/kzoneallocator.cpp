@@ -211,11 +211,12 @@ void KZoneAllocator::delBlock(MemBlock *b)
                 QList<MemBlock *> *list = d->hashList[key];
                 QList<MemBlock *>::Iterator it = list->begin();
                 QList<MemBlock *>::Iterator endit = list->end();
-                for (; it != endit; ++it)
+                for (; it != endit; ++it) {
                     if (*it == b) {
                         list->erase(it);
                         break;
                     }
+                }
             }
             adr += d->blockSize;
         }
@@ -297,10 +298,11 @@ void KZoneAllocator::free_since(void *ptr)
     if (d->hashList && !d->hashDirty) {
         const MemBlock *b;
         unsigned int removed = 0;
-        for (b = d->currentBlock; b; b = b->older, removed++)
+        for (b = d->currentBlock; b; b = b->older, removed++) {
             if (b->is_in(ptr)) {
                 break;
             }
+        }
         if (d->hashSize >= 4 * (d->num_blocks - removed)) {
             d->hashDirty = true;
         }

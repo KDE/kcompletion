@@ -60,10 +60,11 @@ void KCompletionBoxPrivate::init()
 
     // on wayland, we need an xdg-popup but we don't want it to grab
     // calls setVisible, so must be done after initializations
-    if (qGuiApp->platformName() == QLatin1String("wayland"))
+    if (qGuiApp->platformName() == QLatin1String("wayland")) {
         q->setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
-    else
+    } else {
         q->setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
+    }
     q->setUniformItemSizes(true);
 
     q->setLineWidth(1);
@@ -295,7 +296,8 @@ void KCompletionBox::resizeAndReposition()
     QRect geom = calculateGeometry();
     resize(geom.size());
 
-    int x = currentPos.x(), y = currentPos.y();
+    int x = currentPos.x();
+    int y = currentPos.y();
     if (d->m_parent) {
         if (!isVisible()) {
             const QPoint orig = globalPositionHint();
@@ -373,7 +375,8 @@ QRect KCompletionBox::calculateGeometry() const
         return QRect();
     }
 
-    int x = 0, y = 0;
+    int x = 0;
+    int y = 0;
     int ih = visualRect.height();
     int h = qMin(15 * ih, count() * ih) + 2 * frameWidth();
 

@@ -88,7 +88,8 @@ bool KCompletionMatches::sorting() const
 
 void KCompletionMatches::removeDuplicates()
 {
-    Iterator it1, it2;
+    Iterator it1;
+    Iterator it2;
     for (it1 = begin(); it1 != end(); ++it1) {
         for ((it2 = it1), ++it2; it2 != end();) {
             if ((*it1).value() == (*it2).value()) {

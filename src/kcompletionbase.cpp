@@ -212,10 +212,11 @@ bool KCompletionBase::setKeyBinding(KeyBindingType item, const QList<QKeySequenc
     }
 
     if (!cut.isEmpty()) {
-        for (KeyBindingMap::Iterator it = d->keyBindingMap.begin(); it != d->keyBindingMap.end(); ++it)
+        for (KeyBindingMap::Iterator it = d->keyBindingMap.begin(); it != d->keyBindingMap.end(); ++it) {
             if (it.value() == cut) {
                 return false;
             }
+        }
     }
     d->keyBindingMap.insert(item, cut);
     return true;
