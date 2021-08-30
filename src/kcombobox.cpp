@@ -287,7 +287,7 @@ void KComboBox::setLineEdit(QLineEdit *edit)
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
     // Connect the returnPressed signal for both Q[K]LineEdits'
     if (edit) {
-        connect(edit, QOverload<>::of(&QLineEdit::returnPressed), this, QOverload<>::of(&KComboBox::returnPressed));
+        connect(edit, qOverload<>(&QLineEdit::returnPressed), this, qOverload<>(&KComboBox::returnPressed));
     }
 #endif
 
@@ -298,7 +298,7 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         // when it is a KLineEdit!
         connect(edit, SIGNAL(destroyed()), SLOT(_k_lineEditDeleted()));
 
-        connect(d->klineEdit, &KLineEdit::returnKeyPressed, this, QOverload<const QString &>::of(&KComboBox::returnPressed));
+        connect(d->klineEdit, &KLineEdit::returnKeyPressed, this, qOverload<const QString &>(&KComboBox::returnPressed));
 
         connect(d->klineEdit, &KLineEdit::completion, this, &KComboBox::completion);
 
@@ -319,7 +319,7 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         QT_WARNING_PUSH
         QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
         QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
-        connect(d->klineEdit, &KLineEdit::completionBoxActivated, this, QOverload<const QString &>::of(&QComboBox::activated));
+        connect(d->klineEdit, &KLineEdit::completionBoxActivated, this, qOverload<const QString &>(&QComboBox::activated));
         QT_WARNING_POP
 #endif
         connect(d->klineEdit, &KLineEdit::completionBoxActivated, this, &QComboBox::textActivated);

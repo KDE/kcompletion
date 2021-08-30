@@ -37,7 +37,7 @@ private Q_SLOTS:
         QSignalSpy qReturnPressedSpy(&w, &QLineEdit::returnPressed);
 
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QSignalSpy kReturnPressedSpy(&w, QOverload<const QString &>::of(&KLineEdit::returnPressed));
+        QSignalSpy kReturnPressedSpy(&w, qOverload<const QString &>(&KLineEdit::returnPressed));
 #endif
         QSignalSpy returnKeyPressedSpy(&w, &KLineEdit::returnKeyPressed);
 
@@ -222,7 +222,7 @@ private Q_SLOTS:
         const QRect rect = w.completionBox()->visualRect(w.completionBox()->model()->index(1, 0));
 
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QSignalSpy activatedSpy(w.completionBox(), QOverload<const QString &>::of(&KCompletionBox::activated));
+        QSignalSpy activatedSpy(w.completionBox(), qOverload<const QString &>(&KCompletionBox::activated));
 #endif
         QSignalSpy textActivatedSpy(w.completionBox(), &KCompletionBox::textActivated);
 

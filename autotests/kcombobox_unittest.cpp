@@ -45,15 +45,15 @@ private:
         QSignalSpy qReturnPressedSpy(w.lineEdit(), &QLineEdit::returnPressed);
 
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QSignalSpy kEditReturnPressedSpy(lineEdit, QOverload<const QString &>::of(&KLineEdit::returnPressed));
+        QSignalSpy kEditReturnPressedSpy(lineEdit, qOverload<const QString &>(&KLineEdit::returnPressed));
 #endif
         QSignalSpy kEditReturnKeyPressedSpy(lineEdit, &KLineEdit::returnKeyPressed);
 
         // KComboBox signals
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QSignalSpy comboReturnPressedSpy(&w, QOverload<>::of(&KComboBox::returnPressed));
+        QSignalSpy comboReturnPressedSpy(&w, qOverload<>(&KComboBox::returnPressed));
 #endif
-        QSignalSpy comboReturnPressedStringSpy(&w, QOverload<const QString &>::of(&KComboBox::returnPressed));
+        QSignalSpy comboReturnPressedStringSpy(&w, qOverload<const QString &>(&KComboBox::returnPressed));
 
         QSignalSpy comboActivatedSpy(&w, &QComboBox::textActivated);
         QTest::keyClick(&w, Qt::Key_Return);
@@ -88,9 +88,9 @@ private Q_SLOTS:
         KHistoryComboBox w;
         QVERIFY(qobject_cast<KLineEdit *>(w.lineEdit()));
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QSignalSpy comboReturnPressedSpy(&w, QOverload<>::of(&KComboBox::returnPressed));
+        QSignalSpy comboReturnPressedSpy(&w, qOverload<>(&KComboBox::returnPressed));
 #endif
-        QSignalSpy comboReturnPressedStringSpy(&w, QOverload<const QString &>::of(&KComboBox::returnPressed));
+        QSignalSpy comboReturnPressedStringSpy(&w, qOverload<const QString &>(&KComboBox::returnPressed));
         connect(&w, &KHistoryComboBox::textActivated, &w, &KHistoryComboBox::addToHistory);
         QSignalSpy comboActivatedSpy(&w, &QComboBox::textActivated);
         QTest::keyClicks(&w, QStringLiteral("Hello world"));

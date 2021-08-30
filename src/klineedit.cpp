@@ -1131,8 +1131,8 @@ void KLineEdit::setCompletionBox(KCompletionBox *box)
         connect(d->completionBox, &KCompletionBox::userCancelled, this, &KLineEdit::userCancelled);
 
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        connect(d->completionBox, QOverload<const QString &>::of(&KCompletionBox::activated), this, &KLineEdit::completionBoxActivated);
-        connect(d->completionBox, QOverload<const QString &>::of(&KCompletionBox::activated), this, &KLineEdit::textEdited);
+        connect(d->completionBox, qOverload<const QString &>(&KCompletionBox::activated), this, &KLineEdit::completionBoxActivated);
+        connect(d->completionBox, qOverload<const QString &>(&KCompletionBox::activated), this, &KLineEdit::textEdited);
 #else
         connect(d->completionBox, &KCompletionBox::textActivated, this, &KLineEdit::completionBoxActivated);
         connect(d->completionBox, &KCompletionBox::textActivated, this, &KLineEdit::textEdited);
