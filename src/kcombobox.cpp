@@ -218,11 +218,11 @@ void KComboBox::changeUrl(int index, const QIcon &icon, const QUrl &url)
     QComboBox::setItemText(index, url.toDisplayString());
 }
 
-void KComboBox::setCompletedItems(const QStringList &items, bool autosubject)
+void KComboBox::setCompletedItems(const QStringList &items, bool autoSuggest)
 {
     Q_D(KComboBox);
     if (d->klineEdit) {
-        d->klineEdit->setCompletedItems(items, autosubject);
+        d->klineEdit->setCompletedItems(items, autoSuggest);
     }
 }
 

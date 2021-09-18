@@ -492,7 +492,7 @@ public Q_SLOTS:
      * Sets @p items into the completion box if completionMode() is
      * CompletionPopup. The popup will be shown immediately.
      */
-    void setCompletedItems(const QStringList &items, bool autosubject = true) override;
+    void setCompletedItems(const QStringList &items, bool autoSuggest = true) override;
 
     /**
      * Selects the first item that matches @p item.
