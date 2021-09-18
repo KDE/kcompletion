@@ -19,6 +19,7 @@ void KCompletionPrivate::init()
     beep = true;
     ignoreCase = false;
     hasMultipleMatches = false;
+    shouldAutoSuggest = true;
     rotationIndex = 0;
 }
 
@@ -372,6 +373,18 @@ KCompletion::CompletionMode KCompletion::completionMode() const
 {
     Q_D(const KCompletion);
     return d->completionMode;
+}
+
+void KCompletion::setShouldAutoSuggest(const bool shouldAutoSuggest)
+{
+    Q_D(KCompletion);
+    d->shouldAutoSuggest = shouldAutoSuggest;
+}
+
+bool KCompletion::shouldAutoSuggest() const
+{
+    Q_D(const KCompletion);
+    return d->shouldAutoSuggest;
 }
 
 QStringList KCompletion::allMatches()

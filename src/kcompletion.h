@@ -280,6 +280,15 @@ public:
     bool ignoreCase() const;
 
     /**
+     * Informs the caller if they should display the auto-suggestion for the last completion operation performed.
+     * Applies for CompletionPopupAuto and CompletionAuto modes.
+     * Defaults to true, but deriving classes may set it to false in special cases via "setShouldAutoSuggest".
+     * @return true if auto-suggestion should be displayed for the last completion operation performed.
+     * @since 5.87
+     */
+    bool shouldAutoSuggest() const;
+
+    /**
      * Returns a list of all items matching the last completed string.
      * It might take some time if you have a @em lot of items.
      * @return a list of all matches for the last completed string.
@@ -557,6 +566,15 @@ protected:
      * @see postProcessMatch
      */
     virtual void postProcessMatches(KCompletionMatches *matches) const;
+
+    /**
+     * Deriving classes may set this property and control whether the auto-suggestion should be displayed
+     * for the last completion operation performed.
+     *
+     * Applies for CompletionPopupAuto and CompletionAuto modes.
+     * @since 5.87
+     */
+    void setShouldAutoSuggest(bool shouldAutosuggest);
 
 private:
     Q_DISABLE_COPY(KCompletion)

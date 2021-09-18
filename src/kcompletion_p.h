@@ -332,6 +332,7 @@ public:
     bool hasMultipleMatches;
     bool beep : 1;
     bool ignoreCase : 1;
+    bool shouldAutoSuggest : 1;
     Q_DECLARE_PUBLIC(KCompletion)
 };
 

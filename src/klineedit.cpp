@@ -295,7 +295,7 @@ void KLineEdit::makeCompletion(const QString &text)
                 d->completionBox->clear();
             }
         } else {
-            setCompletedItems(comp->allMatches());
+            setCompletedItems(comp->allMatches(), comp->shouldAutoSuggest());
         }
     } else { // Auto,  ShortAuto (Man) and Shell
         // all other completion modes
