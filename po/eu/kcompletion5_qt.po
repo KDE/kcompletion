@@ -1,0 +1,82 @@
+# Translation of kcompletion5_qt.po to Euskara/Basque (eu)
+# Copyright (C) 1999-2017, Free Software Foundation, Inc.
+# Copyright (C) 2018-2020, This file is copyright:
+# This file is distributed under the same license as the original file.
+# KDE euskaratzeko proiektuko arduraduna <xalba@euskalnet.net>.
+#
+# Translators:
+# Marcos <marcos@euskalgnu.org>, 2002,2003, 2004, 2005.
+# Ion Gaztañaga <igaztanaga@gmail.com>, 2005.
+# marcos <marcos@euskalgnu.org>, 2006, 2007, 2008, 2009, 2010.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009.
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2010, 2011, 2012, 2013, 2014, 2017, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: kcompletion5_qt\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2020-05-09 18:45+0200\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-eu@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.04.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Qt-Contexts: true\n"
+
+#: khistorycombobox.cpp:213
+msgctxt "KHistoryComboBox|@action:inmenu"
+msgid "Clear &History"
+msgstr "Garbitu &historia"
+
+#: klineedit.cpp:98
+msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
+msgid "1"
+msgstr "1"
+
+#: klineedit.cpp:938
+msgctxt "KLineEdit|@action:inmenu"
+msgid "C&lear"
+msgstr "Ga&rbitu"
+
+#: klineedit.cpp:952
+msgctxt "KLineEdit|@title:menu"
+msgid "Text Completion"
+msgstr "Testu-osatzea"
+
+#: klineedit.cpp:960
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "None"
+msgstr "Bat ere ez"
+
+#: klineedit.cpp:961
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Manual"
+msgstr "Eskuz"
+
+#: klineedit.cpp:962
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Automatic"
+msgstr "Automatikoa"
+
+#: klineedit.cpp:963
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List"
+msgstr "Goitibehera zerrenda"
+
+#: klineedit.cpp:964
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Short Automatic"
+msgstr "Automatiko laburra"
+
+#: klineedit.cpp:965
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Dropdown List && Automatic"
+msgstr "Goitibehera zerrenda eta automatikoa"
+
+#: klineedit.cpp:995
+msgctxt "KLineEdit|@item:inmenu Text Completion"
+msgid "Default"
+msgstr "Lehenetsia"
