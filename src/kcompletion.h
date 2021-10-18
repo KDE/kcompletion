@@ -14,6 +14,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QStringList>
+#include <functional>
 #include <memory>
 
 class KCompTreeNode;
@@ -160,11 +161,19 @@ public:
      * completion lookups.
      */
     enum CompOrder {
-        Sorted, ///< Use alphabetically sorted order
+        Sorted, ///< Use alphabetically sorted order or custom sorter logic
         Insertion, ///< Use order of insertion
         Weighted, ///< Use weighted order
     };
     Q_ENUM(CompOrder)
+
+    /**
+     * The sorter function signature. Deriving classes may provide
+     * custom sorting logic via the setSorterFunction method.
+     *
+     * @since 5.88
+     */
+    using SorterFunction = std::function<void(QStringList &)>;
 
     /**
      * Constructor, nothing special here :)
@@ -575,6 +584,15 @@ protected:
      * @since 5.87
      */
     void setShouldAutoSuggest(bool shouldAutosuggest);
+
+    /**
+     * Sets a custom function to be used to sort the matches.
+     * Can be set to nullptr to use the default sorting logic.
+     *
+     * Applies for CompOrder::Sorted mode.
+     * @since 5.88
+     */
+    void setSorterFunction(SorterFunction sortFunc);
 
 private:
     Q_DISABLE_COPY(KCompletion)

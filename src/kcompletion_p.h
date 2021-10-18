@@ -206,10 +206,11 @@ private:
 class KCOMPLETION_EXPORT KCompletionMatchesWrapper
 {
 public:
-    explicit KCompletionMatchesWrapper(KCompletion::CompOrder compOrder = KCompletion::Insertion)
+    explicit KCompletionMatchesWrapper(KCompletion::SorterFunction const &sorterFunction, KCompletion::CompOrder compOrder = KCompletion::Insertion)
         : m_sortedList(compOrder == KCompletion::Weighted ? new KCompletionMatchesList : nullptr)
         , m_dirty(false)
         , m_compOrder(compOrder)
+        , m_sorterFunction(sorterFunction)
     {
     }
 
@@ -293,6 +294,7 @@ public:
     KCompletionMatchesList *m_sortedList;
     mutable bool m_dirty;
     KCompletion::CompOrder m_compOrder;
+    KCompletion::SorterFunction const &m_sorterFunction;
 };
 
 class KCompletionPrivate
@@ -313,8 +315,14 @@ public:
     void addWeightedItem(const QString &);
     QString findCompletion(const QString &string);
 
+    // The default sorting function, sorts alphabetically
+    static void defaultSort(QStringList &);
+
+    // Pointer to sorter function
+    KCompletion::SorterFunction sorterFunction{defaultSort};
+
     // list used for nextMatch() and previousMatch()
-    KCompletionMatchesWrapper matches;
+    KCompletionMatchesWrapper matches{sorterFunction};
 
     KCompletion::CompletionMode completionMode;
 

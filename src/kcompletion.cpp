@@ -130,6 +130,13 @@ QString KCompletionPrivate::findCompletion(const QString &string)
     return completion;
 }
 
+void KCompletionPrivate::defaultSort(QStringList &stringList)
+{
+    QCollator c;
+    c.setCaseSensitivity(Qt::CaseSensitive);
+    std::stable_sort(stringList.begin(), stringList.end(), c);
+}
+
 KCompletion::KCompletion()
     : d_ptr(new KCompletionPrivate(this))
 {
@@ -192,7 +199,7 @@ void KCompletion::insertItems(const QStringList &items)
 QStringList KCompletion::items() const
 {
     Q_D(const KCompletion);
-    KCompletionMatchesWrapper list; // unsorted
+    KCompletionMatchesWrapper list(d->sorterFunction); // unsorted
     bool addWeight = (d->order == Weighted);
     list.extractStringsFromNode(d->treeRoot, QString(), addWeight);
 
@@ -340,7 +347,7 @@ QStringList KCompletion::substringCompletion(const QString &string) const
 {
     Q_D(const KCompletion);
     // get all items in the tree, eventually in sorted order
-    KCompletionMatchesWrapper allItems(d->order);
+    KCompletionMatchesWrapper allItems(d->sorterFunction, d->order);
     allItems.extractStringsFromNode(d->treeRoot, QString(), false);
 
     QStringList list = allItems.list();
@@ -391,13 +398,19 @@ bool KCompletion::shouldAutoSuggest() const
     return d->shouldAutoSuggest;
 }
 
+void KCompletion::setSorterFunction(SorterFunction sortFunc)
+{
+    Q_D(KCompletion);
+    d->sorterFunction = sortFunc ? sortFunc : KCompletionPrivate::defaultSort;
+}
+
 QStringList KCompletion::allMatches()
 {
     Q_D(KCompletion);
     // Don't use d->matches since calling postProcessMatches()
     // on d->matches here would interfere with call to
     // postProcessMatch() during rotation
-    KCompletionMatchesWrapper matches(d->order);
+    KCompletionMatchesWrapper matches(d->sorterFunction, d->order);
     bool dummy;
     matches.findAllCompletions(d->treeRoot, d->lastString, d->ignoreCase, dummy);
     QStringList l = matches.list();
@@ -411,7 +424,7 @@ KCompletionMatches KCompletion::allWeightedMatches()
     // Don't use d->matches since calling postProcessMatches()
     // on d->matches here would interfere with call to
     // postProcessMatch() during rotation
-    KCompletionMatchesWrapper matches(d->order);
+    KCompletionMatchesWrapper matches(d->sorterFunction, d->order);
     bool dummy;
     matches.findAllCompletions(d->treeRoot, d->lastString, d->ignoreCase, dummy);
     KCompletionMatches ret(matches);
@@ -422,7 +435,7 @@ KCompletionMatches KCompletion::allWeightedMatches()
 QStringList KCompletion::allMatches(const QString &string)
 {
     Q_D(KCompletion);
-    KCompletionMatchesWrapper matches(d->order);
+    KCompletionMatchesWrapper matches(d->sorterFunction, d->order);
     bool dummy;
     matches.findAllCompletions(d->treeRoot, string, d->ignoreCase, dummy);
     QStringList l = matches.list();
@@ -433,7 +446,7 @@ QStringList KCompletion::allMatches(const QString &string)
 KCompletionMatches KCompletion::allWeightedMatches(const QString &string)
 {
     Q_D(KCompletion);
-    KCompletionMatchesWrapper matches(d->order);
+    KCompletionMatchesWrapper matches(d->sorterFunction, d->order);
     bool dummy;
     matches.findAllCompletions(d->treeRoot, string, d->ignoreCase, dummy);
     KCompletionMatches ret(matches);
@@ -640,9 +653,7 @@ QStringList KCompletionMatchesWrapper::list() const
             m_stringList.prepend((*it).value());
         }
     } else if (m_compOrder == KCompletion::Sorted) {
-        QCollator c;
-        c.setCaseSensitivity(Qt::CaseSensitive);
-        std::stable_sort(m_stringList.begin(), m_stringList.end(), c);
+        m_sorterFunction(m_stringList);
     }
 
     return m_stringList;
