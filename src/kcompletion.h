@@ -183,7 +183,7 @@ public:
     /**
      * Destructor, nothing special here, either.
      */
-    virtual ~KCompletion();
+    ~KCompletion() override;
 
     /**
      * Returns a list of all completion items that contain the given @p string.

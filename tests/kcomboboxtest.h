@@ -17,7 +17,7 @@ class KComboBoxTest : public QWidget
 
 public:
     KComboBoxTest(QWidget *parent = nullptr);
-    ~KComboBoxTest();
+    ~KComboBoxTest() override;
 
 private Q_SLOTS:
     void quitApp();

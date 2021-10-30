@@ -19,7 +19,7 @@ class Form1 : public QWidget
 
 public:
     Form1(QWidget *parent = nullptr);
-    ~Form1();
+    ~Form1() override;
 
     QGroupBox *GroupBox1;
     QLabel *TextLabel1;

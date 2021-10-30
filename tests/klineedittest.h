@@ -16,7 +16,7 @@ class KLineEditTest : public QWidget
 
 public:
     KLineEditTest(QWidget *parent = nullptr);
-    ~KLineEditTest();
+    ~KLineEditTest() override;
     KLineEdit *lineEdit() const
     {
         return m_lineedit;
