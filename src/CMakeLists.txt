@@ -4,16 +4,28 @@ add_library(KF5::Completion ALIAS KF5Completion)
 ecm_create_qm_loader(KF5Completion kcompletion5_qt)
 
 target_sources(KF5Completion PRIVATE
-  kcombobox.cpp
-  kcompletion.cpp
-  kcompletionbase.cpp
-  kcompletionbox.cpp
-  klineedit.cpp
-  khistorycombobox.cpp
-  kpixmapprovider.cpp
-  kzoneallocator.cpp
-  kcompletionbase.cpp
-  kcompletionmatches.cpp
+    kcombobox.cpp
+    kcombobox.h
+    kcombobox_p.h
+    kcompletionbase.cpp
+    kcompletionbase.h
+    kcompletionbox.cpp
+    kcompletionbox.h
+    kcompletion.cpp
+    kcompletion.h
+    kcompletionmatches.cpp
+    kcompletionmatches.h
+    kcompletion_p.h
+    khistorycombobox.cpp
+    khistorycombobox.h
+    klineedit.cpp
+    klineedit.h
+    klineedit_p.h
+    kpixmapprovider.cpp
+    kpixmapprovider.h
+    ksortablelist.h
+    kzoneallocator.cpp
+    kzoneallocator_p.h
 )
 
 ecm_qt_declare_logging_category(KF5Completion
