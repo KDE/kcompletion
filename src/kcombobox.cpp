@@ -21,7 +21,7 @@ void KComboBoxPrivate::init()
     Q_Q(KComboBox);
 }
 
-void KComboBoxPrivate::_k_lineEditDeleted()
+void KComboBoxPrivate::slotLineEditDeleted()
 {
     Q_Q(KComboBox);
     // yes, we need those ugly casts due to the multiple inheritance
@@ -57,6 +57,8 @@ KComboBox::KComboBox(bool rw, QWidget *parent)
 
 KComboBox::~KComboBox()
 {
+    Q_D(KComboBox);
+    disconnect(d->m_klineEditConnection);
 }
 
 bool KComboBox::contains(const QString &text) const
@@ -296,7 +298,9 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         // line edit without us noticing. And KCompletionBase::delegate would
         // be a dangling pointer then, so prevent that. Note: only do this
         // when it is a KLineEdit!
-        connect(edit, SIGNAL(destroyed()), SLOT(_k_lineEditDeleted()));
+        d->m_klineEditConnection = connect(edit, &QObject::destroyed, this, [d]() {
+            d->slotLineEditDeleted();
+        });
 
         connect(d->klineEdit, &KLineEdit::returnKeyPressed, this, qOverload<const QString &>(&KComboBox::returnPressed));
 

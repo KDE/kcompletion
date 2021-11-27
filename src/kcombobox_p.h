@@ -34,13 +34,14 @@ public:
      */
     void init();
 
-    void _k_lineEditDeleted();
+    void slotLineEditDeleted();
 
     KComboBox *const q_ptr;
 
     KLineEdit *klineEdit = nullptr;
     bool trapReturnKey = false;
     QPointer<QMenu> contextMenu;
+    QMetaObject::Connection m_klineEditConnection;
 };
 
 #endif

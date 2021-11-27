@@ -540,8 +540,6 @@ private:
     Q_DECLARE_PRIVATE(KComboBox)
     std::unique_ptr<KComboBoxPrivate> const d_ptr;
     // KF6 TODO: change private d_ptr to protected d_ptr, remove friend
-
-    Q_PRIVATE_SLOT(d_func(), void _k_lineEditDeleted())
 };
 
 #endif
