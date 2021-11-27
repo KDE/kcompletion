@@ -34,7 +34,7 @@ public:
      */
     void init();
 
-    void slotLineEditDeleted();
+    void slotLineEditDeleted(QLineEdit *sender);
 
     KComboBox *const q_ptr;
 

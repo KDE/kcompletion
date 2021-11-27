@@ -21,13 +21,13 @@ void KComboBoxPrivate::init()
     Q_Q(KComboBox);
 }
 
-void KComboBoxPrivate::slotLineEditDeleted()
+void KComboBoxPrivate::slotLineEditDeleted(QLineEdit *sender)
 {
     Q_Q(KComboBox);
     // yes, we need those ugly casts due to the multiple inheritance
-    // sender() is guaranteed to be a KLineEdit (see the connect() to the
+    // "sender" is guaranteed to be a KLineEdit (see the connect() to the
     // destroyed() signal
-    const KCompletionBase *base = static_cast<const KCompletionBase *>(static_cast<const KLineEdit *>(q->sender()));
+    const KCompletionBase *base = static_cast<const KCompletionBase *>(static_cast<const KLineEdit *>(sender));
 
     // is it our delegate, that is destroyed?
     if (base == q->delegate()) {
@@ -298,8 +298,8 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         // line edit without us noticing. And KCompletionBase::delegate would
         // be a dangling pointer then, so prevent that. Note: only do this
         // when it is a KLineEdit!
-        d->m_klineEditConnection = connect(edit, &QObject::destroyed, this, [d]() {
-            d->slotLineEditDeleted();
+        d->m_klineEditConnection = connect(edit, &QObject::destroyed, this, [d, edit]() {
+            d->slotLineEditDeleted(edit);
         });
 
         connect(d->klineEdit, &KLineEdit::returnKeyPressed, this, qOverload<const QString &>(&KComboBox::returnPressed));
