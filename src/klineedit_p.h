@@ -60,6 +60,7 @@ public:
     QString userText;
     QString lastStyleClass;
 
+    QMetaObject::Connection m_matchesConnection;
     KCompletionBox *completionBox;
 
     LineEditUrlDropEventFilter *urlDropEventFilter;

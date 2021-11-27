@@ -1330,13 +1330,17 @@ KCompletionBox *KLineEdit::completionBox(bool create)
 
 void KLineEdit::setCompletionObject(KCompletion *comp, bool handle)
 {
+    Q_D(class KLineEdit);
+
     KCompletion *oldComp = compObj();
     if (oldComp && handleSignals()) {
-        disconnect(oldComp, SIGNAL(matches(QStringList)), this, SLOT(setCompletedItems(QStringList)));
+        disconnect(d->m_matchesConnection);
     }
 
     if (comp && handle) {
-        connect(comp, SIGNAL(matches(QStringList)), this, SLOT(setCompletedItems(QStringList)));
+        d->m_matchesConnection = connect(comp, &KCompletion::matches, this, [this](const QStringList &list) {
+            setCompletedItems(list);
+        });
     }
 
     KCompletionBase::setCompletionObject(comp, handle);

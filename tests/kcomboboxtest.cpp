@@ -156,14 +156,15 @@ KComboBoxTest::~KComboBoxTest()
 
 void KComboBoxTest::connectComboSignals(QComboBox *combo)
 {
-    QObject::connect(combo, SIGNAL(activated(int)), SLOT(slotActivated(int)));
-    QObject::connect(combo, SIGNAL(activated(QString)), SLOT(slotActivated(QString)));
-    QObject::connect(combo, SIGNAL(currentIndexChanged(int)), SLOT(slotCurrentIndexChanged(int)));
-    QObject::connect(combo, SIGNAL(currentIndexChanged(QString)), SLOT(slotCurrentIndexChanged(QString)));
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-    QObject::connect(combo, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));
-#endif
-    QObject::connect(combo, SIGNAL(returnPressed(QString)), SLOT(slotReturnPressed(QString)));
+    QObject::connect(combo, qOverload<int>(&QComboBox::activated), this, &KComboBoxTest::slotActivated);
+    QObject::connect(combo, &QComboBox::textActivated, this, &KComboBoxTest::slotTextActivated);
+
+    QObject::connect(combo, qOverload<int>(&QComboBox::currentIndexChanged), this, &KComboBoxTest::slotCurrentIndexChanged);
+    QObject::connect(combo, qOverload<int>(&QComboBox::currentIndexChanged), this, [this, combo](const int index) {
+        slotCurrentTextChanged(combo->itemText(index));
+    });
+
+    QObject::connect(combo, &QComboBox::textActivated, this, qOverload<const QString &>(&KComboBoxTest::slotReturnPressed));
 }
 
 void KComboBoxTest::slotDisable()
@@ -202,7 +203,7 @@ void KComboBoxTest::slotCurrentIndexChanged(int index)
     qDebug() << qPrintable(sender()->objectName()) << ", index:" << index;
 }
 
-void KComboBoxTest::slotCurrentIndexChanged(const QString &item)
+void KComboBoxTest::slotCurrentTextChanged(const QString &item)
 {
     qDebug() << qPrintable(sender()->objectName()) << ", item:" << item;
 }
@@ -212,7 +213,7 @@ void KComboBoxTest::slotActivated(int index)
     qDebug() << "Activated Combo:" << qPrintable(sender()->objectName()) << ", index:" << index;
 }
 
-void KComboBoxTest::slotActivated(const QString &item)
+void KComboBoxTest::slotTextActivated(const QString &item)
 {
     qDebug() << "Activated Combo:" << qPrintable(sender()->objectName()) << ", item:" << item;
 }

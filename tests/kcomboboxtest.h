@@ -28,9 +28,9 @@ private Q_SLOTS:
 #endif
     void slotReturnPressed(const QString &);
     void slotActivated(int);
-    void slotActivated(const QString &);
+    void slotTextActivated(const QString &);
     void slotCurrentIndexChanged(int);
-    void slotCurrentIndexChanged(const QString &);
+    void slotCurrentTextChanged(const QString &);
 
 private:
     void connectComboSignals(QComboBox *combo);
