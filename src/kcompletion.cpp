@@ -258,7 +258,7 @@ void KCompletion::addItem(const QString &item, uint weight)
     }
 
     // add 0x0-item as delimiter with evtl. weight
-    node = node->insert(0x0, true);
+    node = node->insert(QChar(0x0), true);
     if (weighted) {
         node->confirm(weight - 1);
     }

@@ -45,9 +45,9 @@ ecm_generate_export_header(KF5Completion
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-target_include_directories(KF5Completion INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KCompletion>")
+target_include_directories(KF5Completion INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KCompletion>")
 
-target_link_libraries(KF5Completion PUBLIC Qt5::Widgets
+target_link_libraries(KF5Completion PUBLIC Qt${QT_MAJOR_VERSION}::Widgets
                                     PRIVATE KF5::ConfigCore      # KConfigGroup, used in many places
                                             KF5::ConfigGui       # KStandardShortcut
                                             KF5::WidgetsAddons   # KCursor
@@ -101,7 +101,7 @@ install(TARGETS KF5Completion EXPORT KF5CompletionTargets ${KF5_INSTALL_TARGETS_
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kcompletion_export.h
   ${KCompletion_HEADERS}
-  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KCompletion COMPONENT Devel
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KCompletion COMPONENT Devel
 )
 
 if(BUILD_DESIGNERPLUGIN)
@@ -136,7 +136,7 @@ if(BUILD_QCH)
 endif()
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KCompletion LIB_NAME KF5Completion DEPS "widgets" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KCompletion)
+ecm_generate_pri_file(BASE_NAME KCompletion LIB_NAME KF5Completion DEPS "widgets" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KCompletion)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
 ecm_qt_install_logging_categories(

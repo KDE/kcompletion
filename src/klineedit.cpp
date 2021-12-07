@@ -1213,6 +1213,14 @@ bool KLineEditPrivate::overrideShortcut(const QKeyEvent *e)
         return true;
     }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    constexpr int ctrlE = QKeyCombination(Qt::CTRL | Qt::Key_E).toCombined();
+    constexpr int ctrlU = QKeyCombination(Qt::CTRL | Qt::Key_U).toCombined();
+#else
+    constexpr int ctrlE = Qt::CTRL | Qt::Key_E;
+    constexpr int ctrlU = Qt::CTRL | Qt::Key_U;
+#endif
+
     // Override all the text manupilation accelerators...
     if (KStandardShortcut::copy().contains(key)) {
         return true;
@@ -1242,7 +1250,7 @@ bool KLineEditPrivate::overrideShortcut(const QKeyEvent *e)
     // but doesn't dare force as "stronger than kaction shortcuts"...
     else if (e->matches(QKeySequence::SelectAll)) {
         return true;
-    } else if (qApp->platformName() == QLatin1String("xcb") && (key == (Qt::CTRL | Qt::Key_E) || key == (Qt::CTRL | Qt::Key_U))) {
+    } else if (qApp->platformName() == QLatin1String("xcb") && (key == ctrlE || key == ctrlU)) {
         return true;
     }
 

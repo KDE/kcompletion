@@ -1,10 +1,10 @@
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 remove_definitions(-DQT_NO_CAST_TO_ASCII)
 
-find_package(Qt5Test ${REQUIRED_QT_VERSION} CONFIG QUIET)
+find_package(Qt${QT_MAJOR_VERSION}Test ${REQUIRED_QT_VERSION} CONFIG QUIET)
 
-if(NOT Qt5Test_FOUND)
-    message(STATUS "Qt5Test not found, autotests will not be built.")
+if(NOT Qt${QT_MAJOR_VERSION}Test_FOUND)
+    message(STATUS "Qt${QT_MAJOR_VERSION}Test not found, autotests will not be built.")
     return()
 endif()
 
@@ -15,5 +15,5 @@ ecm_add_tests(
    klineedit_unittest.cpp
    kcombobox_unittest.cpp
    ksortablelisttest.cpp
-   LINK_LIBRARIES Qt5::Test KF5::Completion
+   LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF5::Completion
 )
