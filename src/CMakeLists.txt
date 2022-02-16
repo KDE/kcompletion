@@ -73,29 +73,6 @@ ecm_generate_headers(KCompletion_HEADERS
   REQUIRED_HEADERS KCompletion_HEADERS
 )
 
-find_package(PythonModuleGeneration)
-
-if (PythonModuleGeneration_FOUND)
-  ecm_generate_python_binding(
-    TARGET KF5::Completion
-    PYTHONNAMESPACE PyKF5
-    MODULENAME KCompletion
-    RULES_FILE "${CMAKE_SOURCE_DIR}/cmake/rules_PyKF5.py"
-    SIP_DEPENDS
-      QtWidgets/QtWidgetsmod.sip
-    HEADERS
-      kcombobox.h
-      kcompletion.h
-      kcompletionbase.h
-      kcompletionbox.h
-      klineedit.h
-      khistorycombobox.h
-      kpixmapprovider.h
-      ksortablelist.h
-      kcompletionmatches.h
-  )
-endif()
-
 install(TARGETS KF5Completion EXPORT KF5CompletionTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
