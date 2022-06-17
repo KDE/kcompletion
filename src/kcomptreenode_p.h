@@ -59,6 +59,10 @@ typedef KCompTreeNodeList KCompTreeChildren;
 
 /**
  * A helper class for KCompletion. Implements a tree of QChar.
+ * Every node is a QChar and has a list of children, which  are Nodes as well.
+ *
+ * QChar( 0x0 ) is used as the delimiter of a string; the last child of each
+ * inserted string is 0x0.
  *
  * The tree looks like this (containing the items "kde", "kde-ui",
  * "kde-core" and "pfeiffer". Every item is delimited with QChar( 0x0 )
@@ -103,7 +107,16 @@ public:
     {
     }
 
-    ~KCompTreeNode();
+    ~KCompTreeNode()
+    {
+        // delete all children
+        KCompTreeNode *cur = m_children.begin();
+        while (cur) {
+            KCompTreeNode *next = cur->m_next;
+            delete m_children.remove(cur);
+            cur = next;
+        }
+    }
 
     KCompTreeNode(const KCompTreeNode &) = delete;
     KCompTreeNode &operator=(const KCompTreeNode &) = delete;
@@ -131,8 +144,13 @@ public:
         return cur;
     }
 
-    KCompTreeNode *insert(const QChar &, bool sorted);
-    void remove(const QString &);
+    // Adds a child-node "ch" to this node. If such a node is already existent,
+    // it will not be created. Returns the new/existing node.
+    inline KCompTreeNode *insert(const QChar &ch, bool sorted);
+
+    // Iteratively removes a string from the tree. The nicer recursive
+    // version apparently was a little memory hungry (see #56757)
+    inline void remove(const QString &str);
 
     inline int childrenCount() const
     {
@@ -197,5 +215,74 @@ private:
     KCompTreeNodeList m_children;
     static QSharedPointer<KZoneAllocator> m_alloc;
 };
+
+KCompTreeNode *KCompTreeNode::insert(const QChar &ch, bool sorted)
+{
+    KCompTreeNode *child = find(ch);
+    if (!child) {
+        child = new KCompTreeNode(ch);
+
+        // FIXME, first (slow) sorted insertion implementation
+        if (sorted) {
+            KCompTreeNode *prev = nullptr;
+            KCompTreeNode *cur = m_children.begin();
+            while (cur) {
+                if (ch > *cur) {
+                    prev = cur;
+                    cur = cur->m_next;
+                } else {
+                    break;
+                }
+            }
+            if (prev) {
+                m_children.insert(prev, child);
+            } else {
+                m_children.prepend(child);
+            }
+        }
+
+        else {
+            m_children.append(child);
+        }
+    }
+
+    // implicit weighting: the more often an item is inserted, the higher
+    // priority it gets.
+    child->confirm();
+
+    return child;
+}
+
+void KCompTreeNode::remove(const QString &str)
+{
+    QString string = str;
+    string += QChar(0x0);
+
+    QVector<KCompTreeNode *> deletables(string.length() + 1);
+
+    KCompTreeNode *child = nullptr;
+    KCompTreeNode *parent = this;
+    deletables.replace(0, parent);
+
+    int i = 0;
+    for (; i < string.length(); i++) {
+        child = parent->find(string.at(i));
+        if (child) {
+            deletables.replace(i + 1, child);
+        } else {
+            break;
+        }
+
+        parent = child;
+    }
+
+    for (; i >= 1; i--) {
+        parent = deletables.at(i - 1);
+        child = deletables.at(i);
+        if (child->m_children.count() == 0) {
+            delete parent->m_children.remove(child);
+        }
+    }
+}
 
 #endif // KCOMPTREENODE_P_H
