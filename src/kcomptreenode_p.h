@@ -130,7 +130,7 @@ public:
 
     // Returns a child of this node matching ch, if available.
     // Otherwise, returns 0L
-    inline KCompTreeNode *find(const QChar &ch) const
+    KCompTreeNode *find(const QChar &ch) const
     {
         KCompTreeNode *cur = m_children.begin();
         while (cur && (*cur != ch)) {
@@ -147,47 +147,47 @@ public:
     // version apparently was a little memory hungry (see #56757)
     inline void remove(const QString &str);
 
-    inline int childrenCount() const
+    int childrenCount() const
     {
         return m_children.count();
     }
 
-    inline void confirm()
+    void confirm()
     {
         m_weight++;
     }
 
-    inline void confirm(uint w)
+    void confirm(uint w)
     {
         m_weight += w;
     }
 
-    inline void decline()
+    void decline()
     {
         m_weight--;
     }
 
-    inline uint weight() const
+    uint weight() const
     {
         return m_weight;
     }
 
-    inline const KCompTreeChildren *children() const
+    const KCompTreeChildren *children() const
     {
         return &m_children;
     }
 
-    inline const KCompTreeNode *childAt(int index) const
+    const KCompTreeNode *childAt(int index) const
     {
         return m_children.at(index);
     }
 
-    inline const KCompTreeNode *firstChild() const
+    const KCompTreeNode *firstChild() const
     {
         return m_children.begin();
     }
 
-    inline const KCompTreeNode *lastChild() const
+    const KCompTreeNode *lastChild() const
     {
         return m_children.end();
     }
