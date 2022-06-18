@@ -74,17 +74,17 @@ public:
         m_dirty = false;
     }
 
-    uint count() const
+    uint size() const
     {
         if (m_sortedList) {
-            return m_sortedList->count();
+            return m_sortedList->size();
         }
-        return m_stringList.count();
+        return m_stringList.size();
     }
 
     bool isEmpty() const
     {
-        return count() == 0;
+        return size() == 0;
     }
 
     QString first() const
