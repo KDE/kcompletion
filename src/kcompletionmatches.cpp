@@ -55,10 +55,11 @@ KCompletionMatches::KCompletionMatches(const KCompletionMatchesWrapper &matches)
     if (matches.m_sortedList != nullptr) {
         KCompletionMatchesList::operator=(*matches.m_sortedList);
     } else {
-        const QStringList l = matches.list();
-        for (QStringList::ConstIterator it = l.begin(); it != l.end(); ++it) {
-            prepend(KSortableItem<QString, int>(1, *it));
-        }
+        const QStringList list = matches.list();
+        reserve(list.size());
+        std::transform(list.crbegin(), list.crend(), std::back_inserter(*this), [](const QString &str) {
+            return KSortableItem<QString, int>(1, str);
+        });
     }
 }
 
@@ -73,10 +74,11 @@ QStringList KCompletionMatches::list(bool sort_P) const
         const_cast<KCompletionMatches *>(this)->sort();
     }
     QStringList stringList;
+    stringList.reserve(size());
     // high weight == sorted last -> reverse the sorting here
-    for (ConstIterator it = begin(); it != end(); ++it) {
-        stringList.prepend((*it).value());
-    }
+    std::transform(crbegin(), crend(), std::back_inserter(stringList), [](const KSortableItem<QString> &item) {
+        return item.value();
+    });
     return stringList;
 }
 
@@ -88,13 +90,13 @@ bool KCompletionMatches::sorting() const
 
 void KCompletionMatches::removeDuplicates()
 {
-    Iterator it1;
-    Iterator it2;
-    for (it1 = begin(); it1 != end(); ++it1) {
-        for ((it2 = it1), ++it2; it2 != end();) {
+    for (auto it1 = begin(); it1 != end(); ++it1) {
+        auto it2 = it1;
+        ++it2;
+        while (it2 != end()) {
             if ((*it1).value() == (*it2).value()) {
-                // use the max height
-                (*it1).first = qMax((*it1).key(), (*it2).key());
+                // Use the max weight
+                (*it1).first = std::max((*it1).key(), (*it2).key());
                 it2 = erase(it2);
                 continue;
             }

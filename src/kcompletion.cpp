@@ -57,13 +57,11 @@ void KCompletionPrivate::addWeightedItem(const QString &item)
 // tries to complete "string" from the tree-root
 QString KCompletionPrivate::findCompletion(const QString &string)
 {
-    QChar ch;
     QString completion;
     const KCompTreeNode *node = treeRoot;
 
     // start at the tree-root and try to find the search-string
-    for (int i = 0; i < string.length(); i++) {
-        ch = string.at(i);
+    for (const auto ch : string) {
         node = node->find(ch);
 
         if (node) {
@@ -183,15 +181,11 @@ void KCompletion::setItems(const QStringList &itemList)
 void KCompletion::insertItems(const QStringList &items)
 {
     Q_D(KCompletion);
-    bool weighted = (d->order == Weighted);
-    QStringList::ConstIterator it;
-    if (weighted) { // determine weight
-        for (it = items.begin(); it != items.end(); ++it) {
-            d->addWeightedItem(*it);
-        }
-    } else {
-        for (it = items.begin(); it != items.end(); ++it) {
-            addItem(*it, 0);
+    for (const auto &str : items) {
+        if (d->order == Weighted) {
+            d->addWeightedItem(str);
+        } else {
+            addItem(str, 0);
         }
     }
 }
@@ -200,9 +194,7 @@ QStringList KCompletion::items() const
 {
     Q_D(const KCompletion);
     KCompletionMatchesWrapper list(d->sorterFunction); // unsorted
-    bool addWeight = (d->order == Weighted);
-    list.extractStringsFromNode(d->treeRoot, QString(), addWeight);
-
+    list.extractStringsFromNode(d->treeRoot, QString(), d->order == Weighted);
     return list.list();
 }
 
@@ -357,21 +349,15 @@ QStringList KCompletion::substringCompletion(const QString &string) const
         return list;
     }
 
-    if (string.isEmpty()) { // shortcut
-        postProcessMatches(&list);
-        return list;
+    if (!string.isEmpty()) { // If it's empty, nothing to compare
+        auto it = std::remove_if(list.begin(), list.end(), [&string](const QString &item) {
+            return !item.contains(string, Qt::CaseInsensitive); // always case insensitive
+        });
+        list.erase(it, list.end());
     }
 
-    QStringList matches;
-    for (QStringList::ConstIterator it = list.constBegin(), total = list.constEnd(); it != total; ++it) {
-        QString item = *it;
-        if (item.indexOf(string, 0, Qt::CaseInsensitive) != -1) { // always case insensitive
-            postProcessMatch(&item);
-            matches.append(item);
-        }
-    }
-
-    return matches;
+    postProcessMatches(&list);
+    return list;
 }
 
 void KCompletion::setCompletionMode(CompletionMode mode)

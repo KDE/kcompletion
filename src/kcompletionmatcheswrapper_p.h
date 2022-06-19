@@ -115,13 +115,11 @@ void KCompletionMatchesWrapper::findAllCompletions(const KCompTreeNode *treeRoot
         return;
     }
 
-    QChar ch;
     QString completion;
     const KCompTreeNode *node = treeRoot;
 
     // start at the tree-root and try to find the search-string
-    for (int i = 0; i < string.length(); i++) {
-        ch = string.at(i);
+    for (const QChar ch : string) {
         node = node->find(ch);
 
         if (node) {
@@ -163,12 +161,11 @@ QStringList KCompletionMatchesWrapper::list() const
         m_dirty = false;
 
         m_stringList.clear();
-
+        m_stringList.reserve(m_sortedList->size());
         // high weight == sorted last -> reverse the sorting here
-        QList<KSortableItem<QString>>::const_iterator it;
-        for (it = m_sortedList->constBegin(); it != m_sortedList->constEnd(); ++it) {
-            m_stringList.prepend((*it).value());
-        }
+        std::transform(m_sortedList->crbegin(), m_sortedList->crend(), std::back_inserter(m_stringList), [](const KSortableItem<QString> &item) {
+            return item.value();
+        });
     } else if (m_compOrder == KCompletion::Sorted) {
         m_sorterFunction(m_stringList);
     }
