@@ -22,15 +22,17 @@ class KCompletionPrivate
 public:
     explicit KCompletionPrivate(KCompletion *parent)
         : q_ptr(parent)
+        , completionMode(KCompletion::CompletionPopup)
+        , treeNodeAllocator(KCompTreeNode::allocator()) // keep strong-ref to allocator instance
+        , m_treeRoot(new KCompTreeNode)
+        , hasMultipleMatches(false)
+        , beep(true)
+        , ignoreCase(false)
+        , shouldAutoSuggest(true)
     {
     }
 
-    void init();
-
-    ~KCompletionPrivate()
-    {
-        delete treeRoot;
-    }
+    ~KCompletionPrivate() = default;
 
     void addWeightedItem(const QString &);
     QString findCompletion(const QString &string);
@@ -44,6 +46,7 @@ public:
     // list used for nextMatch() and previousMatch()
     KCompletionMatchesWrapper matches{sorterFunction};
 
+    KCompletion *const q_ptr;
     KCompletion::CompletionMode completionMode;
 
     QSharedPointer<KZoneAllocator> treeNodeAllocator;
@@ -51,9 +54,8 @@ public:
     QString lastString;
     QString lastMatch;
     QString currentMatch;
-    KCompTreeNode *treeRoot;
-    KCompletion *const q_ptr;
-    int rotationIndex;
+    std::unique_ptr<KCompTreeNode> m_treeRoot;
+    int rotationIndex = 0;
     // TODO: Change hasMultipleMatches to bitfield after moving findAllCompletions()
     // to KCompletionMatchesPrivate
     KCompletion::CompOrder order : 3;
