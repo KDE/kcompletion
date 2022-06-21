@@ -15,13 +15,10 @@
 
 class KCompTreeNode;
 
-/**
- * @internal
- */
-class KCOMPLETION_EXPORT KCompTreeNodeList
+class KCOMPLETION_EXPORT KCompTreeChildren
 {
 public:
-    KCompTreeNodeList()
+    KCompTreeChildren()
         : m_first(nullptr)
         , m_last(nullptr)
         , m_count(0)
@@ -38,11 +35,11 @@ public:
         return m_last;
     }
 
-    KCompTreeNode *at(uint index) const;
-    void append(KCompTreeNode *item);
-    void prepend(KCompTreeNode *item);
-    void insert(KCompTreeNode *after, KCompTreeNode *item);
-    KCompTreeNode *remove(KCompTreeNode *item);
+    inline KCompTreeNode *at(uint index) const;
+    inline void append(KCompTreeNode *item);
+    inline void prepend(KCompTreeNode *item);
+    inline void insert(KCompTreeNode *after, KCompTreeNode *item);
+    inline KCompTreeNode *remove(KCompTreeNode *item);
 
     uint count() const
     {
@@ -54,8 +51,6 @@ private:
     KCompTreeNode *m_last;
     uint m_count;
 };
-
-typedef KCompTreeNodeList KCompTreeChildren;
 
 /**
  * A helper class for KCompletion. Implements a tree of QChar.
@@ -212,7 +207,7 @@ public:
 
 private:
     uint m_weight;
-    KCompTreeNodeList m_children;
+    KCompTreeChildren m_children;
     static QSharedPointer<KZoneAllocator> m_alloc;
 };
 
@@ -283,6 +278,85 @@ void KCompTreeNode::remove(const QString &str)
             delete parent->m_children.remove(child);
         }
     }
+}
+
+KCompTreeNode *KCompTreeChildren::at(uint index) const
+{
+    KCompTreeNode *cur = m_first;
+    while (index-- && cur) {
+        cur = cur->m_next;
+    }
+    return cur;
+}
+
+void KCompTreeChildren::append(KCompTreeNode *item)
+{
+    m_count++;
+    if (!m_last) {
+        m_last = item;
+        m_last->m_next = nullptr;
+        m_first = item;
+        return;
+    }
+    m_last->m_next = item;
+    item->m_next = nullptr;
+    m_last = item;
+}
+
+void KCompTreeChildren::prepend(KCompTreeNode *item)
+{
+    m_count++;
+    if (!m_last) {
+        m_last = item;
+        m_last->m_next = nullptr;
+        m_first = item;
+        return;
+    }
+    item->m_next = m_first;
+    m_first = item;
+}
+
+void KCompTreeChildren::insert(KCompTreeNode *after, KCompTreeNode *item)
+{
+    if (!after) {
+        append(item);
+        return;
+    }
+
+    m_count++;
+
+    item->m_next = after->m_next;
+    after->m_next = item;
+
+    if (after == m_last) {
+        m_last = item;
+    }
+}
+
+KCompTreeNode *KCompTreeChildren::remove(KCompTreeNode *item)
+{
+    if (!m_first || !item) {
+        return nullptr;
+    }
+    KCompTreeNode *cur = nullptr;
+
+    if (item == m_first) {
+        m_first = m_first->m_next;
+    } else {
+        cur = m_first;
+        while (cur && cur->m_next != item) {
+            cur = cur->m_next;
+        }
+        if (!cur) {
+            return nullptr;
+        }
+        cur->m_next = item->m_next;
+    }
+    if (item == m_last) {
+        m_last = cur;
+    }
+    m_count--;
+    return item;
 }
 
 #endif // KCOMPTREENODE_P_H
