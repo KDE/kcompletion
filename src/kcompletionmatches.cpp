@@ -13,91 +13,83 @@
 class KCompletionMatchesPrivate
 {
 public:
-    KCompletionMatchesPrivate(bool sort, KCompletionMatches *parent)
-        : sorting(sort)
-        , q_ptr(parent)
+    KCompletionMatchesPrivate(bool sort, KCompletionMatches *qq)
+        : q(qq)
+        , sorting(sort)
     {
     }
 
-    bool sorting;
-    KCompletionMatches *const q_ptr;
-
-    Q_DECLARE_PUBLIC(KCompletionMatches)
+    KCompletionMatches *const q;
+    bool sorting = false;
+    CompletionItemsVec m_matches;
 };
 
+KCompletionMatches::KCompletionMatches(bool sort_P)
+    : d(new KCompletionMatchesPrivate(sort_P, this))
+{
+}
+
 KCompletionMatches::KCompletionMatches(const KCompletionMatches &o)
-    : KSortableList<QString, int>()
-    , d_ptr(new KCompletionMatchesPrivate(o.sorting(), this))
+    : d(new KCompletionMatchesPrivate(o.sorting(), this))
 {
     *this = KCompletionMatches::operator=(o);
 }
 
-KCompletionMatches &KCompletionMatches::operator=(const KCompletionMatches &o)
+KCompletionMatches &KCompletionMatches::operator=(const KCompletionMatches &other)
 {
-    Q_D(KCompletionMatches);
-    if (*this == o) {
+    if (this == &other) {
         return *this;
     }
-    KCompletionMatchesList::operator=(o);
-    d->sorting = o.sorting();
+    d->m_matches = other.d->m_matches;
+    d->sorting = other.sorting();
 
     return *this;
 }
 
-KCompletionMatches::KCompletionMatches(bool sort_P)
-    : d_ptr(new KCompletionMatchesPrivate(sort_P, this))
-{
-}
-
-KCompletionMatches::KCompletionMatches(const KCompletionMatchesWrapper &matches)
-    : d_ptr(new KCompletionMatchesPrivate(matches.sorting(), this))
+KCompletionMatches::KCompletionMatches(KCompletionMatchesWrapper &matches)
+    : d(new KCompletionMatchesPrivate(matches.sorting(), this))
 {
     if (matches.m_sortedListPtr) {
-        KCompletionMatchesList::operator=(*matches.m_sortedListPtr);
+        d->m_matches = *matches.m_sortedListPtr;
     } else {
         const QStringList list = matches.list();
-        reserve(list.size());
-        std::transform(list.crbegin(), list.crend(), std::back_inserter(*this), [](const QString &str) {
-            return KSortableItem<QString, int>(1, str);
+        d->m_matches.reserve(list.size());
+        std::transform(list.crbegin(), list.crend(), std::back_inserter(d->m_matches), [](const QString &str) {
+            return Item{1, str};
         });
     }
 }
 
-KCompletionMatches::~KCompletionMatches()
-{
-}
+KCompletionMatches::~KCompletionMatches() = default;
 
-QStringList KCompletionMatches::list(bool sort_P) const
+QStringList KCompletionMatches::list(bool sort_P)
 {
-    Q_D(const KCompletionMatches);
     if (d->sorting && sort_P) {
-        const_cast<KCompletionMatches *>(this)->sort();
+        std::sort(d->m_matches.begin(), d->m_matches.end());
     }
     QStringList stringList;
-    stringList.reserve(size());
+    stringList.reserve(d->m_matches.size());
     // high weight == sorted last -> reverse the sorting here
-    std::transform(crbegin(), crend(), std::back_inserter(stringList), [](const KSortableItem<QString> &item) {
-        return item.value();
+    std::transform(d->m_matches.crbegin(), d->m_matches.crend(), std::back_inserter(stringList), [](const Item &item) {
+        return item.text;
     });
     return stringList;
 }
 
 bool KCompletionMatches::sorting() const
 {
-    Q_D(const KCompletionMatches);
     return d->sorting;
 }
 
 void KCompletionMatches::removeDuplicates()
 {
-    for (auto it1 = begin(); it1 != end(); ++it1) {
+    for (auto it1 = d->m_matches.begin(); it1 != d->m_matches.end(); ++it1) {
         auto it2 = it1;
-        ++it2;
-        while (it2 != end()) {
-            if ((*it1).value() == (*it2).value()) {
+        for (++it2; it2 != d->m_matches.end();) {
+            if (it1->text == it2->text) {
                 // Use the max weight
-                (*it1).first = std::max((*it1).key(), (*it2).key());
-                it2 = erase(it2);
+                it1->key = std::max(it1->key, it2->key);
+                it2 = d->m_matches.erase(it2);
                 continue;
             }
             ++it2;

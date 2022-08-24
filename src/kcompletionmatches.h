@@ -9,15 +9,12 @@
 #define KCOMPLETIONMATCHES_H
 
 #include <kcompletion_export.h>
-#include <ksortablelist.h>
 
 #include <QStringList>
 #include <memory>
 
 class KCompletionMatchesWrapper;
 class KCompletionMatchesPrivate;
-
-typedef KSortableList<QString> KCompletionMatchesList;
 
 /**
  * @class KCompletionMatches kcompletionmatches.h KCompletionMatches
@@ -39,16 +36,15 @@ typedef KSortableList<QString> KCompletionMatchesList;
  *
  * @short List for keeping matches returned from KCompletion
  */
-class KCOMPLETION_EXPORT KCompletionMatches : public KCompletionMatchesList
+class KCOMPLETION_EXPORT KCompletionMatches
 {
 public:
-    Q_DECLARE_PRIVATE(KCompletionMatches)
     /**
      * Default constructor.
      * @param sort if false, the matches won't be sorted before the conversion,
      *             use only if you're sure the sorting is not needed
      */
-    KCompletionMatches(bool sort);
+    explicit KCompletionMatches(bool sort);
 
     /**
      * copy constructor.
@@ -63,7 +59,9 @@ public:
     /**
      * @internal
      */
-    KCompletionMatches(const KCompletionMatchesWrapper &matches);
+    // TODO KF6: make this constructor private since KCompletionMatchesWrapper
+    // is a private class
+    explicit KCompletionMatches(KCompletionMatchesWrapper &matches);
 
     /**
      * default destructor.
@@ -80,7 +78,7 @@ public:
      *             use only if you're sure the sorting is not needed
      * @return the list of matches
      */
-    QStringList list(bool sort = true) const;
+    QStringList list(bool sort = true);
     /**
      * If sorting() returns false, the matches aren't sorted by their weight,
      * even if true is passed to list().
@@ -88,8 +86,19 @@ public:
      */
     bool sorting() const;
 
+    struct Item {
+        int key = 0;
+        QString text;
+    };
+
 private:
-    std::unique_ptr<KCompletionMatchesPrivate> const d_ptr;
+    friend class KCompletion;
+    const std::unique_ptr<KCompletionMatchesPrivate> d;
 };
+
+inline bool operator<(const KCompletionMatches::Item &a, const KCompletionMatches::Item &b)
+{
+    return a.key < b.key;
+}
 
 #endif // KCOMPLETIONMATCHES_H

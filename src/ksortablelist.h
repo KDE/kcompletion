@@ -10,6 +10,8 @@
 
 #include <kcompletion_export.h>
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 98)
+
 #include <QList>
 #include <QPair>
 #include <algorithm>
@@ -206,5 +208,7 @@ inline uint qHash(const KSortableItem<T, K> &)
     return 0;
 }
 #endif
+
+#endif // KCOMPLETION_BUILD_DEPRECATED_SINCE
 
 #endif // KSORTABLELIST_H

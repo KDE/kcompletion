@@ -417,6 +417,7 @@ QStringList KCompletion::allMatches(const QString &string)
 KCompletionMatches KCompletion::allWeightedMatches(const QString &string)
 {
     Q_D(KCompletion);
+
     KCompletionMatchesWrapper matches(d->sorterFunction, d->order);
     bool dummy;
     matches.findAllCompletions(d->m_treeRoot.get(), string, d->ignoreCase, dummy);

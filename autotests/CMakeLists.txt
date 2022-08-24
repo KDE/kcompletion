@@ -14,6 +14,10 @@ ecm_add_tests(
    kcompletioncoretest.cpp
    klineedit_unittest.cpp
    kcombobox_unittest.cpp
-   ksortablelisttest.cpp
    LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF5::Completion
 )
+
+if (NOT EXCLUDE_DEPRECATED_BEFORE_AND_AT STREQUAL "CURRENT" AND
+    EXCLUDE_DEPRECATED_BEFORE_AND_AT VERSION_LESS "5.98.0")
+    ecm_add_tests(ksortablelisttest.cpp LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF5::Completion)
+endif()

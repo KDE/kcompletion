@@ -13,12 +13,13 @@
 
 #include <kcompletionmatches.h>
 
+using CompletionItemsVec = std::vector<KCompletionMatches::Item>;
+
 class KCOMPLETION_EXPORT KCompletionMatchesWrapper
 {
 public:
     explicit KCompletionMatchesWrapper(KCompletion::SorterFunction const &sorterFunction, KCompletion::CompOrder compOrder = KCompletion::Insertion)
-        : m_sortedListPtr(compOrder == KCompletion::Weighted ? new KCompletionMatchesList : nullptr)
-        , m_dirty(false)
+        : m_sortedListPtr(compOrder == KCompletion::Weighted ? std::make_unique<CompletionItemsVec>() : nullptr)
         , m_compOrder(compOrder)
         , m_sorterFunction(sorterFunction)
     {
@@ -30,7 +31,7 @@ public:
     void setSorting(KCompletion::CompOrder compOrder)
     {
         if (compOrder == KCompletion::Weighted && !m_sortedListPtr) {
-            m_sortedListPtr = std::make_unique<KCompletionMatchesList>();
+            m_sortedListPtr = std::make_unique<CompletionItemsVec>();
         } else if (compOrder != KCompletion::Weighted) {
             m_sortedListPtr.reset();
         }
@@ -47,7 +48,7 @@ public:
     void append(int i, const QString &string)
     {
         if (m_sortedListPtr) {
-            m_sortedListPtr->insert(i, string);
+            m_sortedListPtr->push_back({i, string});
         } else {
             m_stringList.append(string);
         }
@@ -76,17 +77,17 @@ public:
         return size() == 0;
     }
 
-    QString first() const
+    QString first()
     {
         return list().constFirst();
     }
 
-    QString last() const
+    QString last()
     {
         return list().constLast();
     }
 
-    inline QStringList list() const;
+    inline QStringList list();
 
     inline void findAllCompletions(const KCompTreeNode *, const QString &, bool ignoreCase, bool &hasMultipleMatches);
 
@@ -94,9 +95,9 @@ public:
 
     inline void extractStringsFromNodeCI(const KCompTreeNode *, const QString &beginning, const QString &restString);
 
-    mutable QStringList m_stringList;
-    std::unique_ptr<KCompletionMatchesList> m_sortedListPtr;
-    mutable bool m_dirty;
+    QStringList m_stringList;
+    std::unique_ptr<CompletionItemsVec> m_sortedListPtr;
+    bool m_dirty = false;
     KCompletion::CompOrder m_compOrder;
     KCompletion::SorterFunction const &m_sorterFunction;
 };
@@ -154,17 +155,17 @@ void KCompletionMatchesWrapper::findAllCompletions(const KCompTreeNode *treeRoot
     }
 }
 
-QStringList KCompletionMatchesWrapper::list() const
+QStringList KCompletionMatchesWrapper::list()
 {
     if (m_sortedListPtr && m_dirty) {
-        m_sortedListPtr->sort();
+        std::sort(m_sortedListPtr->begin(), m_sortedListPtr->end());
         m_dirty = false;
 
         m_stringList.clear();
         m_stringList.reserve(m_sortedListPtr->size());
         // high weight == sorted last -> reverse the sorting here
-        std::transform(m_sortedListPtr->crbegin(), m_sortedListPtr->crend(), std::back_inserter(m_stringList), [](const KSortableItem<QString> &item) {
-            return item.value();
+        std::transform(m_sortedListPtr->crbegin(), m_sortedListPtr->crend(), std::back_inserter(m_stringList), [](const KCompletionMatches::Item &item) {
+            return item.text;
         });
     } else if (m_compOrder == KCompletion::Sorted) {
         m_sorterFunction(m_stringList);
