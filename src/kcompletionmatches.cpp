@@ -52,8 +52,8 @@ KCompletionMatches::KCompletionMatches(bool sort_P)
 KCompletionMatches::KCompletionMatches(const KCompletionMatchesWrapper &matches)
     : d_ptr(new KCompletionMatchesPrivate(matches.sorting(), this))
 {
-    if (matches.m_sortedList != nullptr) {
-        KCompletionMatchesList::operator=(*matches.m_sortedList);
+    if (matches.m_sortedListPtr) {
+        KCompletionMatchesList::operator=(*matches.m_sortedListPtr);
     } else {
         const QStringList list = matches.list();
         reserve(list.size());
