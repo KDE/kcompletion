@@ -73,7 +73,7 @@ ecm_generate_headers(KCompletion_HEADERS
   REQUIRED_HEADERS KCompletion_HEADERS
 )
 
-install(TARGETS KF5Completion EXPORT KF5CompletionTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5Completion EXPORT KF5CompletionTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kcompletion_export.h
