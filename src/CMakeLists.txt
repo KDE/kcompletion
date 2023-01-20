@@ -1,9 +1,9 @@
-add_library(KF5Completion)
-add_library(KF5::Completion ALIAS KF5Completion)
+add_library(KF6Completion)
+add_library(KF6::Completion ALIAS KF6Completion)
 
-ecm_create_qm_loader(KF5Completion kcompletion5_qt)
+ecm_create_qm_loader(KF6Completion kcompletion5_qt)
 
-target_sources(KF5Completion PRIVATE
+target_sources(KF6Completion PRIVATE
     kcombobox.cpp
     kcombobox.h
     kcombobox_p.h
@@ -28,7 +28,7 @@ target_sources(KF5Completion PRIVATE
     kzoneallocator_p.h
 )
 
-ecm_qt_declare_logging_category(KF5Completion
+ecm_qt_declare_logging_category(KF6Completion
     HEADER kcompletion_debug.h
     IDENTIFIER KCOMPLETION_LOG
     CATEGORY_NAME kf.completion
@@ -36,7 +36,7 @@ ecm_qt_declare_logging_category(KF5Completion
     EXPORT KCOMPLETION
 )
 
-ecm_generate_export_header(KF5Completion
+ecm_generate_export_header(KF6Completion
     BASE_NAME KCompletion
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
@@ -45,15 +45,15 @@ ecm_generate_export_header(KF5Completion
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-target_include_directories(KF5Completion INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KCompletion>")
+target_include_directories(KF6Completion INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KCompletion>")
 
-target_link_libraries(KF5Completion PUBLIC Qt${QT_MAJOR_VERSION}::Widgets
-                                    PRIVATE KF5::ConfigCore      # KConfigGroup, used in many places
-                                            KF5::ConfigGui       # KStandardShortcut
-                                            KF5::WidgetsAddons   # KCursor
+target_link_libraries(KF6Completion PUBLIC Qt${QT_MAJOR_VERSION}::Widgets
+                                    PRIVATE KF6::ConfigCore      # KConfigGroup, used in many places
+                                            KF6::ConfigGui       # KStandardShortcut
+                                            KF6::WidgetsAddons   # KCursor
 )
 
-set_target_properties(KF5Completion PROPERTIES VERSION   ${KCOMPLETION_VERSION}
+set_target_properties(KF6Completion PROPERTIES VERSION   ${KCOMPLETION_VERSION}
                                                SOVERSION ${KCOMPLETION_SOVERSION}
                                                EXPORT_NAME Completion
 )
@@ -73,7 +73,7 @@ ecm_generate_headers(KCompletion_HEADERS
   REQUIRED_HEADERS KCompletion_HEADERS
 )
 
-install(TARGETS KF5Completion EXPORT KF5CompletionTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF6Completion EXPORT KF6CompletionTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kcompletion_export.h
@@ -87,9 +87,9 @@ endif()
 
 if(BUILD_QCH)
     ecm_add_qch(
-        KF5Completion_QCH
+        KF6Completion_QCH
         NAME KCompletion
-        BASE_NAME KF5Completion
+        BASE_NAME KF6Completion
         VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
@@ -113,7 +113,7 @@ if(BUILD_QCH)
 endif()
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KCompletion LIB_NAME KF5Completion DEPS "widgets" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KCompletion)
+ecm_generate_pri_file(BASE_NAME KCompletion LIB_NAME KF6Completion DEPS "widgets" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KCompletion)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
 ecm_qt_install_logging_categories(

@@ -30,16 +30,16 @@ include(ECMPoQmTools)
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KCOMPLETION
   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kcompletion_version.h"
-  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5CompletionConfigVersion.cmake"
-  SOVERSION 5)
+  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6CompletionConfigVersion.cmake"
+  SOVERSION 6)
 
 # Dependencies
 set(REQUIRED_QT_VERSION 6.4.0)
 
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} NO_MODULE REQUIRED Widgets)
 
-find_package(KF5Config ${KF_DEP_VERSION} REQUIRED)
-find_package(KF5WidgetsAddons ${KF_DEP_VERSION} REQUIRED)
+find_package(KF6Config ${KF_DEP_VERSION} REQUIRED)
+find_package(KF6WidgetsAddons ${KF_DEP_VERSION} REQUIRED)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
@@ -63,34 +63,34 @@ if (BUILD_TESTING)
 endif()
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5Completion")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6Completion")
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KF5Completion_QCH
-        FILE KF5CompletionQchTargets.cmake
+        TARGETS KF6Completion_QCH
+        FILE KF6CompletionQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5CompletionQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6CompletionQchTargets.cmake\")")
 endif()
 
 include(CMakePackageConfigHelpers)
 
 configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/KF5CompletionConfig.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5CompletionConfig.cmake"
+  "${CMAKE_CURRENT_SOURCE_DIR}/KF6CompletionConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF6CompletionConfig.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
 
 install(FILES
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5CompletionConfig.cmake"
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5CompletionConfigVersion.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF6CompletionConfig.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF6CompletionConfigVersion.cmake"
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Devel
 )
 
-install(EXPORT KF5CompletionTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5CompletionTargets.cmake NAMESPACE KF5:: )
+install(EXPORT KF6CompletionTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF6CompletionTargets.cmake NAMESPACE KF6:: )
 
 install(FILES
    ${CMAKE_CURRENT_BINARY_DIR}/kcompletion_version.h

@@ -15,5 +15,5 @@ ecm_add_tests(
    klineedit_unittest.cpp
    kcombobox_unittest.cpp
    ksortablelisttest.cpp
-   LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF5::Completion
+   LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF6::Completion
 )

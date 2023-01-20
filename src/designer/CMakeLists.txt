@@ -1,17 +1,17 @@
 include(ECMAddQtDesignerPlugin)
 
 ecm_qtdesignerplugin_widget(KComboBox
-    TOOLTIP "Combo Box (KF5)"
-    GROUP "Input (KF5)"
+    TOOLTIP "Combo Box (KF6)"
+    GROUP "Input (KF6)"
 )
 ecm_qtdesignerplugin_widget(KHistoryComboBox
-    TOOLTIP "A combobox for offering a history and completion (KF5)"
+    TOOLTIP "A combobox for offering a history and completion (KF6)"
     WHATSTHIS "A combobox which implements a history like a unix shell"
-    GROUP "Input (KF5)"
+    GROUP "Input (KF6)"
 )
 ecm_qtdesignerplugin_widget(KLineEdit
-    TOOLTIP "Line Edit (KF5)"
-    GROUP "Input (KF5)"
+    TOOLTIP "Line Edit (KF6)"
+    GROUP "Input (KF6)"
 )
 
 ecm_add_qtdesignerplugin(kcompletionwidgets
@@ -22,7 +22,7 @@ ecm_add_qtdesignerplugin(kcompletionwidgets
         KHistoryComboBox
         KLineEdit
     LINK_LIBRARIES
-        KF5::Completion
+        KF6::Completion
     INSTALL_DESTINATION "${KDE_INSTALL_QTPLUGINDIR}/designer"
     COMPONENT Devel
 )

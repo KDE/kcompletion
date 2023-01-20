@@ -13,8 +13,8 @@ deprecated: false
 release: true
 libraries:
  - qmake: KCompletion
-   cmake: "KF5::Completion"
-cmakename: KF5Completion
+   cmake: "KF6::Completion"
+cmakename: KF6Completion
 
 public_lib: true
 group: Frameworks
