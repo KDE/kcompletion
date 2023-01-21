@@ -250,17 +250,6 @@ public:
      */
     QList<QKeySequence> keyBinding(KeyBindingType item) const;
 
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
-    /**
-     * @deprecated since 5.0, use keyBinding instead
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletionBase::keyBinding(KeyBindingType)")
-    QList<QKeySequence> getKeyBinding(KeyBindingType item) const
-    {
-        return keyBinding(item);
-    }
-#endif
-
     /**
      * Sets this object to use global values for key bindings.
      *
@@ -323,17 +312,6 @@ protected:
      * @since 5.0
      */
     KeyBindingMap keyBindingMap() const;
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
-    /**
-     * @deprecated since 5.0, use keyBindingMap instead
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletionBase::keyBindingMap()")
-    KeyBindingMap getKeyBindings() const
-    {
-        return keyBindingMap();
-    }
-#endif
 
     /**
      * Sets the keymap.

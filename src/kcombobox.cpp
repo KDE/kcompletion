@@ -100,26 +100,6 @@ bool KComboBox::autoCompletion() const
     return completionMode() == KCompletion::CompletionAuto;
 }
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
-void KComboBox::setContextMenuEnabled(bool showMenu)
-{
-    Q_D(KComboBox);
-    if (d->klineEdit) {
-        d->klineEdit->setContextMenuPolicy(showMenu ? Qt::DefaultContextMenu : Qt::NoContextMenu);
-    }
-}
-#endif
-
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
-void KComboBox::setUrlDropsEnabled(bool enable)
-{
-    Q_D(KComboBox);
-    if (d->klineEdit) {
-        d->klineEdit->setUrlDropsEnabled(enable);
-    }
-}
-#endif
-
 bool KComboBox::urlDropsEnabled() const
 {
     Q_D(const KComboBox);
@@ -286,13 +266,6 @@ void KComboBox::setLineEdit(QLineEdit *edit)
         d->klineEdit->setCompletionObject(completion);
     }
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-    // Connect the returnPressed signal for both Q[K]LineEdits'
-    if (edit) {
-        connect(edit, qOverload<>(&QLineEdit::returnPressed), this, qOverload<>(&KComboBox::returnPressed));
-    }
-#endif
-
     if (d->klineEdit) {
         // someone calling KComboBox::setEditable(false) destroys our
         // line edit without us noticing. And KCompletionBase::delegate would
@@ -318,14 +291,6 @@ void KComboBox::setLineEdit(QLineEdit *edit)
             Q_EMIT aboutToShowContextMenu(menu);
         });
 
-        // match the declaration of the deprecated signal
-#if QT_DEPRECATED_SINCE(5, 15)
-        QT_WARNING_PUSH
-        QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
-        QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
-        connect(d->klineEdit, &KLineEdit::completionBoxActivated, this, qOverload<const QString &>(&QComboBox::activated));
-        QT_WARNING_POP
-#endif
         connect(d->klineEdit, &KLineEdit::completionBoxActivated, this, &QComboBox::textActivated);
 
         d->klineEdit->setTrapReturnKey(d->trapReturnKey);

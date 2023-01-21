@@ -149,35 +149,6 @@ public:
      */
     bool removeFromHistory(const QString &item);
 
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 66)
-    /**
-     * Sets a pixmap provider, so that items in the combobox can have a pixmap.
-     * KPixmapProvider is just an abstract class with the one pure virtual
-     * method KPixmapProvider::pixmapFor(). This method is called whenever
-     * an item is added to the KHistoryComboBoxBox. Implement it to return your
-     * own custom pixmaps, or use the KUrlPixmapProvider from KIO,
-     * which uses KMimeType::pixmapForUrl to resolve icons.
-     *
-     * Set @p provider to nullptr if you want to disable pixmaps. Default no pixmaps.
-     *
-     * @see pixmapProvider
-     * @deprecated since 5.66, use setIconProvider
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 66, "Use setIconProvider")
-    void setPixmapProvider(KPixmapProvider *provider);
-#endif
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 66)
-    /**
-     * @returns the current pixmap provider.
-     * @see setPixmapProvider
-     * @see KPixmapProvider
-     * @deprecated since 5.66, unused
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 66, "unused")
-    KPixmapProvider *pixmapProvider() const;
-#endif
-
     /**
      * Sets an icon provider, so that items in the combobox can have an icon.
      * The provider is a function that takes a QString and returns a QIcon
@@ -254,10 +225,6 @@ protected:
 
 private:
     Q_DECLARE_PRIVATE_D(KComboBox::d_ptr, KHistoryComboBox)
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 79)
-    // Unused, kept for ABI compatibility
-    const void *__kcompletion_d_do_not_use;
-#endif
 
     Q_DISABLE_COPY(KHistoryComboBox)
 };

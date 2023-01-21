@@ -44,31 +44,18 @@ private:
         // KLineEdit signals
         QSignalSpy qReturnPressedSpy(w.lineEdit(), &QLineEdit::returnPressed);
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QSignalSpy kEditReturnPressedSpy(lineEdit, qOverload<const QString &>(&KLineEdit::returnPressed));
-#endif
         QSignalSpy kEditReturnKeyPressedSpy(lineEdit, &KLineEdit::returnKeyPressed);
 
         // KComboBox signals
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QSignalSpy comboReturnPressedSpy(&w, qOverload<>(&KComboBox::returnPressed));
-#endif
         QSignalSpy comboReturnPressedStringSpy(&w, qOverload<const QString &>(&KComboBox::returnPressed));
 
         QSignalSpy comboActivatedSpy(&w, &QComboBox::textActivated);
         QTest::keyClick(&w, Qt::Key_Return);
         QCOMPARE(qReturnPressedSpy.count(), 1);
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QCOMPARE(kEditReturnPressedSpy.count(), 1);
-        QCOMPARE(kEditReturnPressedSpy[0][0].toString(), QString("Hello world"));
-#endif
         QCOMPARE(kEditReturnKeyPressedSpy.count(), 1);
         QCOMPARE(kEditReturnKeyPressedSpy.at(0).at(0).toString(), QStringLiteral("Hello world"));
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QCOMPARE(comboReturnPressedSpy.count(), 1);
-#endif
         QCOMPARE(comboReturnPressedStringSpy.count(), 1);
         QCOMPARE(comboReturnPressedStringSpy[0][0].toString(), QString("Hello world"));
 
@@ -87,18 +74,12 @@ private Q_SLOTS:
     {
         KHistoryComboBox w;
         QVERIFY(qobject_cast<KLineEdit *>(w.lineEdit()));
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QSignalSpy comboReturnPressedSpy(&w, qOverload<>(&KComboBox::returnPressed));
-#endif
         QSignalSpy comboReturnPressedStringSpy(&w, qOverload<const QString &>(&KComboBox::returnPressed));
         connect(&w, &KHistoryComboBox::textActivated, &w, &KHistoryComboBox::addToHistory);
         QSignalSpy comboActivatedSpy(&w, &QComboBox::textActivated);
         QTest::keyClicks(&w, QStringLiteral("Hello world"));
         QTest::keyClick(&w, Qt::Key_Return);
         qApp->processEvents(); // QueuedConnection in KHistoryComboBox
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        QCOMPARE(comboReturnPressedSpy.count(), 1);
-#endif
         QCOMPARE(comboReturnPressedStringSpy.count(), 1);
         QCOMPARE(comboReturnPressedStringSpy[0][0].toString(), QString("Hello world"));
 

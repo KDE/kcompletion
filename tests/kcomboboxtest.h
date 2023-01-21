@@ -23,9 +23,6 @@ private Q_SLOTS:
     void quitApp();
     void slotTimeout();
     void slotDisable();
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-    void slotReturnPressed();
-#endif
     void slotReturnPressed(const QString &);
     void slotActivated(int);
     void slotTextActivated(const QString &);

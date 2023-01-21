@@ -177,16 +177,6 @@ public Q_SLOTS:
     void setVisible(bool visible) override;
 
 Q_SIGNALS:
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 81)
-    /**
-     * Emitted when an item is selected, @p text is the text of the selected item.
-     *
-     * @deprecated since 5.81, use the KCompletionBox::textActivated(const QString &) signal instead
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use the KCompletionBox::textActivated(const QString &) signal instead")
-    void activated(const QString &text); // clazy:exclude=overloaded-signal
-#endif
-
     /**
      * Emitted when an item is selected, @p text is the text of the selected item.
      *
@@ -207,17 +197,6 @@ protected:
      * normally used by K/QComboBox when used with one.
      */
     QRect calculateGeometry() const;
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
-    /**
-     * @deprecated since 5.0, use resizeAndReposition instead.
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KCompletionBox::resizeAndReposition()")
-    void sizeAndPosition()
-    {
-        resizeAndReposition();
-    }
-#endif
 
     /**
      * This properly resizes and repositions the listbox.

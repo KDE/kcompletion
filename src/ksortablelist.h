@@ -126,17 +126,6 @@ public:
         return this->second;
     }
 
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 0)
-    /**
-     * @return the first value (the key)
-     * @deprecated Since 4.0. Use key()
-     */
-    KCOMPLETION_DEPRECATED_VERSION(4, 0, "Use KSortableItem::key()")
-    Key index() const
-    {
-        return this->first;
-    }
-#endif
     /**
      * @return the first value.
      */

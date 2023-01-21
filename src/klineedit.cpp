@@ -43,9 +43,6 @@ void KLineEditPrivate::_k_textChanged(const QString &text)
     // COMPAT (as documented): emit userTextChanged whenever textChanged is emitted
     if (!completionRunning && (text != userText)) {
         userText = text;
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
-        Q_EMIT q->userTextChanged(text);
-#endif
     }
 }
 
@@ -57,9 +54,6 @@ void KLineEditPrivate::updateUserText(const QString &text)
     if (!completionRunning && (text != userText)) {
         userText = text;
         q->setModified(true);
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
-        Q_EMIT q->userTextChanged(text);
-#endif
         Q_EMIT q->textEdited(text);
         Q_EMIT q->textChanged(text);
     }
@@ -149,27 +143,6 @@ KLineEdit::KLineEdit(QWidget *parent)
 KLineEdit::~KLineEdit()
 {
 }
-
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
-QString KLineEdit::clickMessage() const
-{
-    return placeholderText();
-}
-#endif
-
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 46)
-void KLineEdit::setClearButtonShown(bool show)
-{
-    setClearButtonEnabled(show);
-}
-#endif
-
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 46)
-bool KLineEdit::isClearButtonShown() const
-{
-    return isClearButtonEnabled();
-}
-#endif
 
 QSize KLineEdit::clearButtonUsedSize() const
 {
@@ -573,9 +546,6 @@ void KLineEdit::keyPressEvent(QKeyEvent *e)
                 Q_EMIT QLineEdit::returnPressed();
                 e->accept();
             }
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-            Q_EMIT returnPressed(displayText());
-#endif
             Q_EMIT returnKeyPressed(displayText());
             if (trap) {
                 d->completionBox->hide();
@@ -1079,20 +1049,6 @@ bool KLineEdit::event(QEvent *ev)
     return QLineEdit::event(ev);
 }
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
-void KLineEdit::setUrlDropsEnabled(bool enable)
-{
-    Q_D(KLineEdit);
-    if (enable && !d->handleURLDrops) {
-        installEventFilter(d->urlDropEventFilter);
-        d->handleURLDrops = true;
-    } else if (!enable && d->handleURLDrops) {
-        removeEventFilter(d->urlDropEventFilter);
-        d->handleURLDrops = false;
-    }
-}
-#endif
-
 bool KLineEdit::urlDropsEnabled() const
 {
     Q_D(const KLineEdit);
@@ -1131,13 +1087,8 @@ void KLineEdit::setCompletionBox(KCompletionBox *box)
 
         connect(d->completionBox, &KCompletionBox::userCancelled, this, &KLineEdit::userCancelled);
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        connect(d->completionBox, qOverload<const QString &>(&KCompletionBox::activated), this, &KLineEdit::completionBoxActivated);
-        connect(d->completionBox, qOverload<const QString &>(&KCompletionBox::activated), this, &KLineEdit::textEdited);
-#else
         connect(d->completionBox, &KCompletionBox::textActivated, this, &KLineEdit::completionBoxActivated);
         connect(d->completionBox, &KCompletionBox::textActivated, this, &KLineEdit::textEdited);
-#endif
     }
 }
 
@@ -1448,53 +1399,6 @@ void KLineEdit::paintEvent(QPaintEvent *ev)
         QLineEdit::paintEvent(ev);
     }
 }
-
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
-void KLineEdit::setClickMessage(const QString &msg)
-{
-    setPlaceholderText(msg);
-}
-#endif
-
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
-void KLineEdit::setContextMenuEnabled(bool showMenu)
-{
-    QLineEdit::setContextMenuPolicy(showMenu ? Qt::DefaultContextMenu : Qt::NoContextMenu);
-}
-#endif
-
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
-bool KLineEdit::isContextMenuEnabled() const
-{
-    return (contextMenuPolicy() == Qt::DefaultContextMenu);
-}
-#endif
-
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 83)
-void KLineEdit::setPasswordMode(bool passwordMode)
-{
-    Q_D(KLineEdit);
-    if (passwordMode) {
-        KConfigGroup cg(KSharedConfig::openConfig(), "Passwords");
-        const QString val = cg.readEntry("EchoMode", "OneStar");
-        if (val == QLatin1String("NoEcho")) {
-            setEchoMode(NoEcho);
-        } else {
-            d->threeStars = (val == QLatin1String("ThreeStars"));
-            setEchoMode(Password);
-        }
-    } else {
-        setEchoMode(Normal);
-    }
-}
-#endif
-
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 83)
-bool KLineEdit::passwordMode() const
-{
-    return echoMode() == NoEcho || echoMode() == Password;
-}
-#endif
 
 void KLineEdit::doCompletion(const QString &text)
 {

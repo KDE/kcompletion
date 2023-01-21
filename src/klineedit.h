@@ -142,23 +142,8 @@ class KCOMPLETION_EXPORT KLineEdit : public QLineEdit, public KCompletionBase //
 
     Q_OBJECT
     Q_DECLARE_PRIVATE(KLineEdit)
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
-    Q_PROPERTY(bool contextMenuEnabled READ isContextMenuEnabled WRITE setContextMenuEnabled)
-#endif
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
-    Q_PROPERTY(bool urlDropsEnabled READ urlDropsEnabled WRITE setUrlDropsEnabled)
-#endif
     Q_PROPERTY(bool trapEnterKeyEvent READ trapReturnKey WRITE setTrapReturnKey)
     Q_PROPERTY(bool squeezedTextEnabled READ isSqueezedTextEnabled WRITE setSqueezedTextEnabled)
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
-    Q_PROPERTY(QString clickMessage READ clickMessage WRITE setClickMessage)
-#endif
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 46)
-    Q_PROPERTY(bool showClearButton READ isClearButtonShown WRITE setClearButtonShown)
-#endif
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 83)
-    Q_PROPERTY(bool passwordMode READ passwordMode WRITE setPasswordMode)
-#endif
 
 public:
     /**
@@ -204,34 +189,6 @@ public:
      * This method allows to disable some modes.
      */
     void setCompletionModeDisabled(KCompletion::CompletionMode mode, bool disable = true);
-
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
-    /**
-     * Enables/disables the popup (context) menu.
-     *
-     * This method only works if this widget is editable, i.e. read-write and
-     * allows you to enable/disable the context menu. It does nothing if invoked
-     * for a none-editable combo-box.
-     *
-     * By default, the context menu is created if this widget is editable.
-     * Call this function with the argument set to false to disable the popup
-     * menu.
-     *
-     * @param showMenu If @c true, show the context menu.
-     * @deprecated since 4.5, use setContextMenuPolicy instead
-     */
-    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use QWidget::setContextMenuPolicy(Qt::ContextMenuPolicy)")
-    virtual void setContextMenuEnabled(bool showMenu);
-#endif
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
-    /**
-     * Returns @c true when the context menu is enabled.
-     * @deprecated since 4.5, use contextMenuPolicy instead
-     */
-    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use QWidget::contextMenuPolicy()")
-    bool isContextMenuEnabled() const;
-#endif
 
     /**
      * Enables/Disables handling of URL drops. If enabled and the user
@@ -332,48 +289,6 @@ public:
      */
     void setCompletionBox(KCompletionBox *box);
 
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
-    /**
-     * This makes the line edit display a grayed-out hinting text as long as
-     * the user didn't enter any text. It is often used as indication about
-     * the purpose of the line edit.
-     * @deprecated since 5.0, use QLineEdit::setPlaceholderText instead.
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use QLineEdit::setPlaceholderText(const QString&)")
-    void setClickMessage(const QString &msg);
-#endif
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
-    /**
-     * @return the message set with setClickMessage
-     * @deprecated since 5.0, use QLineEdit::placeholderText instead.
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use QLineEdit::placeholderText()")
-    QString clickMessage() const;
-#endif
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 46)
-    /**
-     * This makes the line edit display an icon on one side of the line edit
-     * which, when clicked, clears the contents of the line edit.
-     * This is useful for such things as location or search bars.
-     *
-     * @deprecated since 5.46 Use QLineEdit::setClearButtonEnabled
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 46, "Use QLineEdit::setClearButtonEnabled(bool)")
-    void setClearButtonShown(bool show);
-#endif
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 46)
-    /**
-     * @return whether or not the clear button is shown
-     *
-     * @deprecated since 5.46 Use QLineEdit::isClearButtonEnabled
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 46, "Use QLineEdit::isClearButtonEnabled()")
-    bool isClearButtonShown() const;
-#endif
-
     /**
      * @return the size used by the clear button
      * @since 4.1
@@ -394,20 +309,6 @@ Q_SIGNALS:
      * Emitted whenever the completion box is activated.
      */
     void completionBoxActivated(const QString &);
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 81)
-    /**
-     * Emitted when the user presses the Return or Enter key.
-     *
-     *  The argument is the current text. Note that this
-     * signal is @em not emitted if the widget's @c EchoMode is set to
-     * QLineEdit::EchoMode.
-     *
-     * @deprecated since 5.81, use the KLineEdit::returnKeyPressed(const QString &) signal instead
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use the KLineEdit::returnKeyPressed(const QString &) signal instead")
-    void returnPressed(const QString &text); // clazy:exclude=overloaded-signal
-#endif
 
     /**
      * Emitted when the user presses the Return or Enter key.
@@ -432,23 +333,6 @@ Q_SIGNALS:
      * Emitted when the shortcut for substring completion is pressed.
      */
     void substringCompletion(const QString &);
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
-    /**
-     * Emitted when the text is changed NOT by the suggested autocompletion:
-     * either when the user is physically typing keys, or when the text is changed programmatically,
-     * for example, by calling setText().
-     * But not when automatic completion changes the text temporarily.
-     *
-     * @since 4.2.2
-     * @deprecated since 4.5. You probably want to connect to textEdited() instead,
-     * which is emitted whenever the text is actually changed by the user
-     * (by typing or accepting autocompletion), without side effects from
-     * suggested autocompletion either. userTextChanged isn't needed anymore.
-     */
-    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use QLineEdit::textEdited(const QString&)")
-    QT_MOC_COMPAT void userTextChanged(const QString &);
-#endif
 
     /**
      * Emitted when the text rotation key-bindings are pressed.
@@ -533,28 +417,6 @@ public Q_SLOTS:
      * Reimplemented to enable text squeezing. API is not affected.
      */
     virtual void setText(const QString &);
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 83)
-    /**
-     * @brief set the line edit in password mode.
-     * this change the EchoMode according to KDE preferences.
-     * @param passwordMode true to set in password mode
-     *
-     * @deprecated Since 5.83, use KPasswordLineEdit or QLineEdit::setEchoMode(QLineEdit::EchoMode).
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 83, "Use KPasswordLineEdit or QLineEdit::setEchoMode(QLineEdit::EchoMode)")
-    void setPasswordMode(bool passwordMode = true);
-#endif
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 83)
-    /**
-     * @return returns true if the lineedit is set to password mode echoing
-     *
-     * @deprecated Since 5.83, see setPasswordMode(bool)
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 83, "See API docs")
-    bool passwordMode() const;
-#endif
 
 protected Q_SLOTS:
 

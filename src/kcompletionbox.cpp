@@ -106,9 +106,6 @@ void KCompletionBox::slotActivated(QListWidgetItem *item)
 
     hide();
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-    Q_EMIT activated(item->text());
-#endif
     Q_EMIT textActivated(item->text());
 }
 
@@ -552,9 +549,6 @@ void KCompletionBoxPrivate::_k_itemClicked(QListWidgetItem *item)
     if (item) {
         q->hide();
         Q_EMIT q->currentTextChanged(item->text());
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-        Q_EMIT q->activated(item->text());
-#endif
         Q_EMIT q->textActivated(item->text());
     }
 }

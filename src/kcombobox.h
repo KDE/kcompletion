@@ -136,9 +136,6 @@ class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase //
 {
     Q_OBJECT
     Q_PROPERTY(bool autoCompletion READ autoCompletion WRITE setAutoCompletion)
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 0)
-    Q_PROPERTY(bool urlDropsEnabled READ urlDropsEnabled WRITE setUrlDropsEnabled)
-#endif
     Q_PROPERTY(bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey)
 
 public:
@@ -161,33 +158,6 @@ public:
      * Destructor.
      */
     ~KComboBox() override;
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(4, 5)
-    /**
-     * Deprecated to reflect Qt api changes
-     * @deprecated since 4.5
-     */
-    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use KComboBox::insertUrl(int, const QUrl&)")
-    void insertURL(const QUrl &url, int index = -1)
-    {
-        insertUrl(index < 0 ? count() : index, url);
-    }
-    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use KComboBox::insertUrl(int, const QIcon&, const QUrl&)")
-    void insertURL(const QPixmap &pixmap, const QUrl &url, int index = -1)
-    {
-        insertUrl(index < 0 ? count() : index, QIcon(pixmap), url);
-    }
-    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use KComboBox::changeUrl(int, const QUrl&)")
-    void changeURL(const QUrl &url, int index)
-    {
-        changeUrl(index, url);
-    }
-    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use KComboBox::changeUrl(int, const QIcon&, const QUrl&)")
-    void changeURL(const QPixmap &pixmap, const QUrl &url, int index)
-    {
-        changeUrl(index, QIcon(pixmap), url);
-    }
-#endif
 
     /**
      * Sets @p url into the edit field of the combo box.
@@ -279,40 +249,6 @@ public:
      */
     bool autoCompletion() const;
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(4, 5)
-    /**
-     * Enables or disables the popup (context) menu.
-     *
-     * This method only works if this widget is editable, and
-     * allows you to enable/disable the context menu. It does nothing if invoked
-     * for a non-editable combo box.
-     *
-     * By default, the context menu is created if this widget is editable.
-     * Call this function with the argument set to false to disable the popup
-     * menu.
-     *
-     * @param showMenu If @c true, show the context menu.
-     * @deprecated since 4.5, use setContextMenuPolicy instead
-     */
-    KCOMPLETION_DEPRECATED_VERSION(4, 5, "Use QWidget::setContextMenuPolicy(...)")
-    virtual void setContextMenuEnabled(bool showMenu);
-#endif
-
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 0)
-    /**
-     * Enables/Disables handling of URL drops.
-     *
-     * If enabled and the user drops an URL, the decoded URL will
-     * be inserted. Otherwise the default behavior of QComboBox is used,
-     * which inserts the encoded URL.
-     *
-     * @param enable If @c true, insert decoded URLs
-     * @deprecated since 5.0. Use lineEdit()->installEventFilter with a LineEditUrlDropEventFilter
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 0, "Use KComboBox::lineEdit()->installEventFilter(...) with a LineEditUrlDropEventFilter")
-    void setUrlDropsEnabled(bool enable);
-#endif
-
     /**
      * Returns @c true when decoded URL drops are enabled
      */
@@ -391,18 +327,6 @@ public:
     QMenu *contextMenu() const;
 
 Q_SIGNALS:
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(5, 81)
-    /**
-     * Emitted when the user presses the Enter key.
-     *
-     * Note that this signal is only emitted when the widget is editable.
-     *
-     * @deprecated since 5.81, use the KComboBox::returnPressed(const QString &) signal
-     */
-    KCOMPLETION_DEPRECATED_VERSION(5, 81, "Use the KComboBox::returnPressed(const QString &) signal instead")
-    void returnPressed(); // clazy:exclude=overloaded-signal
-#endif
-
     /**
      * Emitted when the user presses the Return or Enter key.
      *

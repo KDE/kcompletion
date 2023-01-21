@@ -21,8 +21,6 @@ target_sources(KF6Completion PRIVATE
     klineedit.cpp
     klineedit.h
     klineedit_p.h
-    kpixmapprovider.cpp
-    kpixmapprovider.h
     ksortablelist.h
     kzoneallocator.cpp
     kzoneallocator_p.h
@@ -41,7 +39,7 @@ ecm_generate_export_header(KF6Completion
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
     DEPRECATED_BASE_VERSION 0
-    DEPRECATION_VERSIONS 4.0 4.5 5.0 5.46 5.66 5.81 5.83
+    DEPRECATION_VERSIONS
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
@@ -66,7 +64,6 @@ ecm_generate_headers(KCompletion_HEADERS
   KCompletionBox
   KLineEdit
   KHistoryComboBox
-  KPixmapProvider
   KSortableList
   KCompletionMatches
 

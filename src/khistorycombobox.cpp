@@ -12,7 +12,6 @@
 #include "kcombobox_p.h"
 
 #include <KStandardShortcut>
-#include <kpixmapprovider.h>
 
 #include <QAbstractItemView>
 #include <QApplication>
@@ -55,10 +54,6 @@ public:
      */
     QString typedText;
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
-    KPixmapProvider *pixmapProvider = nullptr;
-#endif
-
     /**
      * The current index in the combobox, used for Up and Down
      */
@@ -86,9 +81,6 @@ void KHistoryComboBoxPrivate::init(bool useCompletion)
     q->setInsertPolicy(KHistoryComboBox::NoInsert);
     currentIndex = -1;
     rotated = false;
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
-    pixmapProvider = nullptr;
-#endif
 
     // obey HISTCONTROL setting
     QByteArray histControl = qgetenv("HISTCONTROL");
@@ -136,10 +128,6 @@ KHistoryComboBox::KHistoryComboBox(bool useCompletion, QWidget *parent)
 
 KHistoryComboBox::~KHistoryComboBox()
 {
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
-    Q_D(KHistoryComboBox);
-    delete d->pixmapProvider;
-#endif
 }
 
 void KHistoryComboBox::setHistoryItems(const QStringList &items)
@@ -247,10 +235,6 @@ void KHistoryComboBox::addToHistory(const QString &item)
     // now add the item
     if (d->iconProvider) {
         insertItem(0, d->iconProvider(item), item);
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
-    } else if (d->pixmapProvider) {
-        insertItem(0, d->pixmapProvider->pixmapFor(item, iconSize().height()), item);
-#endif
     } else {
         insertItem(0, item);
     }
@@ -417,28 +401,6 @@ void KHistoryComboBox::wheelEvent(QWheelEvent *ev)
     ev->accept();
 }
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
-void KHistoryComboBox::setPixmapProvider(KPixmapProvider *provider)
-{
-    Q_D(KHistoryComboBox);
-    if (d->pixmapProvider == provider) {
-        return;
-    }
-
-    delete d->pixmapProvider;
-    d->pixmapProvider = provider;
-
-    // re-insert all the items with/without pixmap
-    // I would prefer to use changeItem(), but that doesn't honor the pixmap
-    // when using an editable combobox (what we do)
-    if (count() > 0) {
-        QStringList items(historyItems());
-        clear();
-        insertItems(items);
-    }
-}
-#endif
-
 void KHistoryComboBox::setIconProvider(std::function<QIcon(const QString &)> providerFunction)
 {
     Q_D(KHistoryComboBox);
@@ -456,10 +418,6 @@ void KHistoryComboBox::insertItems(const QStringList &items)
 
         if (d->iconProvider) {
             addItem(d->iconProvider(item), item);
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
-        } else if (d->pixmapProvider) {
-            addItem(d->pixmapProvider->pixmapFor(item, iconSize().height()), item);
-#endif
         } else {
             addItem(item);
         }
@@ -481,13 +439,6 @@ void KHistoryComboBoxPrivate::_k_simulateActivated(const QString &text)
        which is perhaps reasonable. Generate the signal ourselves if that's the case.
     */
     if ((q->insertPolicy() == q->NoInsert && q->findText(text, Qt::MatchFixedString | Qt::MatchCaseSensitive) == -1)) {
-#if QT_DEPRECATED_SINCE(5, 15)
-        QT_WARNING_PUSH
-        QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
-        QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
-        Q_EMIT q->activated(text);
-        QT_WARNING_POP
-#endif
         Q_EMIT q->textActivated(text);
     }
 
@@ -496,24 +447,9 @@ void KHistoryComboBoxPrivate::_k_simulateActivated(const QString &text)
        InsertAtCurrent
     */
     else if (q->insertPolicy() != q->InsertAtCurrent && q->count() >= q->maxCount()) {
-#if QT_DEPRECATED_SINCE(5, 15)
-        QT_WARNING_PUSH
-        QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
-        QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
-        Q_EMIT q->activated(text);
-        QT_WARNING_POP
-#endif
         Q_EMIT q->textActivated(text);
     }
 }
-
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 66)
-KPixmapProvider *KHistoryComboBox::pixmapProvider() const
-{
-    Q_D(const KHistoryComboBox);
-    return d->pixmapProvider;
-}
-#endif
 
 void KHistoryComboBox::reset()
 {

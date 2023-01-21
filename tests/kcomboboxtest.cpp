@@ -218,13 +218,6 @@ void KComboBoxTest::slotTextActivated(const QString &item)
     qDebug() << "Activated Combo:" << qPrintable(sender()->objectName()) << ", item:" << item;
 }
 
-#if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 81)
-void KComboBoxTest::slotReturnPressed()
-{
-    qDebug() << "Return Pressed:" << qPrintable(sender()->objectName());
-}
-#endif
-
 void KComboBoxTest::slotReturnPressed(const QString &item)
 {
     qDebug() << "Return Pressed:" << qPrintable(sender()->objectName()) << ", value =" << item;
