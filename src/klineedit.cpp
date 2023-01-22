@@ -1164,13 +1164,8 @@ bool KLineEditPrivate::overrideShortcut(const QKeyEvent *e)
         return true;
     }
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     constexpr int ctrlE = QKeyCombination(Qt::CTRL | Qt::Key_E).toCombined();
     constexpr int ctrlU = QKeyCombination(Qt::CTRL | Qt::Key_U).toCombined();
-#else
-    constexpr int ctrlE = Qt::CTRL | Qt::Key_E;
-    constexpr int ctrlU = Qt::CTRL | Qt::Key_U;
-#endif
 
     // Override all the text manupilation accelerators...
     if (KStandardShortcut::copy().contains(key)) {

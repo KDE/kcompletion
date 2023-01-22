@@ -45,7 +45,7 @@ ecm_generate_export_header(KF6Completion
 
 target_include_directories(KF6Completion INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KCompletion>")
 
-target_link_libraries(KF6Completion PUBLIC Qt${QT_MAJOR_VERSION}::Widgets
+target_link_libraries(KF6Completion PUBLIC Qt6::Widgets
                                     PRIVATE KF6::ConfigCore      # KConfigGroup, used in many places
                                             KF6::ConfigGui       # KStandardShortcut
                                             KF6::WidgetsAddons   # KCursor

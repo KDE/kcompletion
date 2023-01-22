@@ -36,7 +36,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KCOMPLETION
 # Dependencies
 set(REQUIRED_QT_VERSION 6.4.0)
 
-find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} NO_MODULE REQUIRED Widgets)
+find_package(Qt6 ${REQUIRED_QT_VERSION} NO_MODULE REQUIRED Widgets)
 
 find_package(KF6Config ${KF_DEP_VERSION} REQUIRED)
 find_package(KF6WidgetsAddons ${KF_DEP_VERSION} REQUIRED)
@@ -50,8 +50,8 @@ cmake_dependent_option(BUILD_DESIGNERPLUGIN "Build plugin for Qt Designer" ON "N
 add_feature_info(DESIGNERPLUGIN ${BUILD_DESIGNERPLUGIN} "Build plugin for Qt Designer")
 
 ecm_set_disabled_deprecation_versions(
-    QT 5.15.2
-    KF 5.95
+    QT 6.4
+    KF 5.102
 )
 
 ecm_install_po_files_as_qm(poqm)
