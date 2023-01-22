@@ -16,7 +16,7 @@ ecm_qtdesignerplugin_widget(KLineEdit
 
 ecm_add_qtdesignerplugin(kcompletionwidgets
     NAME KCompletionWidgets
-    OUTPUT_NAME kcompletion5widgets
+    OUTPUT_NAME kcompletion6widgets
     WIDGETS
         KComboBox
         KHistoryComboBox
