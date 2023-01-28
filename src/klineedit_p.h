@@ -12,7 +12,7 @@
 #include "klineedit.h"
 
 class KCompletionBox;
-class LineEditUrlDropEventFilter;
+class KLineEditUrlDropEventFilter;
 
 class KLineEditPrivate
 {
@@ -63,7 +63,7 @@ public:
     QMetaObject::Connection m_matchesConnection;
     KCompletionBox *completionBox;
 
-    LineEditUrlDropEventFilter *urlDropEventFilter;
+    KLineEditUrlDropEventFilter *urlDropEventFilter;
 
     QAction *noCompletionAction;
     QAction *shellCompletionAction;

@@ -18,10 +18,11 @@
 #include <KAuthorized>
 #include <KConfigGroup>
 #include <KCursor>
+#include <KLineEditUrlDropEventFilter>
 #include <KSharedConfig>
 #include <KStandardShortcut>
+
 #include <kcompletionbox.h>
-#include <lineediturldropeventfilter.h>
 
 #include <QActionGroup>
 #include <QApplication>
@@ -82,7 +83,7 @@ void KLineEditPrivate::init()
         s_initialized = true;
     }
 
-    urlDropEventFilter = new LineEditUrlDropEventFilter(q);
+    urlDropEventFilter = new KLineEditUrlDropEventFilter(q);
 
     // i18n: Placeholder text in line edit widgets is the text appearing
     // before any user input, briefly explaining to the user what to type
