@@ -224,7 +224,7 @@ protected:
     bool useCompletion() const;
 
 private:
-    Q_DECLARE_PRIVATE_D(KComboBox::d_ptr, KHistoryComboBox)
+    Q_DECLARE_PRIVATE(KHistoryComboBox)
 
     Q_DISABLE_COPY(KHistoryComboBox)
 };

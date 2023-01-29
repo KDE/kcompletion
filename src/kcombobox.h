@@ -459,11 +459,11 @@ protected:
 protected:
     KComboBox(KComboBoxPrivate &dd, QWidget *parent);
 
-private:
-    friend class KHistoryComboBox;
-    Q_DECLARE_PRIVATE(KComboBox)
+protected:
     std::unique_ptr<KComboBoxPrivate> const d_ptr;
-    // KF6 TODO: change private d_ptr to protected d_ptr, remove friend
+
+private:
+    Q_DECLARE_PRIVATE(KComboBox)
 };
 
 #endif
