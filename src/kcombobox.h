@@ -326,6 +326,8 @@ public:
      */
     QMenu *contextMenu() const;
 
+    QSize minimumSizeHint() const override;
+
 Q_SIGNALS:
     /**
      * Emitted when the user presses the Return or Enter key.
@@ -451,10 +453,6 @@ protected:
      * @param marked Whether the text inserted should be highlighted
      */
     virtual void setCompletedText(const QString &text, bool marked);
-
-    // TODO KF6: make public like in base classes, so consumers do not need to cast to base classes
-    // when they have a KComboBox (or subclasses) object and want to access this property
-    QSize minimumSizeHint() const override;
 
 protected:
     KComboBox(KComboBoxPrivate &dd, QWidget *parent);
