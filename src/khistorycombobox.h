@@ -15,7 +15,6 @@
 
 #include <functional>
 
-class KPixmapProvider;
 class KHistoryComboBoxPrivate;
 
 /**
@@ -75,7 +74,7 @@ public:
     explicit KHistoryComboBox(bool useCompletion, QWidget *parent = nullptr);
 
     /**
-     * Destructs the combo, the completion-object and the pixmap-provider
+     * Destructs the combo and the completion-object
      */
     ~KHistoryComboBox() override;
 
@@ -209,12 +208,12 @@ protected:
     void wheelEvent(QWheelEvent *ev) override;
 
     /**
-     * Inserts @p items into the combo, honoring pixmapProvider()
+     * Inserts @p items into the combo, honoring setIconProvider()
      * Does not update the completionObject.
      *
      * @note duplicatesEnabled() is not honored here.
      *
-     * Called from setHistoryItems() and setPixmapProvider()
+     * Called from setHistoryItems()
      */
     void insertItems(const QStringList &items);
 
