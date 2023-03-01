@@ -19,28 +19,28 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "X-Qt-Contexts: true\n"
 
-#: khistorycombobox.cpp:213
+#: khistorycombobox.cpp:201
 #, fuzzy
 #| msgid "Clear &History"
 msgctxt "KHistoryComboBox|@action:inmenu"
 msgid "Clear &History"
 msgstr "Escafar l'&istoric"
 
-#: klineedit.cpp:98
+#: klineedit.cpp:93
 #, fuzzy
 #| msgid "1"
 msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
 msgid "1"
 msgstr "1"
 
-#: klineedit.cpp:939
+#: klineedit.cpp:910
 #, fuzzy
 #| msgid "C&lear"
 msgctxt "KLineEdit|@action:inmenu"
 msgid "C&lear"
 msgstr "Netejar"
 
-#: klineedit.cpp:953
+#: klineedit.cpp:924
 #, fuzzy
 #| msgctxt "@action"
 #| msgid "Text Completion"
@@ -48,28 +48,28 @@ msgctxt "KLineEdit|@title:menu"
 msgid "Text Completion"
 msgstr "Autocomplètament de tèxt"
 
-#: klineedit.cpp:961
+#: klineedit.cpp:932
 #, fuzzy
 #| msgid "None"
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "None"
 msgstr "Pas cap"
 
-#: klineedit.cpp:962
+#: klineedit.cpp:933
 #, fuzzy
 #| msgid "Manual"
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Manual"
 msgstr "Manual"
 
-#: klineedit.cpp:963
+#: klineedit.cpp:934
 #, fuzzy
 #| msgid "Automatic"
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Automatic"
 msgstr "Automatic"
 
-#: klineedit.cpp:964
+#: klineedit.cpp:935
 #, fuzzy
 #| msgctxt "@item:inmenu Text Completion"
 #| msgid "Dropdown List"
@@ -77,14 +77,14 @@ msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List"
 msgstr "Tièra desenrotlanta"
 
-#: klineedit.cpp:965
+#: klineedit.cpp:936
 #, fuzzy
 #| msgid "Automatic"
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Short Automatic"
 msgstr "Automatic cort"
 
-#: klineedit.cpp:966
+#: klineedit.cpp:937
 #, fuzzy
 #| msgctxt "@item:inmenu Text Completion"
 #| msgid "Dropdown List && Automatic"
@@ -92,7 +92,7 @@ msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List && Automatic"
 msgstr "Tièra desenrotlanta e automatica"
 
-#: klineedit.cpp:996
+#: klineedit.cpp:967
 #, fuzzy
 #| msgid "Default"
 msgctxt "KLineEdit|@item:inmenu Text Completion"

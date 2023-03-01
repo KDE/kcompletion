@@ -26,28 +26,28 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "X-Qt-Contexts: true\n"
 
-#: khistorycombobox.cpp:213
+#: khistorycombobox.cpp:201
 #, fuzzy
 #| msgid "Clear &History"
 msgctxt "KHistoryComboBox|@action:inmenu"
 msgid "Clear &History"
 msgstr "Tīrīt &vēsturi"
 
-#: klineedit.cpp:98
+#: klineedit.cpp:93
 #, fuzzy
 #| msgid "1"
 msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
 msgid "1"
 msgstr "1"
 
-#: klineedit.cpp:939
+#: klineedit.cpp:910
 #, fuzzy
 #| msgid "C&lear"
 msgctxt "KLineEdit|@action:inmenu"
 msgid "C&lear"
 msgstr "T&īrīt"
 
-#: klineedit.cpp:953
+#: klineedit.cpp:924
 #, fuzzy
 #| msgctxt "@action"
 #| msgid "Text Completion"
@@ -55,7 +55,7 @@ msgctxt "KLineEdit|@title:menu"
 msgid "Text Completion"
 msgstr "Teksta pabeigšana"
 
-#: klineedit.cpp:961
+#: klineedit.cpp:932
 #, fuzzy
 #| msgctxt "No border line"
 #| msgid "None"
@@ -63,7 +63,7 @@ msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "None"
 msgstr "Nav"
 
-#: klineedit.cpp:962
+#: klineedit.cpp:933
 #, fuzzy
 #| msgctxt "@item:inmenu Text Completion"
 #| msgid "Manual"
@@ -71,7 +71,7 @@ msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Manual"
 msgstr "Rokas"
 
-#: klineedit.cpp:963
+#: klineedit.cpp:934
 #, fuzzy
 #| msgctxt "@item:inmenu Text Completion"
 #| msgid "Automatic"
@@ -79,7 +79,7 @@ msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Automatic"
 msgstr "Automātiska"
 
-#: klineedit.cpp:964
+#: klineedit.cpp:935
 #, fuzzy
 #| msgctxt "@item:inmenu Text Completion"
 #| msgid "Dropdown List"
@@ -87,7 +87,7 @@ msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List"
 msgstr "Izkrītošs saraksts"
 
-#: klineedit.cpp:965
+#: klineedit.cpp:936
 #, fuzzy
 #| msgctxt "@item:inmenu Text Completion"
 #| msgid "Short Automatic"
@@ -95,7 +95,7 @@ msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Short Automatic"
 msgstr "Īsa automātiska"
 
-#: klineedit.cpp:966
+#: klineedit.cpp:937
 #, fuzzy
 #| msgctxt "@item:inmenu Text Completion"
 #| msgid "Dropdown List && Automatic"
@@ -103,7 +103,7 @@ msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List && Automatic"
 msgstr "Izkrītošs saraksts un automātiska"
 
-#: klineedit.cpp:996
+#: klineedit.cpp:967
 #, fuzzy
 #| msgctxt "Encodings menu"
 #| msgid "Default"

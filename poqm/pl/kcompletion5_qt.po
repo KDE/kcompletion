@@ -29,57 +29,57 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Qt-Contexts: true\n"
 
-#: khistorycombobox.cpp:213
+#: khistorycombobox.cpp:201
 msgctxt "KHistoryComboBox|@action:inmenu"
 msgid "Clear &History"
 msgstr "Wyczyść &historię"
 
-#: klineedit.cpp:98
+#: klineedit.cpp:93
 msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
 msgid "1"
 msgstr "1"
 
-#: klineedit.cpp:939
+#: klineedit.cpp:910
 msgctxt "KLineEdit|@action:inmenu"
 msgid "C&lear"
 msgstr "&Wyczyść"
 
-#: klineedit.cpp:953
+#: klineedit.cpp:924
 msgctxt "KLineEdit|@title:menu"
 msgid "Text Completion"
 msgstr "Uzupełnianie tekstu"
 
-#: klineedit.cpp:961
+#: klineedit.cpp:932
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "None"
 msgstr "Brak"
 
-#: klineedit.cpp:962
+#: klineedit.cpp:933
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Manual"
 msgstr "Ręcznie"
 
-#: klineedit.cpp:963
+#: klineedit.cpp:934
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Automatic"
 msgstr "Samoczynnie"
 
-#: klineedit.cpp:964
+#: klineedit.cpp:935
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List"
 msgstr "Lista rozwijana"
 
-#: klineedit.cpp:965
+#: klineedit.cpp:936
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Short Automatic"
 msgstr "Półautomatyczne"
 
-#: klineedit.cpp:966
+#: klineedit.cpp:937
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List && Automatic"
 msgstr "Lista rozwijana i samoczynnie"
 
-#: klineedit.cpp:996
+#: klineedit.cpp:967
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Default"
 msgstr "Domyślne"

@@ -30,67 +30,67 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Qt-Contexts: true\n"
 
-#: khistorycombobox.cpp:213
+#: khistorycombobox.cpp:201
 #, fuzzy
 msgctxt "KHistoryComboBox|@action:inmenu"
 msgid "Clear &History"
 msgstr "נקה &היסטוריה"
 
-#: klineedit.cpp:98
+#: klineedit.cpp:93
 #, fuzzy
 msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
 msgid "1"
 msgstr "1"
 
-#: klineedit.cpp:939
+#: klineedit.cpp:910
 #, fuzzy
 msgctxt "KLineEdit|@action:inmenu"
 msgid "C&lear"
 msgstr "נ&קה"
 
-#: klineedit.cpp:953
+#: klineedit.cpp:924
 #, fuzzy
 msgctxt "KLineEdit|@title:menu"
 msgid "Text Completion"
 msgstr "השלמת טקסט"
 
-#: klineedit.cpp:961
+#: klineedit.cpp:932
 #, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "None"
 msgstr "ללא"
 
-#: klineedit.cpp:962
+#: klineedit.cpp:933
 #, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Manual"
 msgstr "ידנית"
 
-#: klineedit.cpp:963
+#: klineedit.cpp:934
 #, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Automatic"
 msgstr "אוטומטית"
 
-#: klineedit.cpp:964
+#: klineedit.cpp:935
 #, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List"
 msgstr "רשימה נפתחת"
 
-#: klineedit.cpp:965
+#: klineedit.cpp:936
 #, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Short Automatic"
 msgstr "אוטומטית מקוצרת"
 
-#: klineedit.cpp:966
+#: klineedit.cpp:937
 #, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List && Automatic"
 msgstr "רשימה נפתחת ואוטומטית"
 
-#: klineedit.cpp:996
+#: klineedit.cpp:967
 #, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Default"

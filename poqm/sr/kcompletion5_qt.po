@@ -23,7 +23,7 @@ msgstr ""
 "X-Wrapping: fine\n"
 "X-Qt-Contexts: true\n"
 
-#: khistorycombobox.cpp:202
+#: khistorycombobox.cpp:201
 #, fuzzy
 #| msgctxt "KHistoryComboBox|"
 #| msgid "Clear &History"
@@ -31,12 +31,12 @@ msgctxt "KHistoryComboBox|@action:inmenu"
 msgid "Clear &History"
 msgstr "Очисти &историјат"
 
-#: klineedit.cpp:97
+#: klineedit.cpp:93
 msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
 msgid "1"
 msgstr "1"
 
-#: klineedit.cpp:924
+#: klineedit.cpp:910
 #, fuzzy
 #| msgctxt "KLineEdit|"
 #| msgid "C&lear"
@@ -44,42 +44,42 @@ msgctxt "KLineEdit|@action:inmenu"
 msgid "C&lear"
 msgstr "&Очисти"
 
-#: klineedit.cpp:938
+#: klineedit.cpp:924
 msgctxt "KLineEdit|@title:menu"
 msgid "Text Completion"
 msgstr "Допуна текста"
 
-#: klineedit.cpp:945
+#: klineedit.cpp:932
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "None"
 msgstr "никако"
 
-#: klineedit.cpp:946
+#: klineedit.cpp:933
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Manual"
 msgstr "ручно"
 
-#: klineedit.cpp:947
+#: klineedit.cpp:934
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Automatic"
 msgstr "аутоматски"
 
-#: klineedit.cpp:948
+#: klineedit.cpp:935
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List"
 msgstr "падајући списак"
 
-#: klineedit.cpp:949
+#: klineedit.cpp:936
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Short Automatic"
 msgstr "кратко аутоматски"
 
-#: klineedit.cpp:950
+#: klineedit.cpp:937
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List && Automatic"
 msgstr "падајући списак и аутоматски"
 
-#: klineedit.cpp:980
+#: klineedit.cpp:967
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Default"
 msgstr "подразумевано"
