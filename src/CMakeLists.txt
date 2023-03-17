@@ -1,7 +1,7 @@
 add_library(KF6Completion)
 add_library(KF6::Completion ALIAS KF6Completion)
 
-ecm_create_qm_loader(KF6Completion kcompletion5_qt)
+ecm_create_qm_loader(KF6Completion kcompletion6_qt)
 
 target_sources(KF6Completion PRIVATE
     kcombobox.cpp
