@@ -455,7 +455,7 @@ protected:
     virtual void setCompletedText(const QString &text, bool marked);
 
 protected:
-    KComboBox(KComboBoxPrivate &dd, QWidget *parent);
+    KCOMPLETION_NO_EXPORT KComboBox(KComboBoxPrivate &dd, QWidget *parent);
 
 protected:
     std::unique_ptr<KComboBoxPrivate> const d_ptr;
