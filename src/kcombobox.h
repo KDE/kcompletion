@@ -533,7 +533,7 @@ protected:
     QSize minimumSizeHint() const override;
 
 protected:
-    KComboBox(KComboBoxPrivate &dd, QWidget *parent);
+    KCOMPLETION_NO_EXPORT KComboBox(KComboBoxPrivate &dd, QWidget *parent);
 
 private:
     friend class KHistoryComboBox;
