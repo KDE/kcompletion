@@ -1,6 +1,12 @@
 add_library(KF6Completion)
 add_library(KF6::Completion ALIAS KF6Completion)
 
+set_target_properties(KF6Completion PROPERTIES
+    VERSION     ${KCOMPLETION_VERSION}
+    SOVERSION   ${KCOMPLETION_SOVERSION}
+    EXPORT_NAME Completion
+)
+
 ecm_create_qm_loader(KF6Completion kcompletion6_qt)
 
 target_sources(KF6Completion PRIVATE
@@ -49,11 +55,6 @@ target_link_libraries(KF6Completion PUBLIC Qt6::Widgets
                                     PRIVATE KF6::ConfigCore      # KConfigGroup, used in many places
                                             KF6::ConfigGui       # KStandardShortcut
                                             KF6::WidgetsAddons   # KCursor
-)
-
-set_target_properties(KF6Completion PROPERTIES VERSION   ${KCOMPLETION_VERSION}
-                                               SOVERSION ${KCOMPLETION_SOVERSION}
-                                               EXPORT_NAME Completion
 )
 
 ecm_generate_headers(KCompletion_HEADERS
