@@ -15,5 +15,6 @@ ecm_add_tests(
    klineedit_unittest.cpp
    kcombobox_unittest.cpp
    ksortablelisttest.cpp
+   kemailvalidatortest.cpp
    LINK_LIBRARIES Qt6::Test KF6::Completion
 )

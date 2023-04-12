@@ -22,6 +22,8 @@ target_sources(KF6Completion PRIVATE
     kcompletionmatches.cpp
     kcompletionmatches.h
     kcompletion_p.h
+    kemailvalidator.cpp
+    kemailvalidator.h
     khistorycombobox.cpp
     khistorycombobox.h
     klineedit.cpp
@@ -56,6 +58,7 @@ target_link_libraries(KF6Completion PUBLIC Qt6::Widgets
                                     PRIVATE KF6::ConfigCore      # KConfigGroup, used in many places
                                             KF6::ConfigGui       # KStandardShortcut
                                             KF6::WidgetsAddons   # KCursor
+                                            KF6::Codecs # KEmailAddress
 )
 
 ecm_generate_headers(KCompletion_HEADERS
@@ -64,6 +67,7 @@ ecm_generate_headers(KCompletion_HEADERS
   KCompletion
   KCompletionBase
   KCompletionBox
+  KEmailValidator
   KLineEdit
   KHistoryComboBox
   KSortableList
