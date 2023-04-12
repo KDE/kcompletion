@@ -7,7 +7,6 @@
 #include "kemailvalidator.h"
 
 #include <KEmailAddress>
-#include <QRegularExpression>
 
 KEmailValidator::KEmailValidator(QObject *parent)
     : QValidator(parent)
@@ -23,9 +22,10 @@ QValidator::State KEmailValidator::validate(QString &str, int &pos) const
     if (KEmailAddress::isValidSimpleAddress(str)) {
         return QValidator::Acceptable;
     }
-    static QRegularExpression re(QStringLiteral("\\s"));
-    QRegularExpressionMatch match = re.match(str);
-    if (match.hasMatch()) {
+    const auto containsSpace = std::any_of(str.begin(), str.end(), [](QChar c) {
+        return c.isSpace();
+    });
+    if (containsSpace) {
         return QValidator::Invalid;
     }
     return QValidator::Intermediate;
