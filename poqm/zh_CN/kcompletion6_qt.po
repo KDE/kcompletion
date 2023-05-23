@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
-"PO-Revision-Date: 2023-02-24 12:43\n"
+"PO-Revision-Date: 2023-05-22 13:58\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -12,13 +12,13 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-trunk/messages/kcompletion/kcompletion5_qt.pot\n"
-"X-Crowdin-File-ID: 5595\n"
+"X-Crowdin-File: /kf6-trunk/messages/kcompletion/kcompletion6_qt.pot\n"
+"X-Crowdin-File-ID: 43035\n"
 
 #: khistorycombobox.cpp:201
 msgctxt "KHistoryComboBox|@action:inmenu"
 msgid "Clear &History"
-msgstr "清空历史(&H)"
+msgstr "清除历史(&H)"
 
 #: klineedit.cpp:93
 msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
@@ -28,7 +28,7 @@ msgstr "1"
 #: klineedit.cpp:910
 msgctxt "KLineEdit|@action:inmenu"
 msgid "C&lear"
-msgstr "清空(&L)"
+msgstr "清除(&L)"
 
 #: klineedit.cpp:924
 msgctxt "KLineEdit|@title:menu"
