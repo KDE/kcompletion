@@ -35,3 +35,5 @@ void KEmailValidator::fixup(QString &str) const
 {
     str = str.trimmed();
 }
+
+#include "moc_kemailvalidator.cpp"

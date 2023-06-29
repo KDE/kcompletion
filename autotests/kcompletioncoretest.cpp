@@ -373,3 +373,5 @@ void Test_KCompletion::cycleMatches_Weighted()
 }
 
 QTEST_MAIN(Test_KCompletion)
+
+#include "moc_kcompletioncoretest.cpp"
