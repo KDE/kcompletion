@@ -519,3 +519,5 @@ QString KCompletion::previousMatch()
 }
 
 QSharedPointer<KZoneAllocator> KCompTreeNode::m_alloc(new KZoneAllocator(8 * 1024));
+
+#include "moc_kcompletion.cpp"
