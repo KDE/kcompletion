@@ -255,8 +255,11 @@ protected:
 private:
     Q_DECLARE_PRIVATE_D(KComboBox::d_ptr, KHistoryComboBox)
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(5, 79)
+    QT_WARNING_PUSH
+    QT_WARNING_DISABLE_CLANG("-Wunused-private-field")
     // Unused, kept for ABI compatibility
     const void *__kcompletion_d_do_not_use;
+    QT_WARNING_POP
 #endif
 
     Q_DISABLE_COPY(KHistoryComboBox)
