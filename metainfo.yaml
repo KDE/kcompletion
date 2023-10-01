@@ -12,8 +12,7 @@ portingAid: false
 deprecated: false
 release: true
 libraries:
- - qmake: KCompletion
-   cmake: "KF6::Completion"
+ - cmake: "KF6::Completion"
 cmakename: KF6Completion
 
 public_lib: true
