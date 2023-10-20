@@ -253,7 +253,7 @@ void KCompTreeNode::remove(const QString &str)
     QString string = str;
     string += QChar(0x0);
 
-    QVector<KCompTreeNode *> deletables(string.length() + 1);
+    QList<KCompTreeNode *> deletables(string.length() + 1);
 
     KCompTreeNode *child = nullptr;
     KCompTreeNode *parent = this;
