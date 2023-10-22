@@ -17,82 +17,73 @@
 # Meni Livne <livne@kde.org>, 2007.
 # tahmar1900 <tahmar1900@gmail.com>, 2008, 2009.
 # Elkana Bardugo <ttv200@gmail.com>, 2017. #zanata
+# SPDX-FileCopyrightText: 2023 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-05-16 06:49-0400\n"
-"Last-Translator: Copied by Zanata <copied-by-zanata@zanata.org>\n"
-"Language-Team: Hebrew <kde-i18n-doc@kde.org>\n"
+"Project-Id-Version: \n"
+"PO-Revision-Date: 2023-10-21 15:27+0300\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Zanata 3.9.6\n"
+"X-Generator: Lokalize 23.08.1\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Qt-Contexts: true\n"
 
 #: khistorycombobox.cpp:201
-#, fuzzy
 msgctxt "KHistoryComboBox|@action:inmenu"
 msgid "Clear &History"
-msgstr "נקה &היסטוריה"
+msgstr "פינוי &היסטוריה"
 
 #: klineedit.cpp:93
-#, fuzzy
 msgctxt "KLineEdit|Italic placeholder text in line edits: 0 no, 1 yes"
 msgid "1"
-msgstr "1"
+msgstr "0"
 
 #: klineedit.cpp:910
-#, fuzzy
 msgctxt "KLineEdit|@action:inmenu"
 msgid "C&lear"
-msgstr "נ&קה"
+msgstr "&פינוי"
 
 #: klineedit.cpp:924
-#, fuzzy
 msgctxt "KLineEdit|@title:menu"
 msgid "Text Completion"
 msgstr "השלמת טקסט"
 
 #: klineedit.cpp:932
-#, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "None"
 msgstr "ללא"
 
 #: klineedit.cpp:933
-#, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Manual"
 msgstr "ידנית"
 
 #: klineedit.cpp:934
-#, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Automatic"
 msgstr "אוטומטית"
 
 #: klineedit.cpp:935
-#, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List"
 msgstr "רשימה נפתחת"
 
 #: klineedit.cpp:936
-#, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Short Automatic"
 msgstr "אוטומטית מקוצרת"
 
 #: klineedit.cpp:937
-#, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List && Automatic"
 msgstr "רשימה נפתחת ואוטומטית"
 
 #: klineedit.cpp:967
-#, fuzzy
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Default"
 msgstr "ברירת מחדל"
