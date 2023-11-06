@@ -132,7 +132,7 @@ KComboBoxTest::KComboBoxTest(QWidget *widget)
 
     // Setup konq's combobox
     KConfig historyConfig(QStringLiteral("konq_history"), KConfig::SimpleConfig);
-    KConfigGroup cg(&historyConfig, "Location Bar");
+    KConfigGroup cg(&historyConfig, QStringLiteral("Location Bar"));
     KCompletion *s_pCompletion = new KCompletion;
     s_pCompletion->setOrder(KCompletion::Weighted);
     s_pCompletion->setItems(cg.readEntry("ComboContents", QStringList()));

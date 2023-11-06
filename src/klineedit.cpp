@@ -78,7 +78,7 @@ void KLineEditPrivate::init()
 
     completionRunning = false;
     if (!s_initialized) {
-        KConfigGroup config(KSharedConfig::openConfig(), "General");
+        KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("General"));
         s_backspacePerformsCompletion = config.readEntry("Backspace performs completion", false);
         s_initialized = true;
     }
