@@ -470,20 +470,6 @@ void KCompletionBoxPrivate::cancelled()
     }
 }
 
-class KCompletionBoxItem : public QListWidgetItem
-{
-public:
-    // Returns true if dirty.
-    bool reuse(const QString &newText)
-    {
-        if (text() == newText) {
-            return false;
-        }
-        setText(newText);
-        return true;
-    }
-};
-
 void KCompletionBox::insertItems(const QStringList &items, int index)
 {
     bool block = signalsBlocked();
@@ -503,29 +489,19 @@ void KCompletionBox::setItems(const QStringList &items)
     if (!count()) {
         addItems(items);
     } else {
-        // Keep track of whether we need to change anything,
-        // so we can avoid a repaint for identical updates,
-        // to reduce flicker
-        bool dirty = false;
-
         QStringList::ConstIterator it = items.constBegin();
         const QStringList::ConstIterator itEnd = items.constEnd();
 
         for (; it != itEnd; ++it) {
             if (rowIndex < count()) {
-                const bool changed = ((KCompletionBoxItem *)item(rowIndex))->reuse(*it);
-                dirty = dirty || changed;
+                auto item = this->item(rowIndex);
+                if (item->text() != *it) {
+                    item->setText(*it);
+                }
             } else {
-                dirty = true;
-                // Inserting an item is a way of making this dirty
                 addItem(*it);
             }
             rowIndex++;
-        }
-
-        // If there is an unused item, mark as dirty -> less items now
-        if (rowIndex < count()) {
-            dirty = true;
         }
 
         // remove unused items with an index >= rowIndex
