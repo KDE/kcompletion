@@ -19,69 +19,51 @@
 class KCompletionBoxPrivate
 {
 public:
-    KCompletionBoxPrivate(KCompletionBox *parent)
-        : q_ptr(parent)
-    {
-    }
-    void init();
-    void cancelled();
-    void _k_itemClicked(QListWidgetItem *);
-
     QWidget *m_parent = nullptr; // necessary to set the focus back
     QString cancelText;
-    bool tabHandling;
-    bool upwardBox;
-    bool emitSelected;
-
-    KCompletionBox *const q_ptr;
-    Q_DECLARE_PUBLIC(KCompletionBox)
+    bool tabHandling = true;
+    bool upwardBox = false;
+    bool emitSelected = true;
 };
 
 KCompletionBox::KCompletionBox(QWidget *parent)
     : QListWidget(parent)
-    , d_ptr(new KCompletionBoxPrivate(this))
+    , d(new KCompletionBoxPrivate)
 {
-    Q_D(KCompletionBox);
     d->m_parent = parent;
-    d->init();
-}
-
-void KCompletionBoxPrivate::init()
-{
-    Q_Q(KCompletionBox);
-    tabHandling = true;
-    upwardBox = false;
-    emitSelected = true;
 
     // we can't link to QXcbWindowFunctions::Combo
     // also, q->setAttribute(Qt::WA_X11NetWmWindowTypeCombo); is broken in Qt xcb
-    q->setProperty("_q_xcb_wm_window_type", 0x001000);
-    q->setAttribute(Qt::WA_ShowWithoutActivating);
+    setProperty("_q_xcb_wm_window_type", 0x001000);
+    setAttribute(Qt::WA_ShowWithoutActivating);
 
     // on wayland, we need an xdg-popup but we don't want it to grab
     // calls setVisible, so must be done after initializations
     if (qGuiApp->platformName() == QLatin1String("wayland")) {
-        q->setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
+        setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
     } else {
-        q->setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
+        setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
     }
-    q->setUniformItemSizes(true);
+    setUniformItemSizes(true);
 
-    q->setLineWidth(1);
-    q->setFrameStyle(QFrame::Box | QFrame::Plain);
+    setLineWidth(1);
+    setFrameStyle(QFrame::Box | QFrame::Plain);
 
-    q->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    q->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    q->connect(q, &QListWidget::itemDoubleClicked, q, &KCompletionBox::slotActivated);
-    q->connect(q, &KCompletionBox::itemClicked, q, [this](QListWidgetItem *item) {
-        _k_itemClicked(item);
+    connect(this, &QListWidget::itemDoubleClicked, this, &KCompletionBox::slotActivated);
+    connect(this, &KCompletionBox::itemClicked, this, [this](QListWidgetItem *item) {
+        if (item) {
+            hide();
+            Q_EMIT currentTextChanged(item->text());
+            Q_EMIT textActivated(item->text());
+        }
     });
 }
 
 KCompletionBox::~KCompletionBox()
 {
-    Q_D(KCompletionBox);
     d->m_parent = nullptr;
 }
 
@@ -100,18 +82,14 @@ QStringList KCompletionBox::items() const
 
 void KCompletionBox::slotActivated(QListWidgetItem *item)
 {
-    if (!item) {
-        return;
+    if (item) {
+        hide();
+        Q_EMIT textActivated(item->text());
     }
-
-    hide();
-
-    Q_EMIT textActivated(item->text());
 }
 
 bool KCompletionBox::eventFilter(QObject *o, QEvent *e)
 {
-    Q_D(KCompletionBox);
     int type = e->type();
     QWidget *wid = qobject_cast<QWidget *>(o);
 
@@ -193,7 +171,12 @@ bool KCompletionBox::eventFilter(QObject *o, QEvent *e)
                 ev->accept();
                 return true;
             case Qt::Key_Escape:
-                d->cancelled();
+                if (!d->cancelText.isNull()) {
+                    Q_EMIT userCancelled(d->cancelText);
+                }
+                if (isVisible()) {
+                    hide();
+                }
                 ev->accept();
                 return true;
             case Qt::Key_Enter:
@@ -287,7 +270,6 @@ void KCompletionBox::popup()
 
 void KCompletionBox::resizeAndReposition()
 {
-    Q_D(KCompletionBox);
     int currentGeom = height();
     QPoint currentPos = pos();
     QRect geom = calculateGeometry();
@@ -325,7 +307,6 @@ void KCompletionBox::resizeAndReposition()
 
 QPoint KCompletionBox::globalPositionHint() const
 {
-    Q_D(const KCompletionBox);
     if (!d->m_parent) {
         return QPoint();
     }
@@ -334,7 +315,6 @@ QPoint KCompletionBox::globalPositionHint() const
 
 void KCompletionBox::setVisible(bool visible)
 {
-    Q_D(KCompletionBox);
     if (visible) {
         d->upwardBox = false;
         if (d->m_parent) {
@@ -366,7 +346,6 @@ void KCompletionBox::setVisible(bool visible)
 
 QRect KCompletionBox::calculateGeometry() const
 {
-    Q_D(const KCompletionBox);
     QRect visualRect;
     if (count() == 0 || !(visualRect = visualItemRect(item(0))).isValid()) {
         return QRect();
@@ -437,37 +416,22 @@ void KCompletionBox::end()
 
 void KCompletionBox::setTabHandling(bool enable)
 {
-    Q_D(KCompletionBox);
     d->tabHandling = enable;
 }
 
 bool KCompletionBox::isTabHandling() const
 {
-    Q_D(const KCompletionBox);
     return d->tabHandling;
 }
 
 void KCompletionBox::setCancelledText(const QString &text)
 {
-    Q_D(KCompletionBox);
     d->cancelText = text;
 }
 
 QString KCompletionBox::cancelledText() const
 {
-    Q_D(const KCompletionBox);
     return d->cancelText;
-}
-
-void KCompletionBoxPrivate::cancelled()
-{
-    Q_Q(KCompletionBox);
-    if (!cancelText.isNull()) {
-        Q_EMIT q->userCancelled(cancelText);
-    }
-    if (q->isVisible()) {
-        q->hide();
-    }
 }
 
 void KCompletionBox::insertItems(const QStringList &items, int index)
@@ -516,25 +480,13 @@ void KCompletionBox::setItems(const QStringList &items)
     blockSignals(block);
 }
 
-void KCompletionBoxPrivate::_k_itemClicked(QListWidgetItem *item)
-{
-    Q_Q(KCompletionBox);
-    if (item) {
-        q->hide();
-        Q_EMIT q->currentTextChanged(item->text());
-        Q_EMIT q->textActivated(item->text());
-    }
-}
-
 void KCompletionBox::setActivateOnSelect(bool doEmit)
 {
-    Q_D(KCompletionBox);
     d->emitSelected = doEmit;
 }
 
 bool KCompletionBox::activateOnSelect() const
 {
-    Q_D(const KCompletionBox);
     return d->emitSelected;
 }
 

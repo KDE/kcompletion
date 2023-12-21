@@ -36,7 +36,6 @@ class QEvent;
 class KCOMPLETION_EXPORT KCompletionBox : public QListWidget
 {
     Q_OBJECT
-    Q_DECLARE_PRIVATE(KCompletionBox)
     Q_PROPERTY(bool isTabHandling READ isTabHandling WRITE setTabHandling)
     Q_PROPERTY(QString cancelledText READ cancelledText WRITE setCancelledText)
     Q_PROPERTY(bool activateOnSelect READ activateOnSelect WRITE setActivateOnSelect)
@@ -226,7 +225,7 @@ protected Q_SLOTS:
     virtual void slotActivated(QListWidgetItem *);
 
 private:
-    std::unique_ptr<KCompletionBoxPrivate> const d_ptr;
+    std::unique_ptr<KCompletionBoxPrivate> const d;
 };
 
 #endif // KCOMPLETIONBOX_H
