@@ -489,17 +489,14 @@ void KCompletionBox::setItems(const QStringList &items)
     if (!count()) {
         addItems(items);
     } else {
-        QStringList::ConstIterator it = items.constBegin();
-        const QStringList::ConstIterator itEnd = items.constEnd();
-
-        for (; it != itEnd; ++it) {
+        for (const auto &text : items) {
             if (rowIndex < count()) {
                 auto item = this->item(rowIndex);
-                if (item->text() != *it) {
-                    item->setText(*it);
+                if (item->text() != text) {
+                    item->setText(text);
                 }
             } else {
-                addItem(*it);
+                addItem(text);
             }
             rowIndex++;
         }
