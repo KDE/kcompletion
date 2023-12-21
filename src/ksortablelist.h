@@ -187,13 +187,4 @@ public:
     }
 };
 
-#ifdef Q_CC_MSVC
-template<class T, class K>
-inline uint qHash(const KSortableItem<T, K> &)
-{
-    Q_ASSERT(0);
-    return 0;
-}
-#endif
-
 #endif // KSORTABLELIST_H
