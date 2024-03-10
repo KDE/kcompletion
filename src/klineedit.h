@@ -191,16 +191,6 @@ public:
     void setCompletionModeDisabled(KCompletion::CompletionMode mode, bool disable = true);
 
     /**
-     * Enables/Disables handling of URL drops. If enabled and the user
-     * drops an URL, the decoded URL will be inserted. Otherwise the default
-     * behavior of QLineEdit is used, which inserts the encoded URL.
-     * Call setUrlDropsEnabled(false) if you need dropEvent to be called in a KLineEdit subclass.
-     *
-     * @param enable If @c true, insert decoded URLs
-     */
-    void setUrlDropsEnabled(bool enable); // KF6: remove it and don't create LineEditUrlDropEventFilter by default.
-
-    /**
      * Returns @c true when decoded URL drops are enabled
      */
     bool urlDropsEnabled() const;
