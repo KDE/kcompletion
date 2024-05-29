@@ -52,7 +52,7 @@ cmake_dependent_option(BUILD_DESIGNERPLUGIN "Build plugin for Qt Designer" ON "N
 add_feature_info(DESIGNERPLUGIN ${BUILD_DESIGNERPLUGIN} "Build plugin for Qt Designer")
 
 ecm_set_disabled_deprecation_versions(
-    QT 6.5
+    QT 6.7
     KF 5.240
 )
 
