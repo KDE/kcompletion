@@ -18,9 +18,10 @@
 class KHistoryComboBoxPrivate;
 
 /*!
- * \class KHistoryComboBox khistorycombobox.h KHistoryComboBox
+ * \class KHistoryComboBox
+ * \inmodule KCompletion
  *
- * @short A combobox for offering a history and completion
+ * \brief A combobox for offering a history and completion.
  *
  * A combobox which implements a history like a unix shell. You can navigate
  * through all the items by using the Up or Down arrows (configurable of
@@ -34,14 +35,16 @@ class KHistoryComboBoxPrivate;
  * duplicates will be disabled when HISTCONTROL is set to "ignoredups" or
  * "ignoreboth". Otherwise, duplicates are enabled by default.
  *
+ * TODO qdoc
  * \image html khistorycombobox.png "KHistoryComboBox widget"
- *
- * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
 class KCOMPLETION_EXPORT KHistoryComboBox : public KComboBox
 {
     Q_OBJECT
 
+    /*!
+     * \property KHistoryComboBox::historyItems
+     */
     Q_PROPERTY(QStringList historyItems READ historyItems WRITE setHistoryItems)
 
 public:
@@ -73,9 +76,6 @@ public:
      */
     explicit KHistoryComboBox(bool useCompletion, QWidget *parent = nullptr);
 
-    /*!
-     * Destructs the combo and the completion-object
-     */
     ~KHistoryComboBox() override;
 
     /*!
@@ -120,7 +120,7 @@ public:
      * Be sure to use different names for saving with KConfig if you have more
      * than one KHistoryComboBox.
      *
-     * @note When \c setCompletionList is true, the items are inserted into the
+     * \note When setCompletionList is true, the items are inserted into the
      * KCompletion object with mode KCompletion::Insertion and the mode is set
      * to KCompletion::Weighted afterwards.
      *
@@ -142,7 +142,7 @@ public:
     /*!
      * Removes all items named \a item.
      *
-     * @return \c true if at least one item was removed.
+     * Returns \c true if at least one item was removed.
      *
      * \sa addToHistory
      */
@@ -150,8 +150,10 @@ public:
 
     /*!
      * Sets an icon provider, so that items in the combobox can have an icon.
+     *
      * The provider is a function that takes a QString and returns a QIcon
-     * @since 5.66
+     *
+     * \since 5.66
      */
     void setIconProvider(std::function<QIcon(const QString &)> providerFunction);
 
@@ -169,7 +171,7 @@ public Q_SLOTS:
      * If duplicatesEnabled() is false, any equal existing item will be
      * removed before \a item is added.
      *
-     * @note By using this method and not the Q and KComboBox insertItem()
+     * \note By using this method and not the Q and KComboBox insertItem()
      * methods, you make sure that the combobox stays in sync with the
      * completion. It would be annoying if completion would give an item
      * not in the combobox, and vice versa.
@@ -197,12 +199,12 @@ Q_SIGNALS:
     void cleared();
 
 protected:
-    /*!
+    /*
      * Handling key-events, the shortcuts to rotate the items.
      */
     void keyPressEvent(QKeyEvent *) override;
 
-    /*!
+    /*
      * Handling wheel-events, to rotate the items.
      */
     void wheelEvent(QWheelEvent *ev) override;
@@ -211,14 +213,14 @@ protected:
      * Inserts \a items into the combo, honoring setIconProvider()
      * Does not update the completionObject.
      *
-     * @note duplicatesEnabled() is not honored here.
+     * \note duplicatesEnabled() is not honored here.
      *
      * Called from setHistoryItems()
      */
     void insertItems(const QStringList &items);
 
     /*!
-     * @returns if we can modify the completion object or not.
+     * Returns if we can modify the completion object or not.
      */
     bool useCompletion() const;
 

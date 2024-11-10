@@ -24,6 +24,7 @@ class KCompletionMatches;
 
 /*!
  * \class KCompletion
+ * \inmodule KCompletion
  *
  * \brief A generic class for completing QStrings.
  *
@@ -70,7 +71,7 @@ class KCompletionMatches;
  *     matches is returned (i.e. only a partial item).
  *     Iterating over all matching items (complete, not partial) is possible
  *     via nextMatch() and previousMatch().
- * \endif
+ * \endlist
  *
  * As an application programmer, you do not normally have to worry about
  * the different completion modes; KCompletion handles
@@ -115,17 +116,17 @@ class KCompletionMatches;
 class KCOMPLETION_EXPORT KCompletion : public QObject
 {
     /*!
-     * \property Completion::order
+     * \property KCompletion::order
      */
     Q_PROPERTY(CompOrder order READ order WRITE setOrder)
 
     /*!
-     * \property Completion::ignoreCase
+     * \property KCompletion::ignoreCase
      */
     Q_PROPERTY(bool ignoreCase READ ignoreCase WRITE setIgnoreCase)
 
     /*!
-     * \property Completion::items
+     * \property KCompletion::items
      */
     Q_PROPERTY(QStringList items READ items WRITE setItems)
 

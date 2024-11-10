@@ -15,9 +15,11 @@
 #include <algorithm>
 
 /*!
- * \class KSortableItem ksortablelist.h <KSortableItem>
+ * \class KSortableItem
+ * \inheaderfile KSortableList
+ * \inmodule KCompletion
  *
- * KSortableItem is a QPair that provides several operators
+ * \brief KSortableItem is a QPair that provides several operators
  * for sorting.
  * \sa KSortableList
  */
@@ -27,7 +29,9 @@ class KSortableItem : public QPair<Key, T>
 public:
     /*!
      * Creates a new KSortableItem with the given values.
+     *
      * \a i the first value (the key)
+     *
      * \a t the second value (the item)
      */
     KSortableItem(Key i, const T &t)
@@ -36,6 +40,7 @@ public:
     }
     /*!
      * Creates a new KSortableItem that copies another one.
+     *
      * \a rhs the other item to copy
      */
     KSortableItem(const KSortableItem<T, Key> &rhs)
@@ -111,7 +116,7 @@ public:
     }
 
     /*!
-     * @return the second value (the item)
+     * Returns the second value (the item)
      */
     T &value()
     {
@@ -119,7 +124,7 @@ public:
     }
 
     /*!
-     * @return the second value (the item)
+     * Returns the second value (the item)
      */
     const T &value() const
     {
@@ -127,7 +132,7 @@ public:
     }
 
     /*!
-     * @return the first value.
+     * Returns the first value.
      */
     Key key() const
     {
@@ -136,9 +141,10 @@ public:
 };
 
 /*!
- * \class KSortableList ksortablelist.h <KSortableList>
+ * \class KSortableList
+ * \inmodule KCompletion
  *
- * KSortableList is a QList which associates a key with each item in the list.
+ * \brief KSortableList is a QList which associates a key with each item in the list.
  * This key is used for sorting when calling sort().
  *
  * This allows to temporarily calculate a key and use it for sorting, without having
@@ -151,7 +157,9 @@ class KSortableList : public QList<KSortableItem<T, Key>>
 public:
     /*!
      * Insert a KSortableItem with the given values.
+     *
      * \a i the first value
+     *
      * \a t the second value
      */
     void insert(Key i, const T &t)
@@ -162,7 +170,6 @@ public:
 
     /*!
      * Returns the first value of the KSortableItem at the given position.
-     * @return the first value of the KSortableItem
      */
     T &operator[](Key i)
     {
@@ -171,7 +178,6 @@ public:
 
     /*!
      * Returns the first value of the KSortableItem at the given position.
-     * @return the first value of the KSortableItem
      */
     const T &operator[](Key i) const
     {
