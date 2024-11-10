@@ -27,6 +27,7 @@ include(CMakeDependentOption)
 
 include(ECMAddQch)
 include(ECMPoQmTools)
+include(ECMGenerateQDoc)
 
 set(kcompletion_version_header "${CMAKE_CURRENT_BINARY_DIR}/src/kcompletion_version.h")
 ecm_setup_version(PROJECT VARIABLE_PREFIX KCOMPLETION
