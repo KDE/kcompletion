@@ -76,6 +76,8 @@ ecm_generate_headers(KCompletion_HEADERS
   REQUIRED_HEADERS KCompletion_HEADERS
 )
 
+ecm_generate_qdoc(KF6Completion kcompletion.qdocconf)
+
 install(TARGETS KF6Completion EXPORT KF6CompletionTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
