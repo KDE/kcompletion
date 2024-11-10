@@ -72,7 +72,7 @@ public:
      *
      * Default is true.
      *
-     * @see setTabHandling
+     * \sa setTabHandling
      */
     bool isTabHandling() const;
 
@@ -115,7 +115,7 @@ public Q_SLOTS:
      * When off, KLineEdit handles Tab itself, making it select the current item from the completion box,
      * which is particularly useful when using KUrlCompletion.
      *
-     * @see isTabHandling
+     * \sa isTabHandling
      */
     void setTabHandling(bool enable);
 
@@ -126,7 +126,7 @@ public Q_SLOTS:
      * If the cancelled text is not set through this function, the
      * userCancelled signal will not be emitted.
      *
-     * @see userCancelled( const QString& )
+     * \sa userCancelled( const QString& )
      * \a text the text to be emitted if the user cancels this box
      */
     void setCancelledText(const QString &text);
