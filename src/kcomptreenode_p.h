@@ -82,8 +82,7 @@ private:
  *                   |     |
  *                  0x0   0x0
  *
- * @author Carsten Pfeiffer <pfeiffer@kde.org>
- * @internal
+ * \internal
  */
 class KCOMPLETION_EXPORT KCompTreeNode : public QChar
 {

@@ -151,25 +151,23 @@ public:
     /*!
      * Constructs a read-only (or rather select-only) combo box.
      *
-     * @param parent The parent object of this widget
+     * \a parent The parent object of this widget
      */
     explicit KComboBox(QWidget *parent = nullptr);
 
     /*!
      * Constructs an editable or read-only combo box.
      *
-     * @param rw When @c true, widget will be editable.
-     * @param parent The parent object of this widget.
+     * \a rw When \c true, widget will be editable.
+     *
+     * \a parent The parent object of this widget.
      */
     explicit KComboBox(bool rw, QWidget *parent = nullptr);
 
-    /*!
-     * Destructor.
-     */
     ~KComboBox() override;
 
     /*!
-     * Sets @p url into the edit field of the combo box.
+     * Sets \a url into the edit field of the combo box.
      *
      * It uses QUrl::toDisplayString() so that the url is properly decoded for
      * displaying.
@@ -177,7 +175,7 @@ public:
     void setEditUrl(const QUrl &url);
 
     /*!
-     * Appends @p url to the combo box.
+     * Appends \a url to the combo box.
      *
      * QUrl::toDisplayString() is used so that the url is properly decoded
      * for displaying.
@@ -185,7 +183,7 @@ public:
     void addUrl(const QUrl &url);
 
     /*!
-     * Appends @p url with the @p icon to the combo box.
+     * Appends \a url with the \a icon to the combo box.
      *
      * QUrl::toDisplayString() is used so that the url is properly decoded
      * for displaying.
@@ -193,7 +191,7 @@ public:
     void addUrl(const QIcon &icon, const QUrl &url);
 
     /*!
-     * Inserts @p url at position @p index into the combo box.
+     * Inserts \a url at position \a index into the combo box.
      *
      * QUrl::toDisplayString() is used so that the url is properly decoded
      * for displaying.
@@ -201,7 +199,7 @@ public:
     void insertUrl(int index, const QUrl &url);
 
     /*!
-     * Inserts @p url with the @p icon at position @p index into
+     * Inserts \a url with the \a icon at position \a index into
      * the combo box.
      *
      * QUrl::toDisplayString() is used so that the url is
@@ -210,7 +208,7 @@ public:
     void insertUrl(int index, const QIcon &icon, const QUrl &url);
 
     /*!
-     * Replaces the item at position @p index with @p url.
+     * Replaces the item at position \a index with \a url.
      *
      * QUrl::toDisplayString() is used so that the url is properly decoded
      * for displaying.
@@ -218,7 +216,7 @@ public:
     void changeUrl(int index, const QUrl &url);
 
     /*!
-     * Replaces the item at position @p index with @p url and @p icon.
+     * Replaces the item at position \a index with \a url and \a icon.
      *
      * QUrl::toDisplayString() is used so that the url is properly decoded
      * for displaying.
@@ -228,49 +226,49 @@ public:
     /*!
      * Returns the current cursor position.
      *
-     * This method always returns a -1 if the combo box is @em not
+     * This method always returns a -1 if the combo box is \e not
      * editable (read-only).
      *
-     * @return Current cursor position.
+     * Returns current cursor position.
      */
     int cursorPosition() const;
 
     /*!
-     * Reimplemented from QComboBox.
+     * \reimp
      *
-     * If @c true, the completion mode will be set to automatic.
+     * If \c true, the completion mode will be set to automatic.
      * Otherwise, it is defaulted to the global setting. This
      * method has been replaced by the more comprehensive
      * setCompletionMode().
      *
-     * @param autocomplete Flag to enable/disable automatic completion mode.
+     * \a autocomplete Flag to enable/disable automatic completion mode.
      */
     virtual void setAutoCompletion(bool autocomplete);
 
     /*!
-     * Reimplemented from QComboBox.
+     * \reimp
      *
-     * Returns @c true if the current completion mode is set
+     * Returns \c true if the current completion mode is set
      * to automatic. See its more comprehensive replacement
      * completionMode().
      *
-     * @return @c true when completion mode is automatic.
+     * Returns \c true when completion mode is automatic.
      */
     bool autoCompletion() const;
 
     /*!
-     * Returns @c true when decoded URL drops are enabled
+     * Returns \c true when decoded URL drops are enabled
      */
     bool urlDropsEnabled() const;
 
     /*!
      * Convenience method which iterates over all items and checks if
-     * any of them is equal to @p text.
+     * any of them is equal to \a text.
      *
-     * If @p text is an empty string, @c false
+     * If \a text is an empty string, \c false
      * is returned.
      *
-     * @return @c true if an item with the string @p text is in the combo box.
+     * Returns \c true if an item with the string \a text is in the combo box.
      */
     bool contains(const QString &text) const;
 
@@ -279,20 +277,20 @@ public:
      * returnPressed(const QString &) signal, but it also lets the event pass,
      * for example causing a dialog's default button to be called.
      *
-     * Call this method with @p trap set to true to make KComboBox stop these
+     * Call this method with \a trap set to true to make KComboBox stop these
      * events. The signals will still be emitted of course.
      *
-     * @note This only affects editable combo boxes.
+     * \note This only affects editable combo boxes.
      *
-     * @see setTrapReturnKey()
+     * \sa setTrapReturnKey()
      */
     void setTrapReturnKey(bool trap);
 
     /*!
-     * @return @c true if Key_Return or Key_Enter input events will be stopped or
-     * @c false if they will be propagated.
+     * Returns \c true if Key_Return or Key_Enter input events will be stopped or
+     * \c false if they will be propagated.
      *
-     * @see setTrapReturnKey()
+     * \sa setTrapReturnKey()
      */
     bool trapReturnKey() const;
 
@@ -300,9 +298,9 @@ public:
      * This method will create a completion box by calling
      * KLineEdit::completionBox, if none is there yet.
      *
-     * @param create Set this to false if you don't want the box to be created
+     * \a create Set this to false if you don't want the box to be created
      *               i.e. to test if it is available.
-     * @returns the completion box that is used in completion mode
+     * Returns the completion box that is used in completion mode
      * CompletionPopup and CompletionPopupAuto.
      */
     KCompletionBox *completionBox(bool create = true);
@@ -331,7 +329,7 @@ public:
      * Pointer to KLineEdit's context menu, or nullptr if it does not exist at
      * the given moment.
      *
-     * @since 5.78
+     * \since 5.78
      */
     QMenu *contextMenu() const;
 
@@ -343,7 +341,7 @@ Q_SIGNALS:
      *
      * The argument is the current text being edited.
      *
-     * @note This signal is only emitted when the widget is editable.
+     * \note This signal is only emitted when the widget is editable.
      *
      */
     void returnPressed(const QString &text); // clazy:exclude=overloaded-signal
@@ -353,8 +351,8 @@ Q_SIGNALS:
      *
      * The argument is the current text being edited.
      *
-     * Note that this signal is @em not available when the widget is non-editable
-     * or the completion mode is set to @c CompletionNone.
+     * Note that this signal is \e not available when the widget is non-editable
+     * or the completion mode is set to \c CompletionNone.
      */
     void completion(const QString &);
 
@@ -367,13 +365,13 @@ Q_SIGNALS:
      * Emitted when the text rotation key bindings are pressed.
      *
      * The argument indicates which key binding was pressed. In this case this
-     * can be either one of four values: @c PrevCompletionMatch,
-     * @c NextCompletionMatch, @c RotateUp or @c RotateDown.
+     * can be either one of four values: PrevCompletionMatch,
+     * NextCompletionMatch, RotateUp or RotateDown.
      *
-     * Note that this signal is @em not emitted if the completion
+     * Note that this signal is \e not emitted if the completion
      * mode is set to CompletionNone.
      *
-     * @see KCompletionBase::setKeyBinding() for details
+     * \sa KCompletionBase::setKeyBinding() for details
      */
     void textRotation(KCompletionBase::KeyBindingType);
 
@@ -387,10 +385,10 @@ Q_SIGNALS:
      * Emitted before the context menu is displayed.
      *
      * The signal allows you to add your own entries into the context menu.
-     * Note that you <em>must not</em> store the pointer to the QPopupMenu since it is
+     * Note that you \e{must not} store the pointer to the QPopupMenu since it is
      * created and deleted on demand. Otherwise, you can crash your app.
      *
-     * @param contextMenu the context menu about to be displayed
+     * \a contextMenu the context menu about to be displayed
      */
     void aboutToShowContextMenu(QMenu *contextMenu);
 
@@ -407,11 +405,11 @@ public Q_SLOTS:
      * iteration will not work if there are no previous matches, i.e.
      * no text has been completed and the *nix shell history list
      * rotation is only available if the insertion policy for this
-     * widget is set either @c QComobBox::AtTop or @c QComboBox::AtBottom.
+     * widget is set either QComobBox::AtTop or QComboBox::AtBottom.
      * For other insertion modes whatever has been typed by the user
      * when the rotation event was initiated will be lost.
      *
-     * @param type The key binding invoked.
+     * \a type The key binding invoked.
      */
     void rotateText(KCompletionBase::KeyBindingType type);
 
@@ -424,16 +422,16 @@ public Q_SLOTS:
     void setCompletedText(const QString &) override;
 
     /*!
-     * Sets @p items into the completion box if completionMode() is
+     * Sets \a items into the completion box if completionMode() is
      * CompletionPopup. The popup will be shown immediately.
      */
     void setCompletedItems(const QStringList &items, bool autoSuggest = true) override;
 
     /*!
-     * Selects the first item that matches @p item.
+     * Selects the first item that matches \a item.
      *
-     * If there is no such item, it is inserted at position @p index
-     * if @p insert is true. Otherwise, no item is selected.
+     * If there is no such item, it is inserted at position \a index
+     * if \a insert is true. Otherwise, no item is selected.
      */
     void setCurrentItem(const QString &item, bool insert = false, int index = -1);
 
@@ -442,8 +440,8 @@ protected Q_SLOTS:
     /*!
      * Completes text according to the completion mode.
      *
-     * @note This method is not invoked if the completion mode is
-     * set to @c CompletionNone. Also if the mode is set to @c CompletionShell
+     * \note This method is not invoked if the completion mode is
+     * set to CompletionNone. Also if the mode is set to CompletionShell
      * and multiple matches are found, this method will complete the
      * text to the first match with a beep to indicate that there are
      * more matches. Then any successive completion key event iterates
@@ -458,8 +456,9 @@ protected:
      * highlights the text appropriately if the boolean
      * value is set to true.
      *
-     * @param text The text to be set in the line edit
-     * @param marked Whether the text inserted should be highlighted
+     * \a text The text to be set in the line edit
+     *
+     * \a marked Whether the text inserted should be highlighted
      */
     virtual void setCompletedText(const QString &text, bool marked);
 

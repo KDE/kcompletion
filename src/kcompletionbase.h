@@ -17,7 +17,7 @@
 class KCompletionBasePrivate;
 
 /*!
- * @class KCompletionBase kcompletionbase.h KCompletionBase
+ * \class KCompletionBase kcompletionbase.h KCompletionBase
  *
  * An abstract base class for adding a completion feature
  * into widgets.
@@ -78,7 +78,7 @@ public:
      * Returns a pointer to the current completion object.
      *
      * If the completion object does not exist, it is automatically created and
-     * by default handles all the completion signals internally unless @c handleSignals
+     * by default handles all the completion signals internally unless \c handleSignals
      * is set to false. It is also automatically destroyed when the destructor
      * is called. You can change this default behavior using the
      * @ref setAutoDeleteCompletionObject and @ref setHandleSignals member
@@ -86,7 +86,7 @@ public:
      *
      * See also @ref compObj.
      *
-     * @param handleSignals if true, handles completion signals internally.
+     * \a handleSignals if true, handles completion signals internally.
      * @return a pointer to the completion object.
      */
     KCompletion *completionObject(bool handleSignals = true);
@@ -104,8 +104,8 @@ public:
      * after calling this method. Be sure to set the bool argument to false, if
      * you want to handle the completion signals yourself.
      *
-     * @param completionObject a KCompletion or a derived child object.
-     * @param handleCompletionSignals if true, handles completion signals internally.
+     * \a completionObject a KCompletion or a derived child object.
+     * \a handleCompletionSignals if true, handles completion signals internally.
      */
     virtual void setCompletionObject(KCompletion *completionObject, bool handleSignals = true);
 
@@ -119,7 +119,7 @@ public:
      * stop the object from emitting signals when these
      * events occur.
      *
-     * @param handle if true, it handles completion and rotation internally.
+     * \a handle if true, it handles completion and rotation internally.
      */
     virtual void setHandleSignals(bool handle);
 
@@ -142,7 +142,7 @@ public:
      * If the argument is set to true, the completion object
      * is deleted when this widget's destructor is called.
      *
-     * @param autoDelete if true, delete completion object on destruction.
+     * \a autoDelete if true, delete completion object on destruction.
      */
     void setAutoDeleteCompletionObject(bool autoDelete);
 
@@ -150,9 +150,9 @@ public:
      * Sets the widget's ability to emit text completion and
      * rotation signals.
      *
-     * Invoking this function with @p enable set to @c false will
+     * Invoking this function with \a enable set to \c false will
      * cause the completion and rotation signals not to be emitted.
-     * However, unlike setting the completion object to @c nullptr
+     * However, unlike setting the completion object to \c nullptr
      * using setCompletionObject, disabling the emission of
      * the signals through this method does not affect the current
      * completion object.
@@ -164,7 +164,7 @@ public:
      * necessarily interfere with the objects' ability to handle these
      * events internally. See setHandleSignals.
      *
-     * @param enable if false, disables the emission of completion and rotation signals.
+     * \a enable if false, disables the emission of completion and rotation signals.
      */
     void setEnableSignals(bool enable);
 
@@ -185,14 +185,14 @@ public:
     /*!
      * Sets whether the object emits rotation signals.
      *
-     * @param emitRotationSignals if false, disables the emission of rotation signals.
+     * \a emitRotationSignals if false, disables the emission of rotation signals.
      */
     void setEmitSignals(bool emitRotationSignals);
 
     /*!
      * Sets the type of completion to be used.
      *
-     * @param mode Completion type
+     * \a mode Completion type
      * @see CompletionMode
      */
     virtual void setCompletionMode(KCompletion::CompletionMode mode);
@@ -215,21 +215,21 @@ public:
      * If the default value or 0 is specified by the second
      * parameter, then the key binding as defined in the global
      * setting should be used. This method returns false
-     * when @p key is negative or the supplied key binding conflicts
+     * when \a key is negative or the supplied key binding conflicts
      * with another one set for another feature.
      *
      * NOTE: To use a modifier key (Shift, Ctrl, Alt) as part of
-     * the key binding simply @p sum up the values of the
+     * the key binding simply \a sum up the values of the
      * modifier and the actual key. For example, to use CTRL+E, supply
-     * @c "Qt::CtrlButton | Qt::Key_E" as the second argument to this
+     * \c "Qt::CtrlButton | Qt::Key_E" as the second argument to this
      * function.
      *
-     * @param item the feature whose key binding needs to be set:
+     * \a item the feature whose key binding needs to be set:
      *   @li TextCompletion the manual completion key binding.
      *   @li PrevCompletionMatch the previous match key for multiple completion.
      *   @li NextCompletionMatch the next match key for for multiple completion.
      *   @li SubstringCompletion the key for substring completion
-     * @param key key binding used to rotate down in a list.
+     * \a key key binding used to rotate down in a list.
      * @return true if key binding is successfully set.
      * @see keyBinding
      */
@@ -239,12 +239,12 @@ public:
      * Returns the key binding used for the specified item.
      *
      * This method returns the key binding used to activate
-     * the feature given by @p item. If the binding
+     * the feature given by \a item. If the binding
      * contains modifier key(s), the sum of the modifier key
      * and the actual key code is returned.
      *
-     * @param item the item to check
-     * @return the key binding used for the feature given by @p item.
+     * \a item the item to check
+     * @return the key binding used for the feature given by \a item.
      * @see setKeyBinding
      * @since 5.0
      */
@@ -275,15 +275,15 @@ public:
      * Does nothing in CompletionPopup mode, as all available
      * matches will be shown in the popup.
      *
-     * @param text the completed text to be set in the widget.
+     * \a text the completed text to be set in the widget.
      */
     virtual void setCompletedText(const QString &text) = 0;
 
     /*!
      * A pure virtual function that must be implemented by
      * all inheriting classes.
-     * @param items the list of completed items
-     * @param autoSuggest if @c true, the first element of @p items
+     * \a items the list of completed items
+     * \a autoSuggest if \c true, the first element of \a items
      *        is automatically completed (i.e. preselected).
      */
     virtual void setCompletedItems(const QStringList &items, bool autoSuggest = true) = 0;
@@ -293,11 +293,11 @@ public:
      *
      * This method is only different from completionObject()
      * in that it does not create a new KCompletion object even if
-     * the internal pointer is @c NULL. Use this method to get the
+     * the internal pointer is \c NULL. Use this method to get the
      * pointer to a completion object when inheriting so that you
      * will not inadvertently create it.
      *
-     * @return the completion object or @c NULL if one does not exist.
+     * @return the completion object or \c NULL if one does not exist.
      */
     KCompletion *compObj() const;
 
@@ -308,7 +308,7 @@ protected:
      * This method is the same as getKeyBinding(), except that it
      * returns the whole keymap containing the key bindings.
      *
-     * @return the key binding used for the feature given by @p item.
+     * @return the key binding used for the feature given by \a item.
      * @since 5.0
      */
     KeyBindingMap keyBindingMap() const;
@@ -316,20 +316,20 @@ protected:
     /*!
      * Sets the keymap.
      *
-     * @param keyBindingMap
+     * \a keyBindingMap
      */
     void setKeyBindingMap(KeyBindingMap keyBindingMap);
 
     /*!
      * Sets or removes the delegation object. If a delegation object is
      * set, all function calls will be forwarded to the delegation object.
-     * @param delegate the delegation object, or @c nullptr to remove it
+     * \a delegate the delegation object, or \c nullptr to remove it
      */
     void setDelegate(KCompletionBase *delegate);
 
     /*!
      * Returns the delegation object.
-     * @return the delegation object, or @c nullptr if there is none
+     * @return the delegation object, or \c nullptr if there is none
      * @see setDelegate()
      */
     KCompletionBase *delegate() const;

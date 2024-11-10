@@ -19,8 +19,6 @@ template<typename T>
 class QList;
 
 /*!
- * \class KZoneAllocator kallocator.h <KZoneAllocator>
- *
  * Memory allocator for large groups of small objects.
  * This should be used for large groups of objects that are created and
  * destroyed together. When used carefully for this purpose it is faster
@@ -29,14 +27,15 @@ class QList;
  * does no compaction it still is faster than malloc()/free(). Depending
  * on the exact usage pattern that might come at the expense of some
  * memory though.
- * @author Waldo Bastian <bastian@kde.org>, Michael Matz <matz@kde.org>
+ *
+ * \internal
  */
 class KZoneAllocator
 {
 public:
     /*!
      * Creates a KZoneAllocator object.
-     * @param _blockSize Size in bytes of the blocks requested from malloc.
+     * \a _blockSize Size in bytes of the blocks requested from malloc.
      */
     explicit KZoneAllocator(unsigned long _blockSize = 8 * 1024);
 
@@ -50,7 +49,7 @@ public:
 
     /*!
      * Allocates a memory block.
-     * @param _size Size in bytes of the memory block. Memory is aligned to
+     * \a _size Size in bytes of the memory block. Memory is aligned to
      * the size of a pointer.
      */
     void *allocate(size_t _size);
@@ -73,14 +72,14 @@ public:
      * just use the functions allocate() and free_since(). All the
      * remaining memory is returned to the system if the zone allocator
      * is destroyed.
-     * @param ptr Pointer as returned by allocate().
+     * \a ptr Pointer as returned by allocate().
      */
     void deallocate(void *ptr);
 
     /*!
      * Deallocate many objects at once.
-     * free_since() deallocates all objects allocated after @p ptr,
-     * @em including @p ptr itself.
+     * free_since() deallocates all objects allocated after \a ptr,
+     * @em including \a ptr itself.
      *
      * The intended use is something along the lines of:
      * \code
@@ -93,7 +92,7 @@ public:
      * Note, that we don't need to remember all the pointers to the 12-byte
      * objects for freeing them. The free_since() does deallocate them
      * all at once.
-     * @param ptr Pointer as returned by allocate(). It acts like
+     * \a ptr Pointer as returned by allocate(). It acts like
      * a kind of mark of a certain position in the stack of all objects,
      * off which you can throw away everything above that mark.
      */

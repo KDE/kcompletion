@@ -140,7 +140,7 @@ void KZoneAllocator::insertHash(MemBlock *b)
 
 /*! Add a new memory block to the pool of blocks,
     and reorganize the hash lists if needed.
-    @param b block to add
+    \a b block to add
     @internal
 */
 void KZoneAllocator::addBlock(MemBlock *b)
@@ -194,7 +194,7 @@ void KZoneAllocator::initHash()
 }
 
 /*! Delete a memory block. This @em really returns the memory to the heap.
-    @param b block to delete
+    \a b block to delete
     @internal
 */
 void KZoneAllocator::delBlock(MemBlock *b)
