@@ -11,4 +11,6 @@ sourcedirs = .
 outputformats = HTML
 
 depends += \
-    qtcore
+    qtcore \
+    qtgui \
+    qtwidgets
