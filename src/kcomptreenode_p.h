@@ -52,7 +52,7 @@ private:
     uint m_count;
 };
 
-/**
+/*!
  * A helper class for KCompletion. Implements a tree of QChar.
  * Every node is a QChar and has a list of children, which  are Nodes as well.
  *
@@ -82,8 +82,7 @@ private:
  *                   |     |
  *                  0x0   0x0
  *
- * @author Carsten Pfeiffer <pfeiffer@kde.org>
- * @internal
+ * \internal
  */
 class KCOMPLETION_EXPORT KCompTreeNode : public QChar
 {
@@ -197,7 +196,7 @@ public:
        use an accessor, but just a public member. */
     KCompTreeNode *m_next;
 
-    /**
+    /*!
      * Custom allocator used for all KCompTreeNode instances
      */
     static QSharedPointer<KZoneAllocator> allocator()

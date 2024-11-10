@@ -76,6 +76,8 @@ ecm_generate_headers(KCompletion_HEADERS
   REQUIRED_HEADERS KCompletion_HEADERS
 )
 
+ecm_generate_qdoc(KF6Completion kcompletion.qdocconf)
+
 install(TARGETS KF6Completion EXPORT KF6CompletionTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
@@ -86,33 +88,6 @@ install(FILES
 
 if(BUILD_DESIGNERPLUGIN)
     add_subdirectory(designer)
-endif()
-
-if(BUILD_QCH)
-    ecm_add_qch(
-        KF6Completion_QCH
-        NAME KCompletion
-        BASE_NAME KF6Completion
-        VERSION ${KF_VERSION}
-        ORG_DOMAIN org.kde
-        SOURCES # using only public headers, to cover only public API
-            ${KCompletion_HEADERS}
-        MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
-        IMAGE_DIRS "${CMAKE_SOURCE_DIR}/docs/pics"
-        LINK_QCHS
-            Qt6Core_QCH
-            Qt6Gui_QCH
-            Qt6Widgets_QCH
-        INCLUDE_DIRS
-            ${CMAKE_CURRENT_BINARY_DIR}
-        BLANK_MACROS
-            KCOMPLETION_EXPORT
-            KCOMPLETION_DEPRECATED
-            "KCOMPLETION_DEPRECATED_VERSION(x, y, t)"
-        TAGFILE_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        QCH_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        COMPONENT Devel
-    )
 endif()
 
 ecm_qt_install_logging_categories(

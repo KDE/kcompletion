@@ -30,93 +30,94 @@ class KCompletionBox;
 class QUrl;
 class KLineEditPrivate;
 
-/**
- * @class KLineEdit klineedit.h KLineEdit
+/*!
+ * \class KLineEdit
+ * \inmodule KCompletion
  *
- * An enhanced QLineEdit widget for inputting text.
- *
- * \b Detail \n
+ * \brief An enhanced QLineEdit widget for inputting text.
  *
  * This widget inherits from QLineEdit and implements the following
  * additional functionalities:
- * @li a completion object that provides both automatic and manual text
+ * \list
+ * \li a completion object that provides both automatic and manual text
  * completion as well as multiple match iteration features
- * @li configurable key-bindings to activate these features
- * @li a popup-menu item that can be used to allow the user to set text
+ * \li configurable key-bindings to activate these features
+ * \li a popup-menu item that can be used to allow the user to set text
  * completion modes on the fly based on their preference
+ * \endlist
  *
  * To support these features KLineEdit also emits a few more additional
  * signals:
- * @li @c completion(const QString &): this signal can be connected to
+ * \list
+ * \li completion(const QString &): this signal can be connected to
  * a slot that will assist the user in filling out the remaining text
- * @li @c textRotation(KeyBindingType): this signal is intended to be
+ * \li textRotation(KeyBindingType): this signal is intended to be
  * used to iterate through the list of all possible matches whenever
  * there is more than one match for the entered text
- * @li @c returnKeyPressed(const QString &): this signal provides the
+ * \li returnKeyPressed(const QString &): this signal provides the
  * current text in the widget as its argument whenever appropriate (this
- * is in addition to the @c QLineEdit::returnPressed() signal which KLineEdit
+ * is in addition to the QLineEdit::returnPressed() signal which KLineEdit
  * inherits from QLineEdit).
+ * \endlist
  *
  * This widget by default creates a completion object when you invoke
- * the @c completionObject(bool) member function for the first time or
- * use @c setCompletionObject(KCompletion *, bool) to assign your own
+ * the completionObject(bool) member function for the first time or
+ * use setCompletionObject(KCompletion *, bool) to assign your own
  * completion object. Additionally, to make this widget more functional,
  * KLineEdit will by default handle the text rotation and completion
  * events internally when a completion object is created through either one
  * of the methods mentioned above. If you do not need this functionality,
- * simply use @c KCompletionBase::setHandleSignals(bool) or set the boolean
+ * simply use KCompletionBase::setHandleSignals(bool) or set the boolean
  * parameter in the above functions to false.
  *
  * The default key-bindings for completion and rotation is determined
  * from the global settings in KStandardShortcut. These values, however,
- * can be overridden locally by invoking @c KCompletionBase::setKeyBinding().
+ * can be overridden locally by invoking KCompletionBase::setKeyBinding().
  * The values can easily be reverted back to the default setting, by simply
- * calling @c useGlobalSettings(). An alternate method would be to default
+ * calling useGlobalSettings(). An alternate method would be to default
  * individual key-bindings by using setKeyBinding() with the default
  * second argument.
  *
- * If @c EchoMode for this widget is set to something other than @c QLineEdit::Normal,
+ * If EchoMode for this widget is set to something other than QLineEdit::Normal,
  * the completion mode will always be defaulted to CompletionNone.
  * This is done purposefully to guard against protected entries, such as
- * passwords, being cached in KCompletion's list. Hence, if the @c EchoMode
- * is not @c QLineEdit::Normal, the completion mode is automatically disabled.
+ * passwords, being cached in KCompletion's list. Hence, if the EchoMode
+ * is not QLineEdit::Normal, the completion mode is automatically disabled.
  *
  * A read-only KLineEdit will have the same background color as a disabled
  * KLineEdit, but its foreground color will be the one used for the read-write
  * mode. This differs from QLineEdit's implementation and is done to give visual
  * distinction between the three different modes: disabled, read-only, and read-write.
  *
- * @b Usage
- *
  * To enable the basic completion feature:
  *
- * @code
+ * \code
  * KLineEdit *edit = new KLineEdit(this);
  * KCompletion *comp = edit->completionObject();
  * // Connect to the Return pressed signal - optional
  * connect(edit, &KLineEdit::returnKeyPressed, comp, [this](const QString &text) { addItem(text); });
- * @endcode
+ * \endcode
  *
  * To use a customized completion object or your own completion object:
  *
- * @code
+ * \code
  * KLineEdit *edit = new KLineEdit(this);
  * KUrlCompletion *comp = new KUrlCompletion();
  * edit->setCompletionObject(comp);
  * // Connect to the return pressed signal - optional
  * connect(edit, &KLineEdit::returnKeyPressed, comp, [this](const QString &text) { addItem(text); });
- * @endcode
+ * \endcode
  *
  * Note if you specify your own completion object you have to either delete
  * it when you don't need it anymore, or you can tell KLineEdit to delete it
  * for you:
- * @code
+ * \code
  * edit->setAutoDeleteCompletionObject(true);
- * @endcode
+ * \endcode
  *
- * <b>Miscellaneous function calls :</b>\n
+ * Miscellaneous function calls:
  *
- * @code
+ * \code
  * // Tell the widget to not handle completion and iteration automatically
  * edit->setHandleSignals(false);
  *
@@ -128,11 +129,9 @@ class KLineEditPrivate;
  *
  * // Default the key-bindings back to the default system settings
  * edit->useGlobalKeyBindings();
- * @endcode
+ * \endcode
  *
- * @image html klineedit.png "KLineEdit widgets with clear-button"
- *
- * @author Dawit Alemayehu <adawit@kde.org>
+ * \image klineedit.png "KLineEdit widgets with clear-button"
  */
 
 class KCOMPLETION_EXPORT KLineEdit : public QLineEdit, public KCompletionBase // krazy:exclude=qclasses
@@ -142,37 +141,42 @@ class KCOMPLETION_EXPORT KLineEdit : public QLineEdit, public KCompletionBase //
 
     Q_OBJECT
     Q_DECLARE_PRIVATE(KLineEdit)
+
+    /*!
+     * \property KLineEdit::trapEnterKeyEvent
+     */
     Q_PROPERTY(bool trapEnterKeyEvent READ trapReturnKey WRITE setTrapReturnKey)
+
+    /*!
+     * \property KLineEdit::squeezedTextEnabled
+     */
     Q_PROPERTY(bool squeezedTextEnabled READ isSqueezedTextEnabled WRITE setSqueezedTextEnabled)
 
 public:
-    /**
+    /*!
      * Constructs a KLineEdit object with a default text, a parent,
      * and a name.
      *
-     * @param string Text to be shown in the edit widget.
-     * @param parent The parent widget of the line edit.
+     * \a string Text to be shown in the edit widget.
+     * \a parent The parent widget of the line edit.
      */
     explicit KLineEdit(const QString &string, QWidget *parent = nullptr);
 
-    /**
+    /*!
      * Constructs a line edit
-     * @param parent The parent widget of the line edit.
+     * \a parent The parent widget of the line edit.
      */
     explicit KLineEdit(QWidget *parent = nullptr);
 
-    /**
-     *  Destructor.
-     */
     ~KLineEdit() override;
 
-    /**
-     * Sets @p url into the lineedit. It uses QUrl::toDisplayString() so
+    /*!
+     * Sets \a url into the lineedit. It uses QUrl::toDisplayString() so
      * that the url is properly decoded for displaying.
      */
     void setUrl(const QUrl &url);
 
-    /**
+    /*
      * Reimplemented from KCompletionBase for internal reasons.
      *
      * This function is re-implemented in order to make sure that
@@ -182,7 +186,7 @@ public:
      */
     void setCompletionMode(KCompletion::CompletionMode mode) override;
 
-    /**
+    /*!
      * Disables completion modes by making them non-checkable.
      *
      * The context menu allows to change the completion mode.
@@ -190,141 +194,137 @@ public:
      */
     void setCompletionModeDisabled(KCompletion::CompletionMode mode, bool disable = true);
 
-    /**
-     * Returns @c true when decoded URL drops are enabled
+    /*!
+     * Returns \c true when decoded URL drops are enabled
      */
     bool urlDropsEnabled() const;
 
-    /**
-     * By default, KLineEdit recognizes @c Key_Return and @c Key_Enter and emits
+    /*!
+     * By default, KLineEdit recognizes \c Key_Return and \c Key_Enter and emits
      * the returnPressed() signals, but it also lets the event pass,
      * for example causing a dialog's default-button to be called.
      *
-     * Call this method with @p trap = @c true to make @c KLineEdit stop these
+     * Call this method with \a trap = \c true to make KLineEdit stop these
      * events. The signals will still be emitted of course.
      *
-     * @see trapReturnKey()
+     * \sa trapReturnKey()
      */
     void setTrapReturnKey(bool trap);
 
-    /**
-     * @returns @c true if keyevents of @c Key_Return or
-     * @c Key_Enter will be stopped or if they will be propagated.
+    /*!
+     * Returns \c true if keyevents of \c Key_Return or
+     * \c Key_Enter will be stopped or if they will be propagated.
      *
-     * @see setTrapReturnKey ()
+     * \sa setTrapReturnKey()
      */
     bool trapReturnKey() const;
 
-    /**
+    /*!
      * This method will create a completion-box if none is there, yet.
      *
-     * @param create Set this to false if you don't want the box to be created
+     * \a create Set this to false if you don't want the box to be created
      *               i.e. to test if it is available.
-     * @returns the completion-box, that is used in completion mode
+     *
+     * Returns the completion-box, that is used in completion mode
      * CompletionPopup.
      */
     virtual KCompletionBox *completionBox(bool create = true);
 
-    /**
-     * Reimplemented for internal reasons, the API is not affected.
-     */
     void setCompletionObject(KCompletion *, bool handle = true) override;
 
-    /**
-     * Reimplemented for internal reasons, the API is not affected.
-     */
     virtual void copy() const;
 
-    /**
+    /*!
      * Enable text squeezing whenever the supplied text is too long.
      * Only works for "read-only" mode.
      *
      * Note that once text squeezing is enabled, QLineEdit::text()
      * and QLineEdit::displayText() return the squeezed text. If
-     * you want the original text, use @ref originalText.
+     * you want the original text, use originalText.
      *
-     * @see QLineEdit
+     * \sa QLineEdit
      */
     void setSqueezedTextEnabled(bool enable);
 
-    /**
-     * Returns true if text squeezing is enabled.
+    /*!
+     * Returns \c true if text squeezing is enabled.
+     *
      * This is only valid when the widget is in read-only mode.
      */
     bool isSqueezedTextEnabled() const;
 
-    /**
+    /*!
      * Returns the original text if text squeezing is enabled.
      * If the widget is not in "read-only" mode, this function
      * returns the same thing as QLineEdit::text().
      *
-     * @see QLineEdit
+     * \sa QLineEdit
      */
     QString originalText() const;
 
-    /**
+    /*!
      * Returns the text as given by the user (i.e. not autocompleted)
      * if the widget has autocompletion disabled, this function
      * returns the same as QLineEdit::text().
-     * @since 4.2.2
+     * \since 4.2.2
      */
     QString userText() const;
 
-    /**
+    /*!
      * Set the completion-box to be used in completion mode
      * CompletionPopup.
      * This will do nothing if a completion-box already exists.
      *
-     * @param box The KCompletionBox to set
+     * \a box The KCompletionBox to set
      */
     void setCompletionBox(KCompletionBox *box);
 
-    /**
-     * @return the size used by the clear button
-     * @since 4.1
+    /*!
+     * Returns the size used by the clear button
+     * \since 4.1
      */
     QSize clearButtonUsedSize() const;
 
-    /**
+    /*!
      * Do completion now. This is called automatically when typing a key for instance.
      * Emits completion() and/or calls makeCompletion(), depending on
      * emitSignals and handleSignals.
      *
-     * @since 4.2.1
+     * \since 4.2.1
      */
     void doCompletion(const QString &text);
 
 Q_SIGNALS:
-    /**
+    /*!
      * Emitted whenever the completion box is activated.
      */
     void completionBoxActivated(const QString &);
 
-    /**
+    /*!
      * Emitted when the user presses the Return or Enter key.
      *
-     * The argument is the current text. Note that this signal is @em not emitted
-     * if the widget's @c EchoMode is set to QLineEdit::EchoMode.
+     * The argument is the current text. Note that this signal is \e not emitted
+     * if the widget's \c EchoMode is set to QLineEdit::EchoMode.
      *
-     * @since 5.81
+     * \since 5.81
      */
     void returnKeyPressed(const QString &text);
 
-    /**
+    /*!
      * Emitted when the completion key is pressed.
      *
-     * Please note that this signal is @em not emitted if the
-     * completion mode is set to @c CompletionNone or @c EchoMode is
-     * @em normal.
+     * Please note that this signal is \e not emitted if the
+     * completion mode is set to CompletionNone or EchoMode is
+     * \e normal.
      */
     void completion(const QString &);
 
-    /**
+    /*!
      * Emitted when the shortcut for substring completion is pressed.
      */
     void substringCompletion(const QString &);
 
-    /**
+    /*!
      * Emitted when the text rotation key-bindings are pressed.
      *
      * The argument indicates which key-binding was pressed.
@@ -332,45 +332,45 @@ Q_SIGNALS:
      * PrevCompletionMatch or NextCompletionMatch. See
      * KCompletionBase::setKeyBinding for details.
      *
-     * Note that this signal is @em not emitted if the completion
-     * mode is set to @c CompletionNone or @c echoMode() is @em not  normal.
+     * Note that this signal is not emitted if the completion
+     * mode is set to CompletionNone or echoMode() is \e not normal.
      */
     void textRotation(KCompletionBase::KeyBindingType);
 
-    /**
+    /*!
      * Emitted when the user changed the completion mode by using the
      * popupmenu.
      */
     void completionModeChanged(KCompletion::CompletionMode);
 
-    /**
+    /*!
      * Emitted before the context menu is displayed.
      *
      * The signal allows you to add your own entries into the
      * the context menu that is created on demand.
      *
-     * NOTE: Do not store the pointer to the QMenu
+     * \note Do not store the pointer to the QMenu
      * provided through since it is created and deleted
      * on demand.
      *
-     * @param contextMenu the context menu about to be displayed
+     * \a contextMenu the context menu about to be displayed
      */
     void aboutToShowContextMenu(QMenu *contextMenu);
 
-    /**
+    /*!
      * Emitted when the user clicked on the clear button
      */
     void clearButtonClicked();
 
 public Q_SLOTS:
 
-    /**
+    /*!
      * Sets the lineedit to read-only. Similar to QLineEdit::setReadOnly
      * but also takes care of the background color, and the clear button.
      */
     virtual void setReadOnly(bool);
 
-    /**
+    /*!
      * Iterates through all possible matches of the completed text or
      * the history list.
      *
@@ -378,45 +378,40 @@ public Q_SLOTS:
      * multiple matches are found as a result of a text completion request.
      * It will have no effect if only a single match is found.
      *
-     * @param type The key-binding invoked.
+     * \a type The key-binding invoked.
      */
     void rotateText(KCompletionBase::KeyBindingType type);
 
-    /**
-     * See KCompletionBase::setCompletedText.
-     */
     void setCompletedText(const QString &) override;
 
-    /**
+    /*!
      * Same as the above function except it allows you to temporarily
      * turn off text completion in CompletionPopupAuto mode.
      *
+     * \a items list of completion matches to be shown in the completion box.
      *
-     * @param items list of completion matches to be shown in the completion box.
-     * @param autoSuggest true if you want automatic text completion (suggestion) enabled.
+     * \a autoSuggest true if you want automatic text completion (suggestion) enabled.
      */
     void setCompletedItems(const QStringList &items, bool autoSuggest = true) override;
 
-    /**
-     * Squeezes @p text into the line edit.
+    /*!
+     * Squeezes \a text into the line edit.
+     *
      * This can only be used with read-only line-edits.
      */
     void setSqueezedText(const QString &text);
 
-    /**
-     * Reimplemented to enable text squeezing. API is not affected.
-     */
     virtual void setText(const QString &);
 
 protected Q_SLOTS:
 
-    /**
+    /*!
      * Completes the remaining text with a matching one from
      * a given list.
      */
     virtual void makeCompletion(const QString &);
 
-    /**
+    /*!
      * Resets the current displayed text.
      * Call this function to revert a text completion if the user
      * cancels the request. Mostly applies to popup completions.
@@ -424,77 +419,36 @@ protected Q_SLOTS:
     void userCancelled(const QString &cancelText);
 
 protected:
-    /**
-     * Reimplemented for internal reasons. API not affected.
-     */
     bool event(QEvent *) override;
 
-    /**
-     * Reimplemented for internal reasons. API not affected.
-     *
-     * See QLineEdit::resizeEvent().
-     */
     void resizeEvent(QResizeEvent *) override;
 
-    /**
-     * Reimplemented for internal reasons. API not affected.
-     *
-     * See QLineEdit::keyPressEvent().
-     */
     void keyPressEvent(QKeyEvent *) override;
 
-    /**
-     * Reimplemented for internal reasons. API not affected.
-     *
-     * See QLineEdit::mousePressEvent().
-     */
     void mousePressEvent(QMouseEvent *) override;
 
-    /**
-     * Reimplemented for internal reasons. API not affected.
-     *
-     * See QLineEdit::mouseReleaseEvent().
-     */
     void mouseReleaseEvent(QMouseEvent *) override;
 
-    /**
-     * Reimplemented for internal reasons. API not affected.
-     *
-     * See QWidget::mouseDoubleClickEvent().
-     */
     void mouseDoubleClickEvent(QMouseEvent *) override;
 
-    /**
-     * Reimplemented for internal reasons. API not affected.
-     *
-     * See QLineEdit::contextMenuEvent().
-     */
     void contextMenuEvent(QContextMenuEvent *) override;
 
-    /**
-     * Reimplemented for internal reasons. API not affected.
-     *
-     * See QLineEdit::createStandardContextMenu().
-     */
     QMenu *createStandardContextMenu();
 
-    /**
+    /*!
      * This function simply sets the lineedit text and
      * highlights the text appropriately if the boolean
-     * value is set to true.
-     *
-     * @param text
-     * @param marked
+     * value is set to \c true.
      */
     virtual void setCompletedText(const QString & /*text*/, bool /*marked*/);
 
-    /**
+    /*!
      * Sets the widget in userSelection mode or in automatic completion
      * selection mode. This changes the colors of selections.
      */
     void setUserSelection(bool userSelection);
 
-    /**
+    /*!
      * Whether in current state text should be auto-suggested
      */
     bool autoSuggest() const;

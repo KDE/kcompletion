@@ -65,21 +65,21 @@ public:
     {
     }
 
-    /** One block is 'current' to satisfy requests. @internal */
+    /* One block is 'current' to satisfy requests */
     MemBlock *currentBlock;
-    /** Store block size from constructor. @internal */
+    /* Store block size from constructor */
     quintptr blockSize;
-    /** Store offset into current block; size-offset is free. @internal */
+    /* Store offset into current block; size-offset is free */
     quintptr blockOffset;
-    /** base-2 log of the block size. @internal */
+    /* base-2 log of the block size */
     unsigned int log2;
-    /** Count total number of allocated blocks. @internal */
+    /* Count total number of allocated blocks */
     unsigned int num_blocks;
-    /** Collection of lists of blocks, for lookups. @internal */
+    /* Collection of lists of blocks, for lookups */
     MemList **hashList;
-    /** Count of hashes. @internal */
+    /* Count of hashes */
     unsigned int hashSize;
-    /** Flag the hashes as in need of reorganization. @internal */
+    /* Flag the hashes as in need of reorganization */
     bool hashDirty;
 };
 
@@ -138,9 +138,9 @@ void KZoneAllocator::insertHash(MemBlock *b)
     }
 }
 
-/** Add a new memory block to the pool of blocks,
+/*! Add a new memory block to the pool of blocks,
     and reorganize the hash lists if needed.
-    @param b block to add
+    \a b block to add
     @internal
 */
 void KZoneAllocator::addBlock(MemBlock *b)
@@ -165,7 +165,7 @@ void KZoneAllocator::addBlock(MemBlock *b)
     }
 }
 
-/** Reinitialize hash list. @internal */
+/*! Reinitialize hash list. @internal */
 void KZoneAllocator::initHash()
 {
     if (d->hashList) {
@@ -193,8 +193,8 @@ void KZoneAllocator::initHash()
     }
 }
 
-/** Delete a memory block. This @em really returns the memory to the heap.
-    @param b block to delete
+/*! Delete a memory block. This @em really returns the memory to the heap.
+    \a b block to delete
     @internal
 */
 void KZoneAllocator::delBlock(MemBlock *b)

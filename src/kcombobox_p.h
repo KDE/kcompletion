@@ -29,7 +29,7 @@ public:
     }
     virtual ~KComboBoxPrivate() = default;
 
-    /**
+    /*
      * Initializes the variables upon construction.
      */
     void init();
