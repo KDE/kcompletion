@@ -136,7 +136,15 @@ class QMenu;
 class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase // krazy:exclude=qclasses
 {
     Q_OBJECT
+
+    /*!
+     * \property KComboBox::autoCompletion
+     */
     Q_PROPERTY(bool autoCompletion READ autoCompletion WRITE setAutoCompletion)
+
+    /*!
+     * \property KComboBox::trapReturnKey
+     */
     Q_PROPERTY(bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey)
 
 public:
