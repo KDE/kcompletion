@@ -17,6 +17,11 @@
 class KCompletionMatchesWrapper;
 class KCompletionMatchesPrivate;
 
+// TODO qdoc inheritance
+/*!
+ * \typedef KCompletionMatchesList
+ * \relates KCompletionMatches
+ */
 typedef KSortableList<QString> KCompletionMatchesList;
 
 /*!
