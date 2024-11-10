@@ -79,7 +79,7 @@ public:
     /*!
      * Deallocate many objects at once.
      * free_since() deallocates all objects allocated after \a ptr,
-     * @em including \a ptr itself.
+     * \e including \a ptr itself.
      *
      * The intended use is something along the lines of:
      * \code
@@ -99,9 +99,9 @@ public:
     void free_since(void *ptr);
 
 protected:
-    /*! A single chunk of memory from the heap. @internal */
+    /*! A single chunk of memory from the heap. \internal */
     class MemBlock;
-    /*!< A list of chunks. @internal */
+    /*!< A list of chunks. \internal */
     typedef QList<MemBlock *> MemList;
     void addBlock(MemBlock *b);
     void delBlock(MemBlock *b);

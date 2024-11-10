@@ -19,9 +19,10 @@ class KCompletionBoxPrivate;
 class QEvent;
 
 /*!
- * \class KCompletionBox kcompletionbox.h KCompletionBox
+ * \class KCompletionBox
+ * \inmodule KCompletion
  *
- * @short A helper widget for "completion-widgets" (KLineEdit, KComboBox))
+ * \brief A helper widget for "completion-widgets" (KLineEdit, KComboBox)).
  *
  * A little utility class for "completion-widgets", like KLineEdit or
  * KComboBox. KCompletionBox is a listbox, displayed as a rectangle without
@@ -30,34 +31,41 @@ class QEvent;
  * can select the one he wants.
  *
  * It is used when KCompletion::CompletionMode == CompletionPopup or CompletionPopupAuto.
- *
- * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
 class KCOMPLETION_EXPORT KCompletionBox : public QListWidget
 {
     Q_OBJECT
+
+    /*!
+     * \property KCompletionBox::isTabHandling
+     */
     Q_PROPERTY(bool isTabHandling READ isTabHandling WRITE setTabHandling)
+
+    /*!
+     * \property KCompletionBox::cancelledText
+     */
     Q_PROPERTY(QString cancelledText READ cancelledText WRITE setCancelledText)
+
+    /*!
+     * \property KCompletionBox::activateOnSelect
+     */
     Q_PROPERTY(bool activateOnSelect READ activateOnSelect WRITE setActivateOnSelect)
 
 public:
     /*!
      * Constructs a KCompletionBox.
      *
-     * The parent widget is used to give the focus back when pressing the
+     * The \a parent widget is used to give the focus back when pressing the
      * up-button on the very first item.
      */
     explicit KCompletionBox(QWidget *parent = nullptr);
 
-    /*!
-     * Destroys the box
-     */
     ~KCompletionBox() override;
 
     QSize sizeHint() const override;
 
     /*!
-     * @returns true if selecting an item results in the emission of the selected() signal.
+     * Returns \c true if selecting an item results in the emission of the selected() signal.
      */
     bool activateOnSelect() const;
 
@@ -67,17 +75,17 @@ public:
     QStringList items() const;
 
     /*!
-     * @returns true if this widget is handling Tab-key events to traverse the
+     * Returns \c true if this widget is handling Tab-key events to traverse the
      * items in the dropdown list, otherwise false.
      *
-     * Default is true.
+     * Default is \c true.
      *
      * \sa setTabHandling
      */
     bool isTabHandling() const;
 
     /*!
-     * @returns the text set via setCancelledText() or QString().
+     * Returns the text set via setCancelledText() or QString().
      */
     QString cancelledText() const;
 
@@ -126,8 +134,9 @@ public Q_SLOTS:
      * If the cancelled text is not set through this function, the
      * userCancelled signal will not be emitted.
      *
-     * \sa userCancelled( const QString& )
      * \a text the text to be emitted if the user cancels this box
+     *
+     * \sa userCancelled( const QString& )
      */
     void setCancelledText(const QString &text);
 
@@ -179,7 +188,7 @@ Q_SIGNALS:
     /*!
      * Emitted when an item is selected, \a text is the text of the selected item.
      *
-     * @since 5.81
+     * \since 5.81
      */
     void textActivated(const QString &text);
 
@@ -200,11 +209,11 @@ protected:
     /*!
      * This properly resizes and repositions the listbox.
      *
-     * @since 5.0
+     * \since 5.0
      */
     void resizeAndReposition();
 
-    /*!
+    /*
      * Reimplemented from QListWidget to get events from the viewport (to hide
      * this widget on mouse-click, Escape-presses, etc.
      */
@@ -220,7 +229,7 @@ protected Q_SLOTS:
     /*!
      * Called when an item is activated. Emits KCompletionBox::textActivated(const QString &) with the item text.
      *
-     * @note For releases <= 5.81, this slot emitted KCompletionBox::activated(const QString &) with the item text.
+     * \note For releases <= 5.81, this slot emitted KCompletionBox::activated(const QString &) with the item text.
      */
     virtual void slotActivated(QListWidgetItem *);
 

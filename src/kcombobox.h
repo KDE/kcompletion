@@ -234,8 +234,6 @@ public:
     int cursorPosition() const;
 
     /*!
-     * \reimp
-     *
      * If \c true, the completion mode will be set to automatic.
      * Otherwise, it is defaulted to the global setting. This
      * method has been replaced by the more comprehensive
