@@ -14,7 +14,7 @@
 #include <QPair>
 #include <algorithm>
 
-/**
+/*!
  * \class KSortableItem ksortablelist.h <KSortableItem>
  *
  * KSortableItem is a QPair that provides several operators
@@ -25,7 +25,7 @@ template<typename T, typename Key = int>
 class KSortableItem : public QPair<Key, T>
 {
 public:
-    /**
+    /*!
      * Creates a new KSortableItem with the given values.
      * @param i the first value (the key)
      * @param t the second value (the item)
@@ -34,7 +34,7 @@ public:
         : QPair<Key, T>(i, t)
     {
     }
-    /**
+    /*!
      * Creates a new KSortableItem that copies another one.
      * @param rhs the other item to copy
      */
@@ -43,14 +43,14 @@ public:
     {
     }
 
-    /**
+    /*!
      * Creates a new KSortableItem with uninitialized values.
      */
     KSortableItem()
     {
     }
 
-    /**
+    /*!
      * Assignment operator, just copies the item.
      */
     KSortableItem<T, Key> &operator=(const KSortableItem<T, Key> &i)
@@ -61,7 +61,7 @@ public:
     }
 
     // operators for sorting
-    /**
+    /*!
      * Compares the two items. This implementation only compares
      * the first value.
      */
@@ -69,7 +69,7 @@ public:
     {
         return (i2.first < this->first);
     }
-    /**
+    /*!
      * Compares the two items. This implementation only compares
      * the first value.
      */
@@ -77,7 +77,7 @@ public:
     {
         return (this->first < i2.first);
     }
-    /**
+    /*!
      * Compares the two items. This implementation only compares
      * the first value.
      */
@@ -85,7 +85,7 @@ public:
     {
         return (this->first >= i2.first);
     }
-    /**
+    /*!
      * Compares the two items. This implementation only compares
      * the first value.
      */
@@ -93,7 +93,7 @@ public:
     {
         return !(i2.first < this->first);
     }
-    /**
+    /*!
      * Compares the two items. This implementation only compares
      * the first value.
      */
@@ -101,7 +101,7 @@ public:
     {
         return (this->first == i2.first);
     }
-    /**
+    /*!
      * Compares the two items. This implementation only compares
      * the first value.
      */
@@ -110,7 +110,7 @@ public:
         return (this->first != i2.first);
     }
 
-    /**
+    /*!
      * @return the second value (the item)
      */
     T &value()
@@ -118,7 +118,7 @@ public:
         return this->second;
     }
 
-    /**
+    /*!
      * @return the second value (the item)
      */
     const T &value() const
@@ -126,7 +126,7 @@ public:
         return this->second;
     }
 
-    /**
+    /*!
      * @return the first value.
      */
     Key key() const
@@ -135,7 +135,7 @@ public:
     }
 };
 
-/**
+/*!
  * \class KSortableList ksortablelist.h <KSortableList>
  *
  * KSortableList is a QList which associates a key with each item in the list.
@@ -149,7 +149,7 @@ template<typename T, typename Key = int>
 class KSortableList : public QList<KSortableItem<T, Key>>
 {
 public:
-    /**
+    /*!
      * Insert a KSortableItem with the given values.
      * @param i the first value
      * @param t the second value
@@ -160,7 +160,7 @@ public:
     }
     // add more as you please...
 
-    /**
+    /*!
      * Returns the first value of the KSortableItem at the given position.
      * @return the first value of the KSortableItem
      */
@@ -169,7 +169,7 @@ public:
         return QList<KSortableItem<T, Key>>::operator[](i).value();
     }
 
-    /**
+    /*!
      * Returns the first value of the KSortableItem at the given position.
      * @return the first value of the KSortableItem
      */
@@ -178,7 +178,7 @@ public:
         return QList<KSortableItem<T, Key>>::operator[](i).value();
     }
 
-    /**
+    /*!
      * Sorts the KSortableItems.
      */
     void sort()

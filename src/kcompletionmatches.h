@@ -19,7 +19,7 @@ class KCompletionMatchesPrivate;
 
 typedef KSortableList<QString> KCompletionMatchesList;
 
-/**
+/*!
  * @class KCompletionMatches kcompletionmatches.h KCompletionMatches
  *
  * This structure is returned by KCompletion::allWeightedMatches().
@@ -43,45 +43,45 @@ class KCOMPLETION_EXPORT KCompletionMatches : public KCompletionMatchesList
 {
 public:
     Q_DECLARE_PRIVATE(KCompletionMatches)
-    /**
+    /*!
      * Default constructor.
      * @param sort if false, the matches won't be sorted before the conversion,
      *             use only if you're sure the sorting is not needed
      */
     KCompletionMatches(bool sort);
 
-    /**
+    /*!
      * copy constructor.
      */
     KCompletionMatches(const KCompletionMatches &);
 
-    /**
+    /*!
      * assignment operator.
      */
     KCompletionMatches &operator=(const KCompletionMatches &);
 
-    /**
+    /*!
      * @internal
      */
     KCompletionMatches(const KCompletionMatchesWrapper &matches);
 
-    /**
+    /*!
      * default destructor.
      */
     ~KCompletionMatches();
-    /**
+    /*!
      * Removes duplicate matches. Needed only when you merged several matches
      * results and there's a possibility of duplicates.
      */
     void removeDuplicates();
-    /**
+    /*!
      * Returns the matches as a QStringList.
      * @param sort if false, the matches won't be sorted before the conversion,
      *             use only if you're sure the sorting is not needed
      * @return the list of matches
      */
     QStringList list(bool sort = true) const;
-    /**
+    /*!
      * If sorting() returns false, the matches aren't sorted by their weight,
      * even if true is passed to list().
      * @return true if the matches won't be sorted

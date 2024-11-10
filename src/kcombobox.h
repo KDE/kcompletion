@@ -24,7 +24,7 @@ class KComboBoxPrivate;
 class QLineEdit;
 class QMenu;
 
-/**
+/*!
  * @class KComboBox kcombobox.h KComboBox
  *
  * @short A combo box with completion support.
@@ -139,14 +139,14 @@ class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase //
     Q_PROPERTY(bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey)
 
 public:
-    /**
+    /*!
      * Constructs a read-only (or rather select-only) combo box.
      *
      * @param parent The parent object of this widget
      */
     explicit KComboBox(QWidget *parent = nullptr);
 
-    /**
+    /*!
      * Constructs an editable or read-only combo box.
      *
      * @param rw When @c true, widget will be editable.
@@ -154,12 +154,12 @@ public:
      */
     explicit KComboBox(bool rw, QWidget *parent = nullptr);
 
-    /**
+    /*!
      * Destructor.
      */
     ~KComboBox() override;
 
-    /**
+    /*!
      * Sets @p url into the edit field of the combo box.
      *
      * It uses QUrl::toDisplayString() so that the url is properly decoded for
@@ -167,7 +167,7 @@ public:
      */
     void setEditUrl(const QUrl &url);
 
-    /**
+    /*!
      * Appends @p url to the combo box.
      *
      * QUrl::toDisplayString() is used so that the url is properly decoded
@@ -175,7 +175,7 @@ public:
      */
     void addUrl(const QUrl &url);
 
-    /**
+    /*!
      * Appends @p url with the @p icon to the combo box.
      *
      * QUrl::toDisplayString() is used so that the url is properly decoded
@@ -183,7 +183,7 @@ public:
      */
     void addUrl(const QIcon &icon, const QUrl &url);
 
-    /**
+    /*!
      * Inserts @p url at position @p index into the combo box.
      *
      * QUrl::toDisplayString() is used so that the url is properly decoded
@@ -191,7 +191,7 @@ public:
      */
     void insertUrl(int index, const QUrl &url);
 
-    /**
+    /*!
      * Inserts @p url with the @p icon at position @p index into
      * the combo box.
      *
@@ -200,7 +200,7 @@ public:
      */
     void insertUrl(int index, const QIcon &icon, const QUrl &url);
 
-    /**
+    /*!
      * Replaces the item at position @p index with @p url.
      *
      * QUrl::toDisplayString() is used so that the url is properly decoded
@@ -208,7 +208,7 @@ public:
      */
     void changeUrl(int index, const QUrl &url);
 
-    /**
+    /*!
      * Replaces the item at position @p index with @p url and @p icon.
      *
      * QUrl::toDisplayString() is used so that the url is properly decoded
@@ -216,7 +216,7 @@ public:
      */
     void changeUrl(int index, const QIcon &icon, const QUrl &url);
 
-    /**
+    /*!
      * Returns the current cursor position.
      *
      * This method always returns a -1 if the combo box is @em not
@@ -226,7 +226,7 @@ public:
      */
     int cursorPosition() const;
 
-    /**
+    /*!
      * Reimplemented from QComboBox.
      *
      * If @c true, the completion mode will be set to automatic.
@@ -238,7 +238,7 @@ public:
      */
     virtual void setAutoCompletion(bool autocomplete);
 
-    /**
+    /*!
      * Reimplemented from QComboBox.
      *
      * Returns @c true if the current completion mode is set
@@ -249,12 +249,12 @@ public:
      */
     bool autoCompletion() const;
 
-    /**
+    /*!
      * Returns @c true when decoded URL drops are enabled
      */
     bool urlDropsEnabled() const;
 
-    /**
+    /*!
      * Convenience method which iterates over all items and checks if
      * any of them is equal to @p text.
      *
@@ -265,7 +265,7 @@ public:
      */
     bool contains(const QString &text) const;
 
-    /**
+    /*!
      * By default, KComboBox recognizes Key_Return and Key_Enter and emits the
      * returnPressed(const QString &) signal, but it also lets the event pass,
      * for example causing a dialog's default button to be called.
@@ -279,7 +279,7 @@ public:
      */
     void setTrapReturnKey(bool trap);
 
-    /**
+    /*!
      * @return @c true if Key_Return or Key_Enter input events will be stopped or
      * @c false if they will be propagated.
      *
@@ -287,7 +287,7 @@ public:
      */
     bool trapReturnKey() const;
 
-    /**
+    /*!
      * This method will create a completion box by calling
      * KLineEdit::completionBox, if none is there yet.
      *
@@ -298,7 +298,7 @@ public:
      */
     KCompletionBox *completionBox(bool create = true);
 
-    /**
+    /*!
      * Reimplemented for internal reasons. API remains unaffected.
      * Note that QComboBox::setLineEdit is not virtual in Qt4, do not
      * use a KComboBox in a QComboBox pointer.
@@ -309,7 +309,7 @@ public:
      */
     virtual void setLineEdit(QLineEdit *);
 
-    /**
+    /*!
      * Reimplemented so that setEditable(true) creates a KLineEdit
      * instead of QLineEdit.
      *
@@ -318,7 +318,7 @@ public:
      */
     void setEditable(bool editable);
 
-    /**
+    /*!
      * Pointer to KLineEdit's context menu, or nullptr if it does not exist at
      * the given moment.
      *
@@ -329,17 +329,17 @@ public:
     QSize minimumSizeHint() const override;
 
 Q_SIGNALS:
-    /**
+    /*!
      * Emitted when the user presses the Return or Enter key.
      *
      * The argument is the current text being edited.
      *
      * @note This signal is only emitted when the widget is editable.
      *
-    */
+     */
     void returnPressed(const QString &text); // clazy:exclude=overloaded-signal
 
-    /**
+    /*!
      * Emitted when the completion key is pressed.
      *
      * The argument is the current text being edited.
@@ -349,12 +349,12 @@ Q_SIGNALS:
      */
     void completion(const QString &);
 
-    /**
+    /*!
      * Emitted when the shortcut for substring completion is pressed.
      */
     void substringCompletion(const QString &);
 
-    /**
+    /*!
      * Emitted when the text rotation key bindings are pressed.
      *
      * The argument indicates which key binding was pressed. In this case this
@@ -368,13 +368,13 @@ Q_SIGNALS:
      */
     void textRotation(KCompletionBase::KeyBindingType);
 
-    /**
+    /*!
      * Emitted whenever the completion mode is changed by the user
      * through the context menu.
      */
     void completionModeChanged(KCompletion::CompletionMode);
 
-    /**
+    /*!
      * Emitted before the context menu is displayed.
      *
      * The signal allows you to add your own entries into the context menu.
@@ -387,7 +387,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
 
-    /**
+    /*!
      * Iterates through all possible matches of the completed text
      * or the history list.
      *
@@ -406,7 +406,7 @@ public Q_SLOTS:
      */
     void rotateText(KCompletionBase::KeyBindingType type);
 
-    /**
+    /*!
      * Sets the completed text in the line edit appropriately.
      *
      * This function is an implementation for
@@ -414,13 +414,13 @@ public Q_SLOTS:
      */
     void setCompletedText(const QString &) override;
 
-    /**
+    /*!
      * Sets @p items into the completion box if completionMode() is
      * CompletionPopup. The popup will be shown immediately.
      */
     void setCompletedItems(const QStringList &items, bool autoSuggest = true) override;
 
-    /**
+    /*!
      * Selects the first item that matches @p item.
      *
      * If there is no such item, it is inserted at position @p index
@@ -430,7 +430,7 @@ public Q_SLOTS:
 
 protected Q_SLOTS:
 
-    /**
+    /*!
      * Completes text according to the completion mode.
      *
      * @note This method is not invoked if the completion mode is
@@ -444,7 +444,7 @@ protected Q_SLOTS:
     virtual void makeCompletion(const QString &);
 
 protected:
-    /**
+    /*!
      * This function sets the line edit text and
      * highlights the text appropriately if the boolean
      * value is set to true.

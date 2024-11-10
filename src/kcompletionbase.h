@@ -16,7 +16,7 @@
 
 class KCompletionBasePrivate;
 
-/**
+/*!
  * @class KCompletionBase kcompletionbase.h KCompletionBase
  *
  * An abstract base class for adding a completion feature
@@ -37,25 +37,25 @@ class KCOMPLETION_EXPORT KCompletionBase
 {
 public:
     Q_DECLARE_PRIVATE(KCompletionBase)
-    /**
+    /*!
      * Constants that represent the items whose shortcut
      * key binding is programmable. The default key bindings
      * for these items are defined in KStandardShortcut.
      */
     enum KeyBindingType {
-        /**
+        /*!
          * Text completion (by default Ctrl-E).
          */
         TextCompletion,
-        /**
+        /*!
          * Switch to previous completion (by default Ctrl-Up).
          */
         PrevCompletionMatch,
-        /**
+        /*!
          * Switch to next completion (by default Ctrl-Down).
          */
         NextCompletionMatch,
-        /**
+        /*!
          * Substring completion (by default Ctrl-T).
          */
         SubstringCompletion,
@@ -64,17 +64,17 @@ public:
     // Map for the key binding types mentioned above.
     typedef QMap<KeyBindingType, QList<QKeySequence>> KeyBindingMap;
 
-    /**
+    /*!
      * Default constructor.
      */
     KCompletionBase();
 
-    /**
+    /*!
      * Destructor.
      */
     virtual ~KCompletionBase();
 
-    /**
+    /*!
      * Returns a pointer to the current completion object.
      *
      * If the completion object does not exist, it is automatically created and
@@ -91,7 +91,7 @@ public:
      */
     KCompletion *completionObject(bool handleSignals = true);
 
-    /**
+    /*!
      * Sets up the completion object to be used.
      *
      * This method assigns the completion object and sets it up to automatically
@@ -109,7 +109,7 @@ public:
      */
     virtual void setCompletionObject(KCompletion *completionObject, bool handleSignals = true);
 
-    /**
+    /*!
      * Enables this object to handle completion and rotation
      * events internally.
      *
@@ -123,7 +123,7 @@ public:
      */
     virtual void setHandleSignals(bool handle);
 
-    /**
+    /*!
      * Returns true if the completion object is deleted
      * upon this widget's destruction.
      *
@@ -135,7 +135,7 @@ public:
      */
     bool isCompletionObjectAutoDeleted() const;
 
-    /**
+    /*!
      * Sets the completion object when this widget's destructor
      * is called.
      *
@@ -146,7 +146,7 @@ public:
      */
     void setAutoDeleteCompletionObject(bool autoDelete);
 
-    /**
+    /*!
      * Sets the widget's ability to emit text completion and
      * rotation signals.
      *
@@ -168,28 +168,28 @@ public:
      */
     void setEnableSignals(bool enable);
 
-    /**
+    /*!
      * Returns true if the object handles the signals.
      *
      * @return true if this signals are handled internally.
      */
     bool handleSignals() const;
 
-    /**
+    /*!
      * Returns true if the object emits the signals.
      *
      * @return true if signals are emitted
      */
     bool emitSignals() const;
 
-    /**
+    /*!
      * Sets whether the object emits rotation signals.
      *
      * @param emitRotationSignals if false, disables the emission of rotation signals.
      */
     void setEmitSignals(bool emitRotationSignals);
 
-    /**
+    /*!
      * Sets the type of completion to be used.
      *
      * @param mode Completion type
@@ -197,14 +197,14 @@ public:
      */
     virtual void setCompletionMode(KCompletion::CompletionMode mode);
 
-    /**
+    /*!
      * Returns the current completion mode.
      *
      * @return the completion mode.
      */
     KCompletion::CompletionMode completionMode() const;
 
-    /**
+    /*!
      * Sets the key binding to be used for manual text
      * completion, text rotation in a history list as
      * well as a completion list.
@@ -235,7 +235,7 @@ public:
      */
     bool setKeyBinding(KeyBindingType item, const QList<QKeySequence> &key);
 
-    /**
+    /*!
      * Returns the key binding used for the specified item.
      *
      * This method returns the key binding used to activate
@@ -250,7 +250,7 @@ public:
      */
     QList<QKeySequence> keyBinding(KeyBindingType item) const;
 
-    /**
+    /*!
      * Sets this object to use global values for key bindings.
      *
      * This method changes the values of the key bindings for
@@ -263,7 +263,7 @@ public:
      */
     void useGlobalKeyBindings();
 
-    /**
+    /*!
      * A pure virtual function that must be implemented by
      * all inheriting classes.
      *
@@ -279,7 +279,7 @@ public:
      */
     virtual void setCompletedText(const QString &text) = 0;
 
-    /**
+    /*!
      * A pure virtual function that must be implemented by
      * all inheriting classes.
      * @param items the list of completed items
@@ -288,7 +288,7 @@ public:
      */
     virtual void setCompletedItems(const QStringList &items, bool autoSuggest = true) = 0;
 
-    /**
+    /*!
      * Returns a pointer to the completion object.
      *
      * This method is only different from completionObject()
@@ -302,7 +302,7 @@ public:
     KCompletion *compObj() const;
 
 protected:
-    /**
+    /*!
      * Returns a key binding map.
      *
      * This method is the same as getKeyBinding(), except that it
@@ -313,28 +313,28 @@ protected:
      */
     KeyBindingMap keyBindingMap() const;
 
-    /**
+    /*!
      * Sets the keymap.
      *
      * @param keyBindingMap
      */
     void setKeyBindingMap(KeyBindingMap keyBindingMap);
 
-    /**
+    /*!
      * Sets or removes the delegation object. If a delegation object is
      * set, all function calls will be forwarded to the delegation object.
      * @param delegate the delegation object, or @c nullptr to remove it
      */
     void setDelegate(KCompletionBase *delegate);
 
-    /**
+    /*!
      * Returns the delegation object.
      * @return the delegation object, or @c nullptr if there is none
      * @see setDelegate()
      */
     KCompletionBase *delegate() const;
 
-    /** Virtual hook, used to add new "virtual" functions while maintaining
+    /*! Virtual hook, used to add new "virtual" functions while maintaining
     binary compatibility. Unused in this class.
     */
     virtual void virtual_hook(int id, void *data);
