@@ -5,7 +5,7 @@
     \cmakepackage KF6
     \cmakecomponent Completion
 
-    \brief Stuff
+    \brief Stuff.
 
     Stuff
 */

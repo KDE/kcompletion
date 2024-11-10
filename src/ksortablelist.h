@@ -27,8 +27,8 @@ class KSortableItem : public QPair<Key, T>
 public:
     /*!
      * Creates a new KSortableItem with the given values.
-     * @param i the first value (the key)
-     * @param t the second value (the item)
+     * \a i the first value (the key)
+     * \a t the second value (the item)
      */
     KSortableItem(Key i, const T &t)
         : QPair<Key, T>(i, t)
@@ -36,7 +36,7 @@ public:
     }
     /*!
      * Creates a new KSortableItem that copies another one.
-     * @param rhs the other item to copy
+     * \a rhs the other item to copy
      */
     KSortableItem(const KSortableItem<T, Key> &rhs)
         : QPair<Key, T>(rhs.first, rhs.second)
@@ -151,8 +151,8 @@ class KSortableList : public QList<KSortableItem<T, Key>>
 public:
     /*!
      * Insert a KSortableItem with the given values.
-     * @param i the first value
-     * @param t the second value
+     * \a i the first value
+     * \a t the second value
      */
     void insert(Key i, const T &t)
     {

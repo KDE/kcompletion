@@ -18,7 +18,7 @@
 class KHistoryComboBoxPrivate;
 
 /*!
- * @class KHistoryComboBox khistorycombobox.h KHistoryComboBox
+ * \class KHistoryComboBox khistorycombobox.h KHistoryComboBox
  *
  * @short A combobox for offering a history and completion
  *
@@ -61,14 +61,14 @@ public:
      *
      * Use QComboBox::setMaxCount() to limit the history.
      *
-     * @p parent the parent object of this widget.
+     * \a parent the parent object of this widget.
      */
     explicit KHistoryComboBox(QWidget *parent = nullptr);
 
     /*!
      * Same as the previous constructor, but additionally has the option
      * to specify whether you want to let KHistoryComboBox handle completion
-     * or not. If set to @c true, KHistoryComboBox will sync the completion to the
+     * or not. If set to \c true, KHistoryComboBox will sync the completion to the
      * contents of the combobox.
      */
     explicit KHistoryComboBox(bool useCompletion, QWidget *parent = nullptr);
@@ -79,7 +79,7 @@ public:
     ~KHistoryComboBox() override;
 
     /*!
-     * Inserts @p items into the combobox. @p items might get
+     * Inserts \a items into the combobox. \a items might get
      * truncated if it is longer than maxCount()
      *
      * @see historyItems
@@ -87,10 +87,10 @@ public:
     void setHistoryItems(const QStringList &items);
 
     /*!
-     * Inserts @p items into the combobox. @p items might get
+     * Inserts \a items into the combobox. \a items might get
      * truncated if it is longer than maxCount()
      *
-     * Set @c setCompletionList to true, if you don't have a list of
+     * Set \c setCompletionList to true, if you don't have a list of
      * completions. This tells KHistoryComboBox to use all the items for the
      * completion object as well.
      * You won't have the benefit of weighted completion though, so normally
@@ -120,7 +120,7 @@ public:
      * Be sure to use different names for saving with KConfig if you have more
      * than one KHistoryComboBox.
      *
-     * @note When @c setCompletionList is true, the items are inserted into the
+     * @note When \c setCompletionList is true, the items are inserted into the
      * KCompletion object with mode KCompletion::Insertion and the mode is set
      * to KCompletion::Weighted afterwards.
      *
@@ -140,9 +140,9 @@ public:
     QStringList historyItems() const;
 
     /*!
-     * Removes all items named @p item.
+     * Removes all items named \a item.
      *
-     * @return @c true if at least one item was removed.
+     * @return \c true if at least one item was removed.
      *
      * @see addToHistory
      */
@@ -163,11 +163,11 @@ public Q_SLOTS:
      * If maxCount() is reached, the first item of the list will be
      * removed.
      *
-     * If the last inserted item is the same as @p item, it will not be
+     * If the last inserted item is the same as \a item, it will not be
      * inserted again.
      *
      * If duplicatesEnabled() is false, any equal existing item will be
-     * removed before @p item is added.
+     * removed before \a item is added.
      *
      * @note By using this method and not the Q and KComboBox insertItem()
      * methods, you make sure that the combobox stays in sync with the
@@ -208,7 +208,7 @@ protected:
     void wheelEvent(QWheelEvent *ev) override;
 
     /*!
-     * Inserts @p items into the combo, honoring setIconProvider()
+     * Inserts \a items into the combo, honoring setIconProvider()
      * Does not update the completionObject.
      *
      * @note duplicatesEnabled() is not honored here.

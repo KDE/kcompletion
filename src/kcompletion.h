@@ -23,7 +23,7 @@ class KCompletionMatchesWrapper;
 class KCompletionMatches;
 
 /*!
- * @class KCompletion kcompletion.h KCompletion
+ * \class KCompletion kcompletion.h KCompletion
  *
  * @short A generic class for completing QStrings
  *
@@ -84,17 +84,17 @@ class KCompletionMatches;
  * completion.addItem("pfeiffer@kde.org");
  * completion.addItem("coolo@kde.org");
  * completion.addItem("carpdjih@sp.zrz.tu-berlin.de");
- * completion.addItem("carp@cs.tu-berlin.de");
+ * completion.addItem("carp\cs.tu-berlin.de");
  *
  * cout << completion.makeCompletion("ca").latin1() << endl;
  * \endcode
  *
  * In shell-completion mode, this will be "carp"; in auto-completion
- * mode it will be "carp\@cs.tu-berlin.de", as that is alphabetically
+ * mode it will be "carp\\cs.tu-berlin.de", as that is alphabetically
  * smaller.
  * If setOrder was set to Insertion, "carpdjih\@sp.zrz.tu-berlin.de"
  * would be completed in auto-completion mode, as that was inserted before
- * "carp\@cs.tu-berlin.de".
+ * "carp\\cs.tu-berlin.de".
  *
  * You can dynamically update the completable items by removing and adding them
  * whenever you want.
@@ -186,9 +186,9 @@ public:
     ~KCompletion() override;
 
     /*!
-     * Returns a list of all completion items that contain the given @p string.
-     * @param string the string to complete
-     * @return a list of items which contain @p text as a substring,
+     * Returns a list of all completion items that contain the given \a string.
+     * \a string the string to complete
+     * @return a list of items which contain \a text as a substring,
      * i.e. not necessarily at the beginning.
      *
      * @see makeCompletion
@@ -228,7 +228,7 @@ public:
 
     /*!
      * Sets the completion mode.
-     * @param mode the completion mode
+     * \a mode the completion mode
      * @see CompletionMode
      */
     virtual void setCompletionMode(CompletionMode mode);
@@ -259,7 +259,7 @@ public:
      * everything sorted.
      *
      * Default is insertion order.
-     * @param order the new order
+     * \a order the new order
      * @see order
      */
     virtual void setOrder(CompOrder order);
@@ -273,9 +273,9 @@ public:
 
     /*!
      * Setting this to true makes KCompletion behave case insensitively.
-     * E.g. makeCompletion("CA"); might return "carp\@cs.tu-berlin.de".
+     * E.g. makeCompletion("CA"); might return "carp\\cs.tu-berlin.de".
      * Default is false (case sensitive).
-     * @param ignoreCase true to ignore the case
+     * \a ignoreCase true to ignore the case
      * @see ignoreCase
      */
     virtual void setIgnoreCase(bool ignoreCase);
@@ -306,8 +306,8 @@ public:
     QStringList allMatches();
 
     /*!
-     * Returns a list of all items matching @p string.
-     * @param string the string to match
+     * Returns a list of all items matching \a string.
+     * \a string the string to match
      * @return the list of all matches
      */
     QStringList allMatches(const QString &string);
@@ -327,8 +327,8 @@ public:
     KCompletionMatches allWeightedMatches();
 
     /*!
-     * Returns a list of all items matching @p string.
-     * @param string the string to match
+     * Returns a list of all items matching \a string.
+     * \a string the string to match
      * @return a list of all matches
      */
     KCompletionMatches allWeightedMatches(const QString &string);
@@ -343,7 +343,7 @@ public:
      *
      * KNotifyClient() is used to emit the sounds.
      *
-     * @param enable true to enable sounds
+     * \a enable true to enable sounds
      * @see soundsEnabled
      */
     virtual void setSoundsEnabled(bool enable);
@@ -366,7 +366,7 @@ public:
 public Q_SLOTS:
     /*!
      * Attempts to find an item in the list of available completions
-     * that begins with @p string. Will either return the first matching item
+     * that begins with \a string. Will either return the first matching item
      * (if there is more than one match) or QString(), if no match is
      * found.
      *
@@ -380,7 +380,7 @@ public Q_SLOTS:
      * will be emitted via the signal matches().
      * This happens only in shell-completion mode.
      *
-     * @param string the string to complete
+     * \a string the string to complete
      * @return the matching item, or QString() if there is no matching
      * item.
      * @see substringCompletion
@@ -408,9 +408,9 @@ public Q_SLOTS:
     QString nextMatch();
 
     /*!
-     * Inserts @p items into the list of possible completions.
+     * Inserts \a items into the list of possible completions.
      * It does the same as setItems(), but without calling clear() before.
-     * @param items the items to insert
+     * \a items the items to insert
      */
     void insertItems(const QStringList &items);
 
@@ -425,7 +425,7 @@ public Q_SLOTS:
      * setOrder(KCompletion::Insertion)
      * before calling setItems().
      *
-     * @param itemList the list of items that are available for completion
+     * \a itemList the list of items that are available for completion
      * @see items
      */
     virtual void setItems(const QStringList &itemList);
@@ -434,7 +434,7 @@ public Q_SLOTS:
      * Adds an item to the list of available completions.
      * Resets the current item state (previousMatch() and nextMatch()
      * won't work the next time they are called).
-     * @param item the item to add
+     * \a item the item to add
      */
     void addItem(const QString &item);
 
@@ -443,11 +443,11 @@ public Q_SLOTS:
      * Resets the current item state (previousMatch() and nextMatch()
      * won't work the next time they are called).
      *
-     * Sets the weight of the item to @p weight or adds it to the current
+     * Sets the weight of the item to \a weight or adds it to the current
      * weight if the item is already available. The weight has to be greater
      * than 1 to take effect (default weight is 1).
-     * @param item the item to add
-     * @param weight the weight of the item, default is 1
+     * \a item the item to add
+     * \a weight the weight of the item, default is 1
      */
     void addItem(const QString &item, uint weight);
 
@@ -455,7 +455,7 @@ public Q_SLOTS:
      * Removes an item from the list of available completions.
      * Resets the current item state (previousMatch() and nextMatch()
      * won't work the next time they are called).
-     * @param item the item to remove
+     * \a item the item to remove
      */
     void removeItem(const QString &item);
 
@@ -473,7 +473,7 @@ Q_SIGNALS:
      * match is found, but the other methods will always emit it (and so
      * may emit it with an empty string).
      *
-     * @param item the matching item, or QString() if there were no more
+     * \a item the matching item, or QString() if there were no more
      * matching items.
      */
     void match(const QString &item);
@@ -482,7 +482,7 @@ Q_SIGNALS:
      * This signal is emitted by makeCompletion() in shell-completion mode
      * when the same string is passed to makeCompletion() multiple times in
      * a row.
-     * @param matchlist the list of all matching items
+     * \a matchlist the list of all matching items
      */
     void matches(const QStringList &matchlist);
 
@@ -504,7 +504,7 @@ protected:
      * Never delete that pointer!
      *
      * Default implementation does nothing.
-     * @param match the match to process
+     * \a match the match to process
      * @see postProcessMatches
      */
     virtual void postProcessMatch(QString *match) const;
@@ -516,7 +516,7 @@ protected:
      * Never delete that pointer!
      *
      * Default implementation does nothing.
-     * @param matchList the matches to process
+     * \a matchList the matches to process
      * @see postProcessMatch
      */
     virtual void postProcessMatches(QStringList *matchList) const;
@@ -528,7 +528,7 @@ protected:
      * Never delete that pointer!
      *
      * Default implementation does nothing.
-     * @param matches the matches to process
+     * \a matches the matches to process
      * @see postProcessMatch
      */
     virtual void postProcessMatches(KCompletionMatches *matches) const;

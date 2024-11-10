@@ -19,7 +19,7 @@ class KCompletionBoxPrivate;
 class QEvent;
 
 /*!
- * @class KCompletionBox kcompletionbox.h KCompletionBox
+ * \class KCompletionBox kcompletionbox.h KCompletionBox
  *
  * @short A helper widget for "completion-widgets" (KLineEdit, KComboBox))
  *
@@ -83,14 +83,14 @@ public:
 
 public Q_SLOTS:
     /*!
-     * Inserts @p items into the box. Does not clear the items before.
-     * @p index determines at which position @p items will be inserted.
+     * Inserts \a items into the box. Does not clear the items before.
+     * \a index determines at which position \a items will be inserted.
      * (defaults to appending them at the end)
      */
     void insertItems(const QStringList &items, int index = -1);
 
     /*!
-     * Clears the box and inserts @p items.
+     * Clears the box and inserts \a items.
      */
     void setItems(const QStringList &items);
 
@@ -127,7 +127,7 @@ public Q_SLOTS:
      * userCancelled signal will not be emitted.
      *
      * @see userCancelled( const QString& )
-     * @param text the text to be emitted if the user cancels this box
+     * \a text the text to be emitted if the user cancels this box
      */
     void setCancelledText(const QString &text);
 
@@ -135,7 +135,7 @@ public Q_SLOTS:
      * Set whether or not the selected signal should be emitted when an
      * item is selected. By default the selected() signal is emitted.
      *
-     * @param doEmit false if the signal should not be emitted.
+     * \a doEmit false if the signal should not be emitted.
      */
     void setActivateOnSelect(bool doEmit);
 
@@ -177,7 +177,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     /*!
-     * Emitted when an item is selected, @p text is the text of the selected item.
+     * Emitted when an item is selected, \a text is the text of the selected item.
      *
      * @since 5.81
      */
