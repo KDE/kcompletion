@@ -33,33 +33,33 @@ public:
     void rotateUp();
     void rotateDown();
 
-    /**
+    /*
      * Called from the popupmenu,
      * calls clearHistory() and emits cleared()
      */
     void _k_clear();
 
-    /**
+    /*
      * Appends our own context menu entry.
      */
     void _k_addContextMenuItems(QMenu *);
 
-    /**
+    /*
      * Used to emit the activated(QString) signal when enter is pressed
      */
     void _k_simulateActivated(const QString &);
 
-    /**
+    /*
      * The text typed before Up or Down was pressed.
      */
     QString typedText;
 
-    /**
+    /*
      * The current index in the combobox, used for Up and Down
      */
     int currentIndex;
 
-    /**
+    /*
      * Indicates that the user at least once rotated Up through the entire list
      * Needed to allow going back after rotation.
      */

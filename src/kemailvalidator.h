@@ -11,11 +11,15 @@
 
 #include <QValidator>
 
-/**
-  An input validator that checks for valid email addresses.
-  @see KEmailAddress::isValidSimpleAddress
-  @since 6.0
-*/
+/*!
+ * \class KEmailValidator
+ * \inmodule KCompletion
+ *
+ * \brief An input validator that checks for valid email addresses.
+ *
+ * \sa KEmailAddress::isValidSimpleAddress
+ * \since 6.0
+ */
 class KCOMPLETION_EXPORT KEmailValidator : public QValidator
 {
     Q_OBJECT
