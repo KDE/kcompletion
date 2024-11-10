@@ -23,9 +23,9 @@ class KCompletionMatchesWrapper;
 class KCompletionMatches;
 
 /*!
- * \class KCompletion kcompletion.h KCompletion
+ * \class KCompletion
  *
- * @short A generic class for completing QStrings
+ * \brief A generic class for completing QStrings.
  *
  * This class offers easy use of "auto completion", "manual completion" or
  * "shell completion" on QString objects. A common use is completing filenames
@@ -46,17 +46,17 @@ class KCompletionMatches;
  *
  * Notice: auto completion, shell completion and manual completion work
  *         slightly differently:
- *
- * @li auto completion always returns a complete item as match.
+ * \list
+ * \li auto completion always returns a complete item as match.
  *     When more than one matching item is available, it will deliver just
  *     the first one (depending on sorting order). Iterating over all matches
  *     is possible via nextMatch() and previousMatch().
  *
- * @li popup completion works in the same way, the only difference being that
+ * \li popup completion works in the same way, the only difference being that
  *     the completed items are not put into the edit widget, but into a
  *     separate popup box.
  *
- * @li manual completion works the same way as auto completion, except that
+ * \li manual completion works the same way as auto completion, except that
  *     it is not invoked automatically while the user is typing,
  *     but only when the user presses a special key. The difference
  *     of manual and auto completion is therefore only visible in UI classes.
@@ -65,11 +65,12 @@ class KCompletionMatches;
  *     KCompletion::CompletionMan and KCompletion::CompletionAuto have the exact
  *     same effect in KCompletion.
  *
- * @li shell completion works like "tab completion" in a shell:
+ * \li shell completion works like "tab completion" in a shell:
  *     when multiple matches are available, the longest possible string of all
  *     matches is returned (i.e. only a partial item).
  *     Iterating over all matching items (complete, not partial) is possible
  *     via nextMatch() and previousMatch().
+ * \endif
  *
  * As an application programmer, you do not normally have to worry about
  * the different completion modes; KCompletion handles
@@ -103,22 +104,31 @@ class KCompletionMatches;
  * items of each file in a different KCompletion object, so that you know (and
  * tell the user) where a completion comes from.
  *
- * @note KCompletion does not work with strings that contain 0x0 characters
+ * \note KCompletion does not work with strings that contain 0x0 characters
  *       (unicode null), as this is used internally as a delimiter.
  *
  * You may inherit from KCompletion and override makeCompletion() in
  * special cases (like reading directories or urls and then supplying the
  * contents to KCompletion, as KUrlCompletion does), but this is usually
  * not necessary.
- *
- *
- * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
 class KCOMPLETION_EXPORT KCompletion : public QObject
 {
+    /*!
+     * \property Completion::order
+     */
     Q_PROPERTY(CompOrder order READ order WRITE setOrder)
+
+    /*!
+     * \property Completion::ignoreCase
+     */
     Q_PROPERTY(bool ignoreCase READ ignoreCase WRITE setIgnoreCase)
+
+    /*!
+     * \property Completion::items
+     */
     Q_PROPERTY(QStringList items READ items WRITE setItems)
+
     Q_OBJECT
     Q_DECLARE_PRIVATE(KCompletion)
 
@@ -126,44 +136,37 @@ public:
     /*!
      * This enum describes the completion mode used for by the KCompletion class.
      *
-     * @since 5.0
+     * \value CompletionNone No completion is used.
+     * \value CompletionAuto Text is automatically filled in whenever possible.
+     * \value CompletionMan Same as automatic, but shortest match is used for completion.
+     * \value Comple Completes text much in the same way as a typical *nix shell would.
+     * \value CompletionPopup Lists all possible matches in a popup list box to choose from.
+     * \value CompletionPopupAuto Lists all possible matches in a popup list box to choose from, and automatically fills the result whenever possible.
+     *
+     * \since 5.0
      */
     enum CompletionMode {
-        /*!
-         * No completion is used.
-         */
         CompletionNone = 1,
-        /*!
-         * Text is automatically filled in whenever possible.
-         */
         CompletionAuto,
-        /*!
-         * Same as automatic, but shortest match is used for completion.
-         */
         CompletionMan,
-        /*!
-         * Completes text much in the same way as a typical *nix shell would.
-         */
         CompletionShell,
-        /*!
-         * Lists all possible matches in a popup list box to choose from.
-         */
         CompletionPopup,
-        /*!
-         * Lists all possible matches in a popup list box to choose from, and automatically
-         * fills the result whenever possible.
-         */
         CompletionPopupAuto,
     };
 
     /*!
      * Constants that represent the order in which KCompletion performs
      * completion lookups.
+     *
+     * \value Sorted Use alphabetically sorted order or custom sorter logic.
+     * \value Insertion Use order of insertion.
+     * \value Weighted Use weighted order
+     *
      */
     enum CompOrder {
-        Sorted, ///< Use alphabetically sorted order or custom sorter logic
-        Insertion, ///< Use order of insertion
-        Weighted, ///< Use weighted order
+        Sorted,
+        Insertion,
+        Weighted,
     };
     Q_ENUM(CompOrder)
 
@@ -171,7 +174,7 @@ public:
      * The sorter function signature. Deriving classes may provide
      * custom sorting logic via the setSorterFunction method.
      *
-     * @since 5.88
+     * \since 5.88
      */
     using SorterFunction = std::function<void(QStringList &)>;
 
@@ -180,25 +183,24 @@ public:
      */
     KCompletion();
 
-    /*!
-     * Destructor, nothing special here, either.
-     */
     ~KCompletion() override;
 
     /*!
      * Returns a list of all completion items that contain the given \a string.
      * \a string the string to complete
-     * @return a list of items which contain \a text as a substring,
+     *
+     * Returns a list of items which contain \a text as a substring,
      * i.e. not necessarily at the beginning.
      *
-     * @see makeCompletion
+     * \sa makeCompletion
      */
     QStringList substringCompletion(const QString &string) const;
 
     /*!
      * Returns the last match. Might be useful if you need to check whether
      * a completion is different from the last one.
-     * @return the last match. QString() is returned when there is no
+     *
+     * QString() is returned when there is no
      *         last match.
      */
     virtual const QString &lastMatch() const;
@@ -208,7 +210,7 @@ public:
      * if you need to save the state of a KCompletion object and restore it
      * later.
      *
-     * @note When order() == Weighted, then every item in the
+     * \note When order() == Weighted, then every item in the
      * stringlist has its weight appended, delimited by a colon. E.g. an item
      * "www.kde.org" might look like "www.kde.org:4", where 4 is the weight.
      * This is necessary so that you can save the items along with its
@@ -216,150 +218,156 @@ public:
      * weight as well. If you really don't want the appended weightings, call
      * setOrder( KCompletion::Insertion ) before calling items().
      *
-     * @return a list of all items
-     * @see setItems
+     * \sa setItems
      */
     QStringList items() const;
 
     /*!
-     * Returns true if the completion object contains no entries.
+     * Returns \c true if the completion object contains no entries.
      */
     bool isEmpty() const;
 
     /*!
      * Sets the completion mode.
+     *
      * \a mode the completion mode
-     * @see CompletionMode
+     *
+     * \sa CompletionMode
      */
     virtual void setCompletionMode(CompletionMode mode);
 
     /*!
-     * Returns the current completion mode.
-     *
-     * @return the current completion mode, default is CompletionPopup
-     * @see setCompletionMode
-     * @see CompletionMode
+     * Returns the current completion mode, default is CompletionPopup
+     * \sa setCompletionMode
+     * \sa CompletionMode
      */
     CompletionMode completionMode() const;
 
     /*!
      * KCompletion offers three different ways in which it offers its items:
-     * @li in the order of insertion
-     * @li sorted alphabetically
-     * @li weighted
+     * \list
+     * \li in the order of insertion
+     * \li sorted alphabetically
+     * \li weighted
+     * \endlist
      *
      * Choosing weighted makes KCompletion perform an implicit weighting based
      * on how often an item is inserted. Imagine a web browser with a location
      * bar, where the user enters URLs. The more often a URL is entered, the
      * higher priority it gets.
      *
-     * @note Setting the order to sorted only affects new inserted items,
+     * \note Setting the order to sorted only affects new inserted items,
      * already existing items will stay in the current order. So you probably
      * want to call setOrder(Sorted) before inserting items if you want
      * everything sorted.
      *
      * Default is insertion order.
+     *
      * \a order the new order
-     * @see order
+     * \sa order
      */
     virtual void setOrder(CompOrder order);
 
     /*!
      * Returns the completion order.
-     * @return the current completion order.
-     * @see setOrder
+     * \sa setOrder
      */
     CompOrder order() const;
 
     /*!
      * Setting this to true makes KCompletion behave case insensitively.
+     *
      * E.g. makeCompletion("CA"); might return "carp\\cs.tu-berlin.de".
+     *
      * Default is false (case sensitive).
+     *
      * \a ignoreCase true to ignore the case
-     * @see ignoreCase
+     *
+     * \sa ignoreCase
      */
     virtual void setIgnoreCase(bool ignoreCase);
 
     /*!
      * Returns whether KCompletion acts case insensitively or not.
-     * Default is false (case sensitive).
-     * @return true if the case will be ignored
-     * @see setIgnoreCase
+     *
+     * Default is \c false (case sensitive).
+     *
+     * \sa setIgnoreCase
      */
     bool ignoreCase() const;
 
     /*!
      * Informs the caller if they should display the auto-suggestion for the last completion operation performed.
+     *
      * Applies for CompletionPopupAuto and CompletionAuto modes.
-     * Defaults to true, but deriving classes may set it to false in special cases via "setShouldAutoSuggest".
-     * @return true if auto-suggestion should be displayed for the last completion operation performed.
-     * @since 5.87
+     *
+     * Defaults to \c true, but deriving classes may set it to false in special cases via "setShouldAutoSuggest".
+     *
+     * Returns \c true if auto-suggestion should be displayed for the last completion operation performed.
+     * \since 5.87
      */
     bool shouldAutoSuggest() const;
 
     /*!
      * Returns a list of all items matching the last completed string.
-     * It might take some time if you have a @em lot of items.
-     * @return a list of all matches for the last completed string.
-     * @see substringCompletion
+     * It might take some time if you have a lot of items.
+     * \sa substringCompletion
      */
     QStringList allMatches();
 
     /*!
      * Returns a list of all items matching \a string.
-     * \a string the string to match
-     * @return the list of all matches
      */
     QStringList allMatches(const QString &string);
 
     /*!
      * Returns a list of all items matching the last completed string.
-     * It might take some time if you have a @em lot of items.
+     * It might take some time if you have a lot of items.
      * The matches are returned as KCompletionMatches, which also
      * keeps the weight of the matches, allowing
      * you to modify some matches or merge them with matches
      * from another call to allWeightedMatches(), and sort the matches
      * after that in order to have the matches ordered correctly.
      *
-     * @return a list of all completion matches
-     * @see substringCompletion
+     * \sa substringCompletion
      */
     KCompletionMatches allWeightedMatches();
 
     /*!
      * Returns a list of all items matching \a string.
-     * \a string the string to match
-     * @return a list of all matches
      */
     KCompletionMatches allWeightedMatches(const QString &string);
 
     /*!
      * Enables/disables emitting a sound when
-     * @li makeCompletion() can't find a match
-     * @li there is a partial completion (= multiple matches in
+     * \list
+     * \li makeCompletion() can't find a match
+     * \li there is a partial completion (= multiple matches in
      *     Shell-completion mode)
-     * @li nextMatch() or previousMatch() hit the last possible
+     * \li nextMatch() or previousMatch() hit the last possible
      *     match and the list is rotated
+     * \endlist
      *
      * KNotifyClient() is used to emit the sounds.
      *
      * \a enable true to enable sounds
-     * @see soundsEnabled
+     * \sa soundsEnabled
      */
     virtual void setSoundsEnabled(bool enable);
 
     /*!
      * Tells you whether KCompletion will emit sounds on certain occasions.
+     *
      * Default is enabled.
-     * @return true if sounds are enabled
-     * @see setSoundsEnabled
+     *
+     * Returns \c true if sounds are enabled
+     * \sa setSoundsEnabled
      */
     bool soundsEnabled() const;
 
     /*!
-     * Returns true when more than one match is found.
-     * @return true if there is more than one match
-     * @see multipleMatches
+     * Returns \c true when more than one match is found.
+     * \sa multipleMatches
      */
     bool hasMultipleMatches() const;
 
@@ -381,17 +389,20 @@ public Q_SLOTS:
      * This happens only in shell-completion mode.
      *
      * \a string the string to complete
-     * @return the matching item, or QString() if there is no matching
+     *
+     * Returns the matching item, or QString() if there is no matching
      * item.
-     * @see substringCompletion
+     * \sa substringCompletion
      */
     virtual QString makeCompletion(const QString &string);
 
     /*!
      * Returns the next item from the list of matching items.
+     *
      * When reaching the beginning, the list is rotated so it will return the
      * last match and a sound is emitted (depending on soundsEnabled()).
-     * @return the next item from the list of matching items.
+     *
+     * Returns the next item from the list of matching items.
      * When there is no match, QString() is returned and
      * a sound is emitted.
      */
@@ -399,17 +410,21 @@ public Q_SLOTS:
 
     /*!
      * Returns the next item from the list of matching items.
+     *
      * When reaching the last item, the list is rotated, so it will return
      * the first match and a sound is emitted (depending on
      * soundsEnabled()).
-     * @return the next item from the list of matching items. When there is no
+     *
+     * Returns the next item from the list of matching items. When there is no
      * match, QString() is returned and a sound is emitted.
      */
     QString nextMatch();
 
     /*!
      * Inserts \a items into the list of possible completions.
+     *
      * It does the same as setItems(), but without calling clear() before.
+     *
      * \a items the items to insert
      */
     void insertItems(const QStringList &items);
@@ -418,7 +433,7 @@ public Q_SLOTS:
      * Sets the list of items available for completion. Removes all previous
      * items.
      *
-     * @note When order() == Weighted, then the weighting is looked up for
+     * \note When order() == Weighted, then the weighting is looked up for
      * every item in the stringlist. Every item should have ":number" appended,
      * where number is an unsigned integer, specifying the weighting.
      * If you don't like this, call
@@ -426,7 +441,8 @@ public Q_SLOTS:
      * before calling setItems().
      *
      * \a itemList the list of items that are available for completion
-     * @see items
+     *
+     * \sa items
      */
     virtual void setItems(const QStringList &itemList);
 
@@ -434,6 +450,7 @@ public Q_SLOTS:
      * Adds an item to the list of available completions.
      * Resets the current item state (previousMatch() and nextMatch()
      * won't work the next time they are called).
+     *
      * \a item the item to add
      */
     void addItem(const QString &item);
@@ -446,7 +463,9 @@ public Q_SLOTS:
      * Sets the weight of the item to \a weight or adds it to the current
      * weight if the item is already available. The weight has to be greater
      * than 1 to take effect (default weight is 1).
+     *
      * \a item the item to add
+     *
      * \a weight the weight of the item, default is 1
      */
     void addItem(const QString &item, uint weight);
@@ -455,6 +474,7 @@ public Q_SLOTS:
      * Removes an item from the list of available completions.
      * Resets the current item state (previousMatch() and nextMatch()
      * won't work the next time they are called).
+     *
      * \a item the item to remove
      */
     void removeItem(const QString &item);
@@ -482,6 +502,7 @@ Q_SIGNALS:
      * This signal is emitted by makeCompletion() in shell-completion mode
      * when the same string is passed to makeCompletion() multiple times in
      * a row.
+     *
      * \a matchlist the list of all matching items
      */
     void matches(const QStringList &matchlist);
@@ -489,7 +510,7 @@ Q_SIGNALS:
     /*!
      * This signal is emitted when calling makeCompletion() and more than
      * one matching item is found.
-     * @see hasMultipleMatches
+     * \sa hasMultipleMatches
      */
     void multipleMatches();
 
@@ -504,8 +525,10 @@ protected:
      * Never delete that pointer!
      *
      * Default implementation does nothing.
+     *
      * \a match the match to process
-     * @see postProcessMatches
+     *
+     * \sa postProcessMatches
      */
     virtual void postProcessMatch(QString *match) const;
 
@@ -516,8 +539,10 @@ protected:
      * Never delete that pointer!
      *
      * Default implementation does nothing.
+     *
      * \a matchList the matches to process
-     * @see postProcessMatch
+     *
+     * \sa postProcessMatch
      */
     virtual void postProcessMatches(QStringList *matchList) const;
 
@@ -528,8 +553,10 @@ protected:
      * Never delete that pointer!
      *
      * Default implementation does nothing.
+     *
      * \a matches the matches to process
-     * @see postProcessMatch
+     *
+     * \sa postProcessMatch
      */
     virtual void postProcessMatches(KCompletionMatches *matches) const;
 
@@ -538,7 +565,7 @@ protected:
      * for the last completion operation performed.
      *
      * Applies for CompletionPopupAuto and CompletionAuto modes.
-     * @since 5.87
+     * \since 5.87
      */
     void setShouldAutoSuggest(bool shouldAutosuggest);
 
@@ -547,7 +574,7 @@ protected:
      * Can be set to nullptr to use the default sorting logic.
      *
      * Applies for CompOrder::Sorted mode.
-     * @since 5.88
+     * \since 5.88
      */
     void setSorterFunction(SorterFunction sortFunc);
 

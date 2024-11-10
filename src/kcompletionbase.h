@@ -193,7 +193,7 @@ public:
      * Sets the type of completion to be used.
      *
      * \a mode Completion type
-     * @see CompletionMode
+     * \sa CompletionMode
      */
     virtual void setCompletionMode(KCompletion::CompletionMode mode);
 
@@ -231,7 +231,7 @@ public:
      *   @li SubstringCompletion the key for substring completion
      * \a key key binding used to rotate down in a list.
      * @return true if key binding is successfully set.
-     * @see keyBinding
+     * \sa keyBinding
      */
     bool setKeyBinding(KeyBindingType item, const QList<QKeySequence> &key);
 
@@ -245,7 +245,7 @@ public:
      *
      * \a item the item to check
      * @return the key binding used for the feature given by \a item.
-     * @see setKeyBinding
+     * \sa setKeyBinding
      * @since 5.0
      */
     QList<QKeySequence> keyBinding(KeyBindingType item) const;
@@ -330,7 +330,7 @@ protected:
     /*!
      * Returns the delegation object.
      * @return the delegation object, or \c nullptr if there is none
-     * @see setDelegate()
+     * \sa setDelegate()
      */
     KCompletionBase *delegate() const;
 

@@ -19,7 +19,7 @@
  *
  * KSortableItem is a QPair that provides several operators
  * for sorting.
- * @see KSortableList
+ * \sa KSortableList
  */
 template<typename T, typename Key = int>
 class KSortableItem : public QPair<Key, T>

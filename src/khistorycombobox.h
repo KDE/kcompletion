@@ -82,7 +82,7 @@ public:
      * Inserts \a items into the combobox. \a items might get
      * truncated if it is longer than maxCount()
      *
-     * @see historyItems
+     * \sa historyItems
      */
     void setHistoryItems(const QStringList &items);
 
@@ -124,10 +124,10 @@ public:
      * KCompletion object with mode KCompletion::Insertion and the mode is set
      * to KCompletion::Weighted afterwards.
      *
-     * @see historyItems
-     * @see KComboBox::completionObject
-     * @see KCompletion::setItems
-     * @see KCompletion::items
+     * \sa historyItems
+     * \sa KComboBox::completionObject
+     * \sa KCompletion::setItems
+     * \sa KCompletion::items
      */
     void setHistoryItems(const QStringList &items, bool setCompletionList);
 
@@ -135,7 +135,7 @@ public:
      * Returns the list of history items. Empty, when this is not a read-write
      * combobox.
      *
-     * @see setHistoryItems
+     * \sa setHistoryItems
      */
     QStringList historyItems() const;
 
@@ -144,7 +144,7 @@ public:
      *
      * @return \c true if at least one item was removed.
      *
-     * @see addToHistory
+     * \sa addToHistory
      */
     bool removeFromHistory(const QString &item);
 
@@ -174,8 +174,8 @@ public Q_SLOTS:
      * completion. It would be annoying if completion would give an item
      * not in the combobox, and vice versa.
      *
-     * @see removeFromHistory
-     * @see QComboBox::setDuplicatesEnabled
+     * \sa removeFromHistory
+     * \sa QComboBox::setDuplicatesEnabled
      */
     void addToHistory(const QString &item);
 

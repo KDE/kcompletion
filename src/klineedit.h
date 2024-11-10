@@ -213,7 +213,7 @@ public:
      * Call this method with \a trap = \c true to make \c KLineEdit stop these
      * events. The signals will still be emitted of course.
      *
-     * @see trapReturnKey()
+     * \sa trapReturnKey()
      */
     void setTrapReturnKey(bool trap);
 
@@ -221,7 +221,7 @@ public:
      * @returns \c true if keyevents of \c Key_Return or
      * \c Key_Enter will be stopped or if they will be propagated.
      *
-     * @see setTrapReturnKey ()
+     * \sa setTrapReturnKey ()
      */
     bool trapReturnKey() const;
 
@@ -253,7 +253,7 @@ public:
      * and QLineEdit::displayText() return the squeezed text. If
      * you want the original text, use @ref originalText.
      *
-     * @see QLineEdit
+     * \sa QLineEdit
      */
     void setSqueezedTextEnabled(bool enable);
 
@@ -268,7 +268,7 @@ public:
      * If the widget is not in "read-only" mode, this function
      * returns the same thing as QLineEdit::text().
      *
-     * @see QLineEdit
+     * \sa QLineEdit
      */
     QString originalText() const;
 
