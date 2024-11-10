@@ -11,6 +11,7 @@ sourcedirs = .
 outputformats = HTML
 
 depends += \
+    kde \
     qtcore \
     qtgui \
     qtwidgets
