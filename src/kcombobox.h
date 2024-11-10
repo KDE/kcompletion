@@ -25,16 +25,18 @@ class QLineEdit;
 class QMenu;
 
 /*!
- * @class KComboBox kcombobox.h KComboBox
+ * \class KComboBox
+ * \inmodule KCompletion
  *
- * @short A combo box with completion support.
+ * \brief A combo box with completion support.
  *
  * This widget inherits from QComboBox and implements the following
  * additional features:
- *   @li a completion object that provides both automatic
+ * \list
+ * \li A completion object that provides both automatic
  * and manual text completion as well as text rotation
- *   @li configurable key bindings to activate these features
- *   @li a popup menu item that can be used to allow the user to change
+ * \li Configurable key bindings to activate these features
+ * \li A popup menu item that can be used to allow the user to change
  * the text completion mode on the fly.
  *
  * To support these additional features, KComboBox emits a few additional signals
@@ -54,7 +56,7 @@ class QMenu;
  * internally whenever a completion object is created through either one of the
  * methods mentioned above. If you do not need this functionality, simply use
  * KCompletionBase::setHandleSignals(bool) or alternatively set the boolean
- * parameter in the @c setCompletionObject() call to @c false.
+ * parameter in the setCompletionObject() call to \c false.
  *
  * Beware: The completion object can be deleted on you, especially if a call
  * such as setEditable(false) is made. Store the pointer at your own risk,
@@ -67,7 +69,7 @@ class QMenu;
  * useGlobalSettings(). An alternate method would be to default individual
  * key bindings by using setKeyBinding() with the default second argument.
  *
- * A non-editable combo box only has one completion mode, @c CompletionAuto.
+ * A non-editable combo box only has one completion mode, CompletionAuto.
  * Unlike an editable combo box, the CompletionAuto mode works by matching
  * any typed key with the first letter of entries in the combo box. Please note
  * that if you call setEditable(false) to change an editable combo box to a
@@ -128,9 +130,8 @@ class QMenu;
  * combo->setKeyBinding(KCompletionBase::TextCompletion, Qt::End);
  * \endcode
  *
+ * TODO qdoc
  * \image html kcombobox.png "KComboBox widgets, one non-editable, one editable with KUrlCompletion"
- *
- * @author Dawit Alemayehu <adawit@kde.org>
  */
 class KCOMPLETION_EXPORT KComboBox : public QComboBox, public KCompletionBase // krazy:exclude=qclasses
 {
