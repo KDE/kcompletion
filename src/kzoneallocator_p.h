@@ -18,7 +18,7 @@
 template<typename T>
 class QList;
 
-/**
+/*!
  * \class KZoneAllocator kallocator.h <KZoneAllocator>
  *
  * Memory allocator for large groups of small objects.
@@ -34,13 +34,13 @@ class QList;
 class KZoneAllocator
 {
 public:
-    /**
+    /*!
      * Creates a KZoneAllocator object.
      * @param _blockSize Size in bytes of the blocks requested from malloc.
      */
     explicit KZoneAllocator(unsigned long _blockSize = 8 * 1024);
 
-    /**
+    /*!
      * Destructs the ZoneAllocator and free all memory allocated by it.
      */
     ~KZoneAllocator();
@@ -48,14 +48,14 @@ public:
     KZoneAllocator(const KZoneAllocator &) = delete;
     KZoneAllocator &operator=(const KZoneAllocator &) = delete;
 
-    /**
+    /*!
      * Allocates a memory block.
      * @param _size Size in bytes of the memory block. Memory is aligned to
      * the size of a pointer.
      */
     void *allocate(size_t _size);
 
-    /**
+    /*!
      * Gives back a block returned by allocate() to the zone
      * allocator, and possibly deallocates the block holding it (when it's
      * empty). The first deallocate() after many allocate() calls
@@ -77,7 +77,7 @@ public:
      */
     void deallocate(void *ptr);
 
-    /**
+    /*!
      * Deallocate many objects at once.
      * free_since() deallocates all objects allocated after @p ptr,
      * @em including @p ptr itself.
@@ -100,9 +100,9 @@ public:
     void free_since(void *ptr);
 
 protected:
-    /** A single chunk of memory from the heap. @internal */
+    /*! A single chunk of memory from the heap. @internal */
     class MemBlock;
-    /**< A list of chunks. @internal */
+    /*!< A list of chunks. @internal */
     typedef QList<MemBlock *> MemList;
     void addBlock(MemBlock *b);
     void delBlock(MemBlock *b);

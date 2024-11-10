@@ -17,7 +17,7 @@
 
 class KHistoryComboBoxPrivate;
 
-/**
+/*!
  * @class KHistoryComboBox khistorycombobox.h KHistoryComboBox
  *
  * @short A combobox for offering a history and completion
@@ -45,7 +45,7 @@ class KCOMPLETION_EXPORT KHistoryComboBox : public KComboBox
     Q_PROPERTY(QStringList historyItems READ historyItems WRITE setHistoryItems)
 
 public:
-    /**
+    /*!
      * Constructs a "read-write" combobox. A read-only history combobox
      * doesn't make much sense, so it is only available as read-write.
      * Completion will be used automatically for the items in the combo.
@@ -65,7 +65,7 @@ public:
      */
     explicit KHistoryComboBox(QWidget *parent = nullptr);
 
-    /**
+    /*!
      * Same as the previous constructor, but additionally has the option
      * to specify whether you want to let KHistoryComboBox handle completion
      * or not. If set to @c true, KHistoryComboBox will sync the completion to the
@@ -73,12 +73,12 @@ public:
      */
     explicit KHistoryComboBox(bool useCompletion, QWidget *parent = nullptr);
 
-    /**
+    /*!
      * Destructs the combo and the completion-object
      */
     ~KHistoryComboBox() override;
 
-    /**
+    /*!
      * Inserts @p items into the combobox. @p items might get
      * truncated if it is longer than maxCount()
      *
@@ -86,7 +86,7 @@ public:
      */
     void setHistoryItems(const QStringList &items);
 
-    /**
+    /*!
      * Inserts @p items into the combobox. @p items might get
      * truncated if it is longer than maxCount()
      *
@@ -131,7 +131,7 @@ public:
      */
     void setHistoryItems(const QStringList &items, bool setCompletionList);
 
-    /**
+    /*!
      * Returns the list of history items. Empty, when this is not a read-write
      * combobox.
      *
@@ -139,7 +139,7 @@ public:
      */
     QStringList historyItems() const;
 
-    /**
+    /*!
      * Removes all items named @p item.
      *
      * @return @c true if at least one item was removed.
@@ -148,7 +148,7 @@ public:
      */
     bool removeFromHistory(const QString &item);
 
-    /**
+    /*!
      * Sets an icon provider, so that items in the combobox can have an icon.
      * The provider is a function that takes a QString and returns a QIcon
      * @since 5.66
@@ -158,7 +158,7 @@ public:
     using QComboBox::insertItems;
 
 public Q_SLOTS:
-    /**
+    /*!
      * Adds an item to the end of the history list and to the completion list.
      * If maxCount() is reached, the first item of the list will be
      * removed.
@@ -179,35 +179,35 @@ public Q_SLOTS:
      */
     void addToHistory(const QString &item);
 
-    /**
+    /*!
      * Clears the history and the completion list.
      */
     void clearHistory();
 
-    /**
+    /*!
      * Resets the current position of the up/down history. Call this
      * when you manually call setCurrentItem() or clearEdit().
      */
     void reset();
 
 Q_SIGNALS:
-    /**
+    /*!
      * Emitted when the history was cleared by the entry in the popup menu.
      */
     void cleared();
 
 protected:
-    /**
+    /*!
      * Handling key-events, the shortcuts to rotate the items.
      */
     void keyPressEvent(QKeyEvent *) override;
 
-    /**
+    /*!
      * Handling wheel-events, to rotate the items.
      */
     void wheelEvent(QWheelEvent *ev) override;
 
-    /**
+    /*!
      * Inserts @p items into the combo, honoring setIconProvider()
      * Does not update the completionObject.
      *
@@ -217,7 +217,7 @@ protected:
      */
     void insertItems(const QStringList &items);
 
-    /**
+    /*!
      * @returns if we can modify the completion object or not.
      */
     bool useCompletion() const;

@@ -18,7 +18,7 @@
 class KCompletionBoxPrivate;
 class QEvent;
 
-/**
+/*!
  * @class KCompletionBox kcompletionbox.h KCompletionBox
  *
  * @short A helper widget for "completion-widgets" (KLineEdit, KComboBox))
@@ -41,7 +41,7 @@ class KCOMPLETION_EXPORT KCompletionBox : public QListWidget
     Q_PROPERTY(bool activateOnSelect READ activateOnSelect WRITE setActivateOnSelect)
 
 public:
-    /**
+    /*!
      * Constructs a KCompletionBox.
      *
      * The parent widget is used to give the focus back when pressing the
@@ -49,24 +49,24 @@ public:
      */
     explicit KCompletionBox(QWidget *parent = nullptr);
 
-    /**
+    /*!
      * Destroys the box
      */
     ~KCompletionBox() override;
 
     QSize sizeHint() const override;
 
-    /**
+    /*!
      * @returns true if selecting an item results in the emission of the selected() signal.
      */
     bool activateOnSelect() const;
 
-    /**
+    /*!
      * Returns a list of all items currently in the box.
      */
     QStringList items() const;
 
-    /**
+    /*!
      * @returns true if this widget is handling Tab-key events to traverse the
      * items in the dropdown list, otherwise false.
      *
@@ -76,25 +76,25 @@ public:
      */
     bool isTabHandling() const;
 
-    /**
+    /*!
      * @returns the text set via setCancelledText() or QString().
      */
     QString cancelledText() const;
 
 public Q_SLOTS:
-    /**
+    /*!
      * Inserts @p items into the box. Does not clear the items before.
      * @p index determines at which position @p items will be inserted.
      * (defaults to appending them at the end)
      */
     void insertItems(const QStringList &items, int index = -1);
 
-    /**
+    /*!
      * Clears the box and inserts @p items.
      */
     void setItems(const QStringList &items);
 
-    /**
+    /*!
      * Adjusts the size of the box to fit the width of the parent given in the
      * constructor and pops it up at the most appropriate place, relative to
      * the parent.
@@ -107,7 +107,7 @@ public Q_SLOTS:
      */
     virtual void popup();
 
-    /**
+    /*!
      * Makes this widget (when visible) capture Tab-key events to traverse the
      * items in the dropdown list (Tab goes down, Shift+Tab goes up).
      *
@@ -119,7 +119,7 @@ public Q_SLOTS:
      */
     void setTabHandling(bool enable);
 
-    /**
+    /*!
      * Sets the text to be emitted if the user chooses not to
      * pick from the available matches.
      *
@@ -131,7 +131,7 @@ public Q_SLOTS:
      */
     void setCancelledText(const QString &text);
 
-    /**
+    /*!
      * Set whether or not the selected signal should be emitted when an
      * item is selected. By default the selected() signal is emitted.
      *
@@ -139,85 +139,85 @@ public Q_SLOTS:
      */
     void setActivateOnSelect(bool doEmit);
 
-    /**
+    /*!
      * Moves the selection one line down or select the first item if nothing is selected yet.
      */
     void down();
 
-    /**
+    /*!
      * Moves the selection one line up or select the first item if nothing is selected yet.
      */
     void up();
 
-    /**
+    /*!
      * Moves the selection one page down.
      */
     void pageDown();
 
-    /**
+    /*!
      * Moves the selection one page up.
      */
     void pageUp();
 
-    /**
+    /*!
      * Moves the selection up to the first item.
      */
     void home();
 
-    /**
+    /*!
      * Moves the selection down to the last item.
      */
     void end();
 
-    /**
+    /*!
      * Reimplemented for internal reasons. API is unaffected.
      * Call it only if you really need it (i.e. the widget was hidden before) to have better performance.
      */
     void setVisible(bool visible) override;
 
 Q_SIGNALS:
-    /**
+    /*!
      * Emitted when an item is selected, @p text is the text of the selected item.
      *
      * @since 5.81
      */
     void textActivated(const QString &text);
 
-    /**
+    /*!
      * Emitted whenever the user chooses to ignore the available
      * selections and closes this box.
      */
     void userCancelled(const QString &);
 
 protected:
-    /**
+    /*!
      * This calculates the size of the dropdown and the relative position of the top
      * left corner with respect to the parent widget. This matches the geometry and position
      * normally used by K/QComboBox when used with one.
      */
     QRect calculateGeometry() const;
 
-    /**
+    /*!
      * This properly resizes and repositions the listbox.
      *
      * @since 5.0
      */
     void resizeAndReposition();
 
-    /**
+    /*!
      * Reimplemented from QListWidget to get events from the viewport (to hide
      * this widget on mouse-click, Escape-presses, etc.
      */
     bool eventFilter(QObject *, QEvent *) override;
 
-    /**
+    /*!
      * The preferred global coordinate at which the completion box's top left corner
      * should be positioned.
      */
     virtual QPoint globalPositionHint() const;
 
 protected Q_SLOTS:
-    /**
+    /*!
      * Called when an item is activated. Emits KCompletionBox::textActivated(const QString &) with the item text.
      *
      * @note For releases <= 5.81, this slot emitted KCompletionBox::activated(const QString &) with the item text.

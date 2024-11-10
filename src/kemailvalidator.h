@@ -11,7 +11,7 @@
 
 #include <QValidator>
 
-/**
+/*!
   An input validator that checks for valid email addresses.
   @see KEmailAddress::isValidSimpleAddress
   @since 6.0

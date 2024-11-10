@@ -22,7 +22,7 @@ class KCompletionPrivate;
 class KCompletionMatchesWrapper;
 class KCompletionMatches;
 
-/**
+/*!
  * @class KCompletion kcompletion.h KCompletion
  *
  * @short A generic class for completing QStrings
@@ -123,40 +123,40 @@ class KCOMPLETION_EXPORT KCompletion : public QObject
     Q_DECLARE_PRIVATE(KCompletion)
 
 public:
-    /**
+    /*!
      * This enum describes the completion mode used for by the KCompletion class.
      *
      * @since 5.0
      */
     enum CompletionMode {
-        /**
+        /*!
          * No completion is used.
          */
         CompletionNone = 1,
-        /**
+        /*!
          * Text is automatically filled in whenever possible.
          */
         CompletionAuto,
-        /**
+        /*!
          * Same as automatic, but shortest match is used for completion.
          */
         CompletionMan,
-        /**
+        /*!
          * Completes text much in the same way as a typical *nix shell would.
          */
         CompletionShell,
-        /**
+        /*!
          * Lists all possible matches in a popup list box to choose from.
          */
         CompletionPopup,
-        /**
+        /*!
          * Lists all possible matches in a popup list box to choose from, and automatically
          * fills the result whenever possible.
          */
         CompletionPopupAuto,
     };
 
-    /**
+    /*!
      * Constants that represent the order in which KCompletion performs
      * completion lookups.
      */
@@ -167,7 +167,7 @@ public:
     };
     Q_ENUM(CompOrder)
 
-    /**
+    /*!
      * The sorter function signature. Deriving classes may provide
      * custom sorting logic via the setSorterFunction method.
      *
@@ -175,17 +175,17 @@ public:
      */
     using SorterFunction = std::function<void(QStringList &)>;
 
-    /**
+    /*!
      * Constructor, nothing special here :)
      */
     KCompletion();
 
-    /**
+    /*!
      * Destructor, nothing special here, either.
      */
     ~KCompletion() override;
 
-    /**
+    /*!
      * Returns a list of all completion items that contain the given @p string.
      * @param string the string to complete
      * @return a list of items which contain @p text as a substring,
@@ -195,7 +195,7 @@ public:
      */
     QStringList substringCompletion(const QString &string) const;
 
-    /**
+    /*!
      * Returns the last match. Might be useful if you need to check whether
      * a completion is different from the last one.
      * @return the last match. QString() is returned when there is no
@@ -203,7 +203,7 @@ public:
      */
     virtual const QString &lastMatch() const;
 
-    /**
+    /*!
      * Returns a list of all items inserted into KCompletion. This is useful
      * if you need to save the state of a KCompletion object and restore it
      * later.
@@ -221,19 +221,19 @@ public:
      */
     QStringList items() const;
 
-    /**
+    /*!
      * Returns true if the completion object contains no entries.
      */
     bool isEmpty() const;
 
-    /**
+    /*!
      * Sets the completion mode.
      * @param mode the completion mode
      * @see CompletionMode
      */
     virtual void setCompletionMode(CompletionMode mode);
 
-    /**
+    /*!
      * Returns the current completion mode.
      *
      * @return the current completion mode, default is CompletionPopup
@@ -242,7 +242,7 @@ public:
      */
     CompletionMode completionMode() const;
 
-    /**
+    /*!
      * KCompletion offers three different ways in which it offers its items:
      * @li in the order of insertion
      * @li sorted alphabetically
@@ -264,14 +264,14 @@ public:
      */
     virtual void setOrder(CompOrder order);
 
-    /**
+    /*!
      * Returns the completion order.
      * @return the current completion order.
      * @see setOrder
      */
     CompOrder order() const;
 
-    /**
+    /*!
      * Setting this to true makes KCompletion behave case insensitively.
      * E.g. makeCompletion("CA"); might return "carp\@cs.tu-berlin.de".
      * Default is false (case sensitive).
@@ -280,7 +280,7 @@ public:
      */
     virtual void setIgnoreCase(bool ignoreCase);
 
-    /**
+    /*!
      * Returns whether KCompletion acts case insensitively or not.
      * Default is false (case sensitive).
      * @return true if the case will be ignored
@@ -288,7 +288,7 @@ public:
      */
     bool ignoreCase() const;
 
-    /**
+    /*!
      * Informs the caller if they should display the auto-suggestion for the last completion operation performed.
      * Applies for CompletionPopupAuto and CompletionAuto modes.
      * Defaults to true, but deriving classes may set it to false in special cases via "setShouldAutoSuggest".
@@ -297,7 +297,7 @@ public:
      */
     bool shouldAutoSuggest() const;
 
-    /**
+    /*!
      * Returns a list of all items matching the last completed string.
      * It might take some time if you have a @em lot of items.
      * @return a list of all matches for the last completed string.
@@ -305,14 +305,14 @@ public:
      */
     QStringList allMatches();
 
-    /**
+    /*!
      * Returns a list of all items matching @p string.
      * @param string the string to match
      * @return the list of all matches
      */
     QStringList allMatches(const QString &string);
 
-    /**
+    /*!
      * Returns a list of all items matching the last completed string.
      * It might take some time if you have a @em lot of items.
      * The matches are returned as KCompletionMatches, which also
@@ -326,14 +326,14 @@ public:
      */
     KCompletionMatches allWeightedMatches();
 
-    /**
+    /*!
      * Returns a list of all items matching @p string.
      * @param string the string to match
      * @return a list of all matches
      */
     KCompletionMatches allWeightedMatches(const QString &string);
 
-    /**
+    /*!
      * Enables/disables emitting a sound when
      * @li makeCompletion() can't find a match
      * @li there is a partial completion (= multiple matches in
@@ -348,7 +348,7 @@ public:
      */
     virtual void setSoundsEnabled(bool enable);
 
-    /**
+    /*!
      * Tells you whether KCompletion will emit sounds on certain occasions.
      * Default is enabled.
      * @return true if sounds are enabled
@@ -356,7 +356,7 @@ public:
      */
     bool soundsEnabled() const;
 
-    /**
+    /*!
      * Returns true when more than one match is found.
      * @return true if there is more than one match
      * @see multipleMatches
@@ -364,7 +364,7 @@ public:
     bool hasMultipleMatches() const;
 
 public Q_SLOTS:
-    /**
+    /*!
      * Attempts to find an item in the list of available completions
      * that begins with @p string. Will either return the first matching item
      * (if there is more than one match) or QString(), if no match is
@@ -387,7 +387,7 @@ public Q_SLOTS:
      */
     virtual QString makeCompletion(const QString &string);
 
-    /**
+    /*!
      * Returns the next item from the list of matching items.
      * When reaching the beginning, the list is rotated so it will return the
      * last match and a sound is emitted (depending on soundsEnabled()).
@@ -397,7 +397,7 @@ public Q_SLOTS:
      */
     QString previousMatch();
 
-    /**
+    /*!
      * Returns the next item from the list of matching items.
      * When reaching the last item, the list is rotated, so it will return
      * the first match and a sound is emitted (depending on
@@ -407,14 +407,14 @@ public Q_SLOTS:
      */
     QString nextMatch();
 
-    /**
+    /*!
      * Inserts @p items into the list of possible completions.
      * It does the same as setItems(), but without calling clear() before.
      * @param items the items to insert
      */
     void insertItems(const QStringList &items);
 
-    /**
+    /*!
      * Sets the list of items available for completion. Removes all previous
      * items.
      *
@@ -430,7 +430,7 @@ public Q_SLOTS:
      */
     virtual void setItems(const QStringList &itemList);
 
-    /**
+    /*!
      * Adds an item to the list of available completions.
      * Resets the current item state (previousMatch() and nextMatch()
      * won't work the next time they are called).
@@ -438,7 +438,7 @@ public Q_SLOTS:
      */
     void addItem(const QString &item);
 
-    /**
+    /*!
      * Adds an item to the list of available completions.
      * Resets the current item state (previousMatch() and nextMatch()
      * won't work the next time they are called).
@@ -451,7 +451,7 @@ public Q_SLOTS:
      */
     void addItem(const QString &item, uint weight);
 
-    /**
+    /*!
      * Removes an item from the list of available completions.
      * Resets the current item state (previousMatch() and nextMatch()
      * won't work the next time they are called).
@@ -459,13 +459,13 @@ public Q_SLOTS:
      */
     void removeItem(const QString &item);
 
-    /**
+    /*!
      * Removes all inserted items.
      */
     virtual void clear();
 
 Q_SIGNALS:
-    /**
+    /*!
      * This signal is emitted when a match is found.
      *
      * In particular, makeCompletion(), previousMatch() and nextMatch()
@@ -478,7 +478,7 @@ Q_SIGNALS:
      */
     void match(const QString &item);
 
-    /**
+    /*!
      * This signal is emitted by makeCompletion() in shell-completion mode
      * when the same string is passed to makeCompletion() multiple times in
      * a row.
@@ -486,7 +486,7 @@ Q_SIGNALS:
      */
     void matches(const QStringList &matchlist);
 
-    /**
+    /*!
      * This signal is emitted when calling makeCompletion() and more than
      * one matching item is found.
      * @see hasMultipleMatches
@@ -494,7 +494,7 @@ Q_SIGNALS:
     void multipleMatches();
 
 protected:
-    /**
+    /*!
      * This method is called after a completion is found and before the
      * matching string is emitted. You can override this method to modify the
      * string that will be emitted.
@@ -509,7 +509,7 @@ protected:
      */
     virtual void postProcessMatch(QString *match) const;
 
-    /**
+    /*!
      * This method is called before a list of all available completions is
      * emitted via matches(). You can override this method to modify the
      * found items before match() or matches() are emitted.
@@ -521,7 +521,7 @@ protected:
      */
     virtual void postProcessMatches(QStringList *matchList) const;
 
-    /**
+    /*!
      * This method is called before a list of all available completions is
      * emitted via #matches(). You can override this method to modify the
      * found items before #match() or #matches() are emitted.
@@ -533,7 +533,7 @@ protected:
      */
     virtual void postProcessMatches(KCompletionMatches *matches) const;
 
-    /**
+    /*!
      * Deriving classes may set this property and control whether the auto-suggestion should be displayed
      * for the last completion operation performed.
      *
@@ -542,7 +542,7 @@ protected:
      */
     void setShouldAutoSuggest(bool shouldAutosuggest);
 
-    /**
+    /*!
      * Sets a custom function to be used to sort the matches.
      * Can be set to nullptr to use the default sorting logic.
      *

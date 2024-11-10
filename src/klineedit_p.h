@@ -32,7 +32,7 @@ public:
 
     void updateUserText(const QString &text);
 
-    /**
+    /*!
      * Checks whether we should/should not consume a key used as a shortcut.
      * This makes it possible to handle shortcuts in the focused widget before any
      * window-global QAction is triggered.
@@ -43,7 +43,7 @@ public:
 
     bool copySqueezedText(bool copy) const;
 
-    /**
+    /*!
      * Properly sets the squeezed text whenever the widget is
      * created or resized.
      */
