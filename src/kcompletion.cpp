@@ -421,17 +421,21 @@ KCompletionMatches KCompletion::allWeightedMatches(const QString &string)
     return ret;
 }
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(6, 11)
 void KCompletion::setSoundsEnabled(bool enable)
 {
     Q_D(KCompletion);
     d->beep = enable;
 }
+#endif
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(6, 11)
 bool KCompletion::soundsEnabled() const
 {
     Q_D(const KCompletion);
     return d->beep;
 }
+#endif
 
 bool KCompletion::hasMultipleMatches() const
 {

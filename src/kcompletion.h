@@ -333,6 +333,7 @@ public:
      */
     KCompletionMatches allWeightedMatches(const QString &string);
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(6, 11)
     /**
      * Enables/disables emitting a sound when
      * @li makeCompletion() can't find a match
@@ -345,16 +346,25 @@ public:
      *
      * @param enable true to enable sounds
      * @see soundsEnabled
+     *
+     * @deprecated since 6.11, not implemented
      */
+    KCOMPLETION_DEPRECATED_VERSION(6, 11, "Not implemented")
     virtual void setSoundsEnabled(bool enable);
+#endif
 
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(6, 11)
     /**
      * Tells you whether KCompletion will emit sounds on certain occasions.
      * Default is enabled.
      * @return true if sounds are enabled
      * @see setSoundsEnabled
+     *
+     * @deprecated since 6.11, not implemented
      */
+    KCOMPLETION_DEPRECATED_VERSION(6, 11, "Not implemented")
     bool soundsEnabled() const;
+#endif
 
     /**
      * Returns true when more than one match is found.
