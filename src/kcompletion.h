@@ -333,7 +333,7 @@ public:
      */
     KCompletionMatches allWeightedMatches(const QString &string);
 
-#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(6, 11)
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(6, 11) // not KCOMPLETION_ENABLE_DEPRECATED_SINCE because this is a virtual function
     /**
      * Enables/disables emitting a sound when
      * @li makeCompletion() can't find a match
