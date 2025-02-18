@@ -17,13 +17,13 @@
 # Serdar SOYTETİR <tulliana@gmail.com>, 2010, 2012.
 # Volkan Gezer <volkangezer@gmail.com>, 2013, 2014, 2021.
 # Kaan Ozdincer <kaanozdincer@gmail.com>, 2014.
-# Emir SARI <emir_sari@icloud.com>, 2023.
+# SPDX-FileCopyrightText: 2023, 2025 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: http://bugs.kde.org\n"
 "POT-Creation-Date: 2014-03-23 01:50+0000\n"
-"PO-Revision-Date: 2023-04-04 00:53+0300\n"
+"PO-Revision-Date: 2025-02-17 18:27+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 25.03.70\n"
 "X-Qt-Contexts: true\n"
 
 #: khistorycombobox.cpp:201
@@ -67,22 +67,22 @@ msgstr "Elle"
 #: klineedit.cpp:934
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Automatic"
-msgstr "Otomatik"
+msgstr "Kendiliğinden"
 
 #: klineedit.cpp:935
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List"
-msgstr "Açılır Liste"
+msgstr "Açılır liste"
 
 #: klineedit.cpp:936
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Short Automatic"
-msgstr "Kısa Otomatik"
+msgstr "Kısa kendiliğinden"
 
 #: klineedit.cpp:937
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List && Automatic"
-msgstr "Açılır Liste ve Otomatik"
+msgstr "Açılır liste ve kendiliğinden"
 
 #: klineedit.cpp:967
 msgctxt "KLineEdit|@item:inmenu Text Completion"
