@@ -303,14 +303,14 @@ public:
      * @return a list of all matches for the last completed string.
      * @see substringCompletion
      */
-    QStringList allMatches();
+    QStringList allMatches(); // TODO KF7 make method const
 
     /**
      * Returns a list of all items matching @p string.
      * @param string the string to match
      * @return the list of all matches
      */
-    QStringList allMatches(const QString &string);
+    QStringList allMatches(const QString &string); // TODO KF7 make method const
 
     /**
      * Returns a list of all items matching the last completed string.
@@ -324,14 +324,14 @@ public:
      * @return a list of all completion matches
      * @see substringCompletion
      */
-    KCompletionMatches allWeightedMatches();
+    KCompletionMatches allWeightedMatches(); // TODO KF7 make method const
 
     /**
      * Returns a list of all items matching @p string.
      * @param string the string to match
      * @return a list of all matches
      */
-    KCompletionMatches allWeightedMatches(const QString &string);
+    KCompletionMatches allWeightedMatches(const QString &string); // TODO KF7 make method const
 
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(6, 11) // not KCOMPLETION_ENABLE_DEPRECATED_SINCE because this is a virtual function
     /**
