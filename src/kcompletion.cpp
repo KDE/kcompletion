@@ -371,9 +371,16 @@ void KCompletion::setSorterFunction(SorterFunction sortFunc)
     d->sorterFunction = sortFunc ? sortFunc : KCompletionPrivate::defaultSort;
 }
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(6, 14)
 QStringList KCompletion::allMatches()
 {
-    Q_D(KCompletion);
+    return ((const KCompletion *)this)->allMatches();
+}
+#endif
+
+QStringList KCompletion::allMatches() const
+{
+    Q_D(const KCompletion);
     // Don't use d->matches since calling postProcessMatches()
     // on d->matches here would interfere with call to
     // postProcessMatch() during rotation
@@ -385,9 +392,16 @@ QStringList KCompletion::allMatches()
     return l;
 }
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(6, 14)
 KCompletionMatches KCompletion::allWeightedMatches()
 {
-    Q_D(KCompletion);
+    return ((const KCompletion *)this)->allWeightedMatches();
+}
+#endif
+
+KCompletionMatches KCompletion::allWeightedMatches() const
+{
+    Q_D(const KCompletion);
     // Don't use d->matches since calling postProcessMatches()
     // on d->matches here would interfere with call to
     // postProcessMatch() during rotation
@@ -399,9 +413,16 @@ KCompletionMatches KCompletion::allWeightedMatches()
     return ret;
 }
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(6, 14)
 QStringList KCompletion::allMatches(const QString &string)
 {
-    Q_D(KCompletion);
+    return ((const KCompletion *)this)->allMatches(string);
+}
+#endif
+
+QStringList KCompletion::allMatches(const QString &string) const
+{
+    Q_D(const KCompletion);
     KCompletionMatchesWrapper matches(d->sorterFunction, d->order);
     bool dummy;
     matches.findAllCompletions(d->m_treeRoot.get(), string, d->ignoreCase, dummy);
@@ -410,9 +431,16 @@ QStringList KCompletion::allMatches(const QString &string)
     return l;
 }
 
+#if KCOMPLETION_BUILD_DEPRECATED_SINCE(6, 14)
 KCompletionMatches KCompletion::allWeightedMatches(const QString &string)
 {
-    Q_D(KCompletion);
+    return ((const KCompletion *)this)->allWeightedMatches(string);
+}
+#endif
+
+KCompletionMatches KCompletion::allWeightedMatches(const QString &string) const
+{
+    Q_D(const KCompletion);
     KCompletionMatchesWrapper matches(d->sorterFunction, d->order);
     bool dummy;
     matches.findAllCompletions(d->m_treeRoot.get(), string, d->ignoreCase, dummy);

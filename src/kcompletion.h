@@ -303,14 +303,24 @@ public:
      * @return a list of all matches for the last completed string.
      * @see substringCompletion
      */
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(6, 14)
+    KCOMPLETION_DEPRECATED_VERSION(6, 14, "Use const overload")
     QStringList allMatches();
+#endif
+
+    QStringList allMatches() const;
 
     /**
      * Returns a list of all items matching @p string.
      * @param string the string to match
      * @return the list of all matches
      */
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(6, 14)
+    KCOMPLETION_DEPRECATED_VERSION(6, 14, "Use const overload")
     QStringList allMatches(const QString &string);
+#endif
+
+    QStringList allMatches(const QString &string) const;
 
     /**
      * Returns a list of all items matching the last completed string.
@@ -324,14 +334,23 @@ public:
      * @return a list of all completion matches
      * @see substringCompletion
      */
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(6, 14)
+    KCOMPLETION_DEPRECATED_VERSION(6, 14, "Use const overload")
     KCompletionMatches allWeightedMatches();
+#endif
+    KCompletionMatches allWeightedMatches() const;
 
     /**
      * Returns a list of all items matching @p string.
      * @param string the string to match
      * @return a list of all matches
      */
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(6, 14)
+    KCOMPLETION_DEPRECATED_VERSION(6, 14, "Use const overload")
     KCompletionMatches allWeightedMatches(const QString &string);
+#endif
+
+    KCompletionMatches allWeightedMatches(const QString &string) const;
 
 #if KCOMPLETION_BUILD_DEPRECATED_SINCE(6, 11) // not KCOMPLETION_ENABLE_DEPRECATED_SINCE because this is a virtual function
     /**
