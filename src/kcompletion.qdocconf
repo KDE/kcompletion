@@ -12,6 +12,8 @@ imagedirs += ../docs/pics
 
 outputformats = HTML
 
+navigation.landingpage = "KCompletion"
+
 depends += \
     kde \
     qtcore \
