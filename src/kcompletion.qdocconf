@@ -34,3 +34,5 @@ qhp.KCompletion.subprojects.classes.title = C++ Classes
 qhp.KCompletion.subprojects.classes.indexTitle = KCompletion C++ Classes
 qhp.KCompletion.subprojects.classes.selectors = class fake:headerfile
 qhp.KCompletion.subprojects.classes.sortPages = true
+
+tagfile = kcompletion.tags
