@@ -66,4 +66,4 @@ msgstr "ჩამოსაშლელი სია && ავტომატუ�
 #: klineedit.cpp:967
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Default"
-msgstr "ნაგულისხმები"
+msgstr "ნაგულისხმევი"
