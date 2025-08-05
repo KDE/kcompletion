@@ -50,7 +50,7 @@ msgstr "يدويًا"
 #: klineedit.cpp:963
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Automatic"
-msgstr "تلقائيًا"
+msgstr "آليًّا"
 
 #: klineedit.cpp:964
 msgctxt "KLineEdit|@item:inmenu Text Completion"
@@ -60,12 +60,12 @@ msgstr "قائمة منسدلة"
 #: klineedit.cpp:965
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Short Automatic"
-msgstr "تلقائيًا قصيرًا"
+msgstr "آليًّا قصيرًا"
 
 #: klineedit.cpp:966
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Dropdown List && Automatic"
-msgstr "قائمة منسدلة وتلقائيًا"
+msgstr "قائمة منسدلة وآليًّا"
 
 #: klineedit.cpp:996
 msgctxt "KLineEdit|@item:inmenu Text Completion"
