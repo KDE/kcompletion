@@ -126,7 +126,7 @@ private Q_SLOTS:
         KTestComboBox *testCombo = new KTestComboBox(true, nullptr); // rw, with KLineEdit
         testCombo->setEditable(false); // destroys our KLineEdit, with deleteLater
         qApp->sendPostedEvents(nullptr, QEvent::DeferredDelete);
-        QVERIFY(testCombo->KTestComboBox::delegate() == nullptr);
+        QVERIFY(!testCombo->KTestComboBox::delegate());
         delete testCombo; // not needed anymore
     }
 
