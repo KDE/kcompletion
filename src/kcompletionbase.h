@@ -246,7 +246,7 @@ public:
      *
      * This method changes the values of the key bindings for
      * rotation and completion features to the default values
-     * provided in KGlobalSettings.
+     * provided in KStandardShortcut.
      *
      * \note By default, inheriting widgets should use the
      * global key bindings so that there is no need to

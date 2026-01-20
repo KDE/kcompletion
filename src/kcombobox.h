@@ -67,7 +67,7 @@ class QMenu;
  * global settings in KStandardShortcut. These values, however, can be overridden
  * locally by invoking KCompletionBase::setKeyBinding(). The values can
  * easily be reverted back to the default settings by calling
- * useGlobalSettings(). An alternate method would be to default individual
+ * useGlobalKeyBindings(). An alternate method would be to default individual
  * key bindings by using setKeyBinding() with the default second argument.
  *
  * A non-editable combo box only has one completion mode, CompletionAuto.
