@@ -47,7 +47,6 @@ typedef KSortableList<QString> KCompletionMatchesList;
 class KCOMPLETION_EXPORT KCompletionMatches : public KCompletionMatchesList
 {
 public:
-    Q_DECLARE_PRIVATE(KCompletionMatches)
     /*!
      * Default constructor.
      *
@@ -89,6 +88,7 @@ public:
     bool sorting() const;
 
 private:
+    Q_DECLARE_PRIVATE(KCompletionMatches)
     std::unique_ptr<KCompletionMatchesPrivate> const d_ptr;
 };
 

@@ -34,7 +34,6 @@ class KCompletionBasePrivate;
 class KCOMPLETION_EXPORT KCompletionBase
 {
 public:
-    Q_DECLARE_PRIVATE(KCompletionBase)
     /*!
      * Constants that represent the items whose shortcut
      * key binding is programmable. The default key bindings
@@ -329,6 +328,7 @@ protected:
     virtual void virtual_hook(int id, void *data);
 
 private:
+    Q_DECLARE_PRIVATE(KCompletionBase)
     Q_DISABLE_COPY(KCompletionBase)
     std::unique_ptr<KCompletionBasePrivate> const d_ptr;
 };
