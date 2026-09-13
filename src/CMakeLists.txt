@@ -61,7 +61,7 @@ target_link_libraries(KF6Completion PUBLIC Qt6::Widgets
                                             KF6::Codecs # KEmailAddress
 )
 
-ecm_generate_headers(KCompletion_HEADERS
+ecm_generate_headers(KCompletion_CamelCase_HEADERS
   HEADER_NAMES
   KComboBox
   KCompletion
@@ -83,6 +83,7 @@ install(TARGETS KF6Completion EXPORT KF6CompletionTargets ${KF_INSTALL_TARGETS_D
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kcompletion_export.h
   ${KCompletion_HEADERS}
+  ${KCompletion_CamelCase_HEADERS}
   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KCompletion COMPONENT Devel
 )
 
@@ -94,4 +95,17 @@ ecm_qt_install_logging_categories(
     EXPORT KCOMPLETION
     FILE kcompletion.categories
     DESTINATION "${KDE_INSTALL_LOGGINGCATEGORIESDIR}"
+)
+
+ecm_add_installed_library_check(KF6Completion
+    PACKAGE_NAME "KF6Completion"
+    PACKAGE_TARGET_NAMESPACE "KF6::"
+)
+
+ecm_installed_library_check_include_strings(KF6Completion
+    HEADERS ${KCompletion_CamelCase_HEADERS}
+)
+
+ecm_installed_library_check_version_preprocessor_macros(KF6Completion
+    PREFIX KCOMPLETION
 )
