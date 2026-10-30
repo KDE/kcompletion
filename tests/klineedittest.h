@@ -4,7 +4,6 @@
 #include <QWidget>
 
 class QLabel;
-class QLineEdit;
 class QString;
 class QPushButton;
 
