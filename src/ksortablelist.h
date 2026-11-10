@@ -11,20 +11,23 @@
 #include <kcompletion_export.h>
 
 #include <QList>
+#if KCOMPLETION_ENABLE_DEPRECATED_SINCE(6, 33)
 #include <QPair>
+#endif
 #include <algorithm>
+#include <utility>
 
 /*!
  * \class KSortableItem
  * \inheaderfile KSortableList
  * \inmodule KCompletion
  *
- * \brief KSortableItem is a QPair that provides several operators
+ * \brief KSortableItem is a std::pair that provides several operators
  * for sorting.
  * \sa KSortableList
  */
 template<typename T, typename Key = int>
-class KSortableItem : public QPair<Key, T>
+class KSortableItem : public std::pair<Key, T>
 {
 public:
     /*!
@@ -35,7 +38,7 @@ public:
      * \a t the second value (the item)
      */
     KSortableItem(Key i, const T &t)
-        : QPair<Key, T>(i, t)
+        : std::pair<Key, T>(i, t)
     {
     }
     /*!
@@ -44,7 +47,7 @@ public:
      * \a rhs the other item to copy
      */
     KSortableItem(const KSortableItem<T, Key> &rhs)
-        : QPair<Key, T>(rhs.first, rhs.second)
+        : std::pair<Key, T>(rhs.first, rhs.second)
     {
     }
 
