@@ -285,7 +285,7 @@ void KComboBox::setLineEdit(QLineEdit *edit)
 
         connect(d->klineEdit, &KLineEdit::completionModeChanged, this, &KComboBox::completionModeChanged);
 
-        connect(d->klineEdit, &KLineEdit::aboutToShowContextMenu, [this](QMenu *menu) {
+        connect(d->klineEdit, &KLineEdit::aboutToShowContextMenu, this, [this](QMenu *menu) {
             Q_D(KComboBox);
             d->contextMenu = menu;
             Q_EMIT aboutToShowContextMenu(menu);
