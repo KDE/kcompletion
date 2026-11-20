@@ -8,14 +8,15 @@
 # Shinichi Tsunoda <tsuno@ngy.1st.ne.jp>, 2005.
 # Yukiko Bando <ybando@k6.dion.ne.jp>, 2006, 2007, 2008, 2009, 2010.
 # Fumiaki Okushi <fumiaki.okushi@gmail.com>, 2006, 2007, 2008, 2010, 2011, 2015.
+# SPDX-FileCopyrightText: 2026 Mint <5602mint@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: http://bugs.kde.org\n"
 "POT-Creation-Date: 2014-03-23 01:50+0000\n"
-"PO-Revision-Date: 2015-04-18 23:05-0700\n"
-"Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
+"PO-Revision-Date: 2026-11-11 17:03+0900\n"
+"Last-Translator: Mint <5602mint@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -24,13 +25,10 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: qtrich\n"
-"X-Generator: Lokalize 1.1\n"
+"X-Generator: Lokalize 26.08.3\n"
 "X-Qt-Contexts: true\n"
 
 #: khistorycombobox.cpp:201
-#, fuzzy
-#| msgctxt "KHistoryComboBox|"
-#| msgid "Clear &History"
 msgctxt "KHistoryComboBox|@action:inmenu"
 msgid "Clear &History"
 msgstr "履歴をクリア(&H)"
@@ -41,9 +39,6 @@ msgid "1"
 msgstr "1"
 
 #: klineedit.cpp:910
-#, fuzzy
-#| msgctxt "KLineEdit|"
-#| msgid "C&lear"
 msgctxt "KLineEdit|@action:inmenu"
 msgid "C&lear"
 msgstr "クリア(&L)"
@@ -76,7 +71,7 @@ msgstr "ドロップダウンリスト"
 #: klineedit.cpp:936
 msgctxt "KLineEdit|@item:inmenu Text Completion"
 msgid "Short Automatic"
-msgstr "短自動"
+msgstr "共通部分まで自動"
 
 #: klineedit.cpp:937
 msgctxt "KLineEdit|@item:inmenu Text Completion"
